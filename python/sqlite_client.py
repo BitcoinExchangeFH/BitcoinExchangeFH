@@ -22,20 +22,36 @@ class SqliteClient:
         self.conn = sqlite3.connect(path, check_same_thread=False)
         self.cursor = self.conn.cursor()
 
-    @staticmethod
-    def create_table_str(table, columns):
-        """
-        Return create table string
-        :param table: Table name
-        :param columns: Columns
-        :return String
-        """
-        return "create table %s %s" % (table_name, columns))
-
-    def create_table(self, sql):
+    def create_table(self, table, columns):
         """
         Create table in the database
-        :param sql: SQL string
+        :param table: Table name
+        :param columns: Columns
+        :return Commit result
         """
-        return self.cursor.execute(sql)
+        sql = "create table %s %s" % (table_name, columns))
+        self.cursor.execute(sql)
+        return self.conn.commit()
+
+    def insert(self, table, value):
+        """
+        Insert into the table
+        :param table: Table name
+        :param value: Values
+        :return Commit result
+        """
+        sql = "insert into %s values (%s)" % (table, value)
+        self.cursor.execute(sql)
+        return self.conn.commit()
+
+    def insert_or_replace(self, table, value):
+        """
+        Insert or replace into the table
+        :param table: Table name
+        :param value: Values
+        :return Commit result
+        """
+        sql = "insert or replace %s values (%s)" % (table, value)
+        self.cursor.execute(sql)
+        return self.conn.commit()
 

@@ -8,7 +8,7 @@ from web_socket import RESTfulApi
 
 class ExchBtcc(RESTfulApi):
     def __init__(self):
-        super(ExchBtcc, self).__init__()
+        RESTfulApi.__init__(self)
         self.exchange_name = 'BTCC'
         self.l2_depth = L2Depth(exch=self.exchange_name, instmt='BTC/CNY')
 

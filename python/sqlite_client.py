@@ -1,9 +1,9 @@
 #!/bin/python
 
 import sqlite3
+from sql_client import SqlClient
 
-
-class SqliteClient:
+class SqliteClient(SqlClient):
     """
     Sqlite client
     """
@@ -11,8 +11,7 @@ class SqliteClient:
         """
         Constructor
         """
-        self.conn = None
-        self.cursor = None
+        SqlClient.__init__(self)
 
     def connect(self, path):
         """
@@ -21,37 +20,32 @@ class SqliteClient:
         """
         self.conn = sqlite3.connect(path, check_same_thread=False)
         self.cursor = self.conn.cursor()
-
-    def create_table(self, table, columns):
+        return self.conn is not None and self.cursor is not None
+        
+    def execute(self, sql):
         """
-        Create table in the database
-        :param table: Table name
-        :param columns: Columns
-        :return Commit result
+        Execute the sql command
+        :param sql: SQL command
         """
-        sql = "create table %s %s" % (table_name, columns))
         self.cursor.execute(sql)
-        return self.conn.commit()
+        
+    def commit(self):
+        """
+        Commit
+        """    
+        self.conn.commit()
+        
+    def fetchone(self):
+        """
+        Fetch one record
+        :return Record
+        """        
+        return self.cursor.fetchone()     
 
-    def insert(self, table, value):
+    def fetchall(self):
         """
-        Insert into the table
-        :param table: Table name
-        :param value: Values
-        :return Commit result
-        """
-        sql = "insert into %s values (%s)" % (table, value)
-        self.cursor.execute(sql)
-        return self.conn.commit()
-
-    def insert_or_replace(self, table, value):
-        """
-        Insert or replace into the table
-        :param table: Table name
-        :param value: Values
-        :return Commit result
-        """
-        sql = "insert or replace %s values (%s)" % (table, value)
-        self.cursor.execute(sql)
-        return self.conn.commit()
+        Fetch all records
+        :return Record
+        """        
+        return self.cursor.fetchall()
 

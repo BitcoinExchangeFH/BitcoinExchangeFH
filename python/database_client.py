@@ -1,4 +1,4 @@
-class DataBaseClient:
+class DatabaseClient:
     """
     Base database client
     """
@@ -7,7 +7,7 @@ class DataBaseClient:
         Constructor
         """
         pass
-    
+
     def connect(self, **args):
         """
         Connect

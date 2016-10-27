@@ -1,6 +1,6 @@
-from database_client import DataBaseClient
+from database_client import DatabaseClient
 
-class SqlClient(DataBaseClient):
+class SqlClient(DatabaseClient):
     """
     Sql client
     """
@@ -8,35 +8,35 @@ class SqlClient(DataBaseClient):
         """
         Constructor
         """
-        DataBaseClient.__init__(self)
+        DatabaseClient.__init__(self)
         self.conn = None
-        self.cursor = None    
-        
+        self.cursor = None
+
     def execute(self, sql):
         """
         Execute the sql command
         :param sql: SQL command
         """
         return True
-        
+
     def commit(self):
         """
         Commit
-        """        
+        """
         return True
-        
+
     def fetchone(self):
         """
         Fetch one record
         :return Record
-        """        
-        return []     
+        """
+        return []
 
     def fetchall(self):
         """
         Fetch all records
         :return Record
-        """        
+        """
         return []
 
     def create(self, table, columns, types, is_ifnotexists=True):
@@ -49,12 +49,12 @@ class SqlClient(DataBaseClient):
         """
         if len(columns) != len(types):
             return False
-        
+
         column_names = ''
         for i in range(0, len(columns)):
             column_names += '%s %s,' % (columns[i], types[i])
         column_names = column_names[0:len(column_names)-1]
-        
+
         if is_ifnotexists:
             sql = "create table if not exists %s (%s)" % (table, column_names)
         else:
@@ -73,7 +73,7 @@ class SqlClient(DataBaseClient):
         """
         if len(columns) != len(values):
             return False
-        
+
         column_names = ','.join(columns)
         value_string = ','.join(["'" + e + "'" if type(e) == str else str(e) for e in values])
         if is_orreplace:
@@ -83,8 +83,8 @@ class SqlClient(DataBaseClient):
         self.execute(sql)
         self.commit()
         return True
-        
-    def select(self, table, columns='*', condition='', orderby='', limit=0, isFetchAll=True):
+
+    def select(self, table, columns=['*'], condition='', orderby='', limit=0, isFetchAll=True):
         """
         Select rows from the table
         :param table: Table name
@@ -95,22 +95,22 @@ class SqlClient(DataBaseClient):
         :param isFetchAll: Indicator of fetching all
         :return Result rows
         """
-        sql = "select %s from %s" % (columns, table)
+        sql = "select %s from %s" % (','.join(columns), table)
         if len(condition) > 0:
             sql += " where %s" % condition
-            
+
         if len(orderby) > 0:
             sql += " order by %s" % orderby
-        
+
         if limit > 0:
             sql += " limit %d" % limit
-        
+
         self.execute(sql)
         if isFetchAll:
             return self.fetchall()
         else:
             return self.fetchone()
-    
+
     def delete(self, table, condition='1==1'):
         """
         Delete rows from the table
@@ -120,6 +120,6 @@ class SqlClient(DataBaseClient):
         sql = "delete from %s" % table
         if len(condition) > 0:
             sql += " where %s" % condition
-        
+
         self.execute(sql)
         self.commit()

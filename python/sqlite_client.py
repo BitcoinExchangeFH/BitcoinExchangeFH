@@ -13,11 +13,12 @@ class SqliteClient(SqlClient):
         """
         SqlClient.__init__(self)
 
-    def connect(self, path):
+    def connect(self, **kwargs):
         """
         Connect
         :param path: sqlite file to connect
         """
+        path = kwargs['path']
         self.conn = sqlite3.connect(path, check_same_thread=False)
         self.cursor = self.conn.cursor()
         return self.conn is not None and self.cursor is not None

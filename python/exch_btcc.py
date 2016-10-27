@@ -1,9 +1,8 @@
-#!/bin/python
-
 import time
 from datetime import datetime
 from market_data import MarketDataAbstract, L2Depth, Trade
 from web_socket import RESTfulApi
+from exchange import ExchangeGateway
 
 
 class ExchBtcc(RESTfulApi):
@@ -74,8 +73,8 @@ class ExchBtcc(RESTfulApi):
         trades = []
         for t in res:
             trade = ExchBtcc.parse_trade(exch=self.exchange_name, 
-                                               instmt=self.instmt_name, 
-                                               raw=t)
+                                   instmt=self.instmt_name, 
+                                   raw=t)
             trades.append(trade)
             trade_id = int(trade.trade_id)
             if trade_id > self.last_trade_id:
@@ -83,6 +82,20 @@ class ExchBtcc(RESTfulApi):
                                                          
         return trades                                              
 
+
+class ExchGwBtcc(ExchangeGateway):
+    """
+    Exchange gateway BTCC 
+    """
+    def __init__(self, db_client):
+        """
+        Constructor
+        :param db_client: Database client
+        """
+        ExchangeGateway.__init__(self, ExchBtcc(), db_client)
+
+    
+    
 if __name__ == '__main__':
     btcc = ExchBtcc()
     while True:

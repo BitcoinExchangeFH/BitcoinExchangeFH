@@ -1,6 +1,6 @@
-#!/bin/python
+from database_client import DataBaseClient
 
-class SqlClient:
+class SqlClient(DataBaseClient):
     """
     Sql client
     """
@@ -8,16 +8,9 @@ class SqlClient:
         """
         Constructor
         """
+        DataBaseClient.__init__(self)
         self.conn = None
         self.cursor = None    
-        
-    def connect(self, path):
-        """
-        Connect
-        :param path: sqlite file to connect
-        :return True if it is connected
-        """
-        return True
         
     def execute(self, sql):
         """
@@ -46,48 +39,50 @@ class SqlClient:
         """        
         return []
 
-    def create(self, table, columns):
+    def create(self, table, columns, types, is_ifnotexists=True):
         """
         Create table in the database
         :param table: Table name
-        :param columns: Columns
+        :param columns: Column array
+        :param types: Type array
+        :param is_ifnotexists: Create table if not exists keyword
         """
-        sql = "create table %s (%s)" % (table, columns)
+        if len(columns) != len(types):
+            return False
+        
+        column_names = ''
+        for i in range(0, len(columns)):
+            column_names += '%s %s,' % (columns[i], types[i])
+        column_names = column_names[0:len(column_names)-1]
+        
+        if is_ifnotexists:
+            sql = "create table if not exists %s (%s)" % (table, column_names)
+        else:
+            sql = "create table %s (%s)" % (table, column_names)
         self.execute(sql)
         self.commit()
+        return True
 
-    def insert(self, table, columns, value):
+    def insert(self, table, columns, values, is_orreplace=False):
         """
         Insert into the table
         :param table: Table name
-        :param columns: String Columns
-        :param value: String Values
+        :param columns: Column array
+        :param values: Value array
+        :param is_orreplace: Indicate if the query is "INSERT OR REPLACE"
         """
-        sql = "insert into %s (%s) values (%s)" % (table, columns, value)
+        if len(columns) != len(values):
+            return False
+        
+        column_names = ','.join(columns)
+        value_string = ','.join(["'" + e + "'" if type(e) == str else str(e) for e in values])
+        if is_orreplace:
+            sql = "insert or replace into %s (%s) values (%s)" % (table, column_names, value_string)
+        else:
+            sql = "insert into %s (%s) values (%s)" % (table, column_names, value_string)
         self.execute(sql)
         self.commit()
-
-    def insert_or_replace(self, table, columns, value):
-        """
-        Insert or replace into the table
-        :param table: Table name
-        :param columns: String Columns
-        :param value: String Values
-        """
-        sql = "insert or replace into %s (%s) values (%s)" % (table, columns, value)
-        self.execute(sql) 
-        self.commit()
-        
-    def update(self, table, columns, value):
-        """
-        Update the table
-        :param table: Table name
-        :param columns: String Columns
-        :param value: String Values
-        """
-        sql = "update %s (%s) values (%s)" % (table, columns, value)
-        self.execute(sql) 
-        self.commit()        
+        return True
         
     def select(self, table, columns='*', condition='', orderby='', limit=0, isFetchAll=True):
         """

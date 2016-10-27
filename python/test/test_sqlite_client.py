@@ -10,7 +10,7 @@ class SqliteClientTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):    
         cls.db_client = SqliteClient()
-        cls.db_client.connect(file_name)
+        cls.db_client.connect(path=file_name)
     
     @classmethod
     def tearDownClass(cls):
@@ -19,25 +19,28 @@ class SqliteClientTest(unittest.TestCase):
     
     def test_query(self):
         table_name = 'test_query'
+        columns = ['date', 'time', 'k', 'v']
+        types = ['text', 'text', 'int PRIMARY KEY', 'text']
         
         # Check table creation
-        self.db_client.create(
-            table_name, 
-            "date text, time text, k int PRIMARY KEY, v text")
+        self.assertTrue(self.db_client.create(table_name, columns, types))
                         
         # Check table insertion                        
-        self.db_client.insert(
+        self.assertTrue(self.db_client.insert(
             table_name, 
-            "date,time,k,v", 
-            "'20161026','10:00:00.000000',1,'AbC'")
-        self.db_client.insert(
+            columns,
+            ['20161026','10:00:00.000000',1,'AbC']))
+        self.assertTrue(self.db_client.insert(
             table_name, 
-            "date,time,k,v", 
-            "'20161026','10:00:01.000000',2,'AbCD'")
-        self.db_client.insert(
+            columns,
+            ['20161026','10:00:01.000000',2,'AbCD']))
+        self.assertTrue(self.db_client.insert(
             table_name, 
-            "date,time,k,v", 
-            "'20161026','10:00:02.000000',3,'Efgh'")
+            columns,
+            ['20161026','10:00:02.000000',3,'Efgh']))
+                        
+        # Check table "IF NOT EXISTS" condition
+        self.assertTrue(self.db_client.create(table_name, columns, types))                        
                         
         # Fetch the whole table
         row = self.db_client.select(table=table_name)
@@ -88,10 +91,11 @@ class SqliteClientTest(unittest.TestCase):
         self.assertEqual(row[0][3], 'AbC')      
         
         # Check table insertion or replacement
-        self.db_client.insert_or_replace(
+        self.assertTrue(self.db_client.insert(
             table_name, 
-            "date,time,k,v", 
-            "'20161026','10:00:04.000000',2,'NoNoNo'")
+            columns,
+            ['20161026','10:00:04.000000',2,'NoNoNo'],
+            True))
                         
         # Fetch the whole table
         row = self.db_client.select(table=table_name)
@@ -132,6 +136,10 @@ class SqliteClientTest(unittest.TestCase):
         # Fetch the whole table
         row = self.db_client.select(table=table_name)
         self.assertEqual(len(row), 0)
+        
+        # Negative case
+        self.assertTrue(not self.db_client.create(table_name, columns[1::], types))
+        self.assertTrue(not self.db_client.insert(table_name, columns, []))
 
 if __name__ == '__main__':
     unittest.main()

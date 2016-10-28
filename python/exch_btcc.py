@@ -38,7 +38,7 @@ class ExchBtcc(RESTfulApi):
         :param raw: Raw data in JSON
         """
         l2_depth.update_date_time = datetime.now()
-        l2_depth.date_time = raw['date']
+        l2_depth.date_time = datetime.fromtimestamp(int(raw['date'])).strftime("%Y%m%d %H:%M:%S.%f")
         bids = raw['bids']
         asks = raw['asks']
         for i in range(0, 5):
@@ -59,6 +59,7 @@ class ExchBtcc(RESTfulApi):
         else:
             return trade
 
+        trade.date_time = datetime.fromtimestamp(int(raw['date'])).strftime("%Y%m%d %H:%M:%S.%f")
         trade.trade_id = raw['tid']
         trade.trade_price = raw['price']
         trade.trade_volume = raw['amount']
@@ -98,21 +99,21 @@ class ExchGwBtcc(ExchangeGateway):
         """
         Iniitalization
         """
-        self.db_client.create(self.get_order_book_table_name(), ['id'] + L2Depth.columns(), ['int'] + L2Depth.types())
-        self.db_client.create(self.get_trade_table_name(), ['id'] + Trade.columns(), ['int'] + Trade.types())
+        self.db_client.create(self.get_order_book_table_name(), ['id'] + L2Depth.columns(), ['int primary key'] + L2Depth.types())
+        self.db_client.create(self.get_trade_table_name(), ['id'] + Trade.columns(), ['int primary key'] + Trade.types())
         ret = self.db_client.select(table=self.get_order_book_table_name(),
                                     columns=['id'],
                                     orderby='id desc',
                                     limit=1)
         if len(ret) > 0:
-            self.db_order_book_id = ret[0]
+            self.db_order_book_id = ret[0][0]
 
         ret = self.db_client.select(table=self.get_trade_table_name(),
                                     columns=['id'],
                                     orderby='id desc',
                                     limit=1)
         if len(ret) > 0:
-            self.db_trade_id = ret[0]
+            self.db_trade_id = ret[0][0]
 
 
     def get_order_book(self):
@@ -124,7 +125,15 @@ class ExchGwBtcc(ExchangeGateway):
                                   values=[self.db_order_book_id]+self.exchange_api.l2_depth.values())
             time.sleep(1)
 
-
+    def get_trade(self):
+        while True:
+            ret = self.exchange_api.get_trade()
+            for trade in ret:
+                self.db_trade_id += 1
+                self.db_client.insert(table=self.get_trade_table_name(),
+                                      columns=['id']+Trade.columns(),
+                                      values=[self.db_trade_id]+trade.values())
+            time.sleep(1)
 
 if __name__ == '__main__':
     btcc = ExchBtcc()

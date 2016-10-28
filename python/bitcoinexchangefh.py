@@ -1,6 +1,7 @@
 #!/bin/python
 
 import argparse
+import threading
 from exch_btcc import ExchGwBtcc
 from sqlite_client import SqliteClient
 
@@ -19,8 +20,14 @@ if __name__ == '__main__':
 
     exch_gws = []
     exch_gws.append(ExchGwBtcc(db_client))
+    threads = []
     for exch in exch_gws:
         exch.init()
-        exch.get_order_book()
+        t1 = threading.Thread(target=exch.get_order_book)
+        t2 = threading.Thread(target=exch.get_trade)
+        threads.append(t1)
+        threads.append(t2)
+        t1.start()
+        t2.start()
 
 

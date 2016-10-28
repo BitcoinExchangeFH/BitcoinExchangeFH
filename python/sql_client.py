@@ -1,4 +1,5 @@
 from database_client import DatabaseClient
+import threading
 
 class SqlClient(DatabaseClient):
     """
@@ -11,6 +12,7 @@ class SqlClient(DatabaseClient):
         DatabaseClient.__init__(self)
         self.conn = None
         self.cursor = None
+        self.lock = threading.Lock()
 
     def execute(self, sql):
         """
@@ -59,8 +61,11 @@ class SqlClient(DatabaseClient):
             sql = "create table if not exists %s (%s)" % (table, column_names)
         else:
             sql = "create table %s (%s)" % (table, column_names)
+
+        self.lock.acquire()
         self.execute(sql)
         self.commit()
+        self.lock.release()
         return True
 
     def insert(self, table, columns, values, is_orreplace=False):
@@ -80,8 +85,10 @@ class SqlClient(DatabaseClient):
             sql = "insert or replace into %s (%s) values (%s)" % (table, column_names, value_string)
         else:
             sql = "insert into %s (%s) values (%s)" % (table, column_names, value_string)
+        self.lock.acquire()
         self.execute(sql)
         self.commit()
+        self.lock.release()
         return True
 
     def select(self, table, columns=['*'], condition='', orderby='', limit=0, isFetchAll=True):
@@ -105,11 +112,16 @@ class SqlClient(DatabaseClient):
         if limit > 0:
             sql += " limit %d" % limit
 
+        self.lock.acquire()
         self.execute(sql)
         if isFetchAll:
-            return self.fetchall()
+            ret = self.fetchall()
+            self.lock.release()
+            return ret
         else:
-            return self.fetchone()
+            ret = self.fetchone()
+            self.lock.release()
+            return ret
 
     def delete(self, table, condition='1==1'):
         """
@@ -121,5 +133,8 @@ class SqlClient(DatabaseClient):
         if len(condition) > 0:
             sql += " where %s" % condition
 
+        self.lock.acquire()
         self.execute(sql)
         self.commit()
+        self.lock.release()
+        return True

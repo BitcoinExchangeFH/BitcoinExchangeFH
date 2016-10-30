@@ -12,8 +12,10 @@ if __name__ == '__main__':
     parser.add_argument('-sqlite', action='store_true', help='Use SQLite database')
     parser.add_argument('-mysql', action='store_true', help='Use MySQL')
     parser.add_argument('-dbpath', action='store', dest='dbpath', help='Database file path. Supported for SQLite only.')
-    parser.add_argument('-dbaddr', action='store', dest='dbaddr',
-                                   help='Database address, e.g. 127.0.0.1:3032. Supported for database with connection')
+    parser.add_argument('-dbaddr', action='store', dest='dbaddr', default='localhost',
+                        help='Database address. Defaulted as localhost. Supported for database with connection')
+    parser.add_argument('-dbport', action='store', dest='dbport', default='3306',
+                        help='Database port, Defaulted as 3306. Supported for database with connection')
     parser.add_argument('-dbuser', action='store', dest='dbuser',
                         help='Database user. Supported for database with connection')
     parser.add_argument('-dbpwd', action='store', dest='dbpwd',
@@ -28,6 +30,7 @@ if __name__ == '__main__':
     elif args.mysql:
         db_client = MysqlClient()
         db_client.connect(host=args.dbaddr,
+                          port=args.dbport,
                           user=args.dbuser,
                           pwd=args.dbpwd,
                           schema=args.dbschema)

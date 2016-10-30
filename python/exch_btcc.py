@@ -30,11 +30,10 @@ class ExchBtcc(RESTfulApi):
         l2_depth.date_time = datetime.fromtimestamp(int(raw['date'])).strftime("%Y%m%d %H:%M:%S.%f")
         bids = raw['bids']
         asks = raw['asks']
-        for i in range(0, 5):
-            l2_depth.bid[i] = bids[i][0]
-            l2_depth.bid_volume[i] = bids[i][1]
-            l2_depth.ask[i] = asks[i][0]
-            l2_depth.ask_volume[i] = asks[i][1]
+        l2_depth.bid = [e[0] for e in bids]
+        l2_depth.bid_volume = [e[1] for e in bids]
+        l2_depth.ask = [e[0] for e in asks][::-1]
+        l2_depth.ask_volume = [e[1] for e in asks][::-1]
 
         return l2_depth
 
@@ -108,8 +107,8 @@ class ExchBtcc(RESTfulApi):
                                          instmt_name=instmt_name,
                                          raw=t)
                 trades.append(trade)
-                trade_id = trade.trade_id
-                if int(trade_id) > int(self.last_trade_id):
+                trade_id = int(trade.trade_id)
+                if trade_id > self.last_trade_id:
                     self.last_trade_id = trade_id
 
         return trades

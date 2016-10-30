@@ -7,6 +7,7 @@ class MarketDataBase:
     Abstract class of a market data
     """
     class Side:
+        NONE = 0
         BUY = 1
         SELL = 2
 
@@ -79,7 +80,7 @@ class Trade(MarketDataBase):
         self.trade_id = ''
         self.trade_price = 0.0
         self.trade_volume = 0.0
-        self.trade_side = MarketDataBase.Side.BUY
+        self.trade_side = MarketDataBase.Side.NONE
         self.update_date_time = datetime.now()
 
 
@@ -96,7 +97,7 @@ class Trade(MarketDataBase):
         """
         Return static column types
         """
-        return ['text', 'text', 'text', 'decimal(10,2)', 'decimal(10,4)', 'test']
+        return ['text', 'text', 'text', 'decimal(10,2)', 'decimal(10,4)', 'text']
 
     def values(self):
         """

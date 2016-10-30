@@ -5,7 +5,7 @@ class ExchangeGateway:
     """
     Exchange gateway
     """
-    def __init__(self, exchange_name, exchange_api, db_client=DatabaseClient()):
+    def __init__(self, exchange_api, db_client=DatabaseClient()):
         """
         Constructor
         :param exchange_name: Exchange name
@@ -13,7 +13,6 @@ class ExchangeGateway:
         :param db_client: Database client
         """
         self.db_client = db_client
-        self.exchange_name = exchange_name
         self.exchange_api = exchange_api
         self.db_order_book_id = 0
         self.db_trade_id = 0
@@ -28,10 +27,10 @@ class ExchangeGateway:
         """
         Get order book table name
         """
-        return 'exch_' + self.exchange_name.lower() + '_book'
+        return 'exch_' + self.exchange_api.get_exchange_name().lower() + '_book'
 
     def get_trade_table_name(self):
         """
         Get trade table name
         """
-        return 'exch_' + self.exchange_name.lower() + '_trade'
+        return 'exch_' + self.exchange_api.get_exchange_name().lower() + '_trade'

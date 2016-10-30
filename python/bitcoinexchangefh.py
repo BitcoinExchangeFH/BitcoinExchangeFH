@@ -2,6 +2,7 @@
 
 import argparse
 import threading
+from functools import partial
 from exch_btcc import ExchGwBtcc
 from sqlite_client import SqliteClient
 
@@ -22,12 +23,14 @@ if __name__ == '__main__':
     exch_gws.append(ExchGwBtcc(db_client))
     threads = []
     for exch in exch_gws:
+        subscription_instmts = exch.get_subscription_instmts()
         exch.init()
-        t1 = threading.Thread(target=exch.get_order_book)
-        t2 = threading.Thread(target=exch.get_trade)
-        threads.append(t1)
-        threads.append(t2)
-        t1.start()
-        t2.start()
+        for instmt in subscription_instmts:
+            t1 = threading.Thread(target=partial(exch.get_order_book, instmt))
+            threads.append(t1)
+            t1.start()
+            t2 = threading.Thread(target=partial(exch.get_trades, instmt))
+            threads.append(t2)
+            t2.start()
 
 

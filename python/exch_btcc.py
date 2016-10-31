@@ -27,7 +27,7 @@ class ExchBtcc(RESTfulApi):
         :param raw: Raw data in JSON
         """
         l2_depth = L2Depth(exch=exch_name, instmt=instmt_name)
-        l2_depth.date_time = datetime.fromtimestamp(int(raw['date'])).strftime("%Y%m%d %H:%M:%S.%f")
+        l2_depth.date_time = datetime.utcfromtimestamp(int(raw['date'])).strftime("%Y%m%d %H:%M:%S.%f")
         bids = raw['bids']
         asks = raw['asks']
         l2_depth.bid = [e[0] for e in bids]
@@ -46,7 +46,7 @@ class ExchBtcc(RESTfulApi):
         :return:
         """
         trade = Trade(exch=exch_name, instmt=instmt_name)
-        trade.date_time = datetime.fromtimestamp(int(raw['date'])).strftime("%Y%m%d %H:%M:%S.%f")
+        trade.date_time = datetime.utcfromtimestamp(int(raw['date'])).strftime("%Y%m%d %H:%M:%S.%f")
 
         side = raw['type']
         if side == 'buy':

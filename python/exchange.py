@@ -14,8 +14,6 @@ class ExchangeGateway:
         """
         self.db_client = db_client
         self.exchange_api = exchange_api
-        self.db_order_book_id = 0
-        self.db_trade_id = 0
 
     def init(self):
         """
@@ -23,14 +21,16 @@ class ExchangeGateway:
         """
         return True
 
-    def get_order_book_table_name(self):
+    def get_order_book_table_name(self, instmt):
         """
         Get order book table name
+        :param instmt: Instrument name
         """
-        return 'exch_' + self.exchange_api.get_exchange_name().lower() + '_book'
+        return 'exch_' + self.exchange_api.get_exchange_name().lower() + '_' + instmt + '_book'
 
-    def get_trade_table_name(self):
+    def get_trade_table_name(self, instmt):
         """
         Get trade table name
+        :param instmt: Instrument name
         """
-        return 'exch_' + self.exchange_api.get_exchange_name().lower() + '_trade'
+        return 'exch_' + self.exchange_api.get_exchange_name().lower() + '_' + instmt + '_trade'

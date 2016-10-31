@@ -34,7 +34,7 @@ class L2Depth(MarketDataBase):
         self.bid_volume = [0.0, 0.0, 0.0, 0.0, 0.0]
         self.ask = [0.0, 0.0, 0.0, 0.0, 0.0]
         self.ask_volume = [0.0, 0.0, 0.0, 0.0, 0.0]
-        self.update_date_time = datetime.now()
+        self.update_date_time = datetime.utcnow()
 
     @staticmethod
     def columns():
@@ -81,7 +81,7 @@ class Trade(MarketDataBase):
         self.trade_price = 0.0
         self.trade_volume = 0.0
         self.trade_side = MarketDataBase.Side.NONE
-        self.update_date_time = datetime.now()
+        self.update_date_time = datetime.utcnow()
 
 
     @staticmethod

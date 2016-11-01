@@ -1,7 +1,7 @@
 import time
 from datetime import datetime
 from market_data import L2Depth, Trade
-from web_socket import RESTfulApi
+from api_socket import RESTfulApi
 from exchange import ExchangeGateway
 
 class ExchGwBtccRestfulApi(RESTfulApi):

@@ -6,6 +6,7 @@ from functools import partial
 from exch_btcc import ExchGwBtcc
 from sqlite_client import SqliteClient
 from mysql_client import MysqlClient
+from instrument import Instrument
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Bitcoin exchange market data feed handler.')
@@ -35,12 +36,23 @@ if __name__ == '__main__':
                           pwd=args.dbpwd,
                           schema=args.dbschema)
 
+    # Subscription instruments
+    subscription_instmts = []
+    subscription_instmts.append(
+        Instrument(exchange='BTCC',
+                   instmt_code='btccny',
+                   restful_order_book_link='https://data.btcchina.com/data/orderbook?limit=5&market=btccny',
+                   restful_trades_link='https://data.btcchina.com/data/historydata?limit=1000&since=<id>&market=btccny'))
+    subscription_instmts.append(
+        Instrument(exchange='BTCC',
+                   instmt_code='xbtcny',
+                   restful_order_book_link='https://pro-data.btcc.com/data/pro/orderbook?limit=5&symbol=xbtcny',
+                   restful_trades_link='https://pro-data.btcc.com/data/pro/historydata?limit=1000&since=<id>&market=xbtcny'))
+
     exch_gws = []
     exch_gws.append(ExchGwBtcc(db_client))
     threads = []
     for exch in exch_gws:
-        subscription_instmts = exch.get_subscription_instmts()
-        exch.init()
         for instmt in subscription_instmts:
             t1 = threading.Thread(target=partial(exch.get_order_book, instmt))
             threads.append(t1)

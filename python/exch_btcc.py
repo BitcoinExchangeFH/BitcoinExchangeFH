@@ -18,14 +18,13 @@ class ExchBtcc(RESTfulApi):
         return 'BTCC'
 
     @classmethod
-    def parse_l2_depth(cls, exch_name, instmt_name, raw):
+    def parse_l2_depth(cls, instmt_name, raw):
         """
         Parse raw data to L2 depth
-        :param exch_name: Exchange name
         :param instmt_name: Instrument name
         :param raw: Raw data in JSON
         """
-        l2_depth = L2Depth(exch=exch_name, instmt=instmt_name)
+        l2_depth = L2Depth(exch=cls.get_exchange_name(), instmt=instmt_name)
         l2_depth.date_time = datetime.utcfromtimestamp(int(raw['date'])).strftime("%Y%m%d %H:%M:%S.%f")
         bids = raw['bids']
         asks = raw['asks']
@@ -37,14 +36,13 @@ class ExchBtcc(RESTfulApi):
         return l2_depth
 
     @classmethod
-    def parse_trade(cls, exch_name, instmt_name, raw):
+    def parse_trade(cls, instmt_name, raw):
         """
-        :param exch_name: Exchange name
         :param instmt_name: Instrument name
         :param raw: Raw data in JSON
         :return:
         """
-        trade = Trade(exch=exch_name, instmt=instmt_name)
+        trade = Trade(exch=cls.get_exchange_name(), instmt=instmt_name)
         trade.date_time = datetime.utcfromtimestamp(int(raw['date'])).strftime("%Y%m%d %H:%M:%S.%f")
 
         side = raw['type']
@@ -87,8 +85,7 @@ class ExchBtcc(RESTfulApi):
         :return: Object L2Depth
         """
         res = self.request(self.get_order_book_url(instmt_name))
-        return self.parse_l2_depth(exch_name=self.get_exchange_name(),
-                                   instmt_name=instmt_name,
+        return self.parse_l2_depth(instmt_name=instmt_name,
                                    raw=res)
 
     def get_trades(self, instmt_name, trade_id):
@@ -98,13 +95,11 @@ class ExchBtcc(RESTfulApi):
         :param trade_id: Trade id
         :return: List of trades
         """
-        exch_name = self.get_exchange_name()
         res = self.request(self.get_trade_url(instmt_name, trade_id))
         trades = []
         if len(res) > 0:
             for t in res:
-                trade = self.parse_trade(exch_name=exch_name,
-                                         instmt_name=instmt_name,
+                trade = self.parse_trade(instmt_name=instmt_name,
                                          raw=t)
                 trades.append(trade)
 
@@ -121,6 +116,13 @@ class ExchGwBtcc(ExchangeGateway):
         :param db_client: Database client
         """
         ExchangeGateway.__init__(self, ExchBtcc(), db_client)
+
+    def get_exchange_name(self):
+        """
+        Get exchange name
+        :return: Exchange name string
+        """
+        return self.exchange_api.get_exchange_name()
 
     @classmethod
     def get_subscription_instmts(cls):

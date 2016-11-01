@@ -15,7 +15,8 @@ if __name__ == '__main__':
     parser.add_argument('-instmts', action='store', help='Instrument subscription file.', default='subscriptions.ini')
     parser.add_argument('-sqlite', action='store_true', help='Use SQLite database.')
     parser.add_argument('-mysql', action='store_true', help='Use MySQL.')
-    parser.add_argument('-dbpath', action='store', dest='dbpath', help='Database file path. Supported for SQLite only.')
+    parser.add_argument('-dbpath', action='store', dest='dbpath', help='Database file path. Supported for SQLite only.',
+                        default='bitcoinexchange.raw')
     parser.add_argument('-dbaddr', action='store', dest='dbaddr', default='localhost',
                         help='Database address. Defaulted as localhost. Supported for database with connection')
     parser.add_argument('-dbport', action='store', dest='dbport', default='3306',

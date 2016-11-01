@@ -5,15 +5,15 @@ class ExchangeGateway:
     """
     Exchange gateway
     """
-    def __init__(self, socket, db_client=DatabaseClient()):
+    def __init__(self, api_socket, db_client=DatabaseClient()):
         """
         Constructor
         :param exchange_name: Exchange name
         :param exchange_api: Exchange API
         :param db_client: Database client
         """
-        self.socket = socket
         self.db_client = db_client
+        self.api_socket = api_socket
 
     @classmethod
     def get_exchange_name(cls):

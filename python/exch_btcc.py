@@ -4,25 +4,12 @@ from market_data import L2Depth, Trade
 from web_socket import RESTfulApi
 from exchange import ExchangeGateway
 
-
-class ExchGwBtcc(ExchangeGateway):
+class ExchGwBtccRestfulApi(RESTfulApi):
     """
-    Exchange gateway BTCC
+    Exchange gateway BTCC RESTfulApi
     """
-    def __init__(self, db_client):
-        """
-        Constructor
-        :param db_client: Database client
-        """
-        ExchangeGateway.__init__(self, RESTfulApi(), db_client)
-
-    @classmethod
-    def get_exchange_name(cls):
-        """
-        Get exchange name
-        :return: Exchange name string
-        """
-        return 'BTCC'
+    def __init__(self):
+        RESTfulApi.__init__(self)
 
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
@@ -77,7 +64,7 @@ class ExchGwBtcc(ExchangeGateway):
         :param instmt: Instrument
         :return: Object L2Depth
         """
-        res = self.socket.request(instmt.get_restful_order_book_link())
+        res = self.request(instmt.get_restful_order_book_link())
         return self.parse_l2_depth(instmt=instmt,
                                    raw=res)
 
@@ -88,7 +75,7 @@ class ExchGwBtcc(ExchangeGateway):
         :param trade_id: Trade id
         :return: List of trades
         """
-        res = self.socket.request(instmt.get_restful_trades_link().replace('<id>', str(trade_id)))
+        res = self.request(instmt.get_restful_trades_link().replace('<id>', str(trade_id)))
         trades = []
         if len(res) > 0:
             for t in res:
@@ -96,7 +83,26 @@ class ExchGwBtcc(ExchangeGateway):
                                          raw=t)
                 trades.append(trade)
 
-        return trades
+        return trades    
+
+class ExchGwBtcc(ExchangeGateway):
+    """
+    Exchange gateway BTCC
+    """
+    def __init__(self, db_client):
+        """
+        Constructor
+        :param db_client: Database client
+        """
+        ExchangeGateway.__init__(self, ExchGwBtccRestfulApi(), db_client)
+
+    @classmethod
+    def get_exchange_name(cls):
+        """
+        Get exchange name
+        :return: Exchange name string
+        """
+        return 'BTCC'
 
     def get_order_book_init(self, instmt):
         """
@@ -148,7 +154,7 @@ class ExchGwBtcc(ExchangeGateway):
         db_order_book_id = self.get_order_book_init(instmt)
 
         while True:
-            ret = self.get_order_book(instmt)
+            ret = self.api_socket.get_order_book(instmt)
             db_order_book_id += 1
             self.db_client.insert(table=table_name,
                                   columns=['id']+L2Depth.columns(),
@@ -165,7 +171,7 @@ class ExchGwBtcc(ExchangeGateway):
         db_trade_id = self.get_trades_init(instmt)
 
         while True:
-            ret = self.get_trades(instmt, db_trade_id)
+            ret = self.api_socket.get_trades(instmt, db_trade_id)
             for trade in ret:
                 if int(trade.trade_id) > db_trade_id:
                     db_trade_id = int(trade.trade_id)

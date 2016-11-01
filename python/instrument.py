@@ -27,6 +27,8 @@ class Instrument:
             
         if param.get('epoch_time_offset') is not None:
             self.epoch_time_offset = param['epoch_time_offset']
+            if type(self.epoch_time_offset) == str:
+                self.epoch_time_offset = int(self.epoch_time_offset)
         else:
             self.epoch_time_offset = 1
 

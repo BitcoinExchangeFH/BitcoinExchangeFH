@@ -1,5 +1,6 @@
 #!/bin/python
 
+import sys
 import argparse
 import threading
 from functools import partial
@@ -7,11 +8,13 @@ from exch_btcc import ExchGwBtcc
 from sqlite_client import SqliteClient
 from mysql_client import MysqlClient
 from instrument import Instrument
+from subscription_manager import SubscriptionManager
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Bitcoin exchange market data feed handler.')
-    parser.add_argument('-sqlite', action='store_true', help='Use SQLite database')
-    parser.add_argument('-mysql', action='store_true', help='Use MySQL')
+    parser.add_argument('-instmts', action='store', help='Instrument subscription file.')
+    parser.add_argument('-sqlite', action='store_true', help='Use SQLite database.')
+    parser.add_argument('-mysql', action='store_true', help='Use MySQL.')
     parser.add_argument('-dbpath', action='store', dest='dbpath', help='Database file path. Supported for SQLite only.')
     parser.add_argument('-dbaddr', action='store', dest='dbaddr', default='localhost',
                         help='Database address. Defaulted as localhost. Supported for database with connection')
@@ -35,22 +38,18 @@ if __name__ == '__main__':
                           user=args.dbuser,
                           pwd=args.dbpwd,
                           schema=args.dbschema)
+    else:
+        print('Error: Please define which database is used.')
+        parser.print_help()
+        sys.exit(1)
 
     # Subscription instruments
-    subscription_instmts = []
-    # subscription_instmts.append(
-    #     Instrument(exchange_name='BTCC',
-    #               instmt_name='btccny',
-    #               instmt_code='btccny',
-    #               restful_order_book_link='https://data.btcchina.com/data/orderbook?limit=5&market=btccny',
-    #               restful_trades_link='https://data.btcchina.com/data/historydata?limit=1000&since=<id>&market=btccny'))
-    subscription_instmts.append(
-        Instrument(exchange_name='BTCC',
-                  instmt_name='xbtcny',
-                  instmt_code='xbtcny',
-                  restful_order_book_link='https://pro-data.btcc.com/data/pro/orderbook?limit=5&symbol=xbtcny',
-                  restful_trades_link='https://pro-data.btcc.com/data/pro/historydata?limit=1000&since=<id>&market=xbtcny',
-                  epoch_time_offset=1000))
+    if args.instmts is None or len(args.instmts) == 0:
+        print('Error: Please define the instrument subscription list. You can refer to subscriptions.ini.')
+        parser.print_help()
+        sys.exit(1)
+        
+    subscription_instmts = SubscriptionManager(args.instmts).get_subscriptions()
 
     exch_gws = []
     exch_gws.append(ExchGwBtcc(db_client))

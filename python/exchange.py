@@ -41,3 +41,16 @@ class ExchangeGateway:
         """
         return 'exch_' + exchange.lower() + '_' + instmt_name.lower() + '_trades'
 
+    def get_order_book_worker(self, instmt):
+        """
+        Get order book worker
+        :param instmt: Instrument
+        """
+        pass
+        
+    def get_trades_worker(self, instmt):
+        """
+        Get order book worker thread
+        :param instmt: Instrument name
+        """       
+        pass

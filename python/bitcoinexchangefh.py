@@ -38,27 +38,31 @@ if __name__ == '__main__':
 
     # Subscription instruments
     subscription_instmts = []
+    # subscription_instmts.append(
+    #     Instrument(exchange_name='BTCC',
+    #               instmt_name='btccny',
+    #               instmt_code='btccny',
+    #               restful_order_book_link='https://data.btcchina.com/data/orderbook?limit=5&market=btccny',
+    #               restful_trades_link='https://data.btcchina.com/data/historydata?limit=1000&since=<id>&market=btccny'))
     subscription_instmts.append(
-        Instrument(exchange='BTCC',
-                   instmt_code='btccny',
-                   restful_order_book_link='https://data.btcchina.com/data/orderbook?limit=5&market=btccny',
-                   restful_trades_link='https://data.btcchina.com/data/historydata?limit=1000&since=<id>&market=btccny'))
-    subscription_instmts.append(
-        Instrument(exchange='BTCC',
-                   instmt_code='xbtcny',
-                   restful_order_book_link='https://pro-data.btcc.com/data/pro/orderbook?limit=5&symbol=xbtcny',
-                   restful_trades_link='https://pro-data.btcc.com/data/pro/historydata?limit=1000&since=<id>&market=xbtcny'))
+        Instrument(exchange_name='BTCC',
+                  instmt_name='xbtcny',
+                  instmt_code='xbtcny',
+                  restful_order_book_link='https://pro-data.btcc.com/data/pro/orderbook?limit=5&symbol=xbtcny',
+                  restful_trades_link='https://pro-data.btcc.com/data/pro/historydata?limit=1000&since=<id>&market=xbtcny',
+                  epoch_time_offset=1000))
 
     exch_gws = []
     exch_gws.append(ExchGwBtcc(db_client))
     threads = []
     for exch in exch_gws:
         for instmt in subscription_instmts:
-            t1 = threading.Thread(target=partial(exch.get_order_book, instmt))
-            threads.append(t1)
-            t1.start()
-            t2 = threading.Thread(target=partial(exch.get_trades, instmt))
-            threads.append(t2)
-            t2.start()
+            if instmt.get_exchange_name() == exch.get_exchange_name():
+                t1 = threading.Thread(target=partial(exch.get_order_book_worker, instmt))
+                threads.append(t1)
+                t1.start()
+                t2 = threading.Thread(target=partial(exch.get_trades_worker, instmt))
+                threads.append(t2)
+                t2.start()
 
 

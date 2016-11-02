@@ -1,12 +1,5 @@
 #!/bin/python
 
-try:
-    import urllib.request as urlrequest
-except ImportError:
-    import urllib as urlrequest
-
-import json
-
 class ApiSocket:
     """
     API socket
@@ -30,25 +23,3 @@ class ApiSocket:
         :return: List of trades
         """
         return None
-
-class RESTfulApi(ApiSocket):
-    """
-    Generic REST API call
-    """
-    def __init__(self):
-        """
-        Constructor
-        """
-        ApiSocket.__init__(self)
-
-    def request(self, url):
-        """
-        Web request
-        :param: url: The url link
-        :return JSON object
-        """
-        res = urlrequest.urlopen(url)
-        res = json.loads(res.read().decode('utf8'))
-        return res
-
-

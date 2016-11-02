@@ -19,20 +19,34 @@ class ExchGwBtccRestfulApi(RESTfulApi):
         :param raw: Raw data in JSON
         """
         l2_depth = L2Depth(exch=instmt.get_exchange_name(), instmt=instmt.get_instmt_code())
-
-        ## Separating pro and spot data
-        if instmt.get_epoch_time_offset() == 1:
-            date_time = int(raw['date'])
-        else:
-            date_time = float(raw['date'])/instmt.get_epoch_time_offset()
-            
-        l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
-        bids = raw['bids']
-        asks = raw['asks']
-        l2_depth.bid = [e[0] for e in bids]
-        l2_depth.bid_volume = [e[1] for e in bids]
-        l2_depth.ask = [e[0] for e in asks][::-1]
-        l2_depth.ask_volume = [e[1] for e in asks][::-1]
+        field_map = instmt.get_restful_order_book_fields_mapping()
+        for key, value in raw.items():
+            if key in field_map.keys():
+                try:
+                    field = field_map[key]
+                except:
+                    print("Error from restful_order_book_fields_mapping on key %s" % key)
+                    raise
+                
+                if field == 'TIMESTAMP':
+                    offset = 1 if 'TIMESTAMP_OFFSET' not in field_map else field_map['TIMESTAMP_OFFSET']
+                    if offset == 1:
+                        date_time = float(value)
+                    else:
+                        date_time = float(value)/offset
+                    l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
+                elif field == 'BIDS':
+                    bids = value
+                    sorted(bids, key=lambda x: x[0])
+                    l2_depth.bid = [float(e[0]) if type(e[0]) != float else e[0] for e in bids]
+                    l2_depth.bid_volume = [float(e[1]) if type(e[1]) != float else e[1] for e in bids]
+                elif field == 'ASKS':
+                    asks = value
+                    sorted(asks, key=lambda x: x[0], reverse=True)
+                    l2_depth.ask = [float(e[0]) if type(e[0]) != float else e[0] for e in asks]
+                    l2_depth.ask_volume = [float(e[1]) if type(e[1]) != float else e[1] for e in asks]
+                else:
+                    raise Exception('The field <%s> is not found' % field)
 
         return l2_depth
 
@@ -44,27 +58,49 @@ class ExchGwBtccRestfulApi(RESTfulApi):
         :return:
         """
         trade = Trade(exch=instmt.get_exchange_name(), instmt=instmt.get_instmt_code())
-        ## Separating pro and spot data
-        if instmt.get_epoch_time_offset() == 1:
-            date_time = int(raw['date'])
-            side = raw['type'].lower()
-            trade.trade_id = raw['tid']
-            trade.trade_price = raw['price']
-            trade.trade_volume = raw['amount']
-        else:
-            date_time = float(raw['Timestamp'])/instmt.get_epoch_time_offset()
-            side = raw['Side'].lower()
-            trade.trade_id = raw['Id']
-            trade.trade_price = raw['Price']
-            trade.trade_volume = raw['Quantity']
-
-        trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
-        if side == 'buy':
-            trade.trade_side = trade.Side.BUY
-        elif side == 'sell':
-            trade.trade_side = trade.Side.SELL
-        else:
-            return trade
+        field_map = instmt.get_restful_trades_fields_mapping()
+        for key, value in raw.items():
+            if key in field_map.keys():
+                try:
+                    field = field_map[key]
+                except:
+                    print("Error from get_restful_trades_fields_mapping on key %s" % key)
+                    raise
+                
+                if field == 'TIMESTAMP':
+                    offset = 1 if 'TIMESTAMP_OFFSET' not in field_map else field_map['TIMESTAMP_OFFSET']
+                    if offset == 1:
+                        date_time = float(value)
+                    else:
+                        date_time = float(value)/offset
+                    trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
+                elif field == 'TRADE_SIDE':
+                    side = value
+                    if type(side) != int:
+                        side = side.lower()
+                        if side == 'buy':
+                            side = 1
+                        elif side == 'sell':
+                            side = 2
+                        else:
+                            raise Exception('Unrecognized trade side %s' % side)
+                    
+                    if side == 1:
+                        trade.trade_side = trade.Side.BUY
+                    elif side == 2:
+                        trade.trade_side = trade.Side.SELL
+                    else:
+                        print(side)
+                        raise Exception('Unexpected trade side value %d' % side)
+                        
+                elif field == 'TRADE_ID':
+                    trade.trade_id = value
+                elif field == 'TRADE_PRICE':
+                    trade.trade_price = value
+                elif field == 'TRADE_VOLUME':
+                    trade.trade_volume = value
+                else:
+                    raise Exception('The field <%s> is not found' % field)        
 
         return trade
 

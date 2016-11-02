@@ -1,3 +1,5 @@
+import json
+
 class Instrument:
     def __init__(self,
                  exchange_name,
@@ -25,6 +27,18 @@ class Instrument:
         else:
             self.restful_trades_link = ''
             
+        if param.get('restful_order_book_fields_mapping') is not None:
+            self.restful_order_book_fields_mapping = \
+                json.loads(param.get('restful_order_book_fields_mapping'))
+        else:
+            self.restful_order_book_fields_mapping = {}
+            
+        if param.get('restful_trades_fields_mapping') is not None:
+            self.restful_trades_fields_mapping = \
+                json.loads(param.get('restful_trades_fields_mapping'))
+        else:
+            self.restful_trades_fields_mapping = {}            
+            
         if param.get('epoch_time_offset') is not None:
             self.epoch_time_offset = param['epoch_time_offset']
             if type(self.epoch_time_offset) == str:
@@ -49,3 +63,9 @@ class Instrument:
 
     def get_epoch_time_offset(self):
         return self.epoch_time_offset
+        
+    def get_restful_order_book_fields_mapping(self):
+        return self.restful_order_book_fields_mapping
+        
+    def get_restful_trades_fields_mapping(self):
+        return self.restful_trades_fields_mapping

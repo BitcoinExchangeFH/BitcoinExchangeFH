@@ -1,4 +1,7 @@
-import ConfigParser
+try:
+    import ConfigParser
+except ImportError:
+    import configparser as ConfigParser
 from instrument import Instrument
 
 class SubscriptionManager:

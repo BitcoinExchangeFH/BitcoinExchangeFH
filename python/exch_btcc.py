@@ -19,11 +19,12 @@ class ExchGwBtccRestfulApi(RESTfulApi):
         :param raw: Raw data in JSON
         """
         l2_depth = L2Depth(exch=instmt.get_exchange_name(), instmt=instmt.get_instmt_code())
-        
+
+        ## Separating pro and spot data
         if instmt.get_epoch_time_offset() == 1:
             date_time = int(raw['date'])
         else:
-            date_time = int(raw['date'])/instmt.get_epoch_time_offset()
+            date_time = float(raw['date'])/instmt.get_epoch_time_offset()
             
         l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
         bids = raw['bids']
@@ -43,9 +44,21 @@ class ExchGwBtccRestfulApi(RESTfulApi):
         :return:
         """
         trade = Trade(exch=instmt.get_exchange_name(), instmt=instmt.get_instmt_code())
-        trade.date_time = datetime.utcfromtimestamp(int(raw['date'])).strftime("%Y%m%d %H:%M:%S.%f")
+        ## Separating pro and spot data
+        if instmt.get_epoch_time_offset() == 1:
+            date_time = int(raw['date'])
+            side = raw['type'].lower()
+            trade.trade_id = raw['tid']
+            trade.trade_price = raw['price']
+            trade.trade_volume = raw['amount']
+        else:
+            date_time = float(raw['Timestamp'])/instmt.get_epoch_time_offset()
+            side = raw['Side'].lower()
+            trade.trade_id = raw['Id']
+            trade.trade_price = raw['Price']
+            trade.trade_volume = raw['Quantity']
 
-        side = raw['type']
+        trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
         if side == 'buy':
             trade.trade_side = trade.Side.BUY
         elif side == 'sell':
@@ -53,9 +66,6 @@ class ExchGwBtccRestfulApi(RESTfulApi):
         else:
             return trade
 
-        trade.trade_id = raw['tid']
-        trade.trade_price = raw['price']
-        trade.trade_volume = raw['amount']
         return trade
 
     def get_order_book(self, instmt):

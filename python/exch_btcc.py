@@ -103,7 +103,40 @@ class ExchGwBtccRestfulApi(RESTfulApiSocket):
                     raise Exception('The field <%s> is not found' % field)        
 
         return trade
-    
+
+    @classmethod
+    def get_order_book(cls, instmt):
+        """
+        Get order book
+        :param instmt: Instrument
+        :return: Object L2Depth
+        """
+        res = cls.request(instmt.get_restful_order_book_link())
+        return cls.parse_l2_depth(instmt=instmt,
+                                   raw=res)
+
+    @classmethod
+    def get_trades(cls, instmt, trade_id):
+        """
+        Get trades
+        :param instmt: Instrument
+        :param trade_id: Trade id
+        :return: List of trades
+        """
+        if trade_id > 0:
+            res = cls.request(instmt.get_restful_trades_link().replace('<id>', '&since=%d' % trade_id))
+        else:
+            res = cls.request(instmt.get_restful_trades_link().replace('<id>', ''))
+
+        trades = []
+        if len(res) > 0:
+            for t in res:
+                trade = cls.parse_trade(instmt=instmt,
+                                         raw=t)
+                trades.append(trade)
+
+        return trades
+
 
 class ExchGwBtcc(ExchangeGateway):
     """
@@ -162,6 +195,7 @@ class ExchGwBtcc(ExchangeGateway):
         if len(ret) > 0:
             return ret[0][0]
         else:
+            # Workaround for BTCC XBTCNY trade recovery from id = 0
             return 0
 
     def get_order_book_worker(self, instmt):

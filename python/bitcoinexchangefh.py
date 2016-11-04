@@ -58,11 +58,5 @@ if __name__ == '__main__':
     for exch in exch_gws:
         for instmt in subscription_instmts:
             if instmt.get_exchange_name() == exch.get_exchange_name():
-                t1 = threading.Thread(target=partial(exch.get_order_book_worker, instmt))
-                threads.append(t1)
-                t1.start()
-                t2 = threading.Thread(target=partial(exch.get_trades_worker, instmt))
-                threads.append(t2)
-                t2.start()
-
+                threads += exch.start(instmt)
 

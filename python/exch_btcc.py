@@ -1,4 +1,6 @@
 import time
+import threading
+from functools import partial
 from datetime import datetime
 from restful_api_socket import RESTfulApiSocket
 from exchange import ExchangeGateway
@@ -213,7 +215,7 @@ class ExchGwBtcc(ExchangeGateway):
             self.db_client.insert(table=table_name,
                                   columns=['id']+L2Depth.columns(),
                                   values=[db_order_book_id]+ret.values())
-            time.sleep(1)
+            time.sleep(0.5)
 
     def get_trades_worker(self, instmt):
         """
@@ -232,9 +234,14 @@ class ExchGwBtcc(ExchangeGateway):
                 self.db_client.insert(table=table_name,
                                       columns=['id']+Trade.columns(),
                                       values=[db_trade_id]+trade.values())
-            time.sleep(1)
+            time.sleep(0.5)
 
-
+    def start(self, instmt):
+        t1 = threading.Thread(target=partial(self.get_order_book_worker, instmt))
+        t1.start()
+        t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))
+        t2.start()
+        return [t1, t2]
 
 
 

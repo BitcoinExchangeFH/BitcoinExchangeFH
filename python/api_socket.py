@@ -7,6 +7,24 @@ class ApiSocket:
     def __init__(self):
         pass
     
+    @classmethod
+    def parse_l2_depth(cls, instmt, raw):
+        """
+        Parse raw data to L2 depth
+        :param instmt: Instrument
+        :param raw: Raw data in JSON
+        """
+        return None
+
+    @classmethod
+    def parse_trade(cls, instmt, raw):
+        """
+        :param instmt: Instrument
+        :param raw: Raw data in JSON
+        :return:
+        """
+        return None
+    
     def get_order_book(self, instmt):
         """
         Get order book

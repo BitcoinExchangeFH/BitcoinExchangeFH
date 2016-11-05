@@ -1,5 +1,6 @@
 #!/bin/python
 from database_client import DatabaseClient
+from market_data import L2Depth, Trade
 
 class ExchangeGateway:
     """
@@ -41,16 +42,50 @@ class ExchangeGateway:
         """
         return 'exch_' + exchange.lower() + '_' + instmt_name.lower() + '_trades'
 
-    def get_order_book_worker(self, instmt):
+    def get_order_book_init(self, instmt):
         """
-        Get order book worker
+        Initialization method in get_order_book
         :param instmt: Instrument
+        :return: Last id
         """
-        pass
-        
-    def get_trades_worker(self, instmt):
+        table_name = self.get_order_book_table_name(instmt.get_exchange_name(),
+                                                    instmt.get_instmt_name())
+        self.db_client.create(table_name,
+                              ['id'] + L2Depth.columns(),
+                              ['int primary key'] + L2Depth.types())
+        ret = self.db_client.select(table_name,
+                                    columns=['id'],
+                                    orderby='id desc',
+                                    limit=1)
+        if len(ret) > 0:
+            return ret[0]
+        else:
+            return None
+
+    def get_trades_init(self, instmt):
         """
-        Get order book worker thread
-        :param instmt: Instrument name
-        """       
-        pass
+        Initialization method in get_trades
+        :param instmt: Instrument
+        :return: Last id
+        """
+        table_name = self.get_trades_table_name(instmt.get_exchange_name(),
+                                               instmt.get_instmt_name())
+        self.db_client.create(table_name,
+                              ['id'] + Trade.columns(),
+                              ['int primary key'] + Trade.types())
+        ret = self.db_client.select(table=table_name,
+                                    columns=['id'],
+                                    orderby="id desc",
+                                    limit=1)
+        if len(ret) > 0:
+            return ret[0]
+        else:
+            return None
+    
+    def start(self, instmt):
+        """
+        Start the exchange gateway
+        :param instmt: Instrument
+        :return List of threads
+        """
+        return []

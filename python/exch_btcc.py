@@ -207,7 +207,11 @@ class ExchGwBtcc(ExchangeGateway):
         """
         table_name = self.get_order_book_table_name(instmt.get_exchange_name(),
                                                     instmt.get_instmt_name())
-        db_order_book_id = self.get_order_book_init(instmt)
+        last_record = self.get_order_book_init(instmt)
+        if last_record is not None:
+            db_order_book_id = last_record[0]
+        else:
+            db_order_book_id = 0
 
         while True:
             ret = self.api_socket.get_order_book(instmt)
@@ -223,8 +227,12 @@ class ExchGwBtcc(ExchangeGateway):
         :param instmt: Instrument name
         """
         table_name = self.get_trades_table_name(instmt.get_exchange_name(),
-                                                instmt.get_instmt_name())        
-        db_trade_id = self.get_trades_init(instmt)
+                                                instmt.get_instmt_name())       
+        last_record = self.get_trades_init(instmt)
+        if last_record is not None:
+            db_trade_id = last_record[0]
+        else:
+            db_trade_id = 0                                                
 
         while True:
             ret = self.api_socket.get_trades(instmt, db_trade_id)
@@ -237,6 +245,11 @@ class ExchGwBtcc(ExchangeGateway):
             time.sleep(0.5)
 
     def start(self, instmt):
+        """
+        Start the exchange gateway
+        :param instmt: Instrument
+        :return List of threads
+        """
         t1 = threading.Thread(target=partial(self.get_order_book_worker, instmt))
         t1.start()
         t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))

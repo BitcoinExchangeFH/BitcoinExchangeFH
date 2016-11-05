@@ -22,7 +22,6 @@ class SubscriptionManagerTest(unittest.TestCase):
                          'https://data.btcchina.com/data/orderbook?limit=5&market=btccny')
         self.assertEqual(instmts['BTCC-BTCCNY'].get_restful_trades_link(), 
                          'https://data.btcchina.com/data/historydata?limit=1000&since=<id>&market=btccny')
-        self.assertEqual(instmts['BTCC-BTCCNY'].get_epoch_time_offset(), 1)
         m = instmts['BTCC-BTCCNY'].get_restful_order_book_fields_mapping()
         self.assertEqual(m['date'], 'TIMESTAMP')
         self.assertEqual(m['bids'], 'BIDS')
@@ -43,7 +42,6 @@ class SubscriptionManagerTest(unittest.TestCase):
                          'https://pro-data.btcc.com/data/pro/orderbook?limit=5&symbol=xbtcny')
         self.assertEqual(instmts['BTCC-XBTCNY'].get_restful_trades_link(), 
                          'https://pro-data.btcc.com/data/pro/historydata?limit=1000&since=<id>&symbol=xbtcny')
-        self.assertEqual(instmts['BTCC-XBTCNY'].get_epoch_time_offset(), 1000)        
         m = instmts['BTCC-XBTCNY'].get_restful_order_book_fields_mapping()
         self.assertEqual(m['date'], 'TIMESTAMP')
         self.assertEqual(m['bids'], 'BIDS')
@@ -78,7 +76,6 @@ class SubscriptionManagerTest(unittest.TestCase):
         self.assertEqual(m['price'], 'TRADE_PRICE')        
         self.assertEqual(m['amount'], 'TRADE_VOLUME')    
         
-        self.assertEqual(instmts[0].get_epoch_time_offset(), 1)
         self.assertEqual(instmts[1].get_exchange_name(), 'BTCC')
         self.assertEqual(instmts[1].get_instmt_name(), 'XBTCNY')
         self.assertEqual(instmts[1].get_instmt_code(), 'xbtcny')
@@ -86,7 +83,6 @@ class SubscriptionManagerTest(unittest.TestCase):
                          'https://pro-data.btcc.com/data/pro/orderbook?limit=5&symbol=xbtcny')
         self.assertEqual(instmts[1].get_restful_trades_link(), 
                          'https://pro-data.btcc.com/data/pro/historydata?limit=1000&since=<id>&symbol=xbtcny')
-        self.assertEqual(instmts[1].get_epoch_time_offset(), 1000)      
         m = instmts[1].get_restful_order_book_fields_mapping()
         self.assertEqual(m['date'], 'TIMESTAMP')
         self.assertEqual(m['bids'], 'BIDS')

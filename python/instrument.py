@@ -38,14 +38,24 @@ class Instrument:
                 json.loads(param.get('restful_trades_fields_mapping'))
         else:
             self.restful_trades_fields_mapping = {}            
-            
-        if param.get('epoch_time_offset') is not None:
-            self.epoch_time_offset = param['epoch_time_offset']
-            if type(self.epoch_time_offset) == str:
-                self.epoch_time_offset = int(self.epoch_time_offset)
-        else:
-            self.epoch_time_offset = 1
 
+        if param.get('ws_link') is not None:
+            self.ws_link = param.get('ws_link')
+        else:
+            self.ws_link = ''
+            
+        if param.get('ws_order_book_fields_mapping') is not None:
+            self.ws_order_book_fields_mapping = \
+                json.loads(param.get('ws_order_book_fields_mapping'))
+        else:
+            self.ws_order_book_fields_mapping = {}
+            
+        if param.get('ws_trades_fields_mapping') is not None:
+            self.ws_trades_fields_mapping = \
+                json.loads(param.get('ws_trades_fields_mapping'))
+        else:
+            self.ws_trades_fields_mapping = {}        
+            
     def get_exchange_name(self):
         return self.exchange_name
         
@@ -60,12 +70,18 @@ class Instrument:
 
     def get_restful_trades_link(self):
         return self.restful_trades_link
-
-    def get_epoch_time_offset(self):
-        return self.epoch_time_offset
         
     def get_restful_order_book_fields_mapping(self):
         return self.restful_order_book_fields_mapping
         
     def get_restful_trades_fields_mapping(self):
         return self.restful_trades_fields_mapping
+        
+    def get_ws_link(self):
+        return self.ws_link        
+        
+    def get_ws_order_book_fields_mapping(self):
+        return self.ws_order_book_fields_mapping
+        
+    def get_ws_trades_fields_mapping(self):
+        return self.ws_trades_fields_mapping        

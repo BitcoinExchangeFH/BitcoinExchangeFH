@@ -4,11 +4,12 @@ import sys
 import argparse
 import threading
 from functools import partial
-from exch_btcc import ExchGwBtcc
 from sqlite_client import SqliteClient
 from mysql_client import MysqlClient
 from instrument import Instrument
 from subscription_manager import SubscriptionManager
+from exch_btcc import ExchGwBtcc
+from exch_bitmex import ExchGwBitmex
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Bitcoin exchange market data feed handler.')
@@ -54,6 +55,7 @@ if __name__ == '__main__':
 
     exch_gws = []
     exch_gws.append(ExchGwBtcc(db_client))
+    exch_gws.append(ExchGwBitmex(db_client))
     threads = []
     for exch in exch_gws:
         for instmt in subscription_instmts:

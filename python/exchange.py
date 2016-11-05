@@ -58,9 +58,9 @@ class ExchangeGateway:
                                     orderby='id desc',
                                     limit=1)
         if len(ret) > 0:
-            return ret[0]
+            return ret[0][0]
         else:
-            return None
+            return 0
 
     def get_trades_init(self, instmt):
         """
@@ -69,18 +69,23 @@ class ExchangeGateway:
         :return: Last id
         """
         table_name = self.get_trades_table_name(instmt.get_exchange_name(),
-                                               instmt.get_instmt_name())
+                                                instmt.get_instmt_name())
         self.db_client.create(table_name,
                               ['id'] + Trade.columns(),
                               ['int primary key'] + Trade.types())
-        ret = self.db_client.select(table=table_name,
+        id_ret = self.db_client.select(table=table_name,
                                     columns=['id'],
                                     orderby="id desc",
                                     limit=1)
-        if len(ret) > 0:
-            return ret[0]
+        trade_id_ret = self.db_client.select(table=table_name,
+                                       columns=['trade_id'],
+                                       orderby="id desc",
+                                       limit=1)
+
+        if len(id_ret) > 0 and len(trade_id_ret) > 0:
+            return id_ret[0][0], trade_id_ret[0][0]
         else:
-            return None
+            return 0, 0
     
     def start(self, instmt):
         """

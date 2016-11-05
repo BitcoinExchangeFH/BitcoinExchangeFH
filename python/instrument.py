@@ -17,45 +17,34 @@ class Instrument:
         self.instmt_name = instmt_name
         self.instmt_code = instmt_code
 
-        if param.get('restful_order_book_link') is not None:
-            self.restful_order_book_link = param['restful_order_book_link']
+        if param.get('order_book_link') is not None:
+            self.order_book_link = param['order_book_link']
         else:
-            self.restful_order_book_link = ''
+            self.order_book_link = ''
 
-        if param.get('restful_trades_link') is not None:
-            self.restful_trades_link = param['restful_trades_link']
+        if param.get('trades_link') is not None:
+            self.trades_link = param['trades_link']
         else:
-            self.restful_trades_link = ''
+            self.trades_link = ''
             
-        if param.get('restful_order_book_fields_mapping') is not None:
-            self.restful_order_book_fields_mapping = \
-                json.loads(param.get('restful_order_book_fields_mapping'))
+        if param.get('order_book_fields_mapping') is not None:
+            self.order_book_fields_mapping = \
+                json.loads(param.get('order_book_fields_mapping'))
         else:
-            self.restful_order_book_fields_mapping = {}
+            self.order_book_fields_mapping = {}
             
-        if param.get('restful_trades_fields_mapping') is not None:
-            self.restful_trades_fields_mapping = \
-                json.loads(param.get('restful_trades_fields_mapping'))
+        if param.get('trades_fields_mapping') is not None:
+            self.trades_fields_mapping = \
+                json.loads(param.get('trades_fields_mapping'))
         else:
-            self.restful_trades_fields_mapping = {}            
+            self.trades_fields_mapping = {}
 
-        if param.get('ws_link') is not None:
-            self.ws_link = param.get('ws_link')
+        if param.get('link') is not None:
+            self.link = param.get('link')
         else:
-            self.ws_link = ''
+            self.link = ''
             
-        if param.get('ws_order_book_fields_mapping') is not None:
-            self.ws_order_book_fields_mapping = \
-                json.loads(param.get('ws_order_book_fields_mapping'))
-        else:
-            self.ws_order_book_fields_mapping = {}
-            
-        if param.get('ws_trades_fields_mapping') is not None:
-            self.ws_trades_fields_mapping = \
-                json.loads(param.get('ws_trades_fields_mapping'))
-        else:
-            self.ws_trades_fields_mapping = {}        
-            
+
     def get_exchange_name(self):
         return self.exchange_name
         
@@ -65,23 +54,18 @@ class Instrument:
     def get_instmt_code(self):
         return self.instmt_code
 
-    def get_restful_order_book_link(self):
-        return self.restful_order_book_link
+    def get_order_book_link(self):
+        return self.order_book_link
 
-    def get_restful_trades_link(self):
-        return self.restful_trades_link
+    def get_trades_link(self):
+        return self.trades_link
         
-    def get_restful_order_book_fields_mapping(self):
-        return self.restful_order_book_fields_mapping
+    def get_order_book_fields_mapping(self):
+        return self.order_book_fields_mapping
         
-    def get_restful_trades_fields_mapping(self):
-        return self.restful_trades_fields_mapping
+    def get_trades_fields_mapping(self):
+        return self.trades_fields_mapping
         
-    def get_ws_link(self):
-        return self.ws_link        
-        
-    def get_ws_order_book_fields_mapping(self):
-        return self.ws_order_book_fields_mapping
-        
-    def get_ws_trades_fields_mapping(self):
-        return self.ws_trades_fields_mapping        
+    def get_link(self):
+        return self.link
+

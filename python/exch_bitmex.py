@@ -18,44 +18,41 @@ class ExchGwBitmexWs(WebSocketApiClient):
         """
         WebSocketApiClient.__init__(self, 'ExchGwBitMEX')
             
-    # @classmethod
-    # def parse_l2_depth(cls, instmt, raw):
-    #     """
-    #     Parse raw data to L2 depth
-    #     :param instmt: Instrument
-    #     :param raw: Raw data in JSON
-    #     """
-    #     l2_depth = L2Depth(exch=instmt.get_exchange_name(), instmt=instmt.get_instmt_code())
-    #     field_map = instmt.get_restful_order_book_fields_mapping()
-    #     for key, value in raw.items():
-    #         if key in field_map.keys():
-    #             try:
-    #                 field = field_map[key]
-    #             except:
-    #                 print("Error from restful_order_book_fields_mapping on key %s" % key)
-    #                 raise
+    @classmethod
+    def parse_l2_depth(cls, instmt, raw):
+        """
+        Parse raw data to L2 depth
+        :param instmt: Instrument
+        :param raw: Raw data in JSON
+        """
+        l2_depth = L2Depth(exch=instmt.get_exchange_name(), instmt=instmt.get_instmt_code())
+        field_map = instmt.get_order_book_fields_mapping()
+        for key, value in raw.items():
+            if key in field_map.keys():
+                try:
+                    field = field_map[key]
+                except:
+                    print("Error from order_book_fields_mapping on key %s" % key)
+                    raise
                 
-    #             if field == 'TIMESTAMP':
-    #                 offset = 1 if 'TIMESTAMP_OFFSET' not in field_map else field_map['TIMESTAMP_OFFSET']
-    #                 if offset == 1:
-    #                     date_time = float(value)
-    #                 else:
-    #                     date_time = float(value)/offset
-    #                 l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
-    #             elif field == 'BIDS':
-    #                 bids = value
-    #                 sorted(bids, key=lambda x: x[0])
-    #                 l2_depth.bid = [float(e[0]) if type(e[0]) != float else e[0] for e in bids]
-    #                 l2_depth.bid_volume = [float(e[1]) if type(e[1]) != float else e[1] for e in bids]
-    #             elif field == 'ASKS':
-    #                 asks = value
-    #                 sorted(asks, key=lambda x: x[0], reverse=True)
-    #                 l2_depth.ask = [float(e[0]) if type(e[0]) != float else e[0] for e in asks]
-    #                 l2_depth.ask_volume = [float(e[1]) if type(e[1]) != float else e[1] for e in asks]
-    #             else:
-    #                 raise Exception('The field <%s> is not found' % field)
+                if field == 'TIMESTAMP':
+                    l2_depth.date_time = value
+                elif field == 'BIDS':
+                    bids = value
+                    sorted(bids, key=lambda x: x[0])
+                    bids = bids[0:5]
+                    l2_depth.bid = [float(e[0]) if type(e[0]) != float else e[0] for e in bids]
+                    l2_depth.bid_volume = [float(e[1]) if type(e[1]) != float else e[1] for e in bids]
+                elif field == 'ASKS':
+                    asks = value
+                    sorted(asks, key=lambda x: x[0], reverse=True)
+                    asks = asks[0:5]
+                    l2_depth.ask = [float(e[0]) if type(e[0]) != float else e[0] for e in asks]
+                    l2_depth.ask_volume = [float(e[1]) if type(e[1]) != float else e[1] for e in asks]
+                else:
+                    raise Exception('The field <%s> is not found' % field)
 
-    #     return l2_depth
+        return l2_depth
 
     @classmethod
     def parse_trade(cls, instmt, raw):
@@ -65,13 +62,13 @@ class ExchGwBitmexWs(WebSocketApiClient):
         :return:
         """
         trade = Trade(exch=instmt.get_exchange_name(), instmt=instmt.get_instmt_code())
-        field_map = instmt.get_ws_trades_fields_mapping()
+        field_map = instmt.get_trades_fields_mapping()
         for key, value in raw.items():
             if key in field_map.keys():
                 try:
                     field = field_map[key]
                 except:
-                    print("Error from ws_trades_fields_mapping on key %s" % key)
+                    print("Error from trades_fields_mapping on key %s" % key)
                     raise
                 
                 if field == 'TIMESTAMP':
@@ -104,41 +101,8 @@ class ExchGwBitmexWs(WebSocketApiClient):
                 else:
                     raise Exception('The field <%s> is not found' % field)        
 
+
         return trade
-
-    # @classmethod
-    # def get_order_book(cls, instmt):
-    #     """
-    #     Get order book
-    #     :param instmt: Instrument
-    #     :return: Object L2Depth
-    #     """
-    #     res = cls.request(instmt.get_restful_order_book_link())
-    #     return cls.parse_l2_depth(instmt=instmt,
-    #                               raw=res)
-
-    # @classmethod
-    # def get_trades(cls, instmt, trade_id):
-    #     """
-    #     Get trades
-    #     :param instmt: Instrument
-    #     :param trade_id: Trade id
-    #     :return: List of trades
-    #     """
-    #     if trade_id > 0:
-    #         res = cls.request(instmt.get_restful_trades_link().replace('<id>', '&since=%d' % trade_id))
-    #     else:
-    #         res = cls.request(instmt.get_restful_trades_link().replace('<id>', ''))
-
-    #     trades = []
-    #     if len(res) > 0:
-    #         for t in res:
-    #             trade = cls.parse_trade(instmt=instmt,
-    #                                      raw=t)
-    #             trades.append(trade)
-
-    #     return trades
-
 
 class ExchGwBitmex(ExchangeGateway):
     """
@@ -153,6 +117,8 @@ class ExchGwBitmex(ExchangeGateway):
         self.db_order_book_id = 0
         self.db_trade_id = 0
         self.last_exch_trade_id = ''
+        self.db_order_book_table_name = ''
+        self.db_trades_table_name = ''
 
     @classmethod
     def get_exchange_name(cls):
@@ -178,18 +144,29 @@ class ExchGwBitmex(ExchangeGateway):
                          'successful' if message['success'] else 'failed'))
         elif 'table' in keys:
             if message['table'] == 'trade':
-                print_log(self.__class__.__name__, message)
                 for trade_raw in message['data']:
-                    trade = self.api_socket.parse_trade(instmt, trade_raw)
-                    if trade.trade_id != self.last_exch_trade_id:
-                        self.db_trade_id += 1
-                        self.last_exch_trade_id = trade.trade_id
-                        self.db_client.insert(table=table_name,
-                                              columns=['id']+Trade.columns(),
-                                              values=[db_trade_id]+trade.values())
+                    if trade_raw["symbol"] == instmt.get_instmt_code():
+                        # Filter out the initial subscriptions
+                        trade = self.api_socket.parse_trade(instmt, trade_raw)
+                        if trade.trade_id != self.last_exch_trade_id:
+                            self.db_trade_id += 1
+                            self.last_exch_trade_id = trade.trade_id
+                            self.db_client.insert(table=self.db_trades_table_name,
+                                                  columns=['id']+Trade.columns(),
+                                                  values=[self.db_trade_id]+trade.values())
+            elif message['table'] == 'orderBook10':
+                for data in message['data']:
+                    if data["symbol"] == instmt.get_instmt_code():
+                        l2depth = self.api_socket.parse_l2_depth(instmt, data)
+                        self.db_order_book_id += 1
+                        self.db_client.insert(table=self.db_order_book_table_name,
+                                              columns=['id']+L2Depth.columns(),
+                                              values=[self.db_order_book_id]+l2depth.values())
+
+            else:
+                print_log(self.__class__.__name__, json.dumps(message,indent=2))
         else:
             print_log(self.__class__.__name__, " - " + json.dumps(message))
-
 
     def start(self, instmt):
         """
@@ -197,11 +174,13 @@ class ExchGwBitmex(ExchangeGateway):
         :param instmt: Instrument
         :return List of threads
         """
-        last_trade_record = self.get_trades_init(instmt)
-        if last_trade_record is not None:
-            self.db_trade_id = last_trade_record[0]
-            self.last_exch_trade_id = last_trade_record[2]
-        
-        return [self.api_socket.connect(instmt.get_ws_link(),
+        self.db_order_book_table_name = self.get_order_book_table_name(instmt.get_exchange_name(),
+                                                                       instmt.get_instmt_name())
+        self.db_trades_table_name = self.get_trades_table_name(instmt.get_exchange_name(),
+                                                               instmt.get_instmt_name())
+        self.db_order_book_id = self.get_order_book_init(instmt)
+        self.db_trade_id, self.last_exch_trade_id = self.get_trades_init(instmt)
+
+        return [self.api_socket.connect(instmt.get_link(),
                                 partial(self.in_message_handler, instmt))]
 

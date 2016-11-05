@@ -21,13 +21,13 @@ class ExchGwBtccRestfulApi(RESTfulApiSocket):
         :param raw: Raw data in JSON
         """
         l2_depth = L2Depth(exch=instmt.get_exchange_name(), instmt=instmt.get_instmt_code())
-        field_map = instmt.get_restful_order_book_fields_mapping()
+        field_map = instmt.get_order_book_fields_mapping()
         for key, value in raw.items():
             if key in field_map.keys():
                 try:
                     field = field_map[key]
                 except:
-                    print("Error from restful_order_book_fields_mapping on key %s" % key)
+                    print("Error from order_book_fields_mapping on key %s" % key)
                     raise
                 
                 if field == 'TIMESTAMP':
@@ -60,13 +60,13 @@ class ExchGwBtccRestfulApi(RESTfulApiSocket):
         :return:
         """
         trade = Trade(exch=instmt.get_exchange_name(), instmt=instmt.get_instmt_code())
-        field_map = instmt.get_restful_trades_fields_mapping()
+        field_map = instmt.get_trades_fields_mapping()
         for key, value in raw.items():
             if key in field_map.keys():
                 try:
                     field = field_map[key]
                 except:
-                    print("Error from get_restful_trades_fields_mapping on key %s" % key)
+                    print("Error from get_trades_fields_mapping on key %s" % key)
                     raise
                 
                 if field == 'TIMESTAMP':
@@ -113,7 +113,7 @@ class ExchGwBtccRestfulApi(RESTfulApiSocket):
         :param instmt: Instrument
         :return: Object L2Depth
         """
-        res = cls.request(instmt.get_restful_order_book_link())
+        res = cls.request(instmt.get_order_book_link())
         return cls.parse_l2_depth(instmt=instmt,
                                    raw=res)
 
@@ -126,9 +126,9 @@ class ExchGwBtccRestfulApi(RESTfulApiSocket):
         :return: List of trades
         """
         if trade_id > 0:
-            res = cls.request(instmt.get_restful_trades_link().replace('<id>', '&since=%d' % trade_id))
+            res = cls.request(instmt.get_trades_link().replace('<id>', '&since=%d' % trade_id))
         else:
-            res = cls.request(instmt.get_restful_trades_link().replace('<id>', ''))
+            res = cls.request(instmt.get_trades_link().replace('<id>', ''))
 
         trades = []
         if len(res) > 0:
@@ -159,47 +159,6 @@ class ExchGwBtcc(ExchangeGateway):
         """
         return 'BTCC'
 
-    def get_order_book_init(self, instmt):
-        """
-        Initialization method in get_order_book
-        :param instmt: Instrument
-        :return: Last id
-        """
-        table_name = self.get_order_book_table_name(instmt.get_exchange_name(),
-                                                    instmt.get_instmt_name())
-        self.db_client.create(table_name,
-                              ['id'] + L2Depth.columns(),
-                              ['int primary key'] + L2Depth.types())
-        ret = self.db_client.select(table_name,
-                                    columns=['id'],
-                                    orderby='id desc',
-                                    limit=1)
-        if len(ret) > 0:
-            return ret[0][0]
-        else:
-            return 0
-
-    def get_trades_init(self, instmt):
-        """
-        Initialization method in get_trades
-        :param instmt: Instrument
-        :return: Last id
-        """
-        table_name = self.get_trades_table_name(instmt.get_exchange_name(),
-                                               instmt.get_instmt_name())
-        self.db_client.create(table_name,
-                              ['id'] + Trade.columns(),
-                              ['int primary key'] + Trade.types())
-        ret = self.db_client.select(table=table_name,
-                                    columns=['id'],
-                                    orderby="id desc",
-                                    limit=1)
-        if len(ret) > 0:
-            return ret[0][0]
-        else:
-            # Workaround for BTCC XBTCNY trade recovery from id = 0
-            return 0
-
     def get_order_book_worker(self, instmt):
         """
         Get order book worker
@@ -207,11 +166,7 @@ class ExchGwBtcc(ExchangeGateway):
         """
         table_name = self.get_order_book_table_name(instmt.get_exchange_name(),
                                                     instmt.get_instmt_name())
-        last_record = self.get_order_book_init(instmt)
-        if last_record is not None:
-            db_order_book_id = last_record[0]
-        else:
-            db_order_book_id = 0
+        db_order_book_id  = self.get_order_book_init(instmt)
 
         while True:
             ret = self.api_socket.get_order_book(instmt)
@@ -228,11 +183,7 @@ class ExchGwBtcc(ExchangeGateway):
         """
         table_name = self.get_trades_table_name(instmt.get_exchange_name(),
                                                 instmt.get_instmt_name())       
-        last_record = self.get_trades_init(instmt)
-        if last_record is not None:
-            db_trade_id = last_record[0]
-        else:
-            db_trade_id = 0                                                
+        db_trade_id, db_exch_trade_id = self.get_trades_init(instmt)
 
         while True:
             ret = self.api_socket.get_trades(instmt, db_trade_id)

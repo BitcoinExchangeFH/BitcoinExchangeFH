@@ -114,8 +114,11 @@ class ExchGwBtccRestfulApi(RESTfulApiSocket):
         :return: Object L2Depth
         """
         res = cls.request(instmt.get_order_book_link())
-        return cls.parse_l2_depth(instmt=instmt,
-                                   raw=res)
+        if len(res) > 0:
+            return cls.parse_l2_depth(instmt=instmt,
+                                       raw=res)
+        else:
+            return None
 
     @classmethod
     def get_trades(cls, instmt, trade_id):
@@ -170,10 +173,11 @@ class ExchGwBtcc(ExchangeGateway):
 
         while True:
             ret = self.api_socket.get_order_book(instmt)
-            db_order_book_id += 1
-            self.db_client.insert(table=table_name,
-                                  columns=['id']+L2Depth.columns(),
-                                  values=[db_order_book_id]+ret.values())
+            if ret is not None:
+                db_order_book_id += 1
+                self.db_client.insert(table=table_name,
+                                      columns=['id']+L2Depth.columns(),
+                                      values=[db_order_book_id]+ret.values())
             time.sleep(0.5)
 
     def get_trades_worker(self, instmt):

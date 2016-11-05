@@ -24,8 +24,11 @@ class RESTfulApiSocket(ApiSocket):
         :return JSON object
         """
         res = urlrequest.urlopen(url)
-        res = json.loads(res.read().decode('utf8'))
-        return res
+        try:
+            res = json.loads(res.read().decode('utf8'))
+            return res
+        except:
+            return {}
         
     @classmethod
     def parse_l2_depth(cls, instmt, raw):

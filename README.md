@@ -8,7 +8,8 @@ Feed handler is a slim application to record the price depth and trades in bitco
 
 ## Supported exchanges
 
-- BTCC
+- BitMEX (Websocket)
+- BTCC (RESTful)
 
 Currently the support of other exchanges is still under development.
 

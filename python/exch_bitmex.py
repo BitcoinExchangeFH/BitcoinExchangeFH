@@ -8,6 +8,7 @@ from market_data import L2Depth, Trade
 from exchange import ExchangeGateway
 from util import print_log
 
+
 class ExchGwBitmexWs(WebSocketApiClient):
     """
     Exchange gateway BTCC RESTfulApi
@@ -36,7 +37,7 @@ class ExchGwBitmexWs(WebSocketApiClient):
                     raise
                 
                 if field == 'TIMESTAMP':
-                    l2_depth.date_time = value
+                    l2_depth.date_time = value.replace('T', ' ').replace('Z', '')
                 elif field == 'BIDS':
                     bids = value
                     sorted(bids, key=lambda x: x[0])
@@ -72,7 +73,7 @@ class ExchGwBitmexWs(WebSocketApiClient):
                     raise
                 
                 if field == 'TIMESTAMP':
-                    trade.date_time = value
+                    trade.date_time = value.replace('T', ' ').replace('Z', '')
                 elif field == 'TRADE_SIDE':
                     side = value
                     if type(side) != int:

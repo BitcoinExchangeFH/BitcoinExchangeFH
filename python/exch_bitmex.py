@@ -8,7 +8,6 @@ from market_data import L2Depth, Trade
 from exchange import ExchangeGateway
 from instrument import Instrument
 from util import print_log
-import copy
 
 class ExchGwBitmexInstrument(Instrument):
     def __init__(self, instmt):
@@ -41,7 +40,7 @@ class ExchGwBitmexWs(WebSocketApiClient):
         :param instmt: Instrument
         :param raw: Raw data in JSON
         """
-        l2_depth = L2Depth(exch=instmt.get_exchange_name(), instmt=instmt.get_instmt_code())
+        l2_depth = L2Depth()
         field_map = instmt.get_order_book_fields_mapping()
         for key, value in raw.items():
             if key in field_map.keys():
@@ -56,15 +55,15 @@ class ExchGwBitmexWs(WebSocketApiClient):
                 elif field == 'BIDS':
                     bids = value
                     sorted(bids, key=lambda x: x[0])
-                    bids = bids[0:5]
-                    l2_depth.bid = [float(e[0]) if type(e[0]) != float else e[0] for e in bids]
-                    l2_depth.bid_volume = [float(e[1]) if type(e[1]) != float else e[1] for e in bids]
+                    for i in range(0, 5):
+                        l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
+                        l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]
                 elif field == 'ASKS':
                     asks = value
                     sorted(asks, key=lambda x: x[0], reverse=True)
-                    asks = asks[0:5]
-                    l2_depth.ask = [float(e[0]) if type(e[0]) != float else e[0] for e in asks]
-                    l2_depth.ask_volume = [float(e[1]) if type(e[1]) != float else e[1] for e in asks]
+                    for i in range(0, 5):
+                        l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
+                        l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]
                 else:
                     raise Exception('The field <%s> is not found' % field)
 
@@ -77,7 +76,7 @@ class ExchGwBitmexWs(WebSocketApiClient):
         :param raw: Raw data in JSON
         :return:
         """
-        trade = Trade(exch=instmt.get_exchange_name(), instmt=instmt.get_instmt_code())
+        trade = Trade()
         field_map = instmt.get_trades_fields_mapping()
         for key, value in raw.items():
             if key in field_map.keys():

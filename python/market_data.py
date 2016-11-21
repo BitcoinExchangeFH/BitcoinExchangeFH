@@ -1,5 +1,6 @@
 #!/bin/python
 from datetime import datetime
+import copy
 
 
 class MarketDataBase:
@@ -10,6 +11,18 @@ class MarketDataBase:
         NONE = 0
         BUY = 1
         SELL = 2
+
+    class Depth(object):
+        def __init__(self, price=0.0, count=0, volume=0.0):
+            """
+            Constructor
+            """
+            self.price = price
+            self.count = count
+            self.volume = volume
+
+        def copy(self):
+            return copy.deepcopy(self)
 
     def __init__(self):
         """
@@ -22,18 +35,16 @@ class L2Depth(MarketDataBase):
     """
     L2 price depth. Container of date, time, bid and ask up to 5 levels
     """
-    def __init__(self, exch, instmt):
+    def __init__(self, depth=5):
         """
         Constructor
-        :param exch: Exchange name
-        :param instmt: Instrument name
+        :param depth: Number of depth
         """
         MarketDataBase.__init__(self)
         self.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
-        self.bid = [0.0, 0.0, 0.0, 0.0, 0.0]
-        self.bid_volume = [0.0, 0.0, 0.0, 0.0, 0.0]
-        self.ask = [0.0, 0.0, 0.0, 0.0, 0.0]
-        self.ask_volume = [0.0, 0.0, 0.0, 0.0, 0.0]
+        self.depth = depth
+        self.bids = [MarketDataBase.Depth() for i in range(0, self.depth)]
+        self.asks = [MarketDataBase.Depth() for i in range(0, self.depth)]
 
     @staticmethod
     def columns():
@@ -59,15 +70,63 @@ class L2Depth(MarketDataBase):
         """
         Return values in a list
         """
-        return [self.date_time] + \
-               self.bid + self.ask + self.bid_volume + self.ask_volume
+        if self.depth == 5:
+            return [self.date_time] + \
+                   [b.price for b in self.bids] + \
+                   [a.price for a in self.asks] + \
+                   [b.volume for b in self.bids] + \
+                   [a.volume for a in self.asks]
+        else:
+            return [self.date_time] + \
+                   [b.price for b in self.bids[0:5]] + \
+                   [a.price for a in self.asks[0:5]] + \
+                   [b.volume for b in self.bids[0:5]] + \
+                   [a.volume for a in self.asks[0:5]]
 
+    def sort_bids(self):
+        """
+        Sorting bids
+        :return:
+        """
+        self.bids.sort(key=lambda x:x.price, reverse=True)
+        if len(self.bids) > self.depth:
+            self.bids = self.bids[0:self.depth]
+
+    def sort_asks(self):
+        """
+        Sorting bids
+        :return:
+        """
+        self.asks.sort(key=lambda x:x.price)
+        if len(self.asks) > self.depth:
+            self.asks = self.asks[0:self.depth]
+
+    def copy(self):
+        """
+        Copy
+        """
+        return copy.deepcopy(self)
+
+    def is_diff(self, l2_depth):
+        """
+        Compare the first 5 price depth
+        :param l2_depth: Another L2Depth object
+        :return: True if they are different
+        """
+        for i in range(0, 5):
+            if self.bids[i].price != l2_depth.bids[i].price or \
+               self.bids[i].volume != l2_depth.bids[i].volume:
+                return True
+            elif self.asks[i].price != l2_depth.asks[i].price or \
+                self.asks[i].volume != l2_depth.asks[i].volume:
+                return True
+        return False
 
 class Trade(MarketDataBase):
     """
     Trade. Container of date, time, trade price, volume and side.
     """
-    def __init__(self, exch, instmt):
+    def __init__(self):
         """
         Constructor
         :param exch: Exchange name

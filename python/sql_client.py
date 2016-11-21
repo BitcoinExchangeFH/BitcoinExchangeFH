@@ -1,5 +1,6 @@
 from database_client import DatabaseClient
 import threading
+from util import print_log
 
 class SqlClient(DatabaseClient):
     """
@@ -86,8 +87,13 @@ class SqlClient(DatabaseClient):
         else:
             sql = "insert into %s (%s) values (%s)" % (table, column_names, value_string)
         self.lock.acquire()
-        self.execute(sql)
-        self.commit()
+
+        try:
+            self.execute(sql)
+            self.commit()
+        except Exception as e:
+            print_log(self.__class__.__name__, "SQL error: %s\nSQL: %s" % (e, sql))
+
         self.lock.release()
         return True
 

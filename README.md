@@ -1,4 +1,4 @@
-# BitcoinExchangeFH - Bitcoin exchange market data feed handler
+# BitcoinExchangeFH - Bitcoin exchange market data feed handler (Bitfinex, BitMEX and BTCC)
 
 Feed handler is a slim application to record the price depth and trades in bitcoin exchanges. It targets on real time market data recording into a database. Users can
 
@@ -76,4 +76,4 @@ python python/bitcoinexchangefh.py -mysql -dbaddr localhost -dbport 3306 -dbuser
 
 
 ## Compatibility
-The application is compatible with version higher or equal to python 2.7.
+The application is compatible with version higher or equal to python 3.0.

@@ -1,6 +1,8 @@
 import json
+import copy
 
-class Instrument:
+
+class Instrument(object):
     def __init__(self,
                  exchange_name,
                  instmt_name,
@@ -43,7 +45,19 @@ class Instrument:
             self.link = param.get('link')
         else:
             self.link = ''
-            
+
+    def copy(self, obj):
+        """
+        Copy constructor
+        """
+        self.exchange_name = obj.exchange_name
+        self.instmt_name = obj.instmt_name
+        self.instmt_code = obj.instmt_code
+        self.order_book_link = obj.order_book_link
+        self.trades_link = obj.trades_link
+        self.order_book_fields_mapping = obj.order_book_fields_mapping
+        self.trades_fields_mapping = obj.trades_fields_mapping
+        self.link = obj.link
 
     def get_exchange_name(self):
         return self.exchange_name

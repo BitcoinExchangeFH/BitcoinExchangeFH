@@ -6,8 +6,23 @@ from datetime import datetime
 from ws_api_socket import WebSocketApiClient
 from market_data import L2Depth, Trade
 from exchange import ExchangeGateway
+from instrument import Instrument
 from util import print_log
+import copy
 
+class ExchGwBitmexInstrument(Instrument):
+    def __init__(self, instmt):
+        """
+        Constructor
+        :param instmt: Instrument
+        """
+        self.copy(instmt)
+        self.subscribed = False
+        self.db_order_book_table_name = ""
+        self.db_trades_table_name = ""
+        self.db_order_book_id = ""
+        self.db_trade_id = ""
+        self.last_exch_trade_id = ""
 
 class ExchGwBitmexWs(WebSocketApiClient):
     """
@@ -115,11 +130,6 @@ class ExchGwBitmex(ExchangeGateway):
         :param db_client: Database client
         """
         ExchangeGateway.__init__(self, ExchGwBitmexWs(), db_client)
-        self.db_order_book_id = 0
-        self.db_trade_id = 0
-        self.last_exch_trade_id = ''
-        self.db_order_book_table_name = ''
-        self.db_trades_table_name = ''
 
     @classmethod
     def get_exchange_name(cls):
@@ -129,7 +139,30 @@ class ExchGwBitmex(ExchangeGateway):
         """
         return 'BitMEX'
 
-    def in_message_handler(self, instmt, message):
+    def on_open_handler(self, instmt, ws):
+        """
+        Socket on open handler
+        :param instmt: Instrument
+        :param ws: Web socket
+        """
+        print_log(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
+                  (instmt.get_instmt_code(), instmt.get_exchange_name()))
+        if not instmt.subscribed:
+            ws.send("{\"op\":\"subscribe\", \"args\": [\"orderBook10:%s\"]}" % instmt.get_instmt_code())
+            ws.send("{\"op\":\"subscribe\", \"args\": [\"trade:%s\"]}" % instmt.get_instmt_code())
+            instmt.subscribed = True
+
+    def on_close_handler(self, instmt, ws):
+        """
+        Socket on close handler
+        :param instmt: Instrument
+        :param ws: Web socket
+        """
+        print_log(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
+                  (instmt.get_instmt_code(), instmt.get_exchange_name()))
+        instmt.subscribed = False
+
+    def on_message_handler(self, instmt, message):
         """
         Incoming message handler
         :param instmt: Instrument
@@ -149,21 +182,20 @@ class ExchGwBitmex(ExchangeGateway):
                     if trade_raw["symbol"] == instmt.get_instmt_code():
                         # Filter out the initial subscriptions
                         trade = self.api_socket.parse_trade(instmt, trade_raw)
-                        if trade.trade_id != self.last_exch_trade_id:
-                            self.db_trade_id += 1
-                            self.last_exch_trade_id = trade.trade_id
-                            self.db_client.insert(table=self.db_trades_table_name,
+                        if trade.trade_id != instmt.last_exch_trade_id:
+                            instmt.db_trade_id += 1
+                            instmt.last_exch_trade_id = trade.trade_id
+                            self.db_client.insert(table=instmt.db_trades_table_name,
                                                   columns=['id']+Trade.columns(),
-                                                  values=[self.db_trade_id]+trade.values())
+                                                  values=[instmt.db_trade_id]+trade.values())
             elif message['table'] == 'orderBook10':
                 for data in message['data']:
                     if data["symbol"] == instmt.get_instmt_code():
                         l2depth = self.api_socket.parse_l2_depth(instmt, data)
-                        self.db_order_book_id += 1
-                        self.db_client.insert(table=self.db_order_book_table_name,
-                                              columns=['id']+L2Depth.columns(),
-                                              values=[self.db_order_book_id]+l2depth.values())
-
+                        instmt.db_order_book_id += 1
+                        self.db_client.insert(table=instmt.db_order_book_table_name,
+                                                columns=['id']+L2Depth.columns(),
+                                                values=[instmt.db_order_book_id]+l2depth.values())
             else:
                 print_log(self.__class__.__name__, json.dumps(message,indent=2))
         else:
@@ -175,13 +207,15 @@ class ExchGwBitmex(ExchangeGateway):
         :param instmt: Instrument
         :return List of threads
         """
-        self.db_order_book_table_name = self.get_order_book_table_name(instmt.get_exchange_name(),
+        instmt = ExchGwBitmexInstrument(instmt)
+        instmt.db_order_book_table_name = self.get_order_book_table_name(instmt.get_exchange_name(),
                                                                        instmt.get_instmt_name())
-        self.db_trades_table_name = self.get_trades_table_name(instmt.get_exchange_name(),
+        instmt.db_trades_table_name = self.get_trades_table_name(instmt.get_exchange_name(),
                                                                instmt.get_instmt_name())
-        self.db_order_book_id = self.get_order_book_init(instmt)
-        self.db_trade_id, self.last_exch_trade_id = self.get_trades_init(instmt)
-
+        instmt.db_order_book_id = self.get_order_book_init(instmt)
+        instmt.db_trade_id, instmt.last_exch_trade_id = self.get_trades_init(instmt)
         return [self.api_socket.connect(instmt.get_link(),
-                                partial(self.in_message_handler, instmt))]
+                                        on_message_handler=partial(self.on_message_handler, instmt),
+                                        on_open_handler=partial(self.on_open_handler, instmt),
+                                        on_close_handler=partial(self.on_close_handler, instmt))]
 

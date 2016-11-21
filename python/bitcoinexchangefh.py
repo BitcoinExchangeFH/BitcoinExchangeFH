@@ -5,6 +5,7 @@ import sys
 
 from exch_bitmex import ExchGwBitmex
 from exch_btcc import ExchGwBtcc
+from exch_bitfinex import ExchGwBitfinex
 from mysql_client import MysqlClient
 from sqlite_client import SqliteClient
 from subscription_manager import SubscriptionManager

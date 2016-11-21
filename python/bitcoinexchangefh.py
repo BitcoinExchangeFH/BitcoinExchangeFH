@@ -10,8 +10,6 @@ from mysql_client import MysqlClient
 from sqlite_client import SqliteClient
 from subscription_manager import SubscriptionManager
 
-from python.exch_bitfinex import ExchGwBitfinex
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Bitcoin exchange market data feed handler.')
     parser.add_argument('-instmts', action='store', help='Instrument subscription file.', default='subscriptions.ini')

@@ -5,6 +5,7 @@ from datetime import datetime
 from restful_api_socket import RESTfulApiSocket
 from exchange import ExchangeGateway
 from market_data import L2Depth, Trade
+from util import print_log
 
 class ExchGwBtccRestfulApi(RESTfulApiSocket):
     """
@@ -174,12 +175,16 @@ class ExchGwBtcc(ExchangeGateway):
         db_order_book_id  = self.get_order_book_init(instmt)
 
         while True:
-            ret = self.api_socket.get_order_book(instmt)
-            if ret is not None:
-                db_order_book_id += 1
-                self.db_client.insert(table=table_name,
-                                      columns=['id']+L2Depth.columns(),
-                                      values=[db_order_book_id]+ret.values())
+            try:
+                ret = self.api_socket.get_order_book(instmt)
+                if ret is not None:
+                    db_order_book_id += 1
+                    self.db_client.insert(table=table_name,
+                                          columns=['id']+L2Depth.columns(),
+                                          values=[db_order_book_id]+ret.values())
+            except Exception as e:
+                print_log(self.__class__.__name__,
+                          "Error in order book: %s\nReturn: %s" % (e, ret))
             time.sleep(0.5)
 
     def get_trades_worker(self, instmt):
@@ -192,13 +197,17 @@ class ExchGwBtcc(ExchangeGateway):
         db_trade_id, db_exch_trade_id = self.get_trades_init(instmt)
 
         while True:
-            ret = self.api_socket.get_trades(instmt, db_trade_id)
-            for trade in ret:
-                if int(trade.trade_id) > db_trade_id:
-                    db_trade_id = int(trade.trade_id)
-                self.db_client.insert(table=table_name,
-                                      columns=['id']+Trade.columns(),
-                                      values=[db_trade_id]+trade.values())
+            try:
+                ret = self.api_socket.get_trades(instmt, db_trade_id)
+                for trade in ret:
+                    if int(trade.trade_id) > db_trade_id:
+                        db_trade_id = int(trade.trade_id)
+                    self.db_client.insert(table=table_name,
+                                          columns=['id']+Trade.columns(),
+                                          values=[db_trade_id]+trade.values())
+            except Exception as e:
+                print_log(self.__class__.__name__,
+                          "Error in trades: %s\nReturn: %s" % (e, ret))
             time.sleep(0.5)
 
     def start(self, instmt):

@@ -63,7 +63,7 @@ class L2Depth(MarketDataBase):
         Return static column types
         """
         return ['text'] + \
-               ['decimal(10,2)'] * 10 + \
+               ['decimal(10,5)'] * 10 + \
                ['decimal(20,8)'] * 10
 
     def values(self):
@@ -154,7 +154,7 @@ class Trade(MarketDataBase):
         """
         Return static column types
         """
-        return ['text', 'text', 'decimal(10,2)', 'decimal(20,8)', 'text']
+        return ['text', 'text', 'decimal(10,5)', 'decimal(20,8)', 'text']
 
     def values(self):
         """

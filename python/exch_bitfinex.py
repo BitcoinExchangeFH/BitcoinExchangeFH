@@ -8,7 +8,6 @@ from market_data import L2Depth, Trade
 from exchange import ExchangeGateway
 from instrument import Instrument
 from util import print_log
-import copy
 
 class ExchGwBitfinexInstrument(Instrument):
     def __init__(self, instmt):

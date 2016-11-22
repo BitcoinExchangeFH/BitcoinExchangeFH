@@ -15,6 +15,23 @@ class SqlClient(DatabaseClient):
         self.cursor = None
         self.lock = threading.Lock()
 
+    @staticmethod
+    def convert_str(val):
+        """
+        Convert the value to string
+        :param val: Can be string, int or float
+        :return:
+        """
+        if isinstance(val, str):
+            return "'" + val + "'"
+        elif isinstance(val, int):
+            return str(val)
+        elif isinstance(val, float):
+            return "%.8f" % val
+        else:
+            raise Exception("Cannot convert value (%s) to string. Value is not string, integer nor float" %\
+                            val)
+
     def execute(self, sql):
         """
         Execute the sql command
@@ -81,7 +98,7 @@ class SqlClient(DatabaseClient):
             return False
 
         column_names = ','.join(columns)
-        value_string = ','.join(["'" + e + "'" if type(e) == str else str(e) for e in values])
+        value_string = ','.join([SqlClient.convert_str(e) for e in values])
         if is_orreplace:
             sql = "insert or replace into %s (%s) values (%s)" % (table, column_names, value_string)
         else:

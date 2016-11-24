@@ -51,7 +51,7 @@ class ExchGwBitmexWs(WebSocketApiClient):
                     raise
                 
                 if field == 'TIMESTAMP':
-                    l2_depth.date_time = value.replace('T', ' ').replace('Z', '')
+                    l2_depth.date_time = value.replace('T', ' ').replace('Z', '').replace('-' , '')
                 elif field == 'BIDS':
                     bids = value
                     sorted(bids, key=lambda x: x[0])

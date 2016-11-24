@@ -82,7 +82,26 @@ class ExchGwBitfinexWs(WebSocketApiClient):
                             break
 
                 if not found:
-                    print_log(cls.__name__, "Cannot find the deletion of the message: %s" % raw)
+                    depth_text = ""
+                    for i in range(0, instmt.l2_depth.depth):
+                        if i < len(instmt.l2_depth.bids):
+                            depth_text += "%.4f,%d,%.4f" % \
+                              (instmt.l2_depth.bids[i].volume, \
+                               instmt.l2_depth.bids[i].count, \
+                               instmt.l2_depth.bids[i].price)
+                        else:
+                            depth_text += "                   "
+                        depth_text += "<--->"
+                        if i < len(instmt.l2_depth.asks):
+                            depth_text += "%.4f,%d,%.4f" % \
+                                          (instmt.l2_depth.asks[i].volume, \
+                                           instmt.l2_depth.asks[i].count, \
+                                           instmt.l2_depth.asks[i].price)
+                        else:
+                            depth_text += "                   "
+                        depth_text += "\n"
+                    print_log(cls.__name__, "Cannot find the deletion of the message: %s\nDepth:\n%s\n" % \
+                              (raw, depth_text))
             else:
                 # Insertion/Update
                 found = False

@@ -14,6 +14,13 @@ Feed handler is a slim application to record the price depth and trades in bitco
 
 Currently the support of other exchanges is still under development.
 
+Scheduled exchange supported soon:
+- Kraken
+- xBTCe
+- Poloniex
+- DABTC
+- FX rate (USDCNY, EURUSD)
+
 ## Supported database
 
 - Sqlite
@@ -77,3 +84,8 @@ python python/bitcoinexchangefh.py -mysql -dbaddr localhost -dbport 3306 -dbuser
 
 ## Compatibility
 The application is compatible with version higher or equal to python 3.0.
+
+## Contributions
+Always welcome for any contribution. Please fork the project, make the changes, and submit the merge request. :)
+
+For any questions, please feel free to contact me through email (gavincyi at gmail)

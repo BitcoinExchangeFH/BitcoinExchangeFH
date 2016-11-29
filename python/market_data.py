@@ -24,6 +24,29 @@ class MarketDataBase:
         def copy(self):
             return copy.deepcopy(self)
 
+    @staticmethod
+    def parse_side(value):
+        """
+        Decode the value to Side (BUY/SELL)
+        :param value: Integer or string
+        :return: Side (NONE, BUY, SELL)
+        """
+        if type(value) != int:
+            value = value.lower()
+            if value == 'buy' or value == 'bid':
+                return MarketDataBase.Side.BUY
+            elif value == 'sell' or value == 'ask':
+                return MarketDataBase.Side.SELL
+            else:
+                return MarketDataBase.Side.NONE
+
+        if value == 1:
+            return MarketDataBase.Side.BUY
+        elif value == 2:
+            return MarketDataBase.Side.SELL
+        else:
+            return MarketDataBase.Side.NONE
+
     def __init__(self):
         """
         Constructor

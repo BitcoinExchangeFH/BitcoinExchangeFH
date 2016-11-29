@@ -80,24 +80,9 @@ class ExchGwBtccRestfulApi(RESTfulApiSocket):
                         date_time = float(value)/offset
                     trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
                 elif field == 'TRADE_SIDE':
-                    side = value
-                    if type(side) != int:
-                        side = side.lower()
-                        if side == 'buy':
-                            side = 1
-                        elif side == 'sell':
-                            side = 2
-                        else:
-                            raise Exception('Unrecognized trade side %s' % side)
-                    
-                    if side == 1:
-                        trade.trade_side = trade.Side.BUY
-                    elif side == 2:
-                        trade.trade_side = trade.Side.SELL
-                    else:
-                        print(side)
-                        raise Exception('Unexpected trade side value %d' % side)
-                        
+                    trade.trade_side = Trade.parse_side(value)
+                    if trade.trade_side == Trade.Side.NONE:
+                        raise Exception('Unexpected trade side value %d' % value)
                 elif field == 'TRADE_ID':
                     trade.trade_id = value
                 elif field == 'TRADE_PRICE':

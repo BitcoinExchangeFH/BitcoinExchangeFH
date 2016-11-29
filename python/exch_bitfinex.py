@@ -45,6 +45,8 @@ class ExchGwBitfinexWs(WebSocketApiClient):
         :param instmt: Instrument
         :param raw: Raw data in JSON
         """
+        # No order book mapping from config. Need to decode here.
+
         instmt.l2_depth.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
         if isinstance(raw[0], list):
             # Start subscription
@@ -152,13 +154,30 @@ class ExchGwBitfinexWs(WebSocketApiClient):
         :return:
         """
         trade = Trade()
-        trade.trade_id = raw[0]
-        trade.date_time = datetime.utcfromtimestamp(raw[1]).strftime("%Y%m%d %H:%M:%S.%f")
-        trade.trade_price = raw[2]
-        trade.trade_side = 1 if raw[3] > 0 else 2
-        trade.trade_volume = raw[3] if raw[3] > 0 else -raw[3]
+        field_map = instmt.get_trades_fields_mapping()
+        for i in range(0, len(raw)):
+            key = str(i)
+            value = raw[i]
+            if key in field_map.keys():
+                try:
+                    field = field_map[key]
+                except:
+                    print("Error from trades_fields_mapping on key %s" % key)
+                    raise
+
+                if field == 'TIMESTAMP':
+                    trade.date_time = datetime.utcfromtimestamp(value).strftime("%Y%m%d %H:%M:%S.%f")
+                elif field == 'TRADE_VOLUME':
+                    # The trade side is only determined by the sign of the trade volume
+                    trade.trade_side = Trade.Side.BUY if value > 0 else Trade.Side.SELL
+                    trade.trade_volume = abs(value)
+                elif field == 'TRADE_ID':
+                    trade.trade_id = value
+                elif field == 'TRADE_PRICE':
+                    trade.trade_price = value
 
         return trade
+
 
 class ExchGwBitfinex(ExchangeGateway):
     """

@@ -1,6 +1,8 @@
 # BitcoinExchangeFH - Bitcoin exchange market data feed handler (OkCoin, Bitfinex, BitMEX and BTCC)
 
-Feed handler is a slim application to record the price depth and trades in bitcoin exchanges. It targets on real time market data recording into a database. Users can
+BitcoinExchangeFH is a slim application to record the price depth and trades in various exchanges. A quick setup and record the tick data in database now!
+
+Users can
 
 1. Recording market data for backtesting and analysis.
 2. Recording market data to a in-memory database and other applications can quickly access to it.

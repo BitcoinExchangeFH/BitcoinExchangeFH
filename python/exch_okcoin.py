@@ -81,22 +81,26 @@ class ExchGwOkCoinWs(WebSocketApiClient):
         """
         trade = Trade()
         field_map = instmt.get_trades_fields_mapping()
+        trade_id = ''
         for i in range(0, len(raw)):
+            key = str(i)
             value = raw[i]
-            if str(i) in field_map.keys():
+            if key in field_map.keys():
                 try:
                     field = field_map[key]
                 except:
                     print("Error from trades_fields_mapping on key %s" % key)
                     raise
-                
-                if field == 'TRADE_SIDE':
+
+                if field == 'TIMESTAMP':
+                    trade_id += value
+                elif field == 'TRADE_SIDE':
                     side = value
                     if type(side) != int:
                         side = side.lower()
-                        if side == 'buy':
+                        if side == 'buy' or side == 'bid':
                             side = 1
-                        elif side == 'sell':
+                        elif side == 'sell' or side == 'ask':
                             side = 2
                         else:
                             raise Exception('Unrecognized trade side %s' % side)
@@ -110,13 +114,13 @@ class ExchGwOkCoinWs(WebSocketApiClient):
                         raise Exception('Unexpected trade side value %d' % side)
                         
                 elif field == 'TRADE_ID':
-                    trade.trade_id = value
+                    trade_id += value
                 elif field == 'TRADE_PRICE':
                     trade.trade_price = value
                 elif field == 'TRADE_VOLUME':
                     trade.trade_volume = value
-                else:
-                    raise Exception('The field <%s> is not found' % field)        
+
+        trade.trade_id = trade_id # Concat timestamp and trade ID
 
         return trade
 
@@ -148,8 +152,22 @@ class ExchGwOkCoin(ExchangeGateway):
         print_log(self.__class__, "Instrument %s is subscribed in channel %s" % \
                   (instmt.get_instmt_code(), instmt.get_exchange_name()))
         if not instmt.subscribed:
-            instmt.book_channel_id = "ok_sub_%s_depth_20" % instmt.get_instmt_code()
-            instmt.trades_channel_id = "ok_sub_%s_trades" % instmt.get_instmt_code()
+            instmt_code_split = instmt.get_instmt_code().split('_')
+            if len(instmt_code_split) == 3:
+                # Future instruments
+                instmt.book_channel_id = "ok_sub_%s_%s_depth_%s_20" % \
+                                         (instmt_code_split[0],
+                                          instmt_code_split[1],
+                                          instmt_code_split[2])
+                instmt.trades_channel_id = "ok_sub_%s_%s_trade_%s" % \
+                                           (instmt_code_split[0],
+                                            instmt_code_split[1],
+                                            instmt_code_split[2])
+            else:
+                # Spot instruments
+                instmt.book_channel_id = "ok_sub_%s_depth_20" % instmt.get_instmt_code()
+                instmt.trades_channel_id = "ok_sub_%s_trades" % instmt.get_instmt_code()
+
             ws.send("{\"event\":\"addChannel\", \"channel\": \"%s\"}" % instmt.book_channel_id)
             ws.send("{\"event\":\"addChannel\", \"channel\": \"%s\"}" % instmt.trades_channel_id)
             instmt.subscribed = True
@@ -184,43 +202,16 @@ class ExchGwOkCoin(ExchangeGateway):
                                               values=[instmt.db_order_book_id]+l2depth.values())                        
                     elif message['channel'] == instmt.trades_channel_id:
                         for trade_raw in message['data']:
-                            print(trade_raw)
                             trade = self.api_socket.parse_trade(instmt, trade_raw)
-                            # if trade.trade_id != instmt.last_exch_trade_id:
-                            #     instmt.db_trade_id += 1
-                            #     instmt.last_exch_trade_id = trade.trade_id
-                            #     self.db_client.insert(table=instmt.db_trades_table_name,
-                            #                           columns=['id']+Trade.columns(),
-                            #                           values=[instmt.db_trade_id]+trade.values())
+                            if trade.trade_id != instmt.last_exch_trade_id:
+                                instmt.db_trade_id += 1
+                                instmt.last_exch_trade_id = trade.trade_id
+                                self.db_client.insert(table=instmt.db_trades_table_name,
+                                                      columns=['id']+Trade.columns(),
+                                                      values=[instmt.db_trade_id]+trade.values())
                 elif 'success' in keys:
                     print_log(self.__class__, "Subscription to channel %s is %s" \
                         % (message['channel'], message['success']))
-            # # if 'subscribe' in keys:
-            # #     print_log(self.__class__, 'Subscription of %s is %s' % \
-            # #                 (message['request']['args'], \
-            # #                  'successful' if message['success'] else 'failed'))
-            # # elif 'table' in keys:
-            # #     if message['table'] == 'trade':
-            # #         for trade_raw in message['data']:
-            # #             if trade_raw["symbol"] == instmt.get_instmt_code():
-            # #                 # Filter out the initial subscriptions
-            # #                 trade = self.api_socket.parse_trade(instmt, trade_raw)
-            # #                 if trade.trade_id != instmt.last_exch_trade_id:
-            # #                     instmt.db_trade_id += 1
-            # #                     instmt.last_exch_trade_id = trade.trade_id
-            # #                     self.db_client.insert(table=instmt.db_trades_table_name,
-            # #                                           columns=['id']+Trade.columns(),
-            # #                                           values=[instmt.db_trade_id]+trade.values())
-            # #     elif message['table'] == 'orderBook10':
-            # #         for data in message['data']:
-            # #             if data["symbol"] == instmt.get_instmt_code():
-            # #                 l2depth = self.api_socket.parse_l2_depth(instmt, data)
-            # #                 instmt.db_order_book_id += 1
-            # #                 self.db_client.insert(table=instmt.db_order_book_table_name,
-            # #                                         columns=['id']+L2Depth.columns(),
-            # #                                         values=[instmt.db_order_book_id]+l2depth.values())
-            # #     else:
-            # #         print_log(self.__class__, json.dumps(message,indent=2))
             else:
                 print_log(self.__class__, ' - ' + json.dumps(message))
 

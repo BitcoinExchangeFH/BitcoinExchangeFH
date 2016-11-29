@@ -61,6 +61,14 @@ class WebSocketApiClient(ApiSocket):
 
         return self.wst
 
+    def send(self, msg):
+        """
+        Send message
+        :param msg: Message
+        :return:
+        """
+        self.ws.send(msg)
+
     def __on_message(self, ws, m):
         for handler in self.on_message_handlers:
             handler(m)

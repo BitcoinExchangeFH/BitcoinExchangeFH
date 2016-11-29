@@ -66,10 +66,10 @@ class ExchGwBitfinexWs(WebSocketApiClient):
             price = raw[1]
             count = raw[2]
             volume = raw[3]
+            found = False
 
             if count == 0:
                 # Deletion
-                found = False
                 if volume > 0:
                     for i in range(0, len(instmt.l2_depth.bids)):
                         if price == instmt.l2_depth.bids[i].price:
@@ -106,7 +106,6 @@ class ExchGwBitfinexWs(WebSocketApiClient):
                               (raw, depth_text))
             else:
                 # Insertion/Update
-                found = False
                 if volume > 0:
                     # Update
                     for i in range(0, len(instmt.l2_depth.bids)):
@@ -123,8 +122,8 @@ class ExchGwBitfinexWs(WebSocketApiClient):
                                                          volume=volume))
                         instmt.l2_depth.sort_bids()
 
-                        if len(instmt.l2_depth.bids) > instmt.l2_depth.depth:
-                            del instmt.l2_depth.bids[instmt.l2_depth.depth]
+                        if len(instmt.l2_depth.bids) > instmt.l2_depth.depth * 2:
+                            del instmt.l2_depth.bids[instmt.l2_depth.depth:]
                 else:
                     for i in range(0, len(instmt.l2_depth.asks)):
                         # Update
@@ -141,8 +140,8 @@ class ExchGwBitfinexWs(WebSocketApiClient):
                                                     volume=-volume))
                         instmt.l2_depth.sort_asks()
 
-                        if len(instmt.l2_depth.asks) > instmt.l2_depth.depth:
-                            del instmt.l2_depth.asks[instmt.l2_depth.depth]
+                        if len(instmt.l2_depth.asks) > instmt.l2_depth.depth * 2:
+                            del instmt.l2_depth.asks[instmt.l2_depth.depth:]
 
         return instmt.l2_depth
 

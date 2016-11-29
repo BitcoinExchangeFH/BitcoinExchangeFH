@@ -9,7 +9,7 @@ from exchange import ExchangeGateway
 from instrument import Instrument
 from util import print_log
 
-class ExchGwBitmexInstrument(Instrument):
+class ExchGwOkCoinInstrument(Instrument):
     def __init__(self, instmt):
         """
         Constructor
@@ -22,8 +22,10 @@ class ExchGwBitmexInstrument(Instrument):
         self.db_order_book_id = ""
         self.db_trade_id = ""
         self.last_exch_trade_id = ""
+        self.book_channel_id = 0
+        self.trades_channel_id = 0
 
-class ExchGwBitmexWs(WebSocketApiClient):
+class ExchGwOkCoinWs(WebSocketApiClient):
     """
     Exchange socket
     """
@@ -31,7 +33,7 @@ class ExchGwBitmexWs(WebSocketApiClient):
         """
         Constructor
         """
-        WebSocketApiClient.__init__(self, 'ExchGwBitMEX')
+        WebSocketApiClient.__init__(self, 'ExchGwOkCoin')
             
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
@@ -51,7 +53,8 @@ class ExchGwBitmexWs(WebSocketApiClient):
                     raise
                 
                 if field == 'TIMESTAMP':
-                    l2_depth.date_time = value.replace('T', ' ').replace('Z', '').replace('-' , '')
+                    date_time = float(value)/1000.0
+                    l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
                 elif field == 'BIDS':
                     bids = value
                     sorted(bids, key=lambda x: x[0])
@@ -78,17 +81,16 @@ class ExchGwBitmexWs(WebSocketApiClient):
         """
         trade = Trade()
         field_map = instmt.get_trades_fields_mapping()
-        for key, value in raw.items():
-            if key in field_map.keys():
+        for i in range(0, len(raw)):
+            value = raw[i]
+            if str(i) in field_map.keys():
                 try:
                     field = field_map[key]
                 except:
                     print("Error from trades_fields_mapping on key %s" % key)
                     raise
                 
-                if field == 'TIMESTAMP':
-                    trade.date_time = value.replace('T', ' ').replace('Z', '')
-                elif field == 'TRADE_SIDE':
+                if field == 'TRADE_SIDE':
                     side = value
                     if type(side) != int:
                         side = side.lower()
@@ -116,10 +118,9 @@ class ExchGwBitmexWs(WebSocketApiClient):
                 else:
                     raise Exception('The field <%s> is not found' % field)        
 
-
         return trade
 
-class ExchGwBitmex(ExchangeGateway):
+class ExchGwOkCoin(ExchangeGateway):
     """
     Exchange gateway
     """
@@ -128,7 +129,7 @@ class ExchGwBitmex(ExchangeGateway):
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwBitmexWs(), db_client)
+        ExchangeGateway.__init__(self, ExchGwOkCoinWs(), db_client)
 
     @classmethod
     def get_exchange_name(cls):
@@ -136,7 +137,7 @@ class ExchGwBitmex(ExchangeGateway):
         Get exchange name
         :return: Exchange name string
         """
-        return 'BitMEX'
+        return 'OkCoin'
 
     def on_open_handler(self, instmt, ws):
         """
@@ -144,11 +145,13 @@ class ExchGwBitmex(ExchangeGateway):
         :param instmt: Instrument
         :param ws: Web socket
         """
-        print_log(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
+        print_log(self.__class__, "Instrument %s is subscribed in channel %s" % \
                   (instmt.get_instmt_code(), instmt.get_exchange_name()))
         if not instmt.subscribed:
-            ws.send("{\"op\":\"subscribe\", \"args\": [\"orderBook10:%s\"]}" % instmt.get_instmt_code())
-            ws.send("{\"op\":\"subscribe\", \"args\": [\"trade:%s\"]}" % instmt.get_instmt_code())
+            instmt.book_channel_id = "ok_sub_%s_depth_20" % instmt.get_instmt_code()
+            instmt.trades_channel_id = "ok_sub_%s_trades" % instmt.get_instmt_code()
+            ws.send("{\"event\":\"addChannel\", \"channel\": \"%s\"}" % instmt.book_channel_id)
+            ws.send("{\"event\":\"addChannel\", \"channel\": \"%s\"}" % instmt.trades_channel_id)
             instmt.subscribed = True
 
     def on_close_handler(self, instmt, ws):
@@ -157,48 +160,69 @@ class ExchGwBitmex(ExchangeGateway):
         :param instmt: Instrument
         :param ws: Web socket
         """
-        print_log(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
+        print_log(self.__class__, "Instrument %s is subscribed in channel %s" % \
                   (instmt.get_instmt_code(), instmt.get_exchange_name()))
         instmt.subscribed = False
 
-    def on_message_handler(self, instmt, message):
+    def on_message_handler(self, instmt, messages):
         """
         Incoming message handler
         :param instmt: Instrument
         :param message: Message
         """
-        message = json.loads(message)
-        keys = message.keys()
-        if 'info' in keys:
-            print_log(self.__class__.__name__, message['info'])
-        elif 'subscribe' in keys:
-            print_log(self.__class__.__name__, 'Subscription of %s is %s' % \
-                        (message['request']['args'], \
-                         'successful' if message['success'] else 'failed'))
-        elif 'table' in keys:
-            if message['table'] == 'trade':
-                for trade_raw in message['data']:
-                    if trade_raw["symbol"] == instmt.get_instmt_code():
-                        # Filter out the initial subscriptions
-                        trade = self.api_socket.parse_trade(instmt, trade_raw)
-                        if trade.trade_id != instmt.last_exch_trade_id:
-                            instmt.db_trade_id += 1
-                            instmt.last_exch_trade_id = trade.trade_id
-                            self.db_client.insert(table=instmt.db_trades_table_name,
-                                                  columns=['id']+Trade.columns(),
-                                                  values=[instmt.db_trade_id]+trade.values())
-            elif message['table'] == 'orderBook10':
-                for data in message['data']:
-                    if data["symbol"] == instmt.get_instmt_code():
+        messages = json.loads(messages)
+        for message in messages:
+            keys = message.keys()
+            if 'channel' in keys:
+                if 'data' in keys:
+                    if message['channel'] == instmt.book_channel_id:
+                        data = message['data']
                         l2depth = self.api_socket.parse_l2_depth(instmt, data)
                         instmt.db_order_book_id += 1
                         self.db_client.insert(table=instmt.db_order_book_table_name,
-                                                columns=['id']+L2Depth.columns(),
-                                                values=[instmt.db_order_book_id]+l2depth.values())
+                                              columns=['id']+L2Depth.columns(),
+                                              values=[instmt.db_order_book_id]+l2depth.values())                        
+                    elif message['channel'] == instmt.trades_channel_id:
+                        for trade_raw in message['data']:
+                            print(trade_raw)
+                            trade = self.api_socket.parse_trade(instmt, trade_raw)
+                            # if trade.trade_id != instmt.last_exch_trade_id:
+                            #     instmt.db_trade_id += 1
+                            #     instmt.last_exch_trade_id = trade.trade_id
+                            #     self.db_client.insert(table=instmt.db_trades_table_name,
+                            #                           columns=['id']+Trade.columns(),
+                            #                           values=[instmt.db_trade_id]+trade.values())
+                elif 'success' in keys:
+                    print_log(self.__class__, "Subscription to channel %s is %s" \
+                        % (message['channel'], message['success']))
+            # # if 'subscribe' in keys:
+            # #     print_log(self.__class__, 'Subscription of %s is %s' % \
+            # #                 (message['request']['args'], \
+            # #                  'successful' if message['success'] else 'failed'))
+            # # elif 'table' in keys:
+            # #     if message['table'] == 'trade':
+            # #         for trade_raw in message['data']:
+            # #             if trade_raw["symbol"] == instmt.get_instmt_code():
+            # #                 # Filter out the initial subscriptions
+            # #                 trade = self.api_socket.parse_trade(instmt, trade_raw)
+            # #                 if trade.trade_id != instmt.last_exch_trade_id:
+            # #                     instmt.db_trade_id += 1
+            # #                     instmt.last_exch_trade_id = trade.trade_id
+            # #                     self.db_client.insert(table=instmt.db_trades_table_name,
+            # #                                           columns=['id']+Trade.columns(),
+            # #                                           values=[instmt.db_trade_id]+trade.values())
+            # #     elif message['table'] == 'orderBook10':
+            # #         for data in message['data']:
+            # #             if data["symbol"] == instmt.get_instmt_code():
+            # #                 l2depth = self.api_socket.parse_l2_depth(instmt, data)
+            # #                 instmt.db_order_book_id += 1
+            # #                 self.db_client.insert(table=instmt.db_order_book_table_name,
+            # #                                         columns=['id']+L2Depth.columns(),
+            # #                                         values=[instmt.db_order_book_id]+l2depth.values())
+            # #     else:
+            # #         print_log(self.__class__, json.dumps(message,indent=2))
             else:
-                print_log(self.__class__.__name__, json.dumps(message,indent=2))
-        else:
-            print_log(self.__class__.__name__, " - " + json.dumps(message))
+                print_log(self.__class__, ' - ' + json.dumps(message))
 
     def start(self, instmt):
         """
@@ -206,7 +230,7 @@ class ExchGwBitmex(ExchangeGateway):
         :param instmt: Instrument
         :return List of threads
         """
-        instmt = ExchGwBitmexInstrument(instmt)
+        instmt = ExchGwOkCoinInstrument(instmt)
         instmt.db_order_book_table_name = self.get_order_book_table_name(instmt.get_exchange_name(),
                                                                        instmt.get_instmt_name())
         instmt.db_trades_table_name = self.get_trades_table_name(instmt.get_exchange_name(),

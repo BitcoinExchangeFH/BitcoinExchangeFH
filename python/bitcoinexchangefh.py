@@ -6,9 +6,12 @@ import sys
 from exch_bitmex import ExchGwBitmex
 from exch_btcc import ExchGwBtcc
 from exch_bitfinex import ExchGwBitfinex
+from exch_okcoin import ExchGwOkCoin
 from mysql_client import MysqlClient
 from sqlite_client import SqliteClient
 from subscription_manager import SubscriptionManager
+from util import print_log
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Bitcoin exchange market data feed handler.')
@@ -56,9 +59,12 @@ if __name__ == '__main__':
     exch_gws.append(ExchGwBtcc(db_client))
     exch_gws.append(ExchGwBitmex(db_client))
     exch_gws.append(ExchGwBitfinex(db_client))
+    exch_gws.append(ExchGwOkCoin(db_client))
     threads = []
     for exch in exch_gws:
         for instmt in subscription_instmts:
             if instmt.get_exchange_name() == exch.get_exchange_name():
+                print_log("[main]", "Starting instrument %s-%s..." % \
+                    (instmt.get_exchange_name(), instmt.get_instmt_name()))
                 threads += exch.start(instmt)
 

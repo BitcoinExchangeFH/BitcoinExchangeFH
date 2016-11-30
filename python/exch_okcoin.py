@@ -24,6 +24,8 @@ class ExchGwOkCoinInstrument(Instrument):
         self.last_exch_trade_id = ""
         self.book_channel_id = 0
         self.trades_channel_id = 0
+        self.prev_l2_depth = L2Depth(depth=25)
+        self.l2_depth = L2Depth(depth=25)
 
 class ExchGwOkCoinWs(WebSocketApiClient):
     """
@@ -42,7 +44,6 @@ class ExchGwOkCoinWs(WebSocketApiClient):
         :param instmt: Instrument
         :param raw: Raw data in JSON
         """
-        l2_depth = L2Depth()
         field_map = instmt.get_order_book_fields_mapping()
         for key, value in raw.items():
             if key in field_map.keys():
@@ -54,23 +55,23 @@ class ExchGwOkCoinWs(WebSocketApiClient):
                 
                 if field == 'TIMESTAMP':
                     date_time = float(value)/1000.0
-                    l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
+                    instmt.l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
                 elif field == 'BIDS':
                     bids = value
                     sorted(bids, key=lambda x: x[0])
-                    for i in range(0, 5):
-                        l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
-                        l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]
+                    for i in range(0, len(bids)):
+                        instmt.l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
+                        instmt.l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]
                 elif field == 'ASKS':
                     asks = value
                     sorted(asks, key=lambda x: x[0], reverse=True)
-                    for i in range(0, 5):
-                        l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
-                        l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]
+                    for i in range(0, len(asks)):
+                        instmt.l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
+                        instmt.l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]
                 else:
                     raise Exception('The field <%s> is not found' % field)
 
-        return l2_depth
+        return instmt.l2_depth
 
     @classmethod
     def parse_trade(cls, instmt, raw):
@@ -181,11 +182,16 @@ class ExchGwOkCoin(ExchangeGateway):
                 if 'data' in keys:
                     if message['channel'] == instmt.book_channel_id:
                         data = message['data']
+                        instmt.prev_l2_depth = instmt.l2_depth.copy()
                         l2depth = self.api_socket.parse_l2_depth(instmt, data)
-                        instmt.db_order_book_id += 1
-                        self.db_client.insert(table=instmt.db_order_book_table_name,
-                                              columns=['id']+L2Depth.columns(),
-                                              values=[instmt.db_order_book_id]+l2depth.values())                        
+
+                        # Insert only if the first 5 levels are different
+                        if l2depth.is_diff(instmt.prev_l2_depth):
+                            instmt.db_order_book_id += 1
+                            self.db_client.insert(table=instmt.db_order_book_table_name,
+                                                  columns=['id']+L2Depth.columns(),
+                                                  values=[instmt.db_order_book_id]+l2depth.values())
+
                     elif message['channel'] == instmt.trades_channel_id:
                         for trade_raw in message['data']:
                             trade = self.api_socket.parse_trade(instmt, trade_raw)

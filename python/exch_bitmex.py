@@ -53,14 +53,12 @@ class ExchGwBitmexWs(WebSocketApiClient):
                 if field == 'TIMESTAMP':
                     l2_depth.date_time = value.replace('T', ' ').replace('Z', '').replace('-' , '')
                 elif field == 'BIDS':
-                    bids = value
-                    sorted(bids, key=lambda x: x[0])
+                    bids = sorted(value, key=lambda x: x[0], reverse=True)
                     for i in range(0, 5):
                         l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
                         l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]
                 elif field == 'ASKS':
-                    asks = value
-                    sorted(asks, key=lambda x: x[0], reverse=True)
+                    asks = sorted(value, key=lambda x: x[0])
                     for i in range(0, 5):
                         l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
                         l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]

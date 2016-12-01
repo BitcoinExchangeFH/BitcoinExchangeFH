@@ -24,8 +24,8 @@ class ExchGwOkCoinInstrument(Instrument):
         self.last_exch_trade_id = ""
         self.book_channel_id = 0
         self.trades_channel_id = 0
-        self.prev_l2_depth = L2Depth(depth=25)
-        self.l2_depth = L2Depth(depth=25)
+        self.prev_l2_depth = L2Depth(depth=20)
+        self.l2_depth = L2Depth(depth=20)
 
 class ExchGwOkCoinWs(WebSocketApiClient):
     """
@@ -57,14 +57,12 @@ class ExchGwOkCoinWs(WebSocketApiClient):
                     date_time = float(value)/1000.0
                     instmt.l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
                 elif field == 'BIDS':
-                    bids = value
-                    sorted(bids, key=lambda x: x[0])
+                    bids = sorted(value, key=lambda x: x[0], reverse=True)
                     for i in range(0, len(bids)):
                         instmt.l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
                         instmt.l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]
                 elif field == 'ASKS':
-                    asks = value
-                    sorted(asks, key=lambda x: x[0], reverse=True)
+                    asks = sorted(value, key=lambda x: x[0])
                     for i in range(0, len(asks)):
                         instmt.l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
                         instmt.l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]

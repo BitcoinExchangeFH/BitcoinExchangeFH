@@ -5,7 +5,23 @@ from datetime import datetime
 from restful_api_socket import RESTfulApiSocket
 from exchange import ExchangeGateway
 from market_data import L2Depth, Trade
+from instrument import Instrument
 from util import print_log
+
+class ExchGwKrakenInstrument(Instrument):
+    def __init__(self, instmt):
+        """
+        Constructor
+        :param instmt: Instrument
+        """
+        self.copy(instmt)
+        self.db_order_book_table_name = ""
+        self.db_trades_table_name = ""
+        self.db_order_book_id = ""
+        self.db_trade_id = ""
+        self.last_exch_trade_id = ""
+        self.prev_l2_depth = L2Depth(depth=5)
+        self.l2_depth = L2Depth(depth=5)
 
 class ExchGwKrakenRestfulApi(RESTfulApiSocket):
     """
@@ -23,6 +39,7 @@ class ExchGwKrakenRestfulApi(RESTfulApiSocket):
         """
         l2_depth = L2Depth()
         field_map = instmt.get_order_book_fields_mapping()
+
         for key, value in raw.items():
             if key in field_map.keys():
                 try:
@@ -31,14 +48,7 @@ class ExchGwKrakenRestfulApi(RESTfulApiSocket):
                     print("Error from order_book_fields_mapping on key %s" % key)
                     raise
                 
-                if field == 'TIMESTAMP':
-                    offset = 1 if 'TIMESTAMP_OFFSET' not in field_map else field_map['TIMESTAMP_OFFSET']
-                    if offset == 1:
-                        date_time = float(value)
-                    else:
-                        date_time = float(value)/offset
-                    l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
-                elif field == 'BIDS':
+                if field == 'BIDS':
                     bids = value
                     sorted(bids, key=lambda x: x[0])
                     for i in range(0, 5):
@@ -64,7 +74,12 @@ class ExchGwKrakenRestfulApi(RESTfulApiSocket):
         """
         trade = Trade()
         field_map = instmt.get_trades_fields_mapping()
-        for key, value in raw.items():
+        trade_id = ''
+
+        for i in range(0, len(raw)):
+            key = str(i)
+            value = raw[i]
+
             if key in field_map.keys():
                 try:
                     field = field_map[key]
@@ -83,14 +98,14 @@ class ExchGwKrakenRestfulApi(RESTfulApiSocket):
                     trade.trade_side = Trade.parse_side(value)
                     if trade.trade_side == Trade.Side.NONE:
                         raise Exception('Unexpected trade side value %d' % value)
-                elif field == 'TRADE_ID':
-                    trade.trade_id = value
                 elif field == 'TRADE_PRICE':
                     trade.trade_price = value
                 elif field == 'TRADE_VOLUME':
                     trade.trade_volume = value
                 else:
                     raise Exception('The field <%s> is not found' % field)        
+
+        trade.trade_id = trade.date_time + '-' + str(instmt.last_exch_trade_id)
 
         return trade
 
@@ -102,30 +117,38 @@ class ExchGwKrakenRestfulApi(RESTfulApiSocket):
         :return: Object L2Depth
         """
         res = cls.request(instmt.get_order_book_link())
-        if len(res) > 0:
+        if len(res) > 0 and 'error' in res and len(res['error']) == 0:
+            res = list(res['result'].values())[0]
             return cls.parse_l2_depth(instmt=instmt,
                                        raw=res)
         else:
             return None
 
     @classmethod
-    def get_trades(cls, instmt, trade_id):
+    def get_trades(cls, instmt):
         """
         Get trades
         :param instmt: Instrument
         :param trade_id: Trade id
         :return: List of trades
         """
-        if trade_id > 0:
-            res = cls.request(instmt.get_trades_link().replace('<id>', '&since=%d' % trade_id))
+        if instmt.last_exch_trade_id > 0:
+            res = cls.request(instmt.get_trades_link().replace('<id>', '&since=%d' % instmt.last_exch_trade_id))
         else:
             res = cls.request(instmt.get_trades_link().replace('<id>', ''))
 
         trades = []
-        if len(res) > 0:
+        if len(res) > 0 and 'error' in res and len(res['error']) == 0:
+            res = res['result']
+            if 'last' in res.keys():
+                instmt.last_exch_trade_id = int(res['last'])
+                del res['last']
+
+            res = list(res.values())[0]
+
             for t in res:
                 trade = cls.parse_trade(instmt=instmt,
-                                         raw=t)
+                                        raw=t)
                 trades.append(trade)
 
         return trades
@@ -133,7 +156,7 @@ class ExchGwKrakenRestfulApi(RESTfulApiSocket):
 
 class ExchGwKraken(ExchangeGateway):
     """
-    Exchange gateway BTCC
+    Exchange gateway
     """
     def __init__(self, db_client):
         """
@@ -148,28 +171,53 @@ class ExchGwKraken(ExchangeGateway):
         Get exchange name
         :return: Exchange name string
         """
-        return 'BTCC'
+        return 'Kraken'
+
+    def get_trades_init(self, instmt):
+        """
+        Initialization method in get_trades
+        :param instmt: Instrument
+        :return: Last id
+        """
+        table_name = self.get_trades_table_name(instmt.get_exchange_name(),
+                                                instmt.get_instmt_name())
+        self.db_client.create(table_name,
+                              ['id'] + Trade.columns(),
+                              ['int primary key'] + Trade.types())
+        id_ret = self.db_client.select(table=table_name,
+                                       columns=['id'],
+                                       orderby="id desc",
+                                       limit=1)
+        trade_id_ret = self.db_client.select(table=table_name,
+                                             columns=['trade_id'],
+                                             orderby="id desc",
+                                             limit=1)
+
+        if len(id_ret) > 0 and len(trade_id_ret) > 0:
+            return id_ret[0][0], int(trade_id_ret[0][0][25:])
+        else:
+            return 0, 0
 
     def get_order_book_worker(self, instmt):
         """
         Get order book worker
         :param instmt: Instrument
         """
-        table_name = self.get_order_book_table_name(instmt.get_exchange_name(),
-                                                    instmt.get_instmt_name())
-        db_order_book_id  = self.get_order_book_init(instmt)
+        instmt.db_order_book_id = self.get_order_book_init(instmt)
 
         while True:
             try:
-                ret = self.api_socket.get_order_book(instmt)
-                # if ret is not None:
-                #     db_order_book_id += 1
-                #     self.db_client.insert(table=table_name,
-                #                           columns=['id']+L2Depth.columns(),
-                #                           values=[db_order_book_id]+ret.values())
+                l2_depth = self.api_socket.get_order_book(instmt)
+                if l2_depth is not None and l2_depth.is_diff(instmt.prev_l2_depth):
+                    instmt.prev_l2_depth = instmt.l2_depth.copy()
+                    instmt.l2_depth = l2_depth
+                    instmt.db_order_book_id += 1
+                    self.db_client.insert(table=instmt.db_order_book_table_name,
+                                          columns=['id']+L2Depth.columns(),
+                                          values=[instmt.db_order_book_id]+l2_depth.values())
             except Exception as e:
                 print_log(self.__class__.__name__,
-                          "Error in order book: %s\nReturn: %s" % (e, ret))
+                          "Error in order book: %s\nReturn: %s" % (e, l2_depth))
             time.sleep(0.5)
 
     def get_trades_worker(self, instmt):
@@ -177,19 +225,16 @@ class ExchGwKraken(ExchangeGateway):
         Get order book worker thread
         :param instmt: Instrument name
         """
-        table_name = self.get_trades_table_name(instmt.get_exchange_name(),
-                                                instmt.get_instmt_name())       
-        db_trade_id, db_exch_trade_id = self.get_trades_init(instmt)
+        instmt.db_trade_id, instmt.last_exch_trade_id = self.get_trades_init(instmt)
 
         while True:
             try:
-                ret = self.api_socket.get_trades(instmt, db_trade_id)
-                # for trade in ret:
-                #     if int(trade.trade_id) > db_trade_id:
-                #         db_trade_id = int(trade.trade_id)
-                #     self.db_client.insert(table=table_name,
-                #                           columns=['id']+Trade.columns(),
-                #                           values=[db_trade_id]+trade.values())
+                ret = self.api_socket.get_trades(instmt)
+                for trade in ret:
+                    instmt.db_trade_id += 1
+                    self.db_client.insert(table=instmt.db_trades_table_name,
+                                          columns=['id']+Trade.columns(),
+                                          values=[instmt.db_trade_id]+trade.values())
             except Exception as e:
                 print_log(self.__class__.__name__,
                           "Error in trades: %s\nReturn: %s" % (e, ret))
@@ -201,6 +246,12 @@ class ExchGwKraken(ExchangeGateway):
         :param instmt: Instrument
         :return List of threads
         """
+        instmt = ExchGwKrakenInstrument(instmt)
+        instmt.db_order_book_table_name = self.get_order_book_table_name(instmt.get_exchange_name(),
+                                                                         instmt.get_instmt_name())
+        instmt.db_trades_table_name = self.get_trades_table_name(instmt.get_exchange_name(),
+                                                                 instmt.get_instmt_name())
+
         t1 = threading.Thread(target=partial(self.get_order_book_worker, instmt))
         t1.start()
         t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))

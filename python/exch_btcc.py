@@ -183,7 +183,7 @@ class ExchGwBtcc(ExchangeGateway):
 
         while True:
             try:
-                ret = self.api_socket.get_trades(instmt, db_trade_id)
+                ret = self.api_socket.get_trades(instmt, db_exch_trade_id)
                 for trade in ret:
                     if int(trade.trade_id) > db_trade_id:
                         db_trade_id = int(trade.trade_id)

@@ -33,9 +33,9 @@ class MarketDataBase:
         """
         if type(value) != int:
             value = value.lower()
-            if value == 'buy' or value == 'bid':
+            if value == 'buy' or value == 'bid' or value == 'b':
                 return MarketDataBase.Side.BUY
-            elif value == 'sell' or value == 'ask':
+            elif value == 'sell' or value == 'ask' or value == 's':
                 return MarketDataBase.Side.SELL
             else:
                 return MarketDataBase.Side.NONE
@@ -137,11 +137,11 @@ class L2Depth(MarketDataBase):
         :return: True if they are different
         """
         for i in range(0, 5):
-            if self.bids[i].price != l2_depth.bids[i].price or \
-               self.bids[i].volume != l2_depth.bids[i].volume:
+            if abs(self.bids[i].price - l2_depth.bids[i].price) > 1e-09 or \
+               abs(self.bids[i].volume - l2_depth.bids[i].volume) > 1e-09:
                 return True
-            elif self.asks[i].price != l2_depth.asks[i].price or \
-                self.asks[i].volume != l2_depth.asks[i].volume:
+            elif abs(self.asks[i].price - l2_depth.asks[i].price) > 1e-09 or \
+                abs(self.asks[i].volume - l2_depth.asks[i].volume) > 1e-09:
                 return True
         return False
 

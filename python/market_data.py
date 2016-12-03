@@ -128,7 +128,11 @@ class L2Depth(MarketDataBase):
         """
         Copy
         """
-        return copy.deepcopy(self)
+        ret = L2Depth(depth=self.depth)
+        ret.date_time = self.date_time
+        ret.bids = self.bids[:]
+        ret.asks = self.asks[:]
+        return ret
 
     def is_diff(self, l2_depth):
         """

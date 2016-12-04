@@ -2,7 +2,7 @@ import websocket
 import threading
 from time import sleep
 from api_socket import ApiSocket
-from util import print_log
+from util import Logger
 
 class WebSocketApiClient(ApiSocket):
     """
@@ -40,7 +40,7 @@ class WebSocketApiClient(ApiSocket):
                            the first argument and the error as the second
                            argument
         """
-        print_log(self.__class__.__name__, "Connecting to socket <%s>..." % self.id)
+        Logger.info(self.__class__.__name__, "Connecting to socket <%s>..." % self.id)
         if on_message_handler is not None:
             self.on_message_handlers.append(on_message_handler)
         if on_open_handler is not None:
@@ -74,18 +74,18 @@ class WebSocketApiClient(ApiSocket):
             handler(m)
 
     def __on_open(self, ws):
-        print_log(self.__class__.__name__, "Socket <%s> is opened." % self.id)
+        Logger.info(self.__class__.__name__, "Socket <%s> is opened." % self.id)
         self._connected = True
         for handler in self.on_open_handlers:
             handler(ws)
         
     def __on_close(self, ws):
-        print_log(self.__class__.__name__, "Socket <%s> is closed." % self.id)
+        Logger.info(self.__class__.__name__, "Socket <%s> is closed." % self.id)
         self._connected = False
         for handler in self.on_close_handlers:
             handler(ws)
         
     def __on_error(self, ws, error):
-        print_log(self.__class__.__name__, "Socket <%s> error:\n %s" % (self.id, error))
+        Logger.info(self.__class__.__name__, "Socket <%s> error:\n %s" % (self.id, error))
         for handler in self.on_error_handlers:
             handler(ws, error)

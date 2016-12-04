@@ -7,7 +7,7 @@ from ws_api_socket import WebSocketApiClient
 from market_data import L2Depth, Trade
 from exchange import ExchangeGateway
 from instrument import Instrument
-from util import print_log
+from util import Logger
 
 
 class ExchGwOkCoinWs(WebSocketApiClient):
@@ -118,7 +118,7 @@ class ExchGwOkCoin(ExchangeGateway):
         :param instmt: Instrument
         :param ws: Web socket
         """
-        print_log(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
+        Logger.info(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
                   (instmt.get_instmt_code(), instmt.get_exchange_name()))
         if not instmt.get_subscribed():
             instmt_code_split = instmt.get_instmt_code().split('_')
@@ -147,7 +147,7 @@ class ExchGwOkCoin(ExchangeGateway):
         :param instmt: Instrument
         :param ws: Web socket
         """
-        print_log(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
+        Logger.info(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
                   (instmt.get_instmt_code(), instmt.get_exchange_name()))
         instmt.set_subscribed(False)
 
@@ -184,10 +184,10 @@ class ExchGwOkCoin(ExchangeGateway):
                                                       columns=['id']+Trade.columns(),
                                                       values=[instmt.get_trade_id()]+trade.values())
                 elif 'success' in keys:
-                    print_log(self.__class__.__name__, "Subscription to channel %s is %s" \
+                    Logger.info(self.__class__.__name__, "Subscription to channel %s is %s" \
                         % (message['channel'], message['success']))
             else:
-                print_log(self.__class__.__name__, ' - ' + json.dumps(message))
+                Logger.info(self.__class__.__name__, ' - ' + json.dumps(message))
 
     def start(self, instmt):
         """

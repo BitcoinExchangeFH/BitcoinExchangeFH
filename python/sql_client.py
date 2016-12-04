@@ -1,6 +1,6 @@
 from database_client import DatabaseClient
 import threading
-from util import print_log
+from util import Logger
 
 class SqlClient(DatabaseClient):
     """
@@ -109,7 +109,7 @@ class SqlClient(DatabaseClient):
             self.execute(sql)
             self.commit()
         except Exception as e:
-            print_log(self.__class__.__name__, "SQL error: %s\nSQL: %s" % (e, sql))
+            Logger.info(self.__class__.__name__, "SQL error: %s\nSQL: %s" % (e, sql))
 
         self.lock.release()
         return True

@@ -11,7 +11,7 @@ from exch_kraken import ExchGwKraken
 from mysql_client import MysqlClient
 from sqlite_client import SqliteClient
 from subscription_manager import SubscriptionManager
-from util import print_log
+from util import Logger
 
 
 if __name__ == '__main__':
@@ -31,6 +31,8 @@ if __name__ == '__main__':
                         help='Database password. Supported for database with connection')
     parser.add_argument('-dbschema', action='store', dest='dbschema',
                         help='Database schema. Supported for database with connection')
+    parser.add_argument('-output', action='store', dest='output',
+                        help='Verbose output file path')
     args = parser.parse_args()
 
     if args.sqlite:
@@ -53,7 +55,8 @@ if __name__ == '__main__':
         print('Error: Please define the instrument subscription list. You can refer to subscriptions.ini.')
         parser.print_help()
         sys.exit(1)
-        
+
+    Logger.init_log(args.output)
     subscription_instmts = SubscriptionManager(args.instmts).get_subscriptions()
 
     exch_gws = []
@@ -66,7 +69,7 @@ if __name__ == '__main__':
     for exch in exch_gws:
         for instmt in subscription_instmts:
             if instmt.get_exchange_name() == exch.get_exchange_name():
-                print_log("[main]", "Starting instrument %s-%s..." % \
+                Logger.info("[main]", "Starting instrument %s-%s..." % \
                     (instmt.get_exchange_name(), instmt.get_instmt_name()))
                 threads += exch.start(instmt)
 

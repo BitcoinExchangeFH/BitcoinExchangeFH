@@ -7,7 +7,7 @@ from ws_api_socket import WebSocketApiClient
 from market_data import L2Depth, Trade
 from exchange import ExchangeGateway
 from instrument import Instrument
-from util import print_log
+from util import Logger
 
 
 class ExchGwBitmexWs(WebSocketApiClient):
@@ -114,7 +114,7 @@ class ExchGwBitmex(ExchangeGateway):
         :param instmt: Instrument
         :param ws: Web socket
         """
-        print_log(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
+        Logger.info(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
                   (instmt.get_instmt_code(), instmt.get_exchange_name()))
         if not instmt.get_subscribed():
             ws.send("{\"op\":\"subscribe\", \"args\": [\"orderBook10:%s\"]}" % instmt.get_instmt_code())
@@ -127,7 +127,7 @@ class ExchGwBitmex(ExchangeGateway):
         :param instmt: Instrument
         :param ws: Web socket
         """
-        print_log(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
+        Logger.info(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
                   (instmt.get_instmt_code(), instmt.get_exchange_name()))
         instmt.set_subscribed(False)
 
@@ -140,9 +140,9 @@ class ExchGwBitmex(ExchangeGateway):
         message = json.loads(message)
         keys = message.keys()
         if 'info' in keys:
-            print_log(self.__class__.__name__, message['info'])
+            Logger.info(self.__class__.__name__, message['info'])
         elif 'subscribe' in keys:
-            print_log(self.__class__.__name__, 'Subscription of %s is %s' % \
+            Logger.info(self.__class__.__name__, 'Subscription of %s is %s' % \
                         (message['request']['args'], \
                          'successful' if message['success'] else 'failed'))
         elif 'table' in keys:
@@ -168,9 +168,9 @@ class ExchGwBitmex(ExchangeGateway):
                                                     columns=['id']+L2Depth.columns(),
                                                     values=[instmt.get_order_book_id()]+instmt.get_l2_depth().values())
             else:
-                print_log(self.__class__.__name__, json.dumps(message,indent=2))
+                Logger.info(self.__class__.__name__, json.dumps(message,indent=2))
         else:
-            print_log(self.__class__.__name__, " - " + json.dumps(message))
+            Logger.error(self.__class__.__name__, "Unrecognised message:\n" + json.dumps(message))
 
     def start(self, instmt):
         """

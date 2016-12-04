@@ -6,7 +6,7 @@ from restful_api_socket import RESTfulApiSocket
 from exchange import ExchangeGateway
 from market_data import L2Depth, Trade
 from instrument import Instrument
-from util import print_log
+from util import Logger
 
 
 class ExchGwKrakenRestfulApi(RESTfulApiSocket):
@@ -201,7 +201,7 @@ class ExchGwKraken(ExchangeGateway):
                                           columns=['id']+L2Depth.columns(),
                                           values=[instmt.get_order_book_id()]+l2_depth.values())
             except Exception as e:
-                print_log(self.__class__.__name__,
+                Logger.error(self.__class__.__name__,
                           "Error in order book: %s\nReturn: %s" % (e, l2_depth))
             time.sleep(0.5)
 
@@ -223,7 +223,7 @@ class ExchGwKraken(ExchangeGateway):
                                           columns=['id']+Trade.columns(),
                                           values=[instmt.get_trade_id()]+trade.values())
             except Exception as e:
-                print_log(self.__class__.__name__,
+                Logger.error(self.__class__.__name__,
                           "Error in trades: %s\nReturn: %s" % (e, ret))
             time.sleep(0.5)
 

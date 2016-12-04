@@ -7,7 +7,7 @@ from ws_api_socket import WebSocketApiClient
 from market_data import L2Depth, Trade
 from exchange import ExchangeGateway
 from instrument import Instrument
-from util import print_log
+from util import Logger
 
 
 class ExchGwBitfinexWs(WebSocketApiClient):
@@ -79,7 +79,7 @@ class ExchGwBitfinexWs(WebSocketApiClient):
                         else:
                             depth_text += "                   "
                         depth_text += "\n"
-                    print_log(cls.__name__, "Cannot find the deletion of the message: %s\nDepth:\n%s\n" % \
+                    Logger.info(cls.__name__, "Cannot find the deletion of the message: %s\nDepth:\n%s\n" % \
                               (raw, depth_text))
             else:
                 # Insertion/Update
@@ -180,7 +180,7 @@ class ExchGwBitfinex(ExchangeGateway):
         :param instmt: Instrument
         :param ws: Web socket
         """
-        print_log(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
+        Logger.info(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
                   (instmt.get_instmt_code(), instmt.get_exchange_name()))
         if not instmt.get_subscribed():
             ws.send("{\"event\":\"subscribe\", \"channel\": \"book\", \"pair\": \"%s\", \"freq\": \"F0\"}" % instmt.get_instmt_code())
@@ -193,7 +193,7 @@ class ExchGwBitfinex(ExchangeGateway):
         :param instmt: Instrument
         :param ws: Web socket
         """
-        print_log(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
+        Logger.info(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
                   (instmt.get_instmt_code(), instmt.get_exchange_name()))
         instmt.set_subscribed(False)
 
@@ -207,7 +207,7 @@ class ExchGwBitfinex(ExchangeGateway):
         if isinstance(message, dict):
             keys = message.keys()
             if 'event' in keys and message['event'] == 'info' and  'version' in keys:
-                print_log(self.__class__.__name__, "Bitfinex version: %s" % message['version'])
+                Logger.info(self.__class__.__name__, "Bitfinex version: %s" % message['version'])
             elif 'event' in keys and message['event'] == 'subscribed':
                 if instmt.get_instmt_code() == message['pair']:
                     if message['channel'] == 'book':
@@ -217,7 +217,7 @@ class ExchGwBitfinex(ExchangeGateway):
                     else:
                         raise Exception("Unknown channel %s : <%s>" % (message['channel'], message))
 
-                    print_log(self.__class__.__name__, 'Subscription: %s, pair: %s, channel Id: %s' % \
+                    Logger.info(self.__class__.__name__, 'Subscription: %s, pair: %s, channel Id: %s' % \
                               (message['channel'], instmt.get_instmt_code(), message['chanId']))
         elif isinstance(message, list):
             if message[0] == instmt.get_order_book_channel_id():

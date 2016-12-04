@@ -9,19 +9,6 @@ from exchange import ExchangeGateway
 from instrument import Instrument
 from util import print_log
 
-class ExchGwBitmexInstrument(Instrument):
-    def __init__(self, instmt):
-        """
-        Constructor
-        :param instmt: Instrument
-        """
-        self.copy(instmt)
-        self.subscribed = False
-        self.db_order_book_table_name = ""
-        self.db_trades_table_name = ""
-        self.db_order_book_id = ""
-        self.db_trade_id = ""
-        self.last_exch_trade_id = ""
 
 class ExchGwBitmexWs(WebSocketApiClient):
     """
@@ -40,7 +27,7 @@ class ExchGwBitmexWs(WebSocketApiClient):
         :param instmt: Instrument
         :param raw: Raw data in JSON
         """
-        l2_depth = L2Depth()
+        l2_depth = instmt.get_l2_depth()
         field_map = instmt.get_order_book_fields_mapping()
         for key, value in raw.items():
             if key in field_map.keys():
@@ -54,12 +41,12 @@ class ExchGwBitmexWs(WebSocketApiClient):
                     l2_depth.date_time = value.replace('T', ' ').replace('Z', '').replace('-' , '')
                 elif field == 'BIDS':
                     bids = sorted(value, key=lambda x: x[0], reverse=True)
-                    for i in range(0, 5):
+                    for i in range(0, 10):
                         l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
                         l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]
                 elif field == 'ASKS':
                     asks = sorted(value, key=lambda x: x[0])
-                    for i in range(0, 5):
+                    for i in range(0, 10):
                         l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
                         l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]
                 else:
@@ -129,10 +116,10 @@ class ExchGwBitmex(ExchangeGateway):
         """
         print_log(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
                   (instmt.get_instmt_code(), instmt.get_exchange_name()))
-        if not instmt.subscribed:
+        if not instmt.get_subscribed():
             ws.send("{\"op\":\"subscribe\", \"args\": [\"orderBook10:%s\"]}" % instmt.get_instmt_code())
             ws.send("{\"op\":\"subscribe\", \"args\": [\"trade:%s\"]}" % instmt.get_instmt_code())
-            instmt.subscribed = True
+            instmt.set_subscribed(True)
 
     def on_close_handler(self, instmt, ws):
         """
@@ -142,7 +129,7 @@ class ExchGwBitmex(ExchangeGateway):
         """
         print_log(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
                   (instmt.get_instmt_code(), instmt.get_exchange_name()))
-        instmt.subscribed = False
+        instmt.set_subscribed(False)
 
     def on_message_handler(self, instmt, message):
         """
@@ -164,20 +151,22 @@ class ExchGwBitmex(ExchangeGateway):
                     if trade_raw["symbol"] == instmt.get_instmt_code():
                         # Filter out the initial subscriptions
                         trade = self.api_socket.parse_trade(instmt, trade_raw)
-                        if trade.trade_id != instmt.last_exch_trade_id:
-                            instmt.db_trade_id += 1
-                            instmt.last_exch_trade_id = trade.trade_id
-                            self.db_client.insert(table=instmt.db_trades_table_name,
+                        if trade.trade_id != instmt.get_exch_trade_id():
+                            instmt.incr_trade_id()
+                            instmt.set_exch_trade_id(trade.trade_id)
+                            self.db_client.insert(table=instmt.get_trades_table_name(),
                                                   columns=['id']+Trade.columns(),
-                                                  values=[instmt.db_trade_id]+trade.values())
+                                                  values=[instmt.get_trade_id()]+trade.values())
             elif message['table'] == 'orderBook10':
                 for data in message['data']:
                     if data["symbol"] == instmt.get_instmt_code():
-                        l2depth = self.api_socket.parse_l2_depth(instmt, data)
-                        instmt.db_order_book_id += 1
-                        self.db_client.insert(table=instmt.db_order_book_table_name,
-                                                columns=['id']+L2Depth.columns(),
-                                                values=[instmt.db_order_book_id]+l2depth.values())
+                        instmt.set_prev_l2_depth(instmt.get_l2_depth().copy())
+                        self.api_socket.parse_l2_depth(instmt, data)
+                        if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
+                            instmt.incr_order_book_id()
+                            self.db_client.insert(table=instmt.get_order_book_table_name(),
+                                                    columns=['id']+L2Depth.columns(),
+                                                    values=[instmt.get_order_book_id()]+instmt.get_l2_depth().values())
             else:
                 print_log(self.__class__.__name__, json.dumps(message,indent=2))
         else:
@@ -189,13 +178,16 @@ class ExchGwBitmex(ExchangeGateway):
         :param instmt: Instrument
         :return List of threads
         """
-        instmt = ExchGwBitmexInstrument(instmt)
-        instmt.db_order_book_table_name = self.get_order_book_table_name(instmt.get_exchange_name(),
-                                                                       instmt.get_instmt_name())
-        instmt.db_trades_table_name = self.get_trades_table_name(instmt.get_exchange_name(),
-                                                               instmt.get_instmt_name())
-        instmt.db_order_book_id = self.get_order_book_init(instmt)
-        instmt.db_trade_id, instmt.last_exch_trade_id = self.get_trades_init(instmt)
+        instmt.set_l2_depth(L2Depth(10))
+        instmt.set_prev_l2_depth(L2Depth(10))
+        instmt.set_order_book_table_name(self.get_order_book_table_name(instmt.get_exchange_name(),
+                                                                       instmt.get_instmt_name()))
+        instmt.set_trades_table_name(self.get_trades_table_name(instmt.get_exchange_name(),
+                                                               instmt.get_instmt_name()))
+        instmt.set_order_book_id(self.get_order_book_init(instmt))
+        trade_id, last_exch_trade_id = self.get_trades_init(instmt)
+        instmt.set_trade_id(trade_id)
+        instmt.set_exch_trade_id(last_exch_trade_id)
         return [self.api_socket.connect(instmt.get_link(),
                                         on_message_handler=partial(self.on_message_handler, instmt),
                                         on_open_handler=partial(self.on_open_handler, instmt),

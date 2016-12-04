@@ -130,8 +130,8 @@ class L2Depth(MarketDataBase):
         """
         ret = L2Depth(depth=self.depth)
         ret.date_time = self.date_time
-        ret.bids = self.bids[:]
-        ret.asks = self.asks[:]
+        ret.bids = [e.copy() for e in self.bids]
+        ret.asks = [e.copy() for e in self.asks]
         return ret
 
     def is_diff(self, l2_depth):

@@ -1,6 +1,4 @@
 import json
-import copy
-
 
 class Instrument(object):
     def __init__(self,
@@ -18,6 +16,16 @@ class Instrument(object):
         self.exchange_name = exchange_name
         self.instmt_name = instmt_name
         self.instmt_code = instmt_code
+        self.order_book_table_name = ''
+        self.trades_table_name = ''
+        self.order_book_id = 0
+        self.trade_id = 0
+        self.exch_trade_id = '0'
+        self.subscribed = False
+        self.l2_depth = None
+        self.prev_l2_depth = None
+        self.order_book_channel_id = ''
+        self.trades_channel_id = ''
 
         if param.get('order_book_link') is not None:
             self.order_book_link = param['order_book_link']
@@ -58,6 +66,16 @@ class Instrument(object):
         self.order_book_fields_mapping = obj.order_book_fields_mapping
         self.trades_fields_mapping = obj.trades_fields_mapping
         self.link = obj.link
+        self.order_book_table_name = obj.order_book_table_name
+        self.trades_table_name = obj.trades_table_name
+        self.order_book_id = obj.order_book_id
+        self.trade_id = obj.trade_id
+        self.exch_trade_id = obj.exch_trade_id
+        self.subscribed = obj.subscribed
+        self.l2_depth = obj.l2_depth
+        self.prev_l2_depth = obj.prev_l2_depth
+        self.order_book_channel_id = obj.order_book_channel_id
+        self.trades_channel_id = obj.trades_channel_id
 
     def get_exchange_name(self):
         return self.exchange_name
@@ -83,3 +101,68 @@ class Instrument(object):
     def get_link(self):
         return self.link
 
+    def get_order_book_table_name(self):
+        return self.order_book_table_name
+
+    def set_order_book_table_name(self, order_book_table_name):
+        self.order_book_table_name = order_book_table_name
+
+    def get_trades_table_name(self):
+        return self.trades_table_name
+
+    def set_trades_table_name(self, trades_table_name):
+        self.trades_table_name = trades_table_name
+
+    def get_order_book_id(self):
+        return self.order_book_id
+
+    def set_order_book_id(self, order_book_id):
+        self.order_book_id = order_book_id
+
+    def incr_order_book_id(self):
+        self.order_book_id += 1
+
+    def get_trade_id(self):
+        return self.trade_id
+
+    def set_trade_id(self, trade_id):
+        self.trade_id = trade_id
+
+    def incr_trade_id(self):
+        self.trade_id += 1
+
+    def get_exch_trade_id(self):
+        return self.exch_trade_id
+
+    def set_exch_trade_id(self, exch_trade_id):
+        self.exch_trade_id = exch_trade_id
+
+    def get_subscribed(self):
+        return self.subscribed
+
+    def set_subscribed(self, subscribed):
+        self.subscribed = subscribed
+
+    def get_l2_depth(self):
+        return self.l2_depth
+
+    def set_l2_depth(self, l2_depth):
+        self.l2_depth = l2_depth
+
+    def get_prev_l2_depth(self):
+        return self.prev_l2_depth
+
+    def set_prev_l2_depth(self, prev_l2_depth):
+        self.prev_l2_depth = prev_l2_depth
+
+    def get_order_book_channel_id(self):
+        return self.order_book_channel_id
+
+    def set_order_book_channel_id(self, order_book_channel_id):
+        self.order_book_channel_id = order_book_channel_id
+
+    def get_trades_channel_id(self):
+        return self.trades_channel_id
+
+    def set_trades_channel_id(self, trades_channel_id):
+        self.trades_channel_id = trades_channel_id

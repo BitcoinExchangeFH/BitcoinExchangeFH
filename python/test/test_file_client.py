@@ -38,28 +38,27 @@ class SqliteClientTest(unittest.TestCase):
             table_name,
             columns,
             ['20161026','10:00:02.000000',3,'Efgh',10.5]))
-
-        # Check table "IF NOT EXISTS" condition
-        self.assertTrue(self.db_client.create(table_name, columns, types))
+        
+        self.db_client.close()
 
         # Fetch the whole table
-        # row = self.db_client.select(table=table_name)
-        # self.assertEqual(len(row), 3)
-        # self.assertEqual(row[0][0], "20161026")
-        # self.assertEqual(row[0][1], "10:00:00.000000")
-        # self.assertEqual(row[0][2], 1)
-        # self.assertEqual(row[0][3], 'AbC')
-        # self.assertEqual(row[0][4], 10.3)
-        # self.assertEqual(row[1][0], "20161026")
-        # self.assertEqual(row[1][1], "10:00:01.000000")
-        # self.assertEqual(row[1][2], 2)
-        # self.assertEqual(row[1][4], 10.4)
-        # self.assertEqual(row[1][3], 'AbCD')
-        # self.assertEqual(row[2][0], "20161026")
-        # self.assertEqual(row[2][1], "10:00:02.000000")
-        # self.assertEqual(row[2][2], 3)
-        # self.assertEqual(row[2][3], 'Efgh')
-        # self.assertEqual(row[2][4], 10.5)
+        row = self.db_client.select(table=table_name)
+        self.assertEqual(len(row), 3)
+        self.assertEqual(row[0][0], "20161026")
+        self.assertEqual(row[0][1], "10:00:00.000000")
+        self.assertEqual(row[0][2], 1)
+        self.assertEqual(row[0][3], 'AbC')
+        self.assertEqual(row[0][4], 10.3)
+        self.assertEqual(row[1][0], "20161026")
+        self.assertEqual(row[1][1], "10:00:01.000000")
+        self.assertEqual(row[1][2], 2)
+        self.assertEqual(row[1][4], 10.4)
+        self.assertEqual(row[1][3], 'AbCD')
+        self.assertEqual(row[2][0], "20161026")
+        self.assertEqual(row[2][1], "10:00:02.000000")
+        self.assertEqual(row[2][2], 3)
+        self.assertEqual(row[2][3], 'Efgh')
+        self.assertEqual(row[2][4], 10.5)
 
         # # Fetch with condition
         # row = self.db_client.select(table=table_name, condition="k=2")

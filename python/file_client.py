@@ -48,6 +48,19 @@ class FileClient(DatabaseClient):
         else:
             raise Exception("Cannot convert value (%s) to string. Value is not string, integer nor float" %\
                             val)
+    
+    @staticmethod
+    def convert_to(from_str, to_type):
+        """
+        Convert the element to the given type
+        """
+        if to_type is int:
+            return int(from_str)
+        elif to_type is float:
+            return float(from_str)
+        else:
+            return from_str
+
 
     def create(self, table, columns, types, is_ifnotexists=True):
         """
@@ -87,6 +100,7 @@ class FileClient(DatabaseClient):
         f = self.file_mapping[table]
         f.write(value_string)
         f.write("\n")
+        f.flush()
         self.lock.release()
         return True
 
@@ -102,8 +116,9 @@ class FileClient(DatabaseClient):
         :param isFetchAll: Indicator of fetching all
         :return Result rows
         """
-        f = self.file_mapping[table]
+        f = open(self.file_directory + table + ".csv", "r")
         orig_columns = f.readline().split(",")
+        ret = []
 
         # Parse condition
         operator = FileClient.Operator.UNKNOWN
@@ -130,20 +145,69 @@ class FileClient(DatabaseClient):
             target_value = condition.split('<')[1].strip()
 
         if condition != '' and operator == FileClient.Operator.UNKNOWN:
-            return []
+            return ret
 
+        # Parse select
         self.lock.acquire()
-        ret = []
         for line in f.readline():
             values = line.split(",")
             row = []
+            is_append = condition == ''
+            
             for i in range(0, len(orig_columns)):
-                if orig_columns[i] in columns or columns[0] == '*':
+                column = orig_columns[i]
+                value = values[i]
+                if column in columns or columns[0] == '*':
                     # Field is correct. Then check condition.
-                    if condition == '':
-                        pass
-
+                    row.append(value)
+                    if operator == FileClient.Operator.NOT_EQUAL and \
+                        FileClient.convert_to(target_value, type(value)) != value:
+                        is_append = True
+                    elif operator == FileClient.Operator.EQUAL and \
+                        FileClient.convert_to(target_value, type(value)) == value:
+                        is_append = True
+                    elif operator == FileClient.Operator.GREATER and \
+                        FileClient.convert_to(target_value, type(value)) > value:
+                        is_append = True
+                    elif operator == FileClient.Operator.GREATER_OR_EQUAL and \
+                        FileClient.convert_to(target_value, type(value)) >= value:
+                        is_append = True
+                    elif operator == FileClient.Operator.SMALLER and \
+                        FileClient.convert_to(target_value, type(value)) < value:
+                        is_append = True
+                    elif operator == FileClient.Operator.SMALLER_OR_EQUAL and \
+                        FileClient.convert_to(target_value, type(value)) <= value:
+                        is_append = True                        
+            if is_append:
+                ret.append(row)
         self.lock.release()
+        
+        # Parse orderby
+        orderby = orderby.split(' ')
+        if len(orderby) == 1:
+            field = orderby[0]
+            field_index = orig_columns.index(field)
+            if field_index == -1:
+                raise Exception("Cannot find field %s from the table" % field)
+            ret = sorted(ret, key=lambda x: x[field_index])
+        elif len(orderby) == 2:
+            field = orderby[0]
+            field_index = orig_columns.index(field)
+            reverse = True
+            if orderby[1] == 'asc':
+                reverse = False
+            elif orderby[1] == 'desc':
+                reverse = True
+            else:
+                raise Exception("Incorrect orderby statement <%s>" % ' '.join(orderby))
+            ret = sorted(ret, key=lambda x: x[field_index], reverse=reverse)
+        else:
+            raise Exception("Incorrect orderby statement <%s>" % ' '.join(orderby))
+        
+        if limit > 0:
+            ret = ret[:limit]
+        
+        return ret
 
     def delete(self, table, condition='1==1'):
         """

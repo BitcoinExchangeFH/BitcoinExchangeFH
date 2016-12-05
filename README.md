@@ -18,11 +18,11 @@ Users can
 - Bitfinex (Websocket)
 - BitMEX (Websocket)
 - BTCC (RESTful)
+- Kraken (RESTful)
 
 Currently the support of other exchanges is still under development.
 
 Scheduled exchange supported soon:
-- Kraken
 - xBTCe
 - Poloniex
 - DABTC
@@ -87,6 +87,7 @@ python python/bitcoinexchangefh.py -mysql -dbaddr localhost -dbport 3306 -dbuser
 |dbuser|Database user. Supported for database with connection.|
 |dbpwd|Database password. Supported for database with connection.|
 |dbschema|Database schema. Supported for database with connection.|
+|output|Verbose output file path.|
 
 
 ## Compatibility

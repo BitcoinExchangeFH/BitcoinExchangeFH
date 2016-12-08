@@ -76,6 +76,12 @@ To record the data to MySQL database, for example connecting to localhost with u
 python python/bitcoinexchangefh.py -mysql -dbaddr localhost -dbport 3306 -dbuser bitcoin -dbpwd bitcoin -dbschema bcex
 ```
 
+To record the data to csv files, for example to a folder named "data", you can run the following command.
+
+```
+python python/bitcoinexchangefh.py -csv -dbdir data/
+```
+
 ### Arguments
 
 |Argument|Description|
@@ -83,6 +89,7 @@ python python/bitcoinexchangefh.py -mysql -dbaddr localhost -dbport 3306 -dbuser
 |instmts|Instrument subscription file.|
 |sqlite|Use SQLite database.|
 |mysql|Use MySQL.|
+|csv|Use CSV file as database.|
 |dbpath|Database file path. Supported for SQLite only.|
 |dbaddr|Database address. Defaulted as localhost. Supported for database with connection.|
 |dbport|Database port, Defaulted as 3306. Supported for database with connection.|
@@ -96,6 +103,6 @@ python python/bitcoinexchangefh.py -mysql -dbaddr localhost -dbport 3306 -dbuser
 The application is compatible with version higher or equal to python 3.0.
 
 ## Contributions
-Always welcome for any contribution. Please fork the project, make the changes, and submit the merge request. :)
+Always welcome for any contribution and comments. Please fork the project, make the changes, and submit the merge request. :)
 
 For any questions, please feel free to contact me through email (gavincyi at gmail)

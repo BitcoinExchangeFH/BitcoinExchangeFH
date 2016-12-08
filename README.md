@@ -103,6 +103,11 @@ python python/bitcoinexchangefh.py -csv -dbdir data/
 The application is compatible with version higher or equal to python 3.0.
 
 ## Contributions
-Always welcome for any contribution and comments. Please fork the project, make the changes, and submit the merge request. :)
+Always welcome for any contribution. Please fork the project, make the changes, and submit the merge request. :)
 
-For any questions, please feel free to contact me through email (gavincyi at gmail)
+For any questions and comment, please feel free to contact me through email (gavincyi at gmail)
+
+Your comment will be a huge contribution to the project!
+
+## Continuity
+If you are not satisified with python performance, you can contact me to discuss migrating the project into other languages, e.g. C++.

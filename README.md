@@ -23,6 +23,7 @@ Users can
 Currently the support of other exchanges is still under development.
 
 Scheduled exchange supported soon:
+- Huobi
 - xBTCe
 - Poloniex
 - DABTC
@@ -32,6 +33,7 @@ Scheduled exchange supported soon:
 
 - Sqlite
 - MySQL
+- CSV
 
 Currently the support of other databases is still under development.
 

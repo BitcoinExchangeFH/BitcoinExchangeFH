@@ -10,6 +10,7 @@ from exch_okcoin import ExchGwOkCoin
 from exch_kraken import ExchGwKraken
 from mysql_client import MysqlClient
 from sqlite_client import SqliteClient
+from file_client import FileClient
 from subscription_manager import SubscriptionManager
 from util import Logger
 
@@ -17,10 +18,15 @@ from util import Logger
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Bitcoin exchange market data feed handler.')
     parser.add_argument('-instmts', action='store', help='Instrument subscription file.', default='subscriptions.ini')
+    parser.add_argument('-csv', action='store_true', help='Use csv file as database.')
     parser.add_argument('-sqlite', action='store_true', help='Use SQLite database.')
     parser.add_argument('-mysql', action='store_true', help='Use MySQL.')
-    parser.add_argument('-dbpath', action='store', dest='dbpath', help='Database file path. Supported for SQLite only.',
+    parser.add_argument('-dbpath', action='store', dest='dbpath',
+                        help='Database file path. Supported for SQLite only.',
                         default='bitcoinexchange.raw')
+    parser.add_argument('-dbdir', action='store', dest='dbdir',
+                        help='Database file directory. Supported for CSV only.',
+                        default='')
     parser.add_argument('-dbaddr', action='store', dest='dbaddr', default='localhost',
                         help='Database address. Defaulted as localhost. Supported for database with connection')
     parser.add_argument('-dbport', action='store', dest='dbport', default='3306',
@@ -45,6 +51,11 @@ if __name__ == '__main__':
                           user=args.dbuser,
                           pwd=args.dbpwd,
                           schema=args.dbschema)
+    elif args.csv:
+        if args.dbdir != '':
+            db_client = FileClient(dir=args.dbdir)
+        else:
+            db_client = FileClient()
     else:
         print('Error: Please define which database is used.')
         parser.print_help()

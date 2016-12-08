@@ -2,6 +2,7 @@ from database_client import DatabaseClient
 from util import Logger
 import threading
 import os
+import csv
 
 class FileClient(DatabaseClient):
     """
@@ -70,18 +71,19 @@ class FileClient(DatabaseClient):
         :param types: Type array
         :param is_ifnotexists: Create table if not exists keyword
         """
+        file_path = self.file_directory + table + ".csv"
+        columns = [e.split(' ')[0] for e in columns]
         if len(columns) != len(types):
             return False
 
-        column_names = ''
-        for i in range(0, len(columns)):
-            column_names += '%s,' % columns[i].split(' ')[0]
-        column_names = column_names[0:len(column_names)-1]
-        f = open(self.file_directory + table + ".csv", "a+")
-        self.file_mapping[table] = f
-        f.write(column_names)
-        f.write("\n")
+        self.lock.acquire()
+        if os.path.isfile(file_path):
+            Logger.info(self.__class__.__name__, "File (%s) has been created already." % file_path)
+        else:
+            with open(file_path, 'w+') as csvfile:
+                csvfile.write(','.join(["\"" + e + "\"" for e in columns])+'\n')
 
+        self.lock.release()
         return True
 
     def insert(self, table, columns, values, is_orreplace=False):
@@ -92,16 +94,23 @@ class FileClient(DatabaseClient):
         :param values: Value array
         :param is_orreplace: Indicate if the query is "INSERT OR REPLACE"
         """
+        ret = True
+        file_path = self.file_directory + table + ".csv"
         if len(columns) != len(values):
             return False
 
-        value_string = ','.join([FileClient.convert_str(e) for e in values])
         self.lock.acquire()
-        f = self.file_mapping[table]
-        f.write(value_string)
-        f.write("\n")
-        f.flush()
+        if not os.path.isfile(file_path):
+            ret = False
+        else:
+            with open(file_path, "a+") as csvfile:
+                writer = csv.writer(csvfile, lineterminator='\n', quotechar='\"', quoting=csv.QUOTE_NONNUMERIC)
+                writer.writerow(values)
         self.lock.release()
+
+        if not ret:
+            raise Exception("File (%s) has not been created.")
+
         return True
 
     def select(self, table, columns=['*'], condition='', orderby='', limit=0, isFetchAll=True):
@@ -116,97 +125,71 @@ class FileClient(DatabaseClient):
         :param isFetchAll: Indicator of fetching all
         :return Result rows
         """
-        f = open(self.file_directory + table + ".csv", "r")
-        orig_columns = f.readline().split(",")
+        file_path = self.file_directory + table + ".csv"
+        is_all_columns = len(columns) == 1 and columns[0] == '*'
+        csv_field_names = []
+        columns = [e.split(' ')[0] for e in columns]
         ret = []
+        is_error = False
 
-        # Parse condition
-        operator = FileClient.Operator.UNKNOWN
-        target_value = ''
-        if condition == '':
-            pass
-        elif condition.find("!=") > -1:
-            operator = FileClient.Operator.NOT_EQUAL
-            target_value = condition.split('!=')[1].strip()
-        elif condition.find(">=") > -1:
-            operator = FileClient.Operator.GREATER_OR_EQUAL
-            target_value = condition.split('>=')[1].strip()
-        elif condition.find("<=") > -1:
-            operator = FileClient.Operator.SMALLER_OR_EQUAL
-            target_value = condition.split('<=')[1].strip()
-        elif condition.find("=") > -1:
-            operator = FileClient.Operator.EQUAL
-            target_value = condition.split('=')[1].strip()
-        elif condition.find(">") > -1:
-            operator = FileClient.Operator.GREATER
-            target_value = condition.split('>')[1].strip()
-        elif condition.find("<") > -1:
-            operator = FileClient.Operator.SMALLER
-            target_value = condition.split('<')[1].strip()
+        # Preparing condition
+        if condition != '':
+            condition = condition.replace('=', '==')
+            condition = condition.replace('!==', '!=')
+            condition = condition.replace('>==', '>=')
+            condition = condition.replace('<==', '<=')
 
-        if condition != '' and operator == FileClient.Operator.UNKNOWN:
-            return ret
-
-        # Parse select
         self.lock.acquire()
-        for line in f.readline():
-            values = line.split(",")
-            row = []
-            is_append = condition == ''
-            
-            for i in range(0, len(orig_columns)):
-                column = orig_columns[i]
-                value = values[i]
-                if column in columns or columns[0] == '*':
-                    # Field is correct. Then check condition.
-                    row.append(value)
-                    if operator == FileClient.Operator.NOT_EQUAL and \
-                        FileClient.convert_to(target_value, type(value)) != value:
-                        is_append = True
-                    elif operator == FileClient.Operator.EQUAL and \
-                        FileClient.convert_to(target_value, type(value)) == value:
-                        is_append = True
-                    elif operator == FileClient.Operator.GREATER and \
-                        FileClient.convert_to(target_value, type(value)) > value:
-                        is_append = True
-                    elif operator == FileClient.Operator.GREATER_OR_EQUAL and \
-                        FileClient.convert_to(target_value, type(value)) >= value:
-                        is_append = True
-                    elif operator == FileClient.Operator.SMALLER and \
-                        FileClient.convert_to(target_value, type(value)) < value:
-                        is_append = True
-                    elif operator == FileClient.Operator.SMALLER_OR_EQUAL and \
-                        FileClient.convert_to(target_value, type(value)) <= value:
-                        is_append = True                        
-            if is_append:
-                ret.append(row)
-        self.lock.release()
-        
-        # Parse orderby
-        orderby = orderby.split(' ')
-        if len(orderby) == 1:
-            field = orderby[0]
-            field_index = orig_columns.index(field)
-            if field_index == -1:
-                raise Exception("Cannot find field %s from the table" % field)
-            ret = sorted(ret, key=lambda x: x[field_index])
-        elif len(orderby) == 2:
-            field = orderby[0]
-            field_index = orig_columns.index(field)
-            reverse = True
-            if orderby[1] == 'asc':
-                reverse = False
-            elif orderby[1] == 'desc':
-                reverse = True
-            else:
-                raise Exception("Incorrect orderby statement <%s>" % ' '.join(orderby))
-            ret = sorted(ret, key=lambda x: x[field_index], reverse=reverse)
+        if not os.path.isfile(file_path):
+            is_error = True
         else:
-            raise Exception("Incorrect orderby statement <%s>" % ' '.join(orderby))
-        
+            with open(file_path, "r") as csvfile:
+                reader = csv.reader(csvfile, lineterminator='\n', quotechar='\"', quoting=csv.QUOTE_NONNUMERIC)
+                csv_field_names = next(reader, None)
+                for col in columns:
+                    if not is_all_columns and col not in csv_field_names:
+                        raise Exception("Field (%s) is not in the table." % col)
+
+                for csv_row in reader:
+                    # Filter by condition statement
+                    is_selected = True
+                    if condition != '':
+                        condition_eval = condition
+                        for i in range(0, len(csv_field_names)):
+                            key = csv_field_names[i]
+                            value = csv_row[i]
+                            if condition_eval.find(key) > -1:
+                                condition_eval = condition_eval.replace(key, str(value))
+                        is_selected = eval(condition_eval)
+
+                    if is_selected:
+                        ret.append(list(csv_row))
+
+        self.lock.release()
+
+        if is_error:
+            raise Exception("File (%s) has not been created.")
+
+        if orderby != '':
+            # Sort the result
+            field = orderby.split(' ')[0].strip()
+            asc_val = orderby.split(' ')[1].strip() if len(orderby.split(' ')) > 1 else 'asc'
+            if asc_val != 'asc' and asc_val != 'desc':
+                raise Exception("Incorrect orderby in select statement (%s)." % orderby)
+            elif field not in csv_field_names:
+                raise Exception("Field (%s) is not in the table." % col)
+
+            field_index = csv_field_names.index(field)
+            ret = sorted(ret, key=lambda x:x[field_index], reverse=(asc_val == 'desc'))
+
         if limit > 0:
+            # Trim the result by the limit
             ret = ret[:limit]
-        
+
+        if not is_all_columns:
+            field_index = [csv_field_names.index(x) for x in columns]
+            ret = [[row[i] for i in field_index] for row in ret]
+
         return ret
 
     def delete(self, table, condition='1==1'):
@@ -217,9 +200,3 @@ class FileClient(DatabaseClient):
         """
         raise Exception("Deletion is not supported in file client.")
 
-    def close(self):
-        """
-        Close conneciton
-        """
-        for key, value in self.file_mapping.items():
-            value.close()

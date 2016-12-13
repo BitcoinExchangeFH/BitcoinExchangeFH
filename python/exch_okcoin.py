@@ -50,8 +50,8 @@ class ExchGwOkCoinWs(WebSocketApiClient):
            cls.get_asks_field_name() in keys:
             
             # Date time
-            date_time = raw[cls.get_order_book_timestamp_field_name()]/1000.0
-            l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
+            timestamp = float(raw[cls.get_order_book_timestamp_field_name()])/1000.0
+            l2_depth.date_time = datetime.utcfromtimestamp(timestamp).strftime("%Y%m%d %H:%M:%S.%f")
             
             # Bids
             bids = raw[cls.get_bids_field_name()]

@@ -17,12 +17,10 @@ class DatabaseClient:
         """
         if isinstance(val, str):
             return "'" + val + "'"
-        elif isinstance(val, unicode):
+        elif isinstance(val, bytes):
             return "'" + str(val) + "'"
         elif isinstance(val, int):
             return str(val)
-        elif isinstance(val, long):
-            return str(val)            
         elif isinstance(val, float):
             return "%.8f" % val
         else:

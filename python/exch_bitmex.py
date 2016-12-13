@@ -63,28 +63,28 @@ class ExchGwBitmexWs(WebSocketApiClient):
         :param instmt: Instrument
         :param raw: Raw data in JSON
         """
-        l2_depth = L2Depth()
+        l2_depth = instmt.get_l2_depth()
         keys = list(raw.keys())
         if cls.get_order_book_timestamp_field_name() in keys and \
            cls.get_bids_field_name() in keys and \
            cls.get_asks_field_name() in keys:
             
             # Date time
-            date_time = raw[cls.get_order_book_timestamp_field_name()]
-            date_time = date_time.replace('T', ' ').replace('Z', '').replace('-' , '')
-            l2_depth.date_time = date_time
+            timestamp = raw[cls.get_order_book_timestamp_field_name()]
+            timestamp = timestamp.replace('T', ' ').replace('Z', '').replace('-' , '')
+            l2_depth.date_time = timestamp
             
             # Bids
             bids = raw[cls.get_bids_field_name()]
             bids = sorted(bids, key=lambda x: x[0], reverse=True)
-            for i in range(0, 10):
+            for i in range(0, len(bids)):
                 l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
                 l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
                 
             # Asks
             asks = raw[cls.get_asks_field_name()]
             asks = sorted(asks, key=lambda x: x[0])
-            for i in range(0, 10):
+            for i in range(0, len(asks)):
                 l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
                 l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]            
         else:
@@ -111,9 +111,9 @@ class ExchGwBitmexWs(WebSocketApiClient):
            cls.get_trade_volume_field_name() in keys:
         
             # Date time
-            date_time = raw[cls.get_trades_timestamp_field_name()]
-            date_time = date_time.replace('T', ' ').replace('Z', '').replace('-' , '')
-            trade.date_time = datetime
+            timestamp = raw[cls.get_trades_timestamp_field_name()]
+            timestamp = timestamp.replace('T', ' ').replace('Z', '').replace('-' , '')
+            trade.date_time = timestamp
             
             # Trade side
             trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])

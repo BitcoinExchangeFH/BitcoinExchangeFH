@@ -8,6 +8,27 @@ class DatabaseClient:
         """
         pass
 
+    @classmethod
+    def convert_str(cls, val):
+        """
+        Convert the value to string
+        :param val: Can be string, int or float
+        :return:
+        """
+        if isinstance(val, str):
+            return "'" + val + "'"
+        elif isinstance(val, unicode):
+            return "'" + str(val) + "'"
+        elif isinstance(val, int):
+            return str(val)
+        elif isinstance(val, long):
+            return str(val)            
+        elif isinstance(val, float):
+            return "%.8f" % val
+        else:
+            raise Exception("Cannot convert value (%s)<%s> to string. Value is not a string, an integer nor a float" %\
+                            (val, type(val)))
+
     def connect(self, **args):
         """
         Connect

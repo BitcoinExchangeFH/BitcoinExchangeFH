@@ -15,23 +15,6 @@ class SqlClient(DatabaseClient):
         self.cursor = None
         self.lock = threading.Lock()
 
-    @staticmethod
-    def convert_str(val):
-        """
-        Convert the value to string
-        :param val: Can be string, int or float
-        :return:
-        """
-        if isinstance(val, str):
-            return "'" + val + "'"
-        elif isinstance(val, int):
-            return str(val)
-        elif isinstance(val, float):
-            return "%.8f" % val
-        else:
-            raise Exception("Cannot convert value (%s) to string. Value is not string, integer nor float" %\
-                            val)
-
     def execute(self, sql):
         """
         Execute the sql command

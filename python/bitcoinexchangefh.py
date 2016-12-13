@@ -4,7 +4,7 @@ import argparse
 import sys
 
 from exch_bitmex import ExchGwBitmex
-from exch_btcc import ExchGwBtcc
+from exch_btcc import ExchGwBtccSpot, ExchGwBtccFuture
 from exch_bitfinex import ExchGwBitfinex
 from exch_okcoin import ExchGwOkCoin
 from exch_kraken import ExchGwKraken
@@ -71,7 +71,8 @@ if __name__ == '__main__':
     subscription_instmts = SubscriptionManager(args.instmts).get_subscriptions()
 
     exch_gws = []
-    exch_gws.append(ExchGwBtcc(db_client))
+    exch_gws.append(ExchGwBtccSpot(db_client))
+    exch_gws.append(ExchGwBtccFuture(db_client))
     exch_gws.append(ExchGwBitmex(db_client))
     exch_gws.append(ExchGwBitfinex(db_client))
     exch_gws.append(ExchGwOkCoin(db_client))

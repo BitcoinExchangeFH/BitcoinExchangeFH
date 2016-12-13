@@ -19,6 +19,22 @@ class ExchGwOkCoinWs(WebSocketApiClient):
         Constructor
         """
         WebSocketApiClient.__init__(self, 'ExchGwOkCoin')
+        
+    @classmethod
+    def get_order_book_timestamp_field_name(cls):
+        return 'timestamp'
+    
+    @classmethod
+    def get_bids_field_name(cls):
+        return 'bids'
+        
+    @classmethod
+    def get_asks_field_name(cls):
+        return 'asks'
+        
+    @classmethod
+    def get_link(cls):
+        return 'wss://real.okcoin.com:10440/websocket/okcoinapi'    
             
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
@@ -27,31 +43,33 @@ class ExchGwOkCoinWs(WebSocketApiClient):
         :param instmt: Instrument
         :param raw: Raw data in JSON
         """
-        field_map = instmt.get_order_book_fields_mapping()
         l2_depth = instmt.get_l2_depth()
-        for key, value in raw.items():
-            if key in field_map.keys():
-                try:
-                    field = field_map[key]
-                except:
-                    print("Error from order_book_fields_mapping on key %s" % key)
-                    raise
+        keys = list(raw.keys())
+        if cls.get_order_book_timestamp_field_name() in keys and \
+           cls.get_bids_field_name() in keys and \
+           cls.get_asks_field_name() in keys:
+            
+            # Date time
+            date_time = raw[cls.get_order_book_timestamp_field_name()]/1000.0
+            l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
+            
+            # Bids
+            bids = raw[cls.get_bids_field_name()]
+            bids = sorted(bids, key=lambda x: x[0], reverse=True)
+            for i in range(0, len(bids)):
+                l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
+                l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
                 
-                if field == 'TIMESTAMP':
-                    date_time = float(value)/1000.0
-                    l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
-                elif field == 'BIDS':
-                    bids = sorted(value, key=lambda x: x[0], reverse=True)
-                    for i in range(0, len(bids)):
-                        l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
-                        l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]
-                elif field == 'ASKS':
-                    asks = sorted(value, key=lambda x: x[0])
-                    for i in range(0, len(asks)):
-                        l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
-                        l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]
-                else:
-                    raise Exception('The field <%s> is not found' % field)
+            # Asks
+            asks = raw[cls.get_asks_field_name()]
+            asks = sorted(asks, key=lambda x: x[0])
+            for i in range(0, len(asks)):
+                l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
+                l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]            
+        else:
+            raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
+                (instmt.get_exchange_name(), instmt.get_instmt_name(), \
+                 raw))        
 
         return l2_depth
 
@@ -63,32 +81,16 @@ class ExchGwOkCoinWs(WebSocketApiClient):
         :return:
         """
         trade = Trade()
-        field_map = instmt.get_trades_fields_mapping()
-        trade_id = ''
-        for i in range(0, len(raw)):
-            key = str(i)
-            value = raw[i]
-            if key in field_map.keys():
-                try:
-                    field = field_map[key]
-                except:
-                    print("Error from trades_fields_mapping on key %s" % key)
-                    raise
-
-                if field == 'TIMESTAMP':
-                    trade_id += value
-                elif field == 'TRADE_SIDE':
-                    trade.trade_side = Trade.parse_side(value)
-                    if trade.trade_side == Trade.Side.NONE:
-                        raise Exception('Unexpected trade side value %d' % value)
-                elif field == 'TRADE_ID':
-                    trade_id += value
-                elif field == 'TRADE_PRICE':
-                    trade.trade_price = value
-                elif field == 'TRADE_VOLUME':
-                    trade.trade_volume = value
-
-        trade.trade_id = trade_id # Concat timestamp and trade ID
+        trade_id = raw[0]
+        trade_price = raw[1]
+        trade_volume = raw[2]
+        timestamp = raw[3]
+        trade_side = raw[4]
+        
+        trade.trade_id = trade_id + timestamp
+        trade.trade_price = trade_price
+        trade.trade_volume = trade_volume
+        trade.trade_side = Trade.parse_side(trade_side)
 
         return trade
 
@@ -205,7 +207,7 @@ class ExchGwOkCoin(ExchangeGateway):
         trade_id, last_exch_trade_id = self.get_trades_init(instmt)
         instmt.set_trade_id(trade_id)
         instmt.set_exch_trade_id(last_exch_trade_id)
-        return [self.api_socket.connect(instmt.get_link(),
+        return [self.api_socket.connect(self.api_socket.get_link(),
                                         on_message_handler=partial(self.on_message_handler, instmt),
                                         on_open_handler=partial(self.on_open_handler, instmt),
                                         on_close_handler=partial(self.on_close_handler, instmt))]

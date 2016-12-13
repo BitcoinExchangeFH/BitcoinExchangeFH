@@ -14,7 +14,51 @@ class ExchGwBtccRestfulApi(RESTfulApiSocket):
     """
     def __init__(self):
         RESTfulApiSocket.__init__(self)
+        
+    @classmethod
+    def get_timestamp_offset(cls):
+        return 1
+        
+    @classmethod
+    def get_order_book_timestamp_field_name(cls):
+        return ''
+        
+    @classmethod
+    def get_trades_timestamp_field_name(cls):
+        return ''
+        
+    @classmethod
+    def get_bids_field_name(cls):
+        return ''
+        
+    @classmethod
+    def get_asks_field_name(cls):
+        return ''
+        
+    @classmethod
+    def get_trade_side_field_name(cls):
+        return ''
+        
+    @classmethod
+    def get_trade_id_field_name(cls):
+        return ''
+        
+    @classmethod
+    def get_trade_price_field_name(cls):
+        return ''        
+        
+    @classmethod
+    def get_trade_volume_field_name(cls):
+        return ''        
+        
+    @classmethod
+    def get_order_book_link(cls, instmt):
+        return ""
 
+    @classmethod
+    def get_trades_link(cls, instmt, trade_id=''):
+        return ""
+                
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
@@ -23,37 +67,34 @@ class ExchGwBtccRestfulApi(RESTfulApiSocket):
         :param raw: Raw data in JSON
         """
         l2_depth = L2Depth()
-        field_map = instmt.get_order_book_fields_mapping()
-        for key, value in raw.items():
-            if key in field_map.keys():
-                try:
-                    field = field_map[key]
-                except:
-                    print("Error from order_book_fields_mapping on key %s" % key)
-                    raise
+        keys = list(raw.keys())
+        if cls.get_order_book_timestamp_field_name() in keys and \
+           cls.get_bids_field_name() in keys and \
+           cls.get_asks_field_name() in keys:
+            
+            # Date time
+            date_time = float(raw[cls.get_order_book_timestamp_field_name()])
+            date_time = date_time / cls.get_timestamp_offset()
+            l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
+            
+            # Bids
+            bids = raw[cls.get_bids_field_name()]
+            bids = sorted(bids, key=lambda x: x[0], reverse=True)
+            for i in range(0, 5):
+                l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
+                l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
                 
-                if field == 'TIMESTAMP':
-                    offset = 1 if 'TIMESTAMP_OFFSET' not in field_map else field_map['TIMESTAMP_OFFSET']
-                    if offset == 1:
-                        date_time = float(value)
-                    else:
-                        date_time = float(value)/offset
-                    l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
-                elif field == 'BIDS':
-                    bids = value
-                    sorted(bids, key=lambda x: x[0])
-                    for i in range(0, 5):
-                        l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
-                        l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]
-                elif field == 'ASKS':
-                    asks = value
-                    sorted(asks, key=lambda x: x[0], reverse=True)
-                    for i in range(0, 5):
-                        l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
-                        l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]
-                else:
-                    raise Exception('The field <%s> is not found' % field)
-
+            # Asks
+            asks = raw[cls.get_asks_field_name()]
+            asks = sorted(asks, key=lambda x: x[0])
+            for i in range(0, 5):
+                l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
+                l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]            
+        else:
+            raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
+                (instmt.get_exchange_name(), instmt.get_instmt_name(), \
+                 raw))
+        
         return l2_depth
 
     @classmethod
@@ -64,34 +105,34 @@ class ExchGwBtccRestfulApi(RESTfulApiSocket):
         :return:
         """
         trade = Trade()
-        field_map = instmt.get_trades_fields_mapping()
-        for key, value in raw.items():
-            if key in field_map.keys():
-                try:
-                    field = field_map[key]
-                except:
-                    print("Error from get_trades_fields_mapping on key %s" % key)
-                    raise
+        keys = list(raw.keys())
+        
+        if cls.get_trades_timestamp_field_name() in keys and \
+           cls.get_trade_id_field_name() in keys and \
+           cls.get_trade_side_field_name() in keys and \
+           cls.get_trade_price_field_name() in keys and \
+           cls.get_trade_volume_field_name() in keys:
+        
+            # Date time
+            date_time = float(raw[cls.get_trades_timestamp_field_name()])
+            date_time = date_time / cls.get_timestamp_offset()
+            trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")      
+            
+            # Trade side
+            trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])
                 
-                if field == 'TIMESTAMP':
-                    offset = 1 if 'TIMESTAMP_OFFSET' not in field_map else field_map['TIMESTAMP_OFFSET']
-                    if offset == 1:
-                        date_time = float(value)
-                    else:
-                        date_time = float(value)/offset
-                    trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
-                elif field == 'TRADE_SIDE':
-                    trade.trade_side = Trade.parse_side(value)
-                    if trade.trade_side == Trade.Side.NONE:
-                        raise Exception('Unexpected trade side value %d' % value)
-                elif field == 'TRADE_ID':
-                    trade.trade_id = value
-                elif field == 'TRADE_PRICE':
-                    trade.trade_price = value
-                elif field == 'TRADE_VOLUME':
-                    trade.trade_volume = value
-                else:
-                    raise Exception('The field <%s> is not found' % field)        
+            # Trade id
+            trade.trade_id = raw[cls.get_trade_id_field_name()]
+            
+            # Trade price
+            trade.trade_price = raw[cls.get_trade_price_field_name()]            
+            
+            # Trade volume
+            trade.trade_volume = raw[cls.get_trade_volume_field_name()]                        
+        else:
+            raise Exception('Does not contain trade keys in instmt %s-%s.\nOriginal:\n%s' % \
+                (instmt.get_exchange_name(), instmt.get_instmt_name(), \
+                 raw))        
 
         return trade
 
@@ -102,7 +143,7 @@ class ExchGwBtccRestfulApi(RESTfulApiSocket):
         :param instmt: Instrument
         :return: Object L2Depth
         """
-        res = cls.request(instmt.get_order_book_link())
+        res = cls.request(cls.get_order_book_link(instmt))
         if len(res) > 0:
             return cls.parse_l2_depth(instmt=instmt,
                                        raw=res)
@@ -117,11 +158,7 @@ class ExchGwBtccRestfulApi(RESTfulApiSocket):
         :param trade_id: Trade id
         :return: List of trades
         """
-        if int(instmt.get_exch_trade_id()) > 0:
-            res = cls.request(instmt.get_trades_link().replace('<id>', '&since=%s' % instmt.get_exch_trade_id()))
-        else:
-            res = cls.request(instmt.get_trades_link().replace('<id>', ''))
-
+        res = cls.request(cls.get_trades_link(instmt))
         trades = []
         if len(res) > 0:
             for t in res:
@@ -216,4 +253,154 @@ class ExchGwBtcc(ExchangeGateway):
         return [t1, t2]
 
 
+class ExchGwBtccSpotRestfulApi(ExchGwBtccRestfulApi):
+    """
+    Exchange gateway Spot Instrument RESTful API
+    """
+    def __init__(self):
+        ExchGwBtccRestfulApi.__init__(self)
+        
+    @classmethod
+    def get_timestamp_offset(cls):
+        return 1
+        
+    @classmethod
+    def get_order_book_timestamp_field_name(cls):
+        return 'date'
+        
+    @classmethod
+    def get_trades_timestamp_field_name(cls):
+        return 'date'
+    
+    @classmethod
+    def get_bids_field_name(cls):
+        return 'bids'
+        
+    @classmethod
+    def get_asks_field_name(cls):
+        return 'asks'
+        
+    @classmethod
+    def get_trade_side_field_name(cls):
+        return 'type'
+        
+    @classmethod
+    def get_trade_id_field_name(cls):
+        return 'tid'
+        
+    @classmethod
+    def get_trade_price_field_name(cls):
+        return 'price'        
+        
+    @classmethod
+    def get_trade_volume_field_name(cls):
+        return 'amount'        
+        
+    @classmethod
+    def get_order_book_link(cls, instmt):
+        return "https://data.btcchina.com/data/orderbook?limit=5&market=%s" % instmt.get_instmt_code()
 
+    @classmethod
+    def get_trades_link(cls, instmt):
+        if int(instmt.get_exch_trade_id()) > 0:
+            return "https://data.btcchina.com/data/historydata?limit=1000&market=%s&since=%s" % \
+                (instmt.get_instmt_code(), instmt.get_exch_trade_id())
+        else:
+            return "https://data.btcchina.com/data/historydata?limit=1000&market=%s" % \
+                (instmt.get_instmt_code())        
+
+class ExchGwBtccFutureRestfulApi(ExchGwBtccRestfulApi):
+    """
+    Exchange gateway Spot Instrument RESTful API
+    """
+    def __init__(self):
+        ExchGwBtccRestfulApi.__init__(self)
+        
+    @classmethod
+    def get_timestamp_offset(cls):
+        return 1000
+        
+    @classmethod
+    def get_order_book_timestamp_field_name(cls):
+        return 'date'
+        
+    @classmethod
+    def get_trades_timestamp_field_name(cls):
+        return 'Timestamp'
+    
+    @classmethod
+    def get_bids_field_name(cls):
+        return 'bids'
+        
+    @classmethod
+    def get_asks_field_name(cls):
+        return 'asks'
+        
+    @classmethod
+    def get_trade_side_field_name(cls):
+        return 'Side'
+        
+    @classmethod
+    def get_trade_id_field_name(cls):
+        return 'Id'
+        
+    @classmethod
+    def get_trade_price_field_name(cls):
+        return 'Price'        
+        
+    @classmethod
+    def get_trade_volume_field_name(cls):
+        return 'Quantity'        
+        
+    @classmethod
+    def get_order_book_link(cls, instmt):
+        return "https://pro-data.btcc.com/data/pro/orderbook?limit=5&symbol=%s" % instmt.get_instmt_code()
+
+    @classmethod
+    def get_trades_link(cls, instmt):
+        if int(instmt.get_exch_trade_id()) > 0:
+            return "https://pro-data.btcc.com/data/pro/historydata?limit=1000&symbol=%s&since=%s" % \
+                (instmt.get_instmt_code(), instmt.get_exch_trade_id())
+        else:
+            return "https://pro-data.btcc.com/data/pro/historydata?limit=1000&symbol=%s" % \
+                (instmt.get_instmt_code())        
+
+
+class ExchGwBtccSpot(ExchGwBtcc):
+    """
+    Exchange gateway BTCC-Spot
+    """
+    def __init__(self, db_client):
+        """
+        Constructor
+        :param db_client: Database client
+        """
+        ExchangeGateway.__init__(self, ExchGwBtccSpotRestfulApi(), db_client)
+
+    @classmethod
+    def get_exchange_name(cls):
+        """
+        Get exchange name
+        :return: Exchange name string
+        """
+        return 'BTCC_Spot'
+        
+        
+class ExchGwBtccFuture(ExchGwBtcc):
+    """
+    Exchange gateway BTCC-Future
+    """
+    def __init__(self, db_client):
+        """
+        Constructor
+        :param db_client: Database client
+        """
+        ExchangeGateway.__init__(self, ExchGwBtccFutureRestfulApi(), db_client)
+
+    @classmethod
+    def get_exchange_name(cls):
+        """
+        Get exchange name
+        :return: Exchange name string
+        """
+        return 'BTCC_Future'        

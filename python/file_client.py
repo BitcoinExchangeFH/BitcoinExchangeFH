@@ -34,23 +34,6 @@ class FileClient(DatabaseClient):
         self.file_directory = dir
 
     @staticmethod
-    def convert_str(val):
-        """
-        Convert the value to string
-        :param val: Can be string, int or float
-        :return:
-        """
-        if isinstance(val, str):
-            return "'" + val + "'"
-        elif isinstance(val, int):
-            return str(val)
-        elif isinstance(val, float):
-            return "%.8f" % val
-        else:
-            raise Exception("Cannot convert value (%s) to string. Value is not string, integer nor float" %\
-                            val)
-    
-    @staticmethod
     def convert_to(from_str, to_type):
         """
         Convert the element to the given type

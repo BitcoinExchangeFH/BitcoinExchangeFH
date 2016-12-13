@@ -17,6 +17,26 @@ class ExchGwKrakenRestfulApi(RESTfulApiSocket):
         RESTfulApiSocket.__init__(self)
 
     @classmethod
+    def get_bids_field_name(cls):
+        return 'bids'
+        
+    @classmethod
+    def get_asks_field_name(cls):
+        return 'asks'
+        
+    @classmethod
+    def get_order_book_link(cls, instmt):
+        return 'https://api.kraken.com/0/public/Depth?pair=%s&count=5' % instmt.get_instmt_code()
+        
+    @classmethod
+    def get_trades_link(cls, instmt):
+        if instmt.get_exch_trade_id() != '':
+            return 'https://api.kraken.com/0/public/Trades?pair=%s&since=%s' % \
+                (instmt.get_instmt_code(), instmt.get_exch_trade_id())
+        else:
+            return 'https://api.kraken.com/0/public/Trades?pair=%s' % instmt.get_instmt_code()
+
+    @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
         Parse raw data to L2 depth
@@ -24,30 +44,22 @@ class ExchGwKrakenRestfulApi(RESTfulApiSocket):
         :param raw: Raw data in JSON
         """
         l2_depth = L2Depth()
-        field_map = instmt.get_order_book_fields_mapping()
-
-        for key, value in raw.items():
-            if key in field_map.keys():
-                try:
-                    field = field_map[key]
-                except:
-                    print("Error from order_book_fields_mapping on key %s" % key)
-                    raise
+        keys = list(raw.keys())
+        if cls.get_bids_field_name() in keys and \
+           cls.get_asks_field_name() in keys:
+            # Bids
+            bids = raw[cls.get_bids_field_name()]
+            bids = sorted(bids, key=lambda x: x[0], reverse=True)
+            for i in range(0, len(bids)):
+                l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
+                l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]
                 
-                if field == 'BIDS':
-                    bids = value
-                    sorted(bids, key=lambda x: x[0])
-                    for i in range(0, 5):
-                        l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
-                        l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]
-                elif field == 'ASKS':
-                    asks = value
-                    sorted(asks, key=lambda x: x[0], reverse=True)
-                    for i in range(0, 5):
-                        l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
-                        l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]
-                else:
-                    raise Exception('The field <%s> is not found' % field)
+            # Asks
+            asks = raw[cls.get_asks_field_name()]
+            asks = sorted(asks, key=lambda x: x[0])
+            for i in range(0, len(asks)):
+                l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
+                l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]                    
 
         return l2_depth
 
@@ -59,37 +71,21 @@ class ExchGwKrakenRestfulApi(RESTfulApiSocket):
         :return:
         """
         trade = Trade()
-        field_map = instmt.get_trades_fields_mapping()
+        
+        # Trade price
+        trade.trade_price = raw[0]
+        
+        # Trade volume
+        trade.trade_volume = raw[1]
+        
+        # Timestamp
+        date_time = float(raw[2])
+        trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
+        
+        # Trade side
+        trade.trade_side = Trade.parse_side(raw[3])
 
-        for i in range(0, len(raw)):
-            key = str(i)
-            value = raw[i]
-
-            if key in field_map.keys():
-                try:
-                    field = field_map[key]
-                except:
-                    print("Error from get_trades_fields_mapping on key %s" % key)
-                    raise
-                
-                if field == 'TIMESTAMP':
-                    offset = 1 if 'TIMESTAMP_OFFSET' not in field_map else field_map['TIMESTAMP_OFFSET']
-                    if offset == 1:
-                        date_time = float(value)
-                    else:
-                        date_time = float(value)/offset
-                    trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
-                elif field == 'TRADE_SIDE':
-                    trade.trade_side = Trade.parse_side(value)
-                    if trade.trade_side == Trade.Side.NONE:
-                        raise Exception('Unexpected trade side value %d' % value)
-                elif field == 'TRADE_PRICE':
-                    trade.trade_price = value
-                elif field == 'TRADE_VOLUME':
-                    trade.trade_volume = value
-                else:
-                    raise Exception('The field <%s> is not found' % field)        
-
+        # Trade id
         trade.trade_id = trade.date_time + '-' + str(instmt.get_exch_trade_id())
 
         return trade
@@ -101,12 +97,13 @@ class ExchGwKrakenRestfulApi(RESTfulApiSocket):
         :param instmt: Instrument
         :return: Object L2Depth
         """
-        res = cls.request(instmt.get_order_book_link())
+        res = cls.request(cls.get_order_book_link(instmt))
         if len(res) > 0 and 'error' in res and len(res['error']) == 0:
             res = list(res['result'].values())[0]
             return cls.parse_l2_depth(instmt=instmt,
                                        raw=res)
         else:
+            Logger.error(cls.__name__, "Cannot parse the order book. Return:\n%s" % res)
             return None
 
     @classmethod
@@ -117,10 +114,7 @@ class ExchGwKrakenRestfulApi(RESTfulApiSocket):
         :param trade_id: Trade id
         :return: List of trades
         """
-        if instmt.get_exch_trade_id() > 0:
-            res = cls.request(instmt.get_trades_link().replace('<id>', '&since=%d' % instmt.get_exch_trade_id()))
-        else:
-            res = cls.request(instmt.get_trades_link().replace('<id>', ''))
+        res = cls.request(cls.get_trades_link(instmt))
 
         trades = []
         if len(res) > 0 and 'error' in res and len(res['error']) == 0:
@@ -179,9 +173,9 @@ class ExchGwKraken(ExchangeGateway):
                                              limit=1)
 
         if len(id_ret) > 0 and len(trade_id_ret) > 0:
-            return id_ret[0][0], int(trade_id_ret[0][0][25:])
+            return id_ret[0][0], trade_id_ret[0][0][25:]
         else:
-            return 0, 0
+            return 0, ''
 
     def get_order_book_worker(self, instmt):
         """
@@ -202,7 +196,7 @@ class ExchGwKraken(ExchangeGateway):
                                           values=[instmt.get_order_book_id()]+l2_depth.values())
             except Exception as e:
                 Logger.error(self.__class__.__name__,
-                          "Error in order book: %s\nReturn: %s" % (e, l2_depth))
+                          "Error in order book: %s" % e)
             time.sleep(0.5)
 
     def get_trades_worker(self, instmt):

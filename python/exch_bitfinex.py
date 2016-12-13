@@ -21,6 +21,10 @@ class ExchGwBitfinexWs(WebSocketApiClient):
         WebSocketApiClient.__init__(self, 'ExchGwBitfinex')
             
     @classmethod
+    def get_link(cls):
+        return 'wss://api2.bitfinex.com:3000/ws'
+            
+    @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
         Parse raw data to L2 depth
@@ -130,27 +134,16 @@ class ExchGwBitfinexWs(WebSocketApiClient):
         :return:
         """
         trade = Trade()
-        field_map = instmt.get_trades_fields_mapping()
-        for i in range(0, len(raw)):
-            key = str(i)
-            value = raw[i]
-            if key in field_map.keys():
-                try:
-                    field = field_map[key]
-                except:
-                    print("Error from trades_fields_mapping on key %s" % key)
-                    raise
-
-                if field == 'TIMESTAMP':
-                    trade.date_time = datetime.utcfromtimestamp(value).strftime("%Y%m%d %H:%M:%S.%f")
-                elif field == 'TRADE_VOLUME':
-                    # The trade side is only determined by the sign of the trade volume
-                    trade.trade_side = Trade.Side.BUY if value > 0 else Trade.Side.SELL
-                    trade.trade_volume = abs(value)
-                elif field == 'TRADE_ID':
-                    trade.trade_id = str(value)
-                elif field == 'TRADE_PRICE':
-                    trade.trade_price = value
+        trade_id = raw[0]
+        timestamp = raw[1]
+        trade_price = raw[2]
+        trade_volume = raw[3]
+        
+        trade.date_time = datetime.utcfromtimestamp(timestamp).strftime("%Y%m%d %H:%M:%S.%f")
+        trade.trade_side = Trade.Side.BUY if trade_volume > 0 else Trade.Side.SELL
+        trade.trade_volume = abs(trade_volume)
+        trade.trade_id = str(trade_id)
+        trade.trade_price = trade_price
 
         return trade
 
@@ -271,7 +264,7 @@ class ExchGwBitfinex(ExchangeGateway):
         trade_id, last_exch_trade_id = self.get_trades_init(instmt)
         instmt.set_trade_id(trade_id)
         instmt.set_exch_trade_id(last_exch_trade_id)
-        return [self.api_socket.connect(instmt.get_link(),
+        return [self.api_socket.connect(self.api_socket.get_link(),
                                         on_message_handler=partial(self.on_message_handler, instmt),
                                         on_open_handler=partial(self.on_open_handler, instmt),
                                         on_close_handler=partial(self.on_close_handler, instmt))]

@@ -45,7 +45,7 @@ class MarketDataBase:
         elif value == 2:
             return MarketDataBase.Side.SELL
         else:
-            return MarketDataBase.Side.NONE
+            raise Exception("Cannot parse the side (%s)" % value)
 
     def __init__(self):
         """

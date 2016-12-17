@@ -3,12 +3,12 @@
     <state version="4" enabled="true" />
     <globalmarks />
     <filemarks>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" timestamp="1482016682127">
-        <mark key="'" line="0" column="0" />
-        <mark key="[" line="227" column="0" />
-        <mark key="]" line="227" column="0" />
-        <mark key="." line="227" column="0" />
-        <mark key="^" line="226" column="54" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" timestamp="1482018132493">
+        <mark key="'" line="75" column="38" />
+        <mark key="[" line="227" column="26" />
+        <mark key="]" line="227" column="53" />
+        <mark key="." line="227" column="53" />
+        <mark key="^" line="227" column="53" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_okcoin.py" timestamp="1482016792803">
         <mark key="'" line="53" column="26" />
@@ -17,10 +17,10 @@
         <mark key="." line="182" column="31" />
         <mark key="^" line="182" column="31" />
       </file>
-      <file name="/Python Console" timestamp="1481984933317">
+      <file name="/Python Console" timestamp="1482017902329">
         <mark key="[" line="0" column="0" />
       </file>
-      <file name="/fragment.py" timestamp="1481984956294">
+      <file name="/fragment.py" timestamp="1482017861217">
         <mark key="'" line="0" column="23" />
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="26" />
@@ -44,7 +44,7 @@
         <mark key="." line="28" column="0" />
         <mark key="^" line="27" column="21" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" timestamp="1482016811009">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" timestamp="1482017532165">
         <mark key="'" line="86" column="26" />
         <mark key="[" line="208" column="57" />
         <mark key="]" line="208" column="57" />
@@ -235,9 +235,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="14" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/sqlite_client.py" />
-      <jump line="10" column="10" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/subscription_manager.py" />
-      <jump line="4" column="22" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket.py" />
       <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitfinex.py" />
       <jump line="217" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitfinex.py" />
       <jump line="172" column="73" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" />
@@ -245,7 +242,6 @@
       <jump line="78" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" />
       <jump line="86" column="26" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" />
       <jump line="195" column="27" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
-      <jump line="54" column="26" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="85" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="93" column="26" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="170" column="19" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
@@ -330,15 +326,19 @@
       <jump line="83" column="13" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
       <jump line="24" column="27" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/gspiderweb.py" />
       <jump line="72" column="23" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket.py" />
-      <jump line="199" column="43" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="147" column="23" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="62" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="301" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
+      <jump line="199" column="44" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
+      <jump line="23" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
+      <jump line="54" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
+      <jump line="70" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
+      <jump line="75" column="38" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICBzZWxmLmRiX2NsaWVudC5pbnNlcnQodGFibGU9aW5zdG10LmdldF90cmFkZXNfdGFibGVfbmFtZSgpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb2x1bW5zPVsnaWQnXStUcmFkZS5jb2x1bW5zKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW5zdG10LmdldF90cmFkZV9pZCgpXSt0cmFkZS52YWx1ZXMoKSkK</text>
+      <register name="&quot;" type="4">
+        <text>, ret))</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1552,10 +1552,10 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>, trade)</text>
+        <text>, ret))</text>
       </register>
       <register name="/" type="4">
-        <text>insert</text>
+        <text>get_order_book</text>
       </register>
       <register name="0" type="2">
         <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNlbGYuaW5zZXJ0X3RyYWRlKGluc3RtdCwgdHJhZGUpCg==</text>
@@ -1592,9 +1592,9 @@
       </register>
     </registers>
     <search>
-      <last-search>insert</last-search>
+      <last-search>get_order_book</last-search>
       <last-offset />
-      <last-pattern>insert</last-pattern>
+      <last-pattern>get_order_book</last-pattern>
       <last-replace>enabled = 1</last-replace>
       <last-substitute>enabled = 0</last-substitute>
       <last-dir>1</last-dir>
@@ -1602,7 +1602,6 @@
     </search>
     <history>
       <history-search>
-        <entry>Exception</entry>
         <entry encoding="base64">XDxjb252ZXJ0X3N0clw+</entry>
         <entry>execute</entry>
         <entry encoding="base64">XDxpc19hbGxfY29sdW1uc1w+</entry>
@@ -1622,6 +1621,7 @@
         <entry encoding="base64">XDxnZXRfb3JkZXJfYm9va1w+</entry>
         <entry encoding="base64">XDxwYXJzZV9sMl9kZXB0aFw+</entry>
         <entry>insert</entry>
+        <entry>get_order_book</entry>
       </history-search>
       <history-cmd>
         <entry encoding="base64">JzwsJz5zL2JpZHMvYXNrcy9n</entry>

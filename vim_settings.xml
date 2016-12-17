@@ -44,7 +44,7 @@
         <mark key="." line="28" column="0" />
         <mark key="^" line="27" column="21" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" timestamp="1481644415378">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" timestamp="1481987614163">
         <mark key="'" line="86" column="26" />
         <mark key="[" line="65" column="19" />
         <mark key="]" line="65" column="39" />
@@ -83,6 +83,12 @@
         <mark key="." line="81" column="26" />
         <mark key="^" line="81" column="26" />
       </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exchange.py" timestamp="1481987793297">
+        <mark key="[" line="95" column="17" />
+        <mark key="]" line="97" column="38" />
+        <mark key="^" line="97" column="38" />
+        <mark key="." line="97" column="38" />
+      </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/bitcoinexchangefh.py" timestamp="1481758519635">
         <mark key="'" line="79" column="36" />
         <mark key="[" line="80" column="26" />
@@ -109,12 +115,12 @@
         <mark key="." line="2" column="22" />
         <mark key="^" line="2" column="22" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/database_client.py" timestamp="1481644533861">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/database_client.py" timestamp="1481987661046">
         <mark key="'" line="23" column="18" />
-        <mark key="[" line="23" column="0" />
-        <mark key="]" line="23" column="0" />
-        <mark key="." line="23" column="0" />
-        <mark key="^" line="19" column="33" />
+        <mark key="[" line="74" column="0" />
+        <mark key="]" line="74" column="0" />
+        <mark key="." line="74" column="0" />
+        <mark key="^" line="74" column="31" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_ws_template.py" timestamp="1481985063354">
         <mark key="[" line="65" column="61" />
@@ -332,8 +338,8 @@
       <jump line="24" column="27" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/gspiderweb.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="4">
-        <text>&quot;</text>
+      <register name="&quot;" type="2">
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1556,25 +1562,25 @@
         <text encoding="base64">ICAgICAgICBzZWxmLmNoZWNrX2FjY291bnRfbG9ja2VkKCkK</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICByZXR1cm4geyAib3AifQo=</text>
-      </register>
-      <register name="2" type="2">
-        <text encoding="base64">ICAgIAo=</text>
-      </register>
-      <register name="3" type="2">
-        <text encoding="base64">ICAgIGRlZiBfX2V4aXRfXyhzZWxmLCBleGNfdHlwZSwgZXhjX3ZhbHVlLCB0cmFjZWJhY2spOgo=</text>
-      </register>
-      <register name="4" type="2">
         <text encoding="base64">Cg==</text>
       </register>
+      <register name="2" type="2">
+        <text encoding="base64">ICAgIGRlZiBpbnNlcnRfb3JkZXJfYm9vayhzZWxmLCApOgo=</text>
+      </register>
+      <register name="3" type="2">
+        <text encoding="base64">ICAgICAgICByZXR1cm4geyAib3AifQo=</text>
+      </register>
+      <register name="4" type="2">
+        <text encoding="base64">ICAgIAo=</text>
+      </register>
       <register name="5" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgdGltZS5zbGVlcCgxKQo=</text>
+        <text encoding="base64">ICAgIGRlZiBfX2V4aXRfXyhzZWxmLCBleGNfdHlwZSwgZXhjX3ZhbHVlLCB0cmFjZWJhY2spOgo=</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICBzZWxmLmNoZWNrX2FjY291bnRfbG9ja2VkKCkK</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgICAgICBzZWxmLmNoZWNrX2FjY291bnRfbG9ja2VkKCkK</text>
+        <text encoding="base64">ICAgICAgICAgICAgdGltZS5zbGVlcCgxKQo=</text>
       </register>
       <register name="8" type="2">
         <text encoding="base64">ICAgICAgICBzZWxmLmNoZWNrX2FjY291bnRfbG9ja2VkKCkK</text>
@@ -1583,7 +1589,7 @@
         <text encoding="base64">ICAgICAgICBzZWxmLmNoZWNrX2FjY291bnRfbG9ja2VkKCkK</text>
       </register>
       <register name=":" type="4">
-        <text>w</text>
+        <text>wq!</text>
       </register>
     </registers>
     <search>
@@ -1624,13 +1630,13 @@
         <entry encoding="base64">JzwsJz5zL29yZGVyX2Jvb2svdHJhZGVzL2c=</entry>
         <entry>%s/print_log/Logger.info</entry>
         <entry>%s/print_log/Logger.info/g</entry>
-        <entry>wq!</entry>
         <entry>wq</entry>
         <entry>%s/enabled = 1/enabled = 0/g</entry>
         <entry>%s/enabled = 0/enabled = 1/g</entry>
         <entry>:w</entry>
         <entry>w!</entry>
         <entry>w</entry>
+        <entry>wq!</entry>
       </history-cmd>
       <history-expr />
       <history-input />

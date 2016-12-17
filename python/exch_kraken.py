@@ -191,9 +191,7 @@ class ExchGwKraken(ExchangeGateway):
                     instmt.set_prev_l2_depth(instmt.l2_depth.copy())
                     instmt.set_l2_depth(l2_depth)
                     instmt.incr_order_book_id()
-                    self.db_client.insert(table=instmt.get_order_book_table_name(),
-                                          columns=['id']+L2Depth.columns(),
-                                          values=[instmt.get_order_book_id()]+l2_depth.values())
+                    self.insert_order_book(instmt)
             except Exception as e:
                 Logger.error(self.__class__.__name__,
                           "Error in order book: %s" % e)
@@ -213,9 +211,7 @@ class ExchGwKraken(ExchangeGateway):
                 ret = self.api_socket.get_trades(instmt)
                 for trade in ret:
                     instmt.incr_trade_id()
-                    self.db_client.insert(table=instmt.get_trades_table_name(),
-                                          columns=['id']+Trade.columns(),
-                                          values=[instmt.get_trade_id()]+trade.values())
+                    self.insert_trade(instmt, trade)
             except Exception as e:
                 Logger.error(self.__class__.__name__,
                           "Error in trades: %s\nReturn: %s" % (e, ret))

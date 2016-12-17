@@ -94,3 +94,21 @@ class ExchangeGateway:
         :return List of threads
         """
         return []
+
+    def insert_order_book(self, instmt):
+        """
+        Insert order book row into the database client
+        :param instmt: Instrument
+        """
+        self.db_client.insert(table=instmt.get_order_book_table_name(),
+                              columns=['id'] + L2Depth.columns(),
+                              values=[instmt.get_order_book_id()] + instmt.get_l2_depth().values())
+
+    def insert_trade(self, instmt, trade):
+        """
+        Insert trade row into the database client
+        :param instmt: Instrument
+        """
+        self.db_client.insert(table=instmt.get_trades_table_name(),
+                              columns=['id']+Trade.columns(),
+                              values=[instmt.get_trade_id()]+trade.values())

@@ -159,7 +159,6 @@ class ExchGwOkCoin(ExchangeGateway):
         :param instmt: Instrument
         :param message: Message
         """
-        messages = json.loads(messages)
         for message in messages:
             keys = message.keys()
             if 'channel' in keys:
@@ -172,9 +171,7 @@ class ExchGwOkCoin(ExchangeGateway):
                         # Insert only if the first 5 levels are different
                         if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
                             instmt.incr_order_book_id()
-                            self.db_client.insert(table=instmt.get_order_book_table_name(),
-                                                  columns=['id']+L2Depth.columns(),
-                                                  values=[instmt.get_order_book_id()]+instmt.get_l2_depth().values())
+                            self.insert_order_book(instmt)
 
                     elif message['channel'] == instmt.get_trades_channel_id():
                         for trade_raw in message['data']:
@@ -182,9 +179,8 @@ class ExchGwOkCoin(ExchangeGateway):
                             if trade.trade_id != instmt.get_exch_trade_id():
                                 instmt.incr_trade_id()
                                 instmt.set_exch_trade_id(trade.trade_id)
-                                self.db_client.insert(table=instmt.get_trades_table_name(),
-                                                      columns=['id']+Trade.columns(),
-                                                      values=[instmt.get_trade_id()]+trade.values())
+                                self.insert_trade(instmt, trade)
+
                 elif 'success' in keys:
                     Logger.info(self.__class__.__name__, "Subscription to channel %s is %s" \
                         % (message['channel'], message['success']))

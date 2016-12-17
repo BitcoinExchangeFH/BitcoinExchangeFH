@@ -202,13 +202,10 @@ class ExchGwBtcc(ExchangeGateway):
                     instmt.set_prev_l2_depth(instmt.get_l2_depth())
                     instmt.set_l2_depth(l2_depth)
                     instmt.incr_order_book_id()
-                    self.db_client.insert(table=instmt.get_order_book_table_name(),
-                                          columns=['id']+L2Depth.columns(),
-                                          values=[instmt.get_order_book_id()]+l2_depth.values())
+                    self.insert_order_book(instmt)
             except Exception as e:
-                Logger.error(self.__class__.__name__,
-                          "Error in order book: %s\nReturn: %s" % (e, l2_depth.values()))
-            time.sleep(0.5)
+                Logger.error(self.__class__.__name__, "Error in order book: %s" % e)
+            time.sleep(1)
 
     def get_trades_worker(self, instmt):
         """
@@ -226,13 +223,10 @@ class ExchGwBtcc(ExchangeGateway):
                     if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
                         instmt.set_exch_trade_id(int(trade.trade_id))
                         instmt.incr_trade_id()
-                        self.db_client.insert(table=instmt.get_trades_table_name(),
-                                              columns=['id']+Trade.columns(),
-                                              values=[instmt.get_trade_id()]+trade.values())
+                        self.insert_trade(instmt, trade)
             except Exception as e:
-                Logger.error(self.__class__.__name__,
-                          "Error in trades: %s\nReturn: %s" % (e, ret))
-            time.sleep(0.5)
+                Logger.error(self.__class__.__name__, "Error in trades: %s" % e)
+            time.sleep(1)
 
     def start(self, instmt):
         """

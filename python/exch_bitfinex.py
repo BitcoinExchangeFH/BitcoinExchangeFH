@@ -196,7 +196,6 @@ class ExchGwBitfinex(ExchangeGateway):
         :param instmt: Instrument
         :param message: Message
         """
-        message = json.loads(message)
         if isinstance(message, dict):
             keys = message.keys()
             if 'event' in keys and message['event'] == 'info' and  'version' in keys:
@@ -224,9 +223,8 @@ class ExchGwBitfinex(ExchangeGateway):
 
                 if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
                     instmt.incr_order_book_id()
-                    self.db_client.insert(table=instmt.get_order_book_table_name(),
-                                          columns=['id'] + L2Depth.columns(),
-                                          values=[instmt.get_order_book_id()] + instmt.get_l2_depth().values())
+                    self.insert_order_book(instmt)
+
             elif message[0] == instmt.get_trades_channel_id():
                 if isinstance(message[1], list):
                     raw_trades = message[1]
@@ -236,9 +234,8 @@ class ExchGwBitfinex(ExchangeGateway):
                         if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
                             instmt.incr_trade_id()
                             instmt.set_exch_trade_id(trade.trade_id)
-                            self.db_client.insert(table=instmt.get_trades_table_name(),
-                                                  columns=['id'] + Trade.columns(),
-                                                  values=[instmt.get_trade_id()] + trade.values())
+                            self.insert_trade(instmt, trade)
+
                 elif message[1] == 'tu':
                     trade = self.api_socket.parse_trade(instmt, message[3:])
                     if int(trade.trade_id) > int(instmt.get_exch_trade_id()):

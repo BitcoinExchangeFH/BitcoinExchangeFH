@@ -182,7 +182,6 @@ class ExchGwBitmex(ExchangeGateway):
         :param instmt: Instrument
         :param message: Message
         """
-        message = json.loads(message)
         keys = message.keys()
         if 'info' in keys:
             Logger.info(self.__class__.__name__, message['info'])
@@ -199,9 +198,7 @@ class ExchGwBitmex(ExchangeGateway):
                         if trade.trade_id != instmt.get_exch_trade_id():
                             instmt.incr_trade_id()
                             instmt.set_exch_trade_id(trade.trade_id)
-                            self.db_client.insert(table=instmt.get_trades_table_name(),
-                                                  columns=['id']+Trade.columns(),
-                                                  values=[instmt.get_trade_id()]+trade.values())
+                            self.insert_trade(instmt, trade)
             elif message['table'] == 'orderBook10':
                 for data in message['data']:
                     if data["symbol"] == instmt.get_instmt_code():
@@ -209,9 +206,7 @@ class ExchGwBitmex(ExchangeGateway):
                         self.api_socket.parse_l2_depth(instmt, data)
                         if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
                             instmt.incr_order_book_id()
-                            self.db_client.insert(table=instmt.get_order_book_table_name(),
-                                                    columns=['id']+L2Depth.columns(),
-                                                    values=[instmt.get_order_book_id()]+instmt.get_l2_depth().values())
+                            self.insert_order_book(instmt)
             else:
                 Logger.info(self.__class__.__name__, json.dumps(message,indent=2))
         else:

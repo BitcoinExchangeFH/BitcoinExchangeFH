@@ -1,6 +1,6 @@
 import websocket
 import threading
-from time import sleep
+import json
 from api_socket import ApiSocket
 from util import Logger
 
@@ -70,6 +70,7 @@ class WebSocketApiClient(ApiSocket):
         self.ws.send(msg)
 
     def __on_message(self, ws, m):
+        m = json.loads(m)
         for handler in self.on_message_handlers:
             handler(m)
 

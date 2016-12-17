@@ -3,19 +3,19 @@
     <state version="4" enabled="true" />
     <globalmarks />
     <filemarks>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" timestamp="1480847877218">
-        <mark key="'" line="194" column="19" />
-        <mark key="[" line="171" column="23" />
-        <mark key="]" line="171" column="27" />
-        <mark key="." line="171" column="27" />
-        <mark key="^" line="171" column="27" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" timestamp="1482016682127">
+        <mark key="'" line="0" column="0" />
+        <mark key="[" line="227" column="0" />
+        <mark key="]" line="227" column="0" />
+        <mark key="." line="227" column="0" />
+        <mark key="^" line="226" column="54" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_okcoin.py" timestamp="1482015495208">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_okcoin.py" timestamp="1482016792803">
         <mark key="'" line="53" column="26" />
-        <mark key="[" line="161" column="0" />
-        <mark key="]" line="161" column="0" />
-        <mark key="." line="161" column="0" />
-        <mark key="^" line="52" column="20" />
+        <mark key="[" line="181" column="64" />
+        <mark key="]" line="182" column="31" />
+        <mark key="." line="182" column="31" />
+        <mark key="^" line="182" column="31" />
       </file>
       <file name="/Python Console" timestamp="1481984933317">
         <mark key="[" line="0" column="0" />
@@ -44,12 +44,12 @@
         <mark key="." line="28" column="0" />
         <mark key="^" line="27" column="21" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" timestamp="1482015438413">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" timestamp="1482016811009">
         <mark key="'" line="86" column="26" />
-        <mark key="[" line="184" column="0" />
-        <mark key="]" line="184" column="0" />
-        <mark key="." line="184" column="0" />
-        <mark key="^" line="208" column="52" />
+        <mark key="[" line="208" column="57" />
+        <mark key="]" line="208" column="57" />
+        <mark key="." line="208" column="57" />
+        <mark key="^" line="208" column="57" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/util.py" timestamp="1480848134126">
         <mark key="[" line="16" column="11" />
@@ -122,11 +122,11 @@
         <mark key="." line="74" column="0" />
         <mark key="^" line="74" column="31" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_ws_template.py" timestamp="1482015527087">
-        <mark key="[" line="193" column="0" />
-        <mark key="]" line="193" column="0" />
-        <mark key="." line="193" column="0" />
-        <mark key="^" line="65" column="95" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_ws_template.py" timestamp="1482016845067">
+        <mark key="[" line="218" column="0" />
+        <mark key="]" line="218" column="0" />
+        <mark key="." line="218" column="0" />
+        <mark key="^" line="217" column="58" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket.py" timestamp="1482015464249">
         <mark key="'" line="72" column="23" />
@@ -150,12 +150,12 @@
         <mark key="." line="16" column="56" />
         <mark key="^" line="16" column="56" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" timestamp="1481755039323">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" timestamp="1482016761260">
         <mark key="'" line="0" column="0" />
-        <mark key="[" line="203" column="23" />
-        <mark key="]" line="203" column="27" />
-        <mark key="." line="203" column="27" />
-        <mark key="^" line="203" column="27" />
+        <mark key="[" line="214" column="0" />
+        <mark key="]" line="214" column="0" />
+        <mark key="." line="214" column="0" />
+        <mark key="^" line="213" column="50" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/market_data.py" timestamp="1480847688479">
         <mark key="'" line="33" column="12" />
@@ -164,11 +164,11 @@
         <mark key="^" line="133" column="47" />
         <mark key="." line="133" column="47" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitfinex.py" timestamp="1482015551543">
-        <mark key="[" line="198" column="0" />
-        <mark key="]" line="198" column="0" />
-        <mark key="^" line="9" column="22" />
-        <mark key="." line="198" column="0" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitfinex.py" timestamp="1482016870056">
+        <mark key="[" line="236" column="60" />
+        <mark key="]" line="237" column="27" />
+        <mark key="^" line="237" column="27" />
+        <mark key="." line="237" column="27" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/pipe_factory.py" timestamp="1480549496205">
         <mark key="'" line="1" column="0" />
@@ -213,12 +213,12 @@
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/.gitignore" timestamp="1481644678099">
         <mark key="[" line="2" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_huobi.py" timestamp="1481758355561">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_huobi.py" timestamp="1482016913894">
         <mark key="'" line="180" column="16" />
-        <mark key="[" line="25" column="16" />
-        <mark key="]" line="25" column="15" />
-        <mark key="^" line="25" column="15" />
-        <mark key="." line="25" column="15" />
+        <mark key="[" line="225" column="0" />
+        <mark key="]" line="225" column="0" />
+        <mark key="^" line="224" column="50" />
+        <mark key="." line="225" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/sql_client.py" timestamp="1480519246204">
         <mark key="'" line="111" column="23" />
@@ -235,10 +235,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="59" column="10" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/mysql_client.py" />
-      <jump line="13" column="10" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/restful_api_socket.py" />
-      <jump line="30" column="12" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/sql_client.py" />
-      <jump line="2" column="22" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/sql_client.py" />
       <jump line="14" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/sqlite_client.py" />
       <jump line="10" column="10" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/subscription_manager.py" />
       <jump line="4" column="22" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket.py" />
@@ -249,7 +245,6 @@
       <jump line="78" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" />
       <jump line="86" column="26" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" />
       <jump line="195" column="27" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
-      <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="54" column="26" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="85" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="93" column="26" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
@@ -335,10 +330,15 @@
       <jump line="83" column="13" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
       <jump line="24" column="27" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/gspiderweb.py" />
       <jump line="72" column="23" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket.py" />
+      <jump line="199" column="43" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
+      <jump line="147" column="23" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
+      <jump line="62" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
+      <jump line="301" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
+      <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
     </jumps>
     <registers>
       <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICBtZXNzYWdlID0ganNvbi5sb2FkcyhtZXNzYWdlKQo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICBzZWxmLmRiX2NsaWVudC5pbnNlcnQodGFibGU9aW5zdG10LmdldF90cmFkZXNfdGFibGVfbmFtZSgpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb2x1bW5zPVsnaWQnXStUcmFkZS5jb2x1bW5zKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW5zdG10LmdldF90cmFkZV9pZCgpXSt0cmFkZS52YWx1ZXMoKSkK</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1552,49 +1552,49 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>message</text>
+        <text>, trade)</text>
       </register>
       <register name="/" type="4">
-        <text>sleep</text>
+        <text>insert</text>
       </register>
       <register name="0" type="2">
         <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNlbGYuaW5zZXJ0X3RyYWRlKGluc3RtdCwgdHJhZGUpCg==</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICBtZXNzYWdlID0ganNvbi5sb2FkcyhtZXNzYWdlKQo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICBzZWxmLmRiX2NsaWVudC5pbnNlcnQodGFibGU9aW5zdG10LmdldF90cmFkZXNfdGFibGVfbmFtZSgpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb2x1bW5zPVsnaWQnXStUcmFkZS5jb2x1bW5zKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW5zdG10LmdldF90cmFkZV9pZCgpXSt0cmFkZS52YWx1ZXMoKSkK</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICBtZXNzYWdlID0ganNvbi5sb2FkcyhtZXNzYWdlKQo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIHNlbGYuZGJfY2xpZW50Lmluc2VydCh0YWJsZT1pbnN0bXQuZ2V0X29yZGVyX2Jvb2tfdGFibGVfbmFtZSgpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY29sdW1ucz1bJ2lkJ10rTDJEZXB0aC5jb2x1bW5zKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2YWx1ZXM9W2luc3RtdC5nZXRfb3JkZXJfYm9va19pZCgpXStpbnN0bXQuZ2V0X2wyX2RlcHRoKCkudmFsdWVzKCkpCg==</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICBtZXNzYWdlcyA9IGpzb24ubG9hZHMobWVzc2FnZXMpCg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNlbGYuZGJfY2xpZW50Lmluc2VydCh0YWJsZT1pbnN0bXQuZ2V0X3RyYWRlc190YWJsZV9uYW1lKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY29sdW1ucz1bJ2lkJ10gKyBUcmFkZS5jb2x1bW5zKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdmFsdWVzPVtpbnN0bXQuZ2V0X3RyYWRlX2lkKCldICsgdHJhZGUudmFsdWVzKCkpCg==</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ZnJvbSB0aW1lIGltcG9ydCBzbGVlcAo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICBzZWxmLmRiX2NsaWVudC5pbnNlcnQodGFibGU9aW5zdG10LmdldF9vcmRlcl9ib29rX3RhYmxlX25hbWUoKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY29sdW1ucz1bJ2lkJ10gKyBMMkRlcHRoLmNvbHVtbnMoKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdmFsdWVzPVtpbnN0bXQuZ2V0X29yZGVyX2Jvb2tfaWQoKV0gKyBpbnN0bXQuZ2V0X2wyX2RlcHRoKCkudmFsdWVzKCkpCg==</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">aW1wb3J0IGpzb24K</text>
-      </register>
-      <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICBtZXNzYWdlID0ganNvbi5sb2FkcyhtZXNzYWdlKQo=</text>
-      </register>
-      <register name="7" type="2">
         <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNlbGYuZGJfY2xpZW50Lmluc2VydCh0YWJsZT1pbnN0bXQuZ2V0X29yZGVyX2Jvb2tfdGFibGVfbmFtZSgpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY29sdW1ucz1bJ2lkJ10rTDJEZXB0aC5jb2x1bW5zKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2YWx1ZXM9W2luc3RtdC5nZXRfb3JkZXJfYm9va19pZCgpXStpbnN0bXQuZ2V0X2wyX2RlcHRoKCkudmFsdWVzKCkpCg==</text>
       </register>
-      <register name="8" type="2">
+      <register name="6" type="2">
         <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNlbGYuZGJfY2xpZW50Lmluc2VydCh0YWJsZT1pbnN0bXQuZ2V0X3RyYWRlc190YWJsZV9uYW1lKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY29sdW1ucz1bJ2lkJ10rVHJhZGUuY29sdW1ucygpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW5zdG10LmdldF90cmFkZV9pZCgpXSt0cmFkZS52YWx1ZXMoKSkK</text>
       </register>
+      <register name="7" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzZWxmLmRiX2NsaWVudC5pbnNlcnQodGFibGU9aW5zdG10LmdldF90cmFkZXNfdGFibGVfbmFtZSgpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb2x1bW5zPVsnaWQnXStUcmFkZS5jb2x1bW5zKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW5zdG10LmdldF90cmFkZV9pZCgpXSt0cmFkZS52YWx1ZXMoKSkK</text>
+      </register>
+      <register name="8" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNlbGYuZGJfY2xpZW50Lmluc2VydCh0YWJsZT1pbnN0bXQuZ2V0X29yZGVyX2Jvb2tfdGFibGVfbmFtZSgpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNvbHVtbnM9WydpZCddK0wyRGVwdGguY29sdW1ucygpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW5zdG10LmdldF9vcmRlcl9ib29rX2lkKCldK2luc3RtdC5nZXRfbDJfZGVwdGgoKS52YWx1ZXMoKSkK</text>
+      </register>
       <register name="9" type="2">
-        <text encoding="base64">ICAgICAgICBzZWxmLmRiX2NsaWVudC5pbnNlcnQodGFibGU9aW5zdG10LmdldF9vcmRlcl9ib29rX3RhYmxlX25hbWUoKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY29sdW1ucz1bJ2lkJ10gKyBMMkRlcHRoLmNvbHVtbnMoKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdmFsdWVzPVtpbnN0bXQuZ2V0X29yZGVyX2Jvb2tfaWQoKV0gKyBpbnN0bXQuZ2V0X2wyX2RlcHRoKCkudmFsdWVzKCkpCg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICBzZWxmLmRiX2NsaWVudC5pbnNlcnQodGFibGU9aW5zdG10LmdldF90cmFkZXNfdGFibGVfbmFtZSgpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb2x1bW5zPVsnaWQnXStUcmFkZS5jb2x1bW5zKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW5zdG10LmdldF90cmFkZV9pZCgpXSt0cmFkZS52YWx1ZXMoKSkK</text>
       </register>
       <register name=":" type="4">
         <text>w</text>
       </register>
     </registers>
     <search>
-      <last-search>sleep</last-search>
+      <last-search>insert</last-search>
       <last-offset />
-      <last-pattern>sleep</last-pattern>
+      <last-pattern>insert</last-pattern>
       <last-replace>enabled = 1</last-replace>
       <last-substitute>enabled = 0</last-substitute>
       <last-dir>1</last-dir>
@@ -1602,9 +1602,6 @@
     </search>
     <history>
       <history-search>
-        <entry>print_log</entry>
-        <entry>catch</entry>
-        <entry>Excep</entry>
         <entry>Exception</entry>
         <entry encoding="base64">XDxjb252ZXJ0X3N0clw+</entry>
         <entry>execute</entry>
@@ -1622,6 +1619,9 @@
         <entry encoding="base64">XDxQQUdFX1BBVVNFX1NFQ1w+</entry>
         <entry>driver.get</entry>
         <entry>sleep</entry>
+        <entry encoding="base64">XDxnZXRfb3JkZXJfYm9va1w+</entry>
+        <entry encoding="base64">XDxwYXJzZV9sMl9kZXB0aFw+</entry>
+        <entry>insert</entry>
       </history-search>
       <history-cmd>
         <entry encoding="base64">JzwsJz5zL2JpZHMvYXNrcy9n</entry>

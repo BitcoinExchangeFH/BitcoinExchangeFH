@@ -59,11 +59,11 @@ class ExchGwApiTemplate(WebSocketApiClient):
         
     @classmethod
     def get_order_book_subscription_string(cls, instmt):
-        return "{\"op\":\"subscribe\", \"args\": [\"orderBook10:%s\"]}" % instmt.get_instmt_code()
+        return json.dumps({"op":"subscribe", "args": ["orderBook10:%s" % instmt.get_instmt_code()]})
         
     @classmethod
     def get_trades_subscription_string(cls, instmt):
-        return "{\"op\":\"subscribe\", \"args\": [\"trade:%s\"]}" % instmt.get_instmt_code()            
+        return json.dumps({"op":"subscribe", "args": ["trade:%s" % instmt.get_instmt_code()]})
             
     @classmethod
     def parse_l2_depth(cls, instmt, raw):

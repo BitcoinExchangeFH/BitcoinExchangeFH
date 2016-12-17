@@ -17,10 +17,10 @@
         <mark key="." line="53" column="59" />
         <mark key="^" line="52" column="20" />
       </file>
-      <file name="/Python Console" timestamp="1481758437547">
+      <file name="/Python Console" timestamp="1481984933317">
         <mark key="[" line="0" column="0" />
       </file>
-      <file name="/fragment.py" timestamp="1481758513664">
+      <file name="/fragment.py" timestamp="1481984956294">
         <mark key="'" line="0" column="23" />
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="26" />
@@ -97,7 +97,7 @@
         <mark key="^" line="77" column="18" />
         <mark key="." line="77" column="37" />
       </file>
-      <file name="/Dummy.txt" timestamp="1481980427695">
+      <file name="/Dummy.txt" timestamp="1481985152487">
         <mark key="'" line="0" column="0" />
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="0" />
@@ -115,6 +115,12 @@
         <mark key="]" line="23" column="0" />
         <mark key="." line="23" column="0" />
         <mark key="^" line="19" column="33" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_ws_template.py" timestamp="1481985063354">
+        <mark key="[" line="65" column="61" />
+        <mark key="]" line="65" column="61" />
+        <mark key="." line="65" column="61" />
+        <mark key="^" line="65" column="95" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket.py" timestamp="1481723274451">
         <mark key="'" line="4" column="22" />
@@ -326,8 +332,8 @@
       <jump line="24" column="27" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/gspiderweb.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ICAgIAo=</text>
+      <register name="&quot;" type="4">
+        <text>&quot;</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1541,7 +1547,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>get</text>
+        <text>&quot;</text>
       </register>
       <register name="/" type="4">
         <text>sleep</text>
@@ -1550,19 +1556,19 @@
         <text encoding="base64">ICAgICAgICBzZWxmLmNoZWNrX2FjY291bnRfbG9ja2VkKCkK</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgIAo=</text>
+        <text encoding="base64">ICAgICAgICByZXR1cm4geyAib3AifQo=</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgIGRlZiBfX2V4aXRfXyhzZWxmLCBleGNfdHlwZSwgZXhjX3ZhbHVlLCB0cmFjZWJhY2spOgo=</text>
+        <text encoding="base64">ICAgIAo=</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgIGRlZiBfX2V4aXRfXyhzZWxmLCBleGNfdHlwZSwgZXhjX3ZhbHVlLCB0cmFjZWJhY2spOgo=</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgdGltZS5zbGVlcCgxKQo=</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">ICAgICAgICBzZWxmLmNoZWNrX2FjY291bnRfbG9ja2VkKCkK</text>
+        <text encoding="base64">ICAgICAgICAgICAgdGltZS5zbGVlcCgxKQo=</text>
       </register>
       <register name="6" type="2">
         <text encoding="base64">ICAgICAgICBzZWxmLmNoZWNrX2FjY291bnRfbG9ja2VkKCkK</text>
@@ -1574,7 +1580,7 @@
         <text encoding="base64">ICAgICAgICBzZWxmLmNoZWNrX2FjY291bnRfbG9ja2VkKCkK</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">ICAgICAgICBpZiBzZWxmLgo=</text>
+        <text encoding="base64">ICAgICAgICBzZWxmLmNoZWNrX2FjY291bnRfbG9ja2VkKCkK</text>
       </register>
       <register name=":" type="4">
         <text>w</text>

@@ -19,11 +19,11 @@ Users can
 - BitMEX (Websocket)
 - BTCC (RESTful)
 - Kraken (RESTful)
+- Huobi (Websocket)
 
 Currently the support of other exchanges is still under development.
 
 Scheduled exchange supported soon:
-- Huobi
 - xBTCe
 - Poloniex
 - DABTC

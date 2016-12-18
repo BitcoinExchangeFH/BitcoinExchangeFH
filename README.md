@@ -98,6 +98,16 @@ python python/bitcoinexchangefh.py -csv -dbdir data/
 |dbschema|Database schema. Supported for database with connection.|
 |output|Verbose output file path.|
 
+### Subscription
+All the instrument subscription are mentioned in the configuration file ["subscriptions.ini"](subscriptions.ini). For supported exchanges, you can include its instruments as a block of subscription.
+
+|Argument|Description|
+|---|---|
+|(block name)|Unique subscription ID|
+|exchange|Exchange name.|
+|instmt_name|Instrument name. Used in application, e.g. database table name|
+|instmt_code|Exchange instrument code. Used in exchange API|
+|enabled|Indicate whether to subscribe it|
 
 ## Compatibility
 The application is compatible with version higher or equal to python 3.0.

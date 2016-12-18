@@ -103,7 +103,7 @@
         <mark key="^" line="77" column="18" />
         <mark key="." line="77" column="37" />
       </file>
-      <file name="/Dummy.txt" timestamp="1481985152487">
+      <file name="/Dummy.txt" timestamp="1482018157109">
         <mark key="'" line="0" column="0" />
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="0" />
@@ -122,7 +122,8 @@
         <mark key="." line="74" column="0" />
         <mark key="^" line="74" column="31" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_ws_template.py" timestamp="1482016845067">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_ws_template.py" timestamp="1482018667917">
+        <mark key="'" line="0" column="0" />
         <mark key="[" line="218" column="0" />
         <mark key="]" line="218" column="0" />
         <mark key="." line="218" column="0" />
@@ -235,8 +236,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitfinex.py" />
-      <jump line="217" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitfinex.py" />
       <jump line="172" column="73" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" />
       <jump line="52" column="26" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" />
       <jump line="78" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" />
@@ -335,6 +334,8 @@
       <jump line="54" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="70" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="75" column="38" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
+      <jump line="198" column="37" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_ws_template.py" />
+      <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_ws_template.py" />
     </jumps>
     <registers>
       <register name="&quot;" type="4">
@@ -1555,7 +1556,7 @@
         <text>, ret))</text>
       </register>
       <register name="/" type="4">
-        <text>get_order_book</text>
+        <text>parse</text>
       </register>
       <register name="0" type="2">
         <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNlbGYuaW5zZXJ0X3RyYWRlKGluc3RtdCwgdHJhZGUpCg==</text>
@@ -1592,9 +1593,9 @@
       </register>
     </registers>
     <search>
-      <last-search>get_order_book</last-search>
+      <last-search>parse</last-search>
       <last-offset />
-      <last-pattern>get_order_book</last-pattern>
+      <last-pattern>parse</last-pattern>
       <last-replace>enabled = 1</last-replace>
       <last-substitute>enabled = 0</last-substitute>
       <last-dir>1</last-dir>
@@ -1602,8 +1603,6 @@
     </search>
     <history>
       <history-search>
-        <entry encoding="base64">XDxjb252ZXJ0X3N0clw+</entry>
-        <entry>execute</entry>
         <entry encoding="base64">XDxpc19hbGxfY29sdW1uc1w+</entry>
         <entry>Error in order book</entry>
         <entry>Bitmex</entry>
@@ -1622,6 +1621,8 @@
         <entry encoding="base64">XDxwYXJzZV9sMl9kZXB0aFw+</entry>
         <entry>insert</entry>
         <entry>get_order_book</entry>
+        <entry>parse_order</entry>
+        <entry>parse</entry>
       </history-search>
       <history-cmd>
         <entry encoding="base64">JzwsJz5zL2JpZHMvYXNrcy9n</entry>

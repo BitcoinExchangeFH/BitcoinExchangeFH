@@ -89,6 +89,12 @@
         <mark key="^" line="108" column="20" />
         <mark key="." line="108" column="20" />
       </file>
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" timestamp="1482155166040">
+        <mark key="[" line="10" column="0" />
+        <mark key="]" line="10" column="0" />
+        <mark key="." line="10" column="0" />
+        <mark key="^" line="5" column="17" />
+      </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/bitcoinexchangefh.py" timestamp="1481758519635">
         <mark key="'" line="79" column="36" />
         <mark key="[" line="80" column="26" />
@@ -145,10 +151,10 @@
         <mark key="^" line="57" column="19" />
         <mark key="." line="57" column="19" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/config.ini" timestamp="1480550310849">
-        <mark key="[" line="16" column="56" />
-        <mark key="]" line="16" column="56" />
-        <mark key="." line="16" column="56" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/config.ini" timestamp="1482155093067">
+        <mark key="[" line="2" column="0" />
+        <mark key="]" line="2" column="0" />
+        <mark key="." line="2" column="0" />
         <mark key="^" line="16" column="56" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" timestamp="1482016761260">
@@ -172,12 +178,12 @@
         <mark key="^" line="187" column="45" />
         <mark key="." line="187" column="45" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/pipe_factory.py" timestamp="1480549496205">
-        <mark key="'" line="1" column="0" />
-        <mark key="[" line="30" column="29" />
-        <mark key="]" line="30" column="39" />
-        <mark key="." line="30" column="39" />
-        <mark key="^" line="30" column="39" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/pipe_factory.py" timestamp="1482156072997">
+        <mark key="'" line="8" column="0" />
+        <mark key="[" line="48" column="38" />
+        <mark key="]" line="48" column="41" />
+        <mark key="." line="48" column="41" />
+        <mark key="^" line="48" column="41" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket2.py" timestamp="1481726023243">
         <mark key="[" line="77" column="22" />
@@ -185,10 +191,10 @@
         <mark key="." line="77" column="21" />
         <mark key="^" line="77" column="21" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/ticktickbacktest.py" timestamp="1480549931671">
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/ticktickbacktest.py" timestamp="1482155276157">
         <mark key="'" line="1" column="40" />
-        <mark key="[" line="57" column="8" />
-        <mark key="]" line="57" column="9" />
+        <mark key="[" line="54" column="0" />
+        <mark key="]" line="54" column="73" />
         <mark key="." line="57" column="9" />
         <mark key="^" line="57" column="9" />
       </file>
@@ -199,8 +205,8 @@
         <mark key="^" line="105" column="39" />
         <mark key="." line="110" column="8" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/.gitignore" timestamp="1480549996917">
-        <mark key="[" line="91" column="5" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/.gitignore" timestamp="1482155117814">
+        <mark key="[" line="91" column="6" />
         <mark key="]" line="91" column="5" />
         <mark key="^" line="91" column="5" />
         <mark key="." line="91" column="5" />
@@ -339,8 +345,8 @@
       <jump line="27" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitfinex.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgd3Muc2VuZChzZWxmLmFwaV9zb2NrZXQuZ2V0CiAgICAgICAgICAgIHdzLnNlbmQoIntcImV2ZW50XCI6XCJhZGRDaGFubmVsXCIsIFwiY2hhbm5lbFwiOiBcIiVzXCJ9IiAlIGluc3RtdC5nZXRfdHJhZGVzX2NoYW5uZWxfaWQoKSkK</text>
+      <register name="&quot;" type="4">
+        <text>v</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1554,40 +1560,40 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>&quot;{\&quot;event\&quot;:\&quot;addChannel\&quot;, \&quot;channel\&quot;: \&quot;%s\&quot;}&quot; % instmt.get_order_book_channel_id())</text>
+        <text>v</text>
       </register>
       <register name="/" type="4">
         <text encoding="base64">XDxnZXRfb3JkZXJfYm9va19zdWJzY3JpcHRpb25fc3RyaW5nXD4=</text>
       </register>
       <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgd3Muc2VuZChzZWxmLmFwaV9zb2NrZXQuZ2V0X29yZGVyX2Jvb2tfc3Vic2NyaXB0aW9uX3N0cmluZyhpbnN0bXQpKQogICAgICAgICAgICB3cy5zZW5kKHNlbGYuYXBpX3NvY2tldC5nZXRfdHJhZGVzX3N1YnNjcmlwdGlvbl9zdHJpbmcoaW5zdG10KSkK</text>
+        <text encoding="base64">ICAgICAgICBzZWxmLmN1cnJfY3Vyc29yID0gTm9uZQo=</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgd3Muc2VuZChzZWxmLmFwaV9zb2NrZXQuZ2V0CiAgICAgICAgICAgIHdzLnNlbmQoIntcImV2ZW50XCI6XCJhZGRDaGFubmVsXCIsIFwiY2hhbm5lbFwiOiBcIiVzXCJ9IiAlIGluc3RtdC5nZXRfdHJhZGVzX2NoYW5uZWxfaWQoKSkK</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICByZXR1cm4ganNvbi5kdW1wcyh7ImV2ZW50Ijoic3Vic2NyaWJlIiwgImNoYW5uZWwiOiAidHJhZGVzIiwgInBhaXIiOiBpbnN0bXQuZ2V0X2luc3RtdF9jb2RlKCl9KQo=</text>
+        <text encoding="base64">ICAgICAgICBjbGllbnQgPSBNeXNxbENsaWVudChzZWxmLmxvZ2dlcikKICAgICAgICBjbGllbnQuY29ubmVjdChob3N0PXNlbGYuaG9zdCwgXAogICAgICAgICAgICAgICAgICAgICAgIHBvcnQ9c2VsZi5wb3J0LCBcCiAgICAgICAgICAgICAgICAgICAgICAgdXNlcj1zZWxmLnVzZXIsCiAgICAgICAgICAgICAgICAgICAgICAgcHdkPXNlbGYucHdkLAogICAgICAgICAgICAgICAgICAgICAgIHNjaGVtYT1zZWxmLnNjaGVtYSkK</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICByZXR1cm4ganNvbi5kdW1wcyh7ImV2ZW50Ijoic3Vic2NyaWJlIiwgImNoYW5uZWwiOiAiYm9vayIsICJwYWlyIjogaW5zdG10LmdldF9pbnN0bXRfY29kZSgpLCAiZnJlcSI6ICJGMCJ9KQo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgCg==</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgd3Muc2VuZCgie1wiZXZlbnRcIjpcInN1YnNjcmliZVwiLCBcImNoYW5uZWxcIjogXCJ0cmFkZXNcIiwgXCJwYWlyXCI6IFwiJXNcIn0iICUgaW5zdG10LmdldF9pbnN0bXRfY29kZSgpKQo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgCiAgICAgICAgcmV0dXJuIGNsaWVudAo=</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">ICAgICAgICByZXR1cm4ganNvbi5kdW1wcyh7Im9wIjoic3Vic2NyaWJlIiwgImFyZ3MiOiBbInRyYWRlOiVzIiAlIGluc3RtdC5nZXRfaW5zdG10X2NvZGUoKV19KQo=</text>
+        <text encoding="base64">ICAgICAgICBzZWxmLnBpcGVzLgo=</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICByZXR1cm4ganNvbi5kdW1wcyh7Im9wIjoic3Vic2NyaWJlIiwgImFyZ3MiOiBbIm9yZGVyQm9vazEwOiVzIiAlIGluc3RtdC5nZXRfaW5zdG10X2NvZGUoKV19KQo=</text>
+        <text encoding="base64">ICAgICAgICByb3cgPSBkYl9jbGllbnQuc2VsZWN0KHRhYmxlPW9yZGVyX2Jvb2tfbmFtZXNbMF1bMF0saXNGZXRjaEFsbD1GYWxzZSkK</text>
       </register>
       <register name="7" type="8">
-        <text>instmt.get_instmt_code()</text>
+        <text encoding="base64">IyAKIyAKIyAKIyAKIyAKIyAKIyAKIyA=</text>
       </register>
-      <register name="8" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgd3Muc2VuZCgie1wib3BcIjpcInN1YnNjcmliZVwiLCBcImFyZ3NcIjogW1wib3JkZXJCb29rMTA6JXNcIl19IiAlIGluc3RtdC5nZXRfaW5zdG10X2NvZGUoKSkKICAgICAgICAgICAgd3Muc2VuZCgie1wib3BcIjpcInN1YnNjcmliZVwiLCBcImFyZ3NcIjogW1widHJhZGU6JXNcIl19IiAlIGluc3RtdC5nZXRfaW5zdG10X2NvZGUoKSkK</text>
+      <register name="8" type="8">
+        <text encoding="base64">IyAKIyAKIyAKIyAKIyA=</text>
       </register>
-      <register name="9" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICBzZWxmLmRiX2NsaWVudC5pbnNlcnQodGFibGU9aW5zdG10LmdldF90cmFkZXNfdGFibGVfbmFtZSgpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb2x1bW5zPVsnaWQnXStUcmFkZS5jb2x1bW5zKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW5zdG10LmdldF90cmFkZV9pZCgpXSt0cmFkZS52YWx1ZXMoKSkK</text>
+      <register name="9" type="8">
+        <text encoding="base64">IyAKIyAKIyAKIyAKIyA=</text>
       </register>
       <register name=":" type="4">
         <text>w</text>

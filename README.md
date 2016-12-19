@@ -12,6 +12,10 @@ Users can
 2. Recording market data to a in-memory database and other applications can quickly access to it.
 3. Customize the project for trading use.
 
+<p align="center">
+  <img src="doc/sample.jpg">
+</p>
+
 ## Supported exchanges
 
 - OkCoin (Websocket)
@@ -108,6 +112,15 @@ All the instrument subscription are mentioned in the configuration file ["subscr
 |instmt_name|Instrument name. Used in application, e.g. database table name|
 |instmt_code|Exchange instrument code. Used in exchange API|
 |enabled|Indicate whether to subscribe it|
+
+### Market Data
+
+All market data are stored in the dedicated database. For each instrument, there are two tables, order book and trades. The order book is the price depth at top five levels. They are recorded under the table names of
+
+```
+exch_<exchange name>_<instrument name>_book
+exch_<exchange name>_<instrument name>_trades
+```
 
 ## Compatibility
 The application is compatible with version higher or equal to python 3.0.

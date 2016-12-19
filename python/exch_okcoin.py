@@ -34,8 +34,16 @@ class ExchGwOkCoinWs(WebSocketApiClient):
         
     @classmethod
     def get_link(cls):
-        return 'wss://real.okcoin.com:10440/websocket/okcoinapi'    
-            
+        return 'wss://real.okcoin.com:10440/websocket/okcoinapi'
+
+    @classmethod
+    def get_order_book_subscription_string(cls, instmt):
+        return json.dumps({"event":"addChannel", "channel": instmt.get_order_book_channel_id()})
+
+    @classmethod
+    def get_trades_subscription_string(cls, instmt):
+        return json.dumps({"event":"addChannel", "channel": instmt.get_trades_channel_id()})
+
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
@@ -139,8 +147,8 @@ class ExchGwOkCoin(ExchangeGateway):
                 instmt.set_order_book_channel_id("ok_sub_%s_depth_20" % instmt.get_instmt_code())
                 instmt.set_trades_channel_id("ok_sub_%s_trades" % instmt.get_instmt_code())
 
-            ws.send("{\"event\":\"addChannel\", \"channel\": \"%s\"}" % instmt.get_order_book_channel_id())
-            ws.send("{\"event\":\"addChannel\", \"channel\": \"%s\"}" % instmt.get_trades_channel_id())
+            ws.send(self.api_socket.get_order_book_subscription_string(instmt))
+            ws.send(self.api_socket.get_trades_subscription_string(instmt))
             instmt.set_subscribed(True)
 
     def on_close_handler(self, instmt, ws):

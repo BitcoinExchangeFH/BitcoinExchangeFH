@@ -23,7 +23,15 @@ class ExchGwBitfinexWs(WebSocketApiClient):
     @classmethod
     def get_link(cls):
         return 'wss://api2.bitfinex.com:3000/ws'
-            
+
+    @classmethod
+    def get_order_book_subscription_string(cls, instmt):
+        return json.dumps({"event":"subscribe", "channel": "book", "pair": instmt.get_instmt_code(), "freq": "F0"})
+
+    @classmethod
+    def get_trades_subscription_string(cls, instmt):
+        return json.dumps({"event":"subscribe", "channel": "trades", "pair": instmt.get_instmt_code()})
+
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
@@ -176,8 +184,8 @@ class ExchGwBitfinex(ExchangeGateway):
         Logger.info(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
                   (instmt.get_instmt_code(), instmt.get_exchange_name()))
         if not instmt.get_subscribed():
-            ws.send("{\"event\":\"subscribe\", \"channel\": \"book\", \"pair\": \"%s\", \"freq\": \"F0\"}" % instmt.get_instmt_code())
-            ws.send("{\"event\":\"subscribe\", \"channel\": \"trades\", \"pair\": \"%s\"}" % instmt.get_instmt_code())
+            ws.send(self.api_socket.get_order_book_subscription_string(instmt))
+            ws.send(self.api_socket.get_trades_subscription_string(instmt))
             instmt.set_subscribed(True)
 
     def on_close_handler(self, instmt, ws):

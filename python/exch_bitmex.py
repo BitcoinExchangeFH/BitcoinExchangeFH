@@ -55,7 +55,15 @@ class ExchGwBitmexWs(WebSocketApiClient):
     @classmethod
     def get_link(cls):
         return 'wss://www.bitmex.com/realtime'
-            
+
+    @classmethod
+    def get_order_book_subscription_string(cls, instmt):
+        return json.dumps({"op":"subscribe", "args": ["orderBook10:%s" % instmt.get_instmt_code()]})
+
+    @classmethod
+    def get_trades_subscription_string(cls, instmt):
+        return json.dumps({"op":"subscribe", "args": ["trade:%s" % instmt.get_instmt_code()]})
+
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
@@ -162,8 +170,8 @@ class ExchGwBitmex(ExchangeGateway):
         Logger.info(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
                   (instmt.get_instmt_code(), instmt.get_exchange_name()))
         if not instmt.get_subscribed():
-            ws.send("{\"op\":\"subscribe\", \"args\": [\"orderBook10:%s\"]}" % instmt.get_instmt_code())
-            ws.send("{\"op\":\"subscribe\", \"args\": [\"trade:%s\"]}" % instmt.get_instmt_code())
+            ws.send(self.api_socket.get_order_book_subscription_string(instmt))
+            ws.send(self.api_socket.get_trades_subscription_string(instmt))
             instmt.set_subscribed(True)
 
     def on_close_handler(self, instmt, ws):

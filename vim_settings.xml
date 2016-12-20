@@ -17,22 +17,22 @@
         <mark key="." line="151" column="0" />
         <mark key="^" line="149" column="38" />
       </file>
-      <file name="/Python Console" timestamp="1482160489406">
+      <file name="/Python Console" timestamp="1482194047873">
         <mark key="[" line="0" column="0" />
       </file>
-      <file name="/fragment.py" timestamp="1482159489894">
+      <file name="/fragment.py" timestamp="1482194012076">
         <mark key="'" line="0" column="23" />
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="27" />
         <mark key="." line="0" column="27" />
         <mark key="^" line="0" column="1" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/config_manager.py" timestamp="1482159465945">
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/config_manager.py" timestamp="1482193287422">
         <mark key="'" line="5" column="0" />
-        <mark key="[" line="14" column="52" />
-        <mark key="]" line="14" column="53" />
-        <mark key="^" line="14" column="53" />
-        <mark key="." line="14" column="53" />
+        <mark key="[" line="18" column="21" />
+        <mark key="]" line="18" column="61" />
+        <mark key="^" line="18" column="61" />
+        <mark key="." line="18" column="61" />
       </file>
       <file name="/a.dummy" timestamp="1480889185027">
         <mark key="[" line="0" column="0" />
@@ -89,11 +89,11 @@
         <mark key="^" line="108" column="20" />
         <mark key="." line="108" column="20" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" timestamp="1482160384806">
-        <mark key="[" line="18" column="45" />
-        <mark key="]" line="18" column="51" />
-        <mark key="." line="18" column="51" />
-        <mark key="^" line="18" column="51" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" timestamp="1482193950081">
+        <mark key="[" line="14" column="44" />
+        <mark key="]" line="14" column="44" />
+        <mark key="." line="14" column="44" />
+        <mark key="^" line="20" column="45" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/bitcoinexchangefh.py" timestamp="1481758519635">
         <mark key="'" line="79" column="36" />
@@ -109,7 +109,7 @@
         <mark key="^" line="77" column="18" />
         <mark key="." line="77" column="37" />
       </file>
-      <file name="/Dummy.txt" timestamp="1482154259774">
+      <file name="/Dummy.txt" timestamp="1482194184769">
         <mark key="'" line="0" column="0" />
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="0" />
@@ -178,11 +178,11 @@
         <mark key="^" line="187" column="45" />
         <mark key="." line="187" column="45" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/pipe_factory.py" timestamp="1482160519851">
-        <mark key="[" line="65" column="0" />
-        <mark key="]" line="66" column="31" />
-        <mark key="^" line="65" column="43" />
-        <mark key="." line="65" column="43" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/pipe_factory.py" timestamp="1482194133450">
+        <mark key="[" line="54" column="33" />
+        <mark key="]" line="54" column="36" />
+        <mark key="^" line="54" column="36" />
+        <mark key="." line="54" column="36" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket2.py" timestamp="1481726023243">
         <mark key="[" line="77" column="22" />
@@ -190,12 +190,12 @@
         <mark key="." line="77" column="21" />
         <mark key="^" line="77" column="21" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/ticktickbacktest.py" timestamp="1482160472713">
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/ticktickbacktest.py" timestamp="1482194110339">
         <mark key="'" line="1" column="40" />
-        <mark key="[" line="51" column="22" />
-        <mark key="]" line="51" column="22" />
-        <mark key="." line="51" column="22" />
-        <mark key="^" line="51" column="22" />
+        <mark key="[" line="53" column="46" />
+        <mark key="]" line="53" column="46" />
+        <mark key="." line="53" column="46" />
+        <mark key="^" line="53" column="46" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/test/test_file_client.py" timestamp="1481153644877">
         <mark key="'" line="111" column="0" />
@@ -344,8 +344,8 @@
       <jump line="40" column="0" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/pipe_factory.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICBmb3Iga2V5LCB2YWx1ZSBpbiBzZWxmLnBpcGVzLml0ZW1zKCk6CiAgICAgICAgICAgIHZhbHVlLmNsaWVudC5jbG9zZSgpCg==</text>
+      <register name="&quot;" type="4">
+        <text>Updated README</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1559,13 +1559,13 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>9</text>
+        <text>Updated README</text>
       </register>
       <register name="/" type="4">
         <text encoding="base64">XDxnZXRfb3JkZXJfYm9va19zdWJzY3JpcHRpb25fc3RyaW5nXD4=</text>
       </register>
-      <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICBmb3Iga2V5LCB2YWx1ZSBpbiBzZWxmLnBpcGVzLml0ZW1zKCk6CiAgICAgICAgICAgIHZhbHVlLmNsaWVudC5jbG9zZSgpCg==</text>
+      <register name="0" type="4">
+        <text>data_info</text>
       </register>
       <register name="1" type="2">
         <text encoding="base64">Cg==</text>

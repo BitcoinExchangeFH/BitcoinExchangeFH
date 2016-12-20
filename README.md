@@ -103,7 +103,7 @@ python python/bitcoinexchangefh.py -csv -dbdir data/
 |output|Verbose output file path.|
 
 ### Subscription
-All the instrument subscription are mentioned in the configuration file ["subscriptions.ini"](subscriptions.ini). For supported exchanges, you can include its instruments as a block of subscription.
+All the instrument subscription are mentioned in the configuration file [subscriptions.ini](subscriptions.ini). For supported exchanges, you can include its instruments as a block of subscription.
 
 |Argument|Description|
 |---|---|

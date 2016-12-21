@@ -37,12 +37,12 @@
       <file name="/a.dummy" timestamp="1480889185027">
         <mark key="[" line="0" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" timestamp="1481979279097">
-        <mark key="'" line="87" column="13" />
-        <mark key="[" line="28" column="0" />
-        <mark key="]" line="28" column="0" />
-        <mark key="." line="28" column="0" />
-        <mark key="^" line="27" column="21" />
+      <file name="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" timestamp="1482355769134">
+        <mark key="'" line="88" column="13" />
+        <mark key="[" line="99" column="31" />
+        <mark key="]" line="99" column="32" />
+        <mark key="." line="99" column="32" />
+        <mark key="^" line="99" column="32" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" timestamp="1482153413470">
         <mark key="'" line="94" column="26" />
@@ -345,7 +345,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>key</text>
+        <text>go_to_url</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1559,40 +1559,40 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>key</text>
+        <text>1)</text>
       </register>
       <register name="/" type="4">
         <text encoding="base64">XDxnZXRfb3JkZXJfYm9va19zdWJzY3JpcHRpb25fc3RyaW5nXD4=</text>
       </register>
       <register name="0" type="4">
-        <text>data_info</text>
+        <text>go_to_url</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgdGltZS5zbGVlcCgxMCkK</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgIGRlZiBfX2RlbF9fKHNlbGYpOgogICAgICAgIGZvciBrZXksIHZhbHVlIGluIHNlbGYucGlwZXM6CiAgICAgICAgICAgIHZhbHVlLmNsaWVudC5jbG9zZSgpCg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgdGltZS5zbGVlcCgzMCkK</text>
       </register>
       <register name="3" type="2">
         <text encoding="base64">Cg==</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgIGRlZiBfX2RlbF9fKHNlbGYpOgogICAgICAgIGZvciBrZXksIHZhbHVlIGluIHNlbGYucGlwZXM6CiAgICAgICAgICAgIHZhbHVlLmNsaWVudC5jbG9zZSgpCg==</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">ICAgIGRlbCBwaXBlX2ZhY3RvcnkK</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgIHRpbWUuc2xlZXAoMSkK</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgIHBpcGVfZmFjdG9yeS5wcmVwYXJlKG9yZGVyX2Jvb2tfbmFtZXNbMF1bMF0pCiAgICBwaXBlX2ZhY3RvcnkucHJlcGFyZShvcmRlcl9ib29rX25hbWVzWzBdWzFdKQo=</text>
+        <text encoding="base64">ICAgIGRlbCBwaXBlX2ZhY3RvcnkK</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">ICAgIHRyYWRlX25hbWVzID0gY29uZmlnX21hbi5nZXRfdHJhZGVfZGF0YV9uYW1lcygpCiAgICBsb2dnZXIuaW5mbygnT3JkZXIgYm9vayBuYW1lcyA9IFxuJXMnICUgb3JkZXJfYm9va19uYW1lcykK</text>
+        <text encoding="base64">ICAgIHRpbWUuc2xlZXAoMSkK</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">CiAgICBkZWYgZ2V0X3RyYWRlX2RhdGFfbmFtZXMoc2VsZik6CiAgICAgICAgIiIiCiAgICAgICAgR2V0IHRyYWRlcyBkYXRhIG5hbWVzCiAgICAgICAgOnJldHVybjogTGlzdCBvZiBuYW1lcwogICAgICAgICIiIgogICAgICAgIHJldHVybiBhc3QubGl0ZXJhbF9ldmFsKHNlbGYuX19jb25maWcuZ2V0KHNlbGYuX19kYXRhX3NlY3Rpb25fbmFtZSwgJ1RyYWRlcycpKQo=</text>
+        <text encoding="base64">ICAgIHBpcGVfZmFjdG9yeS5wcmVwYXJlKG9yZGVyX2Jvb2tfbmFtZXNbMF1bMF0pCiAgICBwaXBlX2ZhY3RvcnkucHJlcGFyZShvcmRlcl9ib29rX25hbWVzWzBdWzFdKQo=</text>
       </register>
       <register name=":" type="4">
         <text>w</text>

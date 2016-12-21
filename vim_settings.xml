@@ -37,12 +37,12 @@
       <file name="/a.dummy" timestamp="1480889185027">
         <mark key="[" line="0" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" timestamp="1482355769134">
+      <file name="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" timestamp="1482356430832">
         <mark key="'" line="88" column="13" />
-        <mark key="[" line="99" column="31" />
-        <mark key="]" line="99" column="32" />
-        <mark key="." line="99" column="32" />
-        <mark key="^" line="99" column="32" />
+        <mark key="[" line="94" column="34" />
+        <mark key="]" line="94" column="34" />
+        <mark key="." line="94" column="34" />
+        <mark key="^" line="94" column="34" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" timestamp="1482153413470">
         <mark key="'" line="94" column="26" />
@@ -345,7 +345,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>go_to_url</text>
+        <text>0</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1559,7 +1559,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>1)</text>
+        <text>0</text>
       </register>
       <register name="/" type="4">
         <text encoding="base64">XDxnZXRfb3JkZXJfYm9va19zdWJzY3JpcHRpb25fc3RyaW5nXD4=</text>

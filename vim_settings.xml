@@ -3,8 +3,12 @@
     <state version="4" enabled="true" />
     <globalmarks />
     <filemarks>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_gdax.py" timestamp="1482797055030">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_gdax.py" timestamp="1482798677439">
         <mark key="'" line="0" column="0" />
+        <mark key="[" line="196" column="20" />
+        <mark key="]" line="196" column="44" />
+        <mark key="." line="196" column="44" />
+        <mark key="^" line="196" column="44" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" timestamp="1482018132493">
         <mark key="'" line="75" column="38" />
@@ -20,7 +24,7 @@
         <mark key="." line="151" column="0" />
         <mark key="^" line="149" column="38" />
       </file>
-      <file name="/Python Console" timestamp="1482797319491">
+      <file name="/Python Console" timestamp="1482798651367">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="/fragment.py" timestamp="1482365005346">
@@ -128,7 +132,10 @@
         <mark key="." line="74" column="0" />
         <mark key="^" line="74" column="31" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/gdax_test.py" timestamp="1482797092798" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/gdax_test.py" timestamp="1482798360549">
+        <mark key="[" line="59" column="0" />
+        <mark key="]" line="59" column="23" />
+      </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_ws_template.py" timestamp="1482150295873">
         <mark key="'" line="0" column="0" />
         <mark key="[" line="173" column="0" />
@@ -136,12 +143,12 @@
         <mark key="." line="218" column="0" />
         <mark key="^" line="217" column="58" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket.py" timestamp="1482797287102">
-        <mark key="'" line="75" column="23" />
-        <mark key="[" line="72" column="28" />
-        <mark key="]" line="72" column="42" />
-        <mark key="." line="72" column="42" />
-        <mark key="^" line="72" column="42" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket.py" timestamp="1482798571386">
+        <mark key="'" line="76" column="25" />
+        <mark key="[" line="74" column="27" />
+        <mark key="]" line="74" column="27" />
+        <mark key="." line="74" column="27" />
+        <mark key="^" line="58" column="59" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/requirement.txt" timestamp="1481890734367">
         <mark key="[" line="2" column="16" />
@@ -244,7 +251,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="203" column="27" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" />
       <jump line="49" column="26" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" />
       <jump line="84" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" />
       <jump line="90" column="26" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" />
@@ -344,10 +350,11 @@
       <jump line="18" column="10" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_gdax.py" />
       <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_gdax.py" />
       <jump line="191" column="40" filename="$USER_HOME$/Anaconda3/Lib/site-packages/websocket/_app.py" />
+      <jump line="75" column="25" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket.py" />
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>ws.run_forever())</text>
+        <text>get_trades_subscription_string</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1561,49 +1568,49 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>ws.run_forever())</text>
+        <text>get_trades_subscription_string</text>
       </register>
       <register name="/" type="4">
-        <text encoding="base64">XDxnZXRfb3JkZXJfYm9va19zdWJzY3JpcHRpb25fc3RyaW5nXD4=</text>
+        <text>try</text>
       </register>
       <register name="0" type="4">
-        <text>go_to_url</text>
+        <text>get_order_book_subscription_string</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgdGltZS5zbGVlcCgxMCkK</text>
-      </register>
-      <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgdGltZS5zbGVlcCgzMCkK</text>
-      </register>
-      <register name="3" type="2">
         <text encoding="base64">Cg==</text>
       </register>
+      <register name="2" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgc2VsZi53cyA9IHdlYnNvY2tldC5XZWJTb2NrZXRBcHAodXJsLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBvbl9tZXNzYWdlPXNlbGYuX19vbl9tZXNzYWdlLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBvbl9jbG9zZT1zZWxmLl9fb25fY2xvc2UsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG9uX29wZW49c2VsZi5fX29uX29wZW4sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG9uX2Vycm9yPXNlbGYuX19vbl9lcnJvcikK</text>
+      </register>
+      <register name="3" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgdGltZS5zbGVlcCgxMCkK</text>
+      </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgIGRlZiBfX2RlbF9fKHNlbGYpOgogICAgICAgIGZvciBrZXksIHZhbHVlIGluIHNlbGYucGlwZXM6CiAgICAgICAgICAgIHZhbHVlLmNsaWVudC5jbG9zZSgpCg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgdGltZS5zbGVlcCgzMCkK</text>
       </register>
       <register name="5" type="2">
         <text encoding="base64">Cg==</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgIGRlZiBfX2RlbF9fKHNlbGYpOgogICAgICAgIGZvciBrZXksIHZhbHVlIGluIHNlbGYucGlwZXM6CiAgICAgICAgICAgIHZhbHVlLmNsaWVudC5jbG9zZSgpCg==</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgIGRlbCBwaXBlX2ZhY3RvcnkK</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">ICAgIHRpbWUuc2xlZXAoMSkK</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">ICAgIHBpcGVfZmFjdG9yeS5wcmVwYXJlKG9yZGVyX2Jvb2tfbmFtZXNbMF1bMF0pCiAgICBwaXBlX2ZhY3RvcnkucHJlcGFyZShvcmRlcl9ib29rX25hbWVzWzBdWzFdKQo=</text>
+        <text encoding="base64">ICAgIGRlbCBwaXBlX2ZhY3RvcnkK</text>
       </register>
       <register name=":" type="4">
         <text>w</text>
       </register>
     </registers>
     <search>
-      <last-search encoding="base64">XDxnZXRfb3JkZXJfYm9va19zdWJzY3JpcHRpb25fc3RyaW5nXD4=</last-search>
+      <last-search>try</last-search>
       <last-offset />
-      <last-pattern encoding="base64">XDxnZXRfb3JkZXJfYm9va19zdWJzY3JpcHRpb25fc3RyaW5nXD4=</last-pattern>
+      <last-pattern>try</last-pattern>
       <last-replace>enabled = 1</last-replace>
       <last-substitute>enabled = 0</last-substitute>
       <last-dir>1</last-dir>
@@ -1611,7 +1618,6 @@
     </search>
     <history>
       <history-search>
-        <entry>Error in order book</entry>
         <entry>Bitmex</entry>
         <entry>enabled = 1</entry>
         <entry>enabled = 0</entry>
@@ -1631,6 +1637,7 @@
         <entry>parse_order</entry>
         <entry>parse</entry>
         <entry encoding="base64">XDxnZXRfb3JkZXJfYm9va19zdWJzY3JpcHRpb25fc3RyaW5nXD4=</entry>
+        <entry>try</entry>
       </history-search>
       <history-cmd>
         <entry encoding="base64">JzwsJz5zL2JpZHMvYXNrcy9n</entry>
@@ -1644,6 +1651,7 @@
         <entry>:w</entry>
         <entry>w!</entry>
         <entry>wq!</entry>
+        <entry>g</entry>
         <entry>w</entry>
       </history-cmd>
       <history-expr />

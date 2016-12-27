@@ -3,7 +3,7 @@
     <state version="4" enabled="true" />
     <globalmarks />
     <filemarks>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_gdax.py" timestamp="1482364675070">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_gdax.py" timestamp="1482797055030">
         <mark key="'" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" timestamp="1482018132493">
@@ -20,7 +20,7 @@
         <mark key="." line="151" column="0" />
         <mark key="^" line="149" column="38" />
       </file>
-      <file name="/Python Console" timestamp="1482367041190">
+      <file name="/Python Console" timestamp="1482797319491">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="/fragment.py" timestamp="1482365005346">
@@ -99,7 +99,9 @@
         <mark key="." line="80" column="30" />
         <mark key="^" line="80" column="30" />
       </file>
-      <file name="$USER_HOME$/Anaconda3/Lib/site-packages/websocket/_app.py" timestamp="1482365001422" />
+      <file name="$USER_HOME$/Anaconda3/Lib/site-packages/websocket/_app.py" timestamp="1482797438624">
+        <mark key="'" line="191" column="40" />
+      </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/instrument.py" timestamp="1480842028394">
         <mark key="'" line="95" column="44" />
         <mark key="[" line="77" column="37" />
@@ -126,6 +128,7 @@
         <mark key="." line="74" column="0" />
         <mark key="^" line="74" column="31" />
       </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/gdax_test.py" timestamp="1482797092798" />
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_ws_template.py" timestamp="1482150295873">
         <mark key="'" line="0" column="0" />
         <mark key="[" line="173" column="0" />
@@ -133,11 +136,12 @@
         <mark key="." line="218" column="0" />
         <mark key="^" line="217" column="58" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket.py" timestamp="1482364697471">
-        <mark key="'" line="72" column="23" />
-        <mark key="[" line="3" column="0" />
-        <mark key="]" line="3" column="0" />
-        <mark key="." line="3" column="0" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket.py" timestamp="1482797287102">
+        <mark key="'" line="75" column="23" />
+        <mark key="[" line="72" column="28" />
+        <mark key="]" line="72" column="42" />
+        <mark key="." line="72" column="42" />
+        <mark key="^" line="72" column="42" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/requirement.txt" timestamp="1481890734367">
         <mark key="[" line="2" column="16" />
@@ -240,7 +244,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="225" column="27" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" />
       <jump line="203" column="27" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" />
       <jump line="49" column="26" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" />
       <jump line="84" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" />
@@ -340,10 +343,11 @@
       <jump line="40" column="0" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/pipe_factory.py" />
       <jump line="18" column="10" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_gdax.py" />
       <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_gdax.py" />
+      <jump line="191" column="40" filename="$USER_HOME$/Anaconda3/Lib/site-packages/websocket/_app.py" />
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>0</text>
+        <text>ws.run_forever())</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1557,7 +1561,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>0</text>
+        <text>ws.run_forever())</text>
       </register>
       <register name="/" type="4">
         <text encoding="base64">XDxnZXRfb3JkZXJfYm9va19zdWJzY3JpcHRpb25fc3RyaW5nXD4=</text>

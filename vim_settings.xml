@@ -143,15 +143,11 @@
         <mark key="." line="218" column="0" />
         <mark key="^" line="217" column="58" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket.py" timestamp="1482798571386">
-        <mark key="'" line="76" column="25" />
-        <mark key="[" line="74" column="27" />
-        <mark key="]" line="74" column="27" />
-        <mark key="." line="74" column="27" />
-        <mark key="^" line="58" column="59" />
-      </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/requirement.txt" timestamp="1481890734367">
-        <mark key="[" line="2" column="16" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/requirement.txt" timestamp="1482846903966">
+        <mark key="[" line="4" column="0" />
+        <mark key="]" line="4" column="6" />
+        <mark key="^" line="4" column="6" />
+        <mark key="." line="4" column="6" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" timestamp="1481758023196">
         <mark key="'" line="47" column="0" />
@@ -1604,7 +1600,7 @@
         <text encoding="base64">ICAgIGRlbCBwaXBlX2ZhY3RvcnkK</text>
       </register>
       <register name=":" type="4">
-        <text>w</text>
+        <text>wq</text>
       </register>
     </registers>
     <search>
@@ -1645,7 +1641,6 @@
         <entry encoding="base64">JzwsJz5zL29yZGVyX2Jvb2svdHJhZGVzL2c=</entry>
         <entry>%s/print_log/Logger.info</entry>
         <entry>%s/print_log/Logger.info/g</entry>
-        <entry>wq</entry>
         <entry>%s/enabled = 1/enabled = 0/g</entry>
         <entry>%s/enabled = 0/enabled = 1/g</entry>
         <entry>:w</entry>
@@ -1653,6 +1648,7 @@
         <entry>wq!</entry>
         <entry>g</entry>
         <entry>w</entry>
+        <entry>wq</entry>
       </history-cmd>
       <history-expr />
       <history-input />

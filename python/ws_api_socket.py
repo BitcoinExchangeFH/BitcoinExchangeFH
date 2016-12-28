@@ -1,6 +1,7 @@
 import websocket
 import threading
 import json
+import time
 from api_socket import ApiSocket
 from util import Logger
 
@@ -68,6 +69,12 @@ class WebSocketApiClient(ApiSocket):
         :return:
         """
         self.ws.send(msg)
+
+    def __start(self):
+        while True:
+            self.ws.run_forever()
+            Logger.info(self.__class__.__name__, "Socket <%s> is going to reconnect..." % self.id)
+            time.sleep(1)
 
     def __on_message(self, ws, m):
         m = json.loads(m)

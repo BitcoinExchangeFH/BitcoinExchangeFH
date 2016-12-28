@@ -181,7 +181,7 @@ class ExchGwBitstamp(ExchangeGateway):
         :param instmt: Instrument
         :param ws: Web socket
         """
-        Logger.info(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
+        Logger.info(self.__class__.__name__, "Instrument %s is unsubscribed in channel %s" % \
                   (instmt.get_instmt_code(), instmt.get_exchange_name()))
         instmt.set_subscribed(False)
 

@@ -85,7 +85,7 @@ class L2Depth(MarketDataBase):
         """
         Return static column types
         """
-        return ['text'] + \
+        return ['varchar(25)'] + \
                ['decimal(10,5)'] * 10 + \
                ['decimal(20,8)'] * 10
 
@@ -181,7 +181,7 @@ class Trade(MarketDataBase):
         """
         Return static column types
         """
-        return ['text', 'text', 'decimal(10,5)', 'decimal(20,8)', 'text']
+        return ['varchar(25)', 'text', 'decimal(10,5)', 'decimal(20,8)', 'text']
 
     def values(self):
         """
@@ -192,11 +192,14 @@ class Trade(MarketDataBase):
 
 
 class Snapshot(MarketDataBase):
+    """
+    Market price snapshot
+    """
     class UpdateType:
         NONE = 0
         ORDER_BOOK = 1
         TRADES = 2
-        
+
     def __init__(self, exchange, instmt_name):
         """
         Constructor
@@ -212,31 +215,33 @@ class Snapshot(MarketDataBase):
         Return static columns names
         """
         return ['exchange', 'instmt',
-                'date_time', 'update_type',
                 'trade_px', 'trade_volume',
                 'b1', 'b2', 'b3', 'b4', 'b5',
                 'a1', 'a2', 'a3', 'a4', 'a5',
                 'bq1', 'bq2', 'bq3', 'bq4', 'bq5',
-                'aq1', 'aq2', 'aq3', 'aq4', 'aq5']
+                'aq1', 'aq2', 'aq3', 'aq4', 'aq5',
+                'order_date_time', 'trades_date_time', 'update_type']
             
     @staticmethod
     def types():
         """
         Return static column types
         """
-        return ['varchar(20)', 'varchar(20)', 'text', 'int', 'decimal(10,5)', 'decimal(20,8)'] + \
+        return ['varchar(20)', 'varchar(20)', 'decimal(10,5)', 'decimal(20,8)'] + \
                ['decimal(10,5)'] * 10 + \
-               ['decimal(20,8)'] * 10        
+               ['decimal(20,8)'] * 10 + \
+               ['varchar(25)', 'varchar(25)', 'int']
                 
     @staticmethod
     def values(exchange_name, instmt_name, l2_depth, last_trade, update_type=UpdateType.NONE):
         """
         Return values in a list
         """        
-        return [exchange_name, instmt_name, datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f"), update_type] + \
+        return [exchange_name, instmt_name] + \
         [last_trade.trade_price, last_trade.trade_volume] + \
         [b.price for b in l2_depth.bids[0:5]] + \
         [a.price for a in l2_depth.asks[0:5]] + \
         [b.volume for b in l2_depth.bids[0:5]] + \
-        [a.volume for a in l2_depth.asks[0:5]]        
+        [a.volume for a in l2_depth.asks[0:5]] + \
+        [l2_depth.date_time, last_trade.date_time, update_type]
         

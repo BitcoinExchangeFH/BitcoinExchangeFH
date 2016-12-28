@@ -193,7 +193,7 @@ class ExchangeGateway:
                                                          instmt.get_last_trade(),
                                                          Snapshot.UpdateType.TRADES),
                                   is_orreplace=True,
-                                  is_commit=not(self.data_mode & ExchangeGateway.DataMode.TRADES_ONLY)) # For testing only
+                                  is_commit=not(self.data_mode & ExchangeGateway.DataMode.TRADES_ONLY))
         
         if self.data_mode & ExchangeGateway.DataMode.TRADES_ONLY:
             self.db_client.insert(table=instmt.get_trades_table_name(),

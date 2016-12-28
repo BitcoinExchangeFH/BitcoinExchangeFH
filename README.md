@@ -2,7 +2,7 @@
   <img src="doc/icon.jpg">
 </p>
 
-# BitcoinExchangeFH - Bitcoin exchange market data feed handler (Kraken, OkCoin, Huobi, Bitfinex, BitMEX and BTCC)
+# BitcoinExchangeFH - Bitcoin exchange market data feed handler (BTCC, Bitfinex, BitMEX, GDAX, Huobi, Kraken, OkCoin)
 
 BitcoinExchangeFH is a slim application to record the price depth and trades in various exchanges. You can set it up quickly and record the all the exchange data in a few minutes!
 
@@ -18,12 +18,14 @@ Users can
 
 ## Supported exchanges
 
-- OkCoin (Websocket)
+
 - Bitfinex (Websocket)
 - BitMEX (Websocket)
 - BTCC (RESTful)
+- GDAX (Websocket)
+- Huobi (SocketIO)
 - Kraken (RESTful)
-- Huobi (Websocket)
+- OkCoin (Websocket)
 
 Currently the support of other exchanges is still under development.
 

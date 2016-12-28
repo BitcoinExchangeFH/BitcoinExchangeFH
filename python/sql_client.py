@@ -6,6 +6,10 @@ class SqlClient(DatabaseClient):
     """
     Sql client
     """
+    @classmethod
+    def replace_keyword(cls):
+        return 'replace into'
+
     def __init__(self):
         """
         Constructor
@@ -93,19 +97,17 @@ class SqlClient(DatabaseClient):
         column_names = ','.join(columns)
         value_string = ','.join([SqlClient.convert_str(e) for e in values])
         if is_orreplace:
-            sql = "insert or replace into %s (%s) values (%s)" % (table, column_names, value_string)
+            sql = "%s %s (%s) values (%s)" % (self.replace_keyword(), table, column_names, value_string)
         else:
             sql = "insert into %s (%s) values (%s)" % (table, column_names, value_string)
-        self.lock.acquire()
 
+        self.lock.acquire()
         try:
             self.execute(sql)
             if is_commit:
                 self.commit()
-                
         except Exception as e:
             Logger.info(self.__class__.__name__, "SQL error: %s\nSQL: %s" % (e, sql))
-
         self.lock.release()
         return True
 

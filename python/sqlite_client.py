@@ -7,6 +7,10 @@ class SqliteClient(SqlClient):
     """
     Sqlite client
     """
+    @classmethod
+    def replace_keyword(cls):
+        return 'insert or replace into'
+
     def __init__(self):
         """
         Constructor

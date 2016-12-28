@@ -109,7 +109,6 @@ class ExchGwBtccRestfulApi(RESTfulApiSocket):
         
         if cls.get_trades_timestamp_field_name() in keys and \
            cls.get_trade_id_field_name() in keys and \
-           cls.get_trade_side_field_name() in keys and \
            cls.get_trade_price_field_name() in keys and \
            cls.get_trade_volume_field_name() in keys:
         
@@ -119,7 +118,7 @@ class ExchGwBtccRestfulApi(RESTfulApiSocket):
             trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")      
             
             # Trade side
-            trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])
+            trade.trade_side = 1
                 
             # Trade id
             trade.trade_id = str(raw[cls.get_trade_id_field_name()])
@@ -297,10 +296,10 @@ class ExchGwBtccSpotRestfulApi(ExchGwBtccRestfulApi):
     @classmethod
     def get_trades_link(cls, instmt):
         if int(instmt.get_exch_trade_id()) > 0:
-            return "https://data.btcchina.com/data/historydata?limit=1000&market=%s&since=%s" % \
+            return "https://data.btcchina.com/data/trades?market=%s&since=%s" % \
                 (instmt.get_instmt_code(), instmt.get_exch_trade_id())
         else:
-            return "https://data.btcchina.com/data/historydata?limit=1000&market=%s" % \
+            return "https://data.btcchina.com/data/trades?market=%s" % \
                 (instmt.get_instmt_code())        
 
 class ExchGwBtccFutureRestfulApi(ExchGwBtccRestfulApi):
@@ -353,10 +352,10 @@ class ExchGwBtccFutureRestfulApi(ExchGwBtccRestfulApi):
     @classmethod
     def get_trades_link(cls, instmt):
         if int(instmt.get_exch_trade_id()) > 0:
-            return "https://pro-data.btcc.com/data/pro/historydata?limit=1000&symbol=%s&since=%s" % \
+            return "https://pro-data.btcc.com/data/pro/historydata?symbol=%s&since=%s" % \
                 (instmt.get_instmt_code(), instmt.get_exch_trade_id())
         else:
-            return "https://pro-data.btcc.com/data/pro/historydata?limit=1000&symbol=%s" % \
+            return "https://pro-data.btcc.com/data/pro/historydata?limit=100&symbol=%s" % \
                 (instmt.get_instmt_code())        
 
 

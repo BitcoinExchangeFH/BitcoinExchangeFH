@@ -224,7 +224,7 @@ class Snapshot(MarketDataBase):
         """
         Return static column types
         """
-        return ['text', 'text', 'text', 'int', 'decimal(10,5)', 'decimal(20,8)'] + \
+        return ['varchar(20)', 'varchar(20)', 'text', 'int', 'decimal(10,5)', 'decimal(20,8)'] + \
                ['decimal(10,5)'] * 10 + \
                ['decimal(20,8)'] * 10        
                 

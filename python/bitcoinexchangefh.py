@@ -74,26 +74,26 @@ if __name__ == '__main__':
         
     # Mode
     if args.mode is not None:
-        data_mode = ExchangeGateway.DataMode.fromstring(args.mode)
+        ExchangeGateway.data_mode = ExchangeGateway.DataMode.fromstring(args.mode)
 
     Logger.init_log(args.output)
     subscription_instmts = SubscriptionManager(args.instmts).get_subscriptions()
-    ExchangeGateway.init_snapshot_table(data_mode, db_client)
+    ExchangeGateway.init_snapshot_table(ExchangeGateway.data_mode, db_client)
 
     Logger.info('[main]', 'Current mode = %s' % args.mode)
     Logger.info('[main]', 'Subscription file = %s' % args.instmts)
     
 
     exch_gws = []
-    exch_gws.append(ExchGwBtccSpot(db_client, data_mode=data_mode))
-    exch_gws.append(ExchGwBtccFuture(db_client, data_mode=data_mode))
-    exch_gws.append(ExchGwBitmex(db_client, data_mode=data_mode))
-    exch_gws.append(ExchGwBitfinex(db_client, data_mode=data_mode))
-    exch_gws.append(ExchGwOkCoin(db_client, data_mode=data_mode))
-    exch_gws.append(ExchGwKraken(db_client, data_mode=data_mode))
-    exch_gws.append(ExchGwHuobi(db_client, data_mode=data_mode))
-    exch_gws.append(ExchGwGdax(db_client, data_mode=data_mode))
-    exch_gws.append(ExchGwBitstamp(db_client, data_mode=data_mode))
+    exch_gws.append(ExchGwBtccSpot(db_client))
+    exch_gws.append(ExchGwBtccFuture(db_client))
+    exch_gws.append(ExchGwBitmex(db_client))
+    exch_gws.append(ExchGwBitfinex(db_client))
+    exch_gws.append(ExchGwOkCoin(db_client))
+    exch_gws.append(ExchGwKraken(db_client))
+    exch_gws.append(ExchGwHuobi(db_client))
+    exch_gws.append(ExchGwGdax(db_client))
+    exch_gws.append(ExchGwBitstamp(db_client))
     threads = []
     for exch in exch_gws:
         for instmt in subscription_instmts:

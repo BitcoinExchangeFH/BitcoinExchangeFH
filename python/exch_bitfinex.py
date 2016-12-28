@@ -160,12 +160,12 @@ class ExchGwBitfinex(ExchangeGateway):
     """
     Exchange gateway BTCC
     """
-    def __init__(self, db_client, data_mode=ExchangeGateway.DataMode.ALL):
+    def __init__(self, db_client):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwBitfinexWs(), db_client, data_mode=data_mode)
+        ExchangeGateway.__init__(self, ExchGwBitfinexWs(), db_client)
 
     @classmethod
     def get_exchange_name(cls):

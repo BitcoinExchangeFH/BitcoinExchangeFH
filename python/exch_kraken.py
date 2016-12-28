@@ -137,12 +137,12 @@ class ExchGwKraken(ExchangeGateway):
     """
     Exchange gateway
     """
-    def __init__(self, db_client, data_mode=ExchangeGateway.DataMode.ALL):
+    def __init__(self, db_client):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwKrakenRestfulApi(), db_client, data_mode)
+        ExchangeGateway.__init__(self, ExchGwKrakenRestfulApi(), db_client)
 
     @classmethod
     def get_exchange_name(cls):

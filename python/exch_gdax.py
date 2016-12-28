@@ -190,12 +190,12 @@ class ExchGwGdax(ExchangeGateway):
     """
     Exchange gateway
     """
-    def __init__(self, db_client, data_mode=ExchangeGateway.DataMode.ALL):
+    def __init__(self, db_client):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwApiGdaxTrades(), db_client, data_mode=data_mode)
+        ExchangeGateway.__init__(self, ExchGwApiGdaxTrades(), db_client)
         self.api_socket2 = ExchGwApiGdaxOrderBook()
 
     @classmethod

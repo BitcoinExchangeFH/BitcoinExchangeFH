@@ -24,13 +24,14 @@ class ExchangeGateway:
         def fromstring(cls, str):
             return getattr(cls, str.upper(), None)
     
+    data_mode = DataMode.ALL
+    
     """
     Exchange gateway
     """
     def __init__(self, 
                  api_socket, 
-                 db_client=DatabaseClient(), 
-                 data_mode=DataMode.ALL):
+                 db_client=DatabaseClient()):
         """
         Constructor
         :param exchange_name: Exchange name
@@ -39,7 +40,6 @@ class ExchangeGateway:
         """
         self.db_client = db_client
         self.api_socket = api_socket
-        self.data_mode = data_mode
 
     @classmethod
     def get_exchange_name(cls):

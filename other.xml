@@ -1,9 +1,0 @@
-<application>
-  <component name="PyTestFrameworkService">
-    <option name="SDK_TO_NOSETEST">
-      <map>
-        <entry key="C:\Users\iverg\Anaconda3\python.exe" value="true" />
-      </map>
-    </option>
-  </component>
-</application>

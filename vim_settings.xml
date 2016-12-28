@@ -10,12 +10,12 @@
         <mark key="." line="196" column="44" />
         <mark key="^" line="196" column="44" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" timestamp="1482018132493">
-        <mark key="'" line="75" column="38" />
-        <mark key="[" line="227" column="26" />
-        <mark key="]" line="227" column="53" />
-        <mark key="." line="227" column="53" />
-        <mark key="^" line="227" column="53" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" timestamp="1482936507196">
+        <mark key="'" line="93" column="29" />
+        <mark key="[" line="357" column="76" />
+        <mark key="]" line="357" column="76" />
+        <mark key="^" line="357" column="65" />
+        <mark key="." line="357" column="76" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_okcoin.py" timestamp="1482153801072">
         <mark key="'" line="149" column="46" />
@@ -24,7 +24,7 @@
         <mark key="." line="151" column="0" />
         <mark key="^" line="149" column="38" />
       </file>
-      <file name="/Python Console" timestamp="1482798651367">
+      <file name="/Python Console" timestamp="1482935987861">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="/fragment.py" timestamp="1482365005346">
@@ -113,7 +113,7 @@
         <mark key="^" line="77" column="18" />
         <mark key="." line="77" column="37" />
       </file>
-      <file name="/Dummy.txt" timestamp="1482194184769">
+      <file name="/Dummy.txt" timestamp="1482936746150">
         <mark key="'" line="0" column="0" />
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="0" />
@@ -253,9 +253,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="49" column="26" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" />
-      <jump line="84" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" />
-      <jump line="90" column="26" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" />
       <jump line="202" column="19" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" />
       <jump line="190" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_okcoin.py" />
       <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_okcoin.py" />
@@ -335,7 +332,6 @@
       <jump line="62" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="301" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="199" column="44" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
-      <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="23" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="54" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="70" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
@@ -353,10 +349,14 @@
       <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_gdax.py" />
       <jump line="191" column="40" filename="$USER_HOME$/Anaconda3/Lib/site-packages/websocket/_app.py" />
       <jump line="75" column="25" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket.py" />
+      <jump line="361" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
+      <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
+      <jump line="220" column="39" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
+      <jump line="93" column="29" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ICAgIEBjbGFzc21ldGhvZAogICAgZGVmIHJlcGxhY2Vfa2V5d29yZChjbHMpOgogICAgICAgIHJldHVybiAncmVwbGFjZSBpbnRvJwo=</text>
+      <register name="&quot;" type="4">
+        <text>Refactored</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1570,49 +1570,49 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text encoding="base64">aW50byA=</text>
+        <text>Refactored</text>
       </register>
       <register name="/" type="4">
-        <text>try</text>
+        <text>Does not contain</text>
       </register>
       <register name="0" type="2">
-        <text encoding="base64">ICAgIEBjbGFzc21ldGhvZAogICAgZGVmIHJlcGxhY2Vfa2V5d29yZChjbHMpOgogICAgICAgIHJldHVybiAncmVwbGFjZSBpbnRvJwo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgcmV0dXJuICJodHRwczovL2RhdGEuYnRjY2hpbmEuY29tL2RhdGEvdHJhZGVzP3N5bWJvbD0lcyZzaW5jZT0lcyIgJSBcCg==</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgICAgICAgICBjbHMuZ2V0X3RyYWRlX3NpZGVfZmllbGRfbmFtZSgpIGluIGtleXMgYW5kIFwK</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgIAo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICByZXR1cm4gImh0dHBzOi8vcHJvLWRhdGEuYnRjYy5jb20vZGF0YS9wcm8vaGlzdG9yeWRhdGE/bGltaXQ9MTAwMCZzeW1ib2w9JXMiICUgXAo=</text>
       </register>
       <register name="3" type="2">
         <text encoding="base64">Cg==</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIAo=</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgc2VsZi53cyA9IHdlYnNvY2tldC5XZWJTb2NrZXRBcHAodXJsLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBvbl9tZXNzYWdlPXNlbGYuX19vbl9tZXNzYWdlLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBvbl9jbG9zZT1zZWxmLl9fb25fY2xvc2UsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG9uX29wZW49c2VsZi5fX29uX29wZW4sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG9uX2Vycm9yPXNlbGYuX19vbl9lcnJvcikK</text>
-      </register>
-      <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgdGltZS5zbGVlcCgxMCkK</text>
-      </register>
-      <register name="7" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgdGltZS5zbGVlcCgzMCkK</text>
-      </register>
-      <register name="8" type="2">
         <text encoding="base64">Cg==</text>
       </register>
+      <register name="6" type="2">
+        <text encoding="base64">Cg==</text>
+      </register>
+      <register name="7" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgc2VsZi53cyA9IHdlYnNvY2tldC5XZWJTb2NrZXRBcHAodXJsLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBvbl9tZXNzYWdlPXNlbGYuX19vbl9tZXNzYWdlLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBvbl9jbG9zZT1zZWxmLl9fb25fY2xvc2UsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG9uX29wZW49c2VsZi5fX29uX29wZW4sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG9uX2Vycm9yPXNlbGYuX19vbl9lcnJvcikK</text>
+      </register>
+      <register name="8" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgdGltZS5zbGVlcCgxMCkK</text>
+      </register>
       <register name="9" type="2">
-        <text encoding="base64">ICAgIGRlZiBfX2RlbF9fKHNlbGYpOgogICAgICAgIGZvciBrZXksIHZhbHVlIGluIHNlbGYucGlwZXM6CiAgICAgICAgICAgIHZhbHVlLmNsaWVudC5jbG9zZSgpCg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgdGltZS5zbGVlcCgzMCkK</text>
       </register>
       <register name=":" type="4">
-        <text>wq</text>
+        <text>w</text>
       </register>
     </registers>
     <search>
-      <last-search>try</last-search>
+      <last-search>Does not contain</last-search>
       <last-offset />
-      <last-pattern>try</last-pattern>
+      <last-pattern>Does not contain</last-pattern>
       <last-replace>enabled = 1</last-replace>
       <last-substitute>enabled = 0</last-substitute>
       <last-dir>1</last-dir>
@@ -1620,8 +1620,6 @@
     </search>
     <history>
       <history-search>
-        <entry>Bitmex</entry>
-        <entry>enabled = 1</entry>
         <entry>enabled = 0</entry>
         <entry>count</entry>
         <entry>send</entry>
@@ -1640,6 +1638,8 @@
         <entry>parse</entry>
         <entry encoding="base64">XDxnZXRfb3JkZXJfYm9va19zdWJzY3JpcHRpb25fc3RyaW5nXD4=</entry>
         <entry>try</entry>
+        <entry>Error in trades</entry>
+        <entry>Does not contain</entry>
       </history-search>
       <history-cmd>
         <entry encoding="base64">JzwsJz5zL2JpZHMvYXNrcy9n</entry>
@@ -1653,8 +1653,8 @@
         <entry>w!</entry>
         <entry>wq!</entry>
         <entry>g</entry>
-        <entry>w</entry>
         <entry>wq</entry>
+        <entry>w</entry>
       </history-cmd>
       <history-expr />
       <history-input />

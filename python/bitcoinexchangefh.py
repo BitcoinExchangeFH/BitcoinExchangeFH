@@ -11,6 +11,7 @@ from exch_okcoin import ExchGwOkCoin
 from exch_kraken import ExchGwKraken
 from exch_huobi import ExchGwHuobi
 from exch_gdax import ExchGwGdax
+from exch_bitstamp import ExchGwBitstamp
 from mysql_client import MysqlClient
 from sqlite_client import SqliteClient
 from file_client import FileClient
@@ -92,6 +93,7 @@ if __name__ == '__main__':
     exch_gws.append(ExchGwKraken(db_client, data_mode=data_mode))
     exch_gws.append(ExchGwHuobi(db_client, data_mode=data_mode))
     exch_gws.append(ExchGwGdax(db_client, data_mode=data_mode))
+    exch_gws.append(ExchGwBitstamp(db_client, data_mode=data_mode))
     threads = []
     for exch in exch_gws:
         for instmt in subscription_instmts:

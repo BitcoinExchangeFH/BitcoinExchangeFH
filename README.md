@@ -2,7 +2,7 @@
   <img src="doc/icon.jpg">
 </p>
 
-# BitcoinExchangeFH - Bitcoin exchange market data feed handler (OkCoin, Bitfinex, BitMEX and BTCC)
+# BitcoinExchangeFH - Bitcoin exchange market data feed handler (Kraken, OkCoin, Huobi, Bitfinex, BitMEX and BTCC)
 
 BitcoinExchangeFH is a slim application to record the price depth and trades in various exchanges. You can set it up quickly and record the all the exchange data in a few minutes!
 
@@ -103,7 +103,7 @@ python python/bitcoinexchangefh.py -csv -dbdir data/
 |output|Verbose output file path.|
 
 ### Subscription
-All the instrument subscription are mentioned in the configuration file ["subscriptions.ini"](subscriptions.ini). For supported exchanges, you can include its instruments as a block of subscription.
+All the instrument subscription are mentioned in the configuration file [subscriptions.ini](subscriptions.ini). For supported exchanges, you can include its instruments as a block of subscription.
 
 |Argument|Description|
 |---|---|

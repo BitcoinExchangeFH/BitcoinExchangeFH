@@ -122,13 +122,13 @@ class ExchGwBtccRestfulApi(RESTfulApiSocket):
             trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])
                 
             # Trade id
-            trade.trade_id = raw[cls.get_trade_id_field_name()]
+            trade.trade_id = str(raw[cls.get_trade_id_field_name()])
             
             # Trade price
-            trade.trade_price = raw[cls.get_trade_price_field_name()]            
+            trade.trade_price = float(str(raw[cls.get_trade_price_field_name()]))
             
             # Trade volume
-            trade.trade_volume = raw[cls.get_trade_volume_field_name()]                        
+            trade.trade_volume = float(str(raw[cls.get_trade_volume_field_name()]))
         else:
             raise Exception('Does not contain trade keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \

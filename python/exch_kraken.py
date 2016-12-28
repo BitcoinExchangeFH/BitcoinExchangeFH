@@ -73,10 +73,10 @@ class ExchGwKrakenRestfulApi(RESTfulApiSocket):
         trade = Trade()
         
         # Trade price
-        trade.trade_price = raw[0]
+        trade.trade_price = float(str(raw[0]))
         
         # Trade volume
-        trade.trade_volume = raw[1]
+        trade.trade_volume = float(str(raw[1]))
         
         # Timestamp
         date_time = float(raw[2])

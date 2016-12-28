@@ -20,6 +20,7 @@ Users can
 
 - Bitfinex (Websocket)
 - BitMEX (Websocket)
+- Bitstamp (Websocket)
 - BTCC (RESTful)
 - GDAX (Websocket)
 - Huobi (SocketIO)

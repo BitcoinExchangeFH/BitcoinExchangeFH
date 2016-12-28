@@ -299,7 +299,7 @@ class ExchGwBtccSpotRestfulApi(ExchGwBtccRestfulApi):
             return "https://data.btcchina.com/data/trades?market=%s&since=%s" % \
                 (instmt.get_instmt_code(), instmt.get_exch_trade_id())
         else:
-            return "https://data.btcchina.com/data/trades?market=%s" % \
+            return "https://data.btcchina.com/data/trades?limit=100&market=%s" % \
                 (instmt.get_instmt_code())        
 
 class ExchGwBtccFutureRestfulApi(ExchGwBtccRestfulApi):

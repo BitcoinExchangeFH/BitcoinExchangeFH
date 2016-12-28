@@ -91,7 +91,7 @@ python python/bitcoinexchangefh.py -csv -dbdir data/
 
 |Argument|Description|
 |---|---|
-|mode|Please refer to [Mode](### Mode)|
+|mode|Please refer to [Mode](#Mode)|
 |instmts|Instrument subscription file.|
 |sqlite|Use SQLite database.|
 |mysql|Use MySQL.|

@@ -3,6 +3,7 @@
 import argparse
 import sys
 
+from exchange import ExchangeGateway
 from exch_bitmex import ExchGwBitmex
 from exch_btcc import ExchGwBtccSpot, ExchGwBtccFuture
 from exch_bitfinex import ExchGwBitfinex
@@ -19,6 +20,7 @@ from util import Logger
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Bitcoin exchange market data feed handler.')
+    parser.add_argument('-mode', action='store', help='Mode. Supports ALL, ORDER_BOOK_AND_TRADES_ONLY, SNAPSHOT_ONLY, ORDER_BOOK_ONLY and TRADES_ONLY', default='ALL')
     parser.add_argument('-instmts', action='store', help='Instrument subscription file.', default='subscriptions.ini')
     parser.add_argument('-csv', action='store_true', help='Use csv file as database.')
     parser.add_argument('-sqlite', action='store_true', help='Use SQLite database.')
@@ -68,19 +70,28 @@ if __name__ == '__main__':
         print('Error: Please define the instrument subscription list. You can refer to subscriptions.ini.')
         parser.print_help()
         sys.exit(1)
+        
+    # Mode
+    if args.mode is not None:
+        data_mode = ExchangeGateway.DataMode.fromstring(args.mode)
 
     Logger.init_log(args.output)
     subscription_instmts = SubscriptionManager(args.instmts).get_subscriptions()
+    ExchangeGateway.init_snapshot_table(data_mode, db_client)
+
+    Logger.info('[main]', 'Current mode = %s' % args.mode)
+    Logger.info('[main]', 'Subscription file = %s' % args.instmts)
+    
 
     exch_gws = []
-    exch_gws.append(ExchGwBtccSpot(db_client))
-    exch_gws.append(ExchGwBtccFuture(db_client))
-    exch_gws.append(ExchGwBitmex(db_client))
-    exch_gws.append(ExchGwBitfinex(db_client))
-    exch_gws.append(ExchGwOkCoin(db_client))
-    exch_gws.append(ExchGwKraken(db_client))
-    exch_gws.append(ExchGwHuobi(db_client))
-    exch_gws.append(ExchGwGdax(db_client))
+    exch_gws.append(ExchGwBtccSpot(db_client, data_mode=data_mode))
+    exch_gws.append(ExchGwBtccFuture(db_client, data_mode=data_mode))
+    exch_gws.append(ExchGwBitmex(db_client, data_mode=data_mode))
+    exch_gws.append(ExchGwBitfinex(db_client, data_mode=data_mode))
+    exch_gws.append(ExchGwOkCoin(db_client, data_mode=data_mode))
+    exch_gws.append(ExchGwKraken(db_client, data_mode=data_mode))
+    exch_gws.append(ExchGwHuobi(db_client, data_mode=data_mode))
+    exch_gws.append(ExchGwGdax(db_client, data_mode=data_mode))
     threads = []
     for exch in exch_gws:
         for instmt in subscription_instmts:

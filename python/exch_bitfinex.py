@@ -160,12 +160,12 @@ class ExchGwBitfinex(ExchangeGateway):
     """
     Exchange gateway BTCC
     """
-    def __init__(self, db_client):
+    def __init__(self, db_client, data_mode=ExchangeGateway.DataMode.ALL):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwBitfinexWs(), db_client)
+        ExchangeGateway.__init__(self, ExchGwBitfinexWs(), db_client, data_mode=data_mode)
 
     @classmethod
     def get_exchange_name(cls):
@@ -249,9 +249,7 @@ class ExchGwBitfinex(ExchangeGateway):
                     if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
                         instmt.incr_trade_id()
                         instmt.set_exch_trade_id(trade.trade_id)
-                        self.db_client.insert(table=instmt.get_trades_table_name(),
-                                              columns=['id'] + Trade.columns(),
-                                              values=[instmt.get_trade_id()] + trade.values())
+                        self.insert_trade(instmt, trade)
 
     def start(self, instmt):
         """

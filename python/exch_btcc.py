@@ -364,12 +364,12 @@ class ExchGwBtccSpot(ExchGwBtcc):
     """
     Exchange gateway BTCC-Spot
     """
-    def __init__(self, db_client):
+    def __init__(self, db_client, data_mode=ExchangeGateway.DataMode.ALL):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwBtccSpotRestfulApi(), db_client)
+        ExchangeGateway.__init__(self, ExchGwBtccSpotRestfulApi(), db_client, data_mode=data_mode)
 
     @classmethod
     def get_exchange_name(cls):
@@ -384,12 +384,12 @@ class ExchGwBtccFuture(ExchGwBtcc):
     """
     Exchange gateway BTCC-Future
     """
-    def __init__(self, db_client):
+    def __init__(self, db_client, data_mode=ExchangeGateway.DataMode.ALL):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwBtccFutureRestfulApi(), db_client)
+        ExchangeGateway.__init__(self, ExchGwBtccFutureRestfulApi(), db_client, data_mode=data_mode)
 
     @classmethod
     def get_exchange_name(cls):

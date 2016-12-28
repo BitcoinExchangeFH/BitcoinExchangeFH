@@ -137,12 +137,12 @@ class ExchGwKraken(ExchangeGateway):
     """
     Exchange gateway
     """
-    def __init__(self, db_client):
+    def __init__(self, db_client, data_mode=ExchangeGateway.DataMode.ALL):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwKrakenRestfulApi(), db_client)
+        ExchangeGateway.__init__(self, ExchGwKrakenRestfulApi(), db_client, data_mode)
 
     @classmethod
     def get_exchange_name(cls):
@@ -160,9 +160,7 @@ class ExchGwKraken(ExchangeGateway):
         """
         table_name = self.get_trades_table_name(instmt.get_exchange_name(),
                                                 instmt.get_instmt_name())
-        self.db_client.create(table_name,
-                              ['id'] + Trade.columns(),
-                              ['int primary key'] + Trade.types())
+        self.init_trades_table(instmt)
         id_ret = self.db_client.select(table=table_name,
                                        columns=['id'],
                                        orderby="id desc",

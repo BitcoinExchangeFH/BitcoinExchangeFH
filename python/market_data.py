@@ -189,3 +189,54 @@ class Trade(MarketDataBase):
         """
         return [self.date_time] + \
                [self.trade_id] + [self.trade_price] + [self.trade_volume] + [self.trade_side]
+
+
+class Snapshot(MarketDataBase):
+    class UpdateType:
+        NONE = 0
+        ORDER_BOOK = 1
+        TRADES = 2
+        
+    def __init__(self, exchange, instmt_name):
+        """
+        Constructor
+        :param exch: Exchange name
+        :param instmt: Instrument name
+        :param default_format: Default date time format
+        """
+        MarketDataBase.__init__(self)
+
+    @staticmethod        
+    def columns():
+        """
+        Return static columns names
+        """
+        return ['exchange', 'instmt',
+                'date_time', 'update_type',
+                'trade_px', 'trade_volume',
+                'b1', 'b2', 'b3', 'b4', 'b5',
+                'a1', 'a2', 'a3', 'a4', 'a5',
+                'bq1', 'bq2', 'bq3', 'bq4', 'bq5',
+                'aq1', 'aq2', 'aq3', 'aq4', 'aq5']
+            
+    @staticmethod
+    def types():
+        """
+        Return static column types
+        """
+        return ['text', 'text', 'text', 'int', 'decimal(10,5)', 'decimal(20,8)'] + \
+               ['decimal(10,5)'] * 10 + \
+               ['decimal(20,8)'] * 10        
+                
+    @staticmethod
+    def values(exchange_name, instmt_name, l2_depth, last_trade, update_type=UpdateType.NONE):
+        """
+        Return values in a list
+        """        
+        return [exchange_name, instmt_name, datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f"), update_type] + \
+        [last_trade.trade_price, last_trade.trade_volume] + \
+        [b.price for b in l2_depth.bids[0:5]] + \
+        [a.price for a in l2_depth.asks[0:5]] + \
+        [b.volume for b in l2_depth.bids[0:5]] + \
+        [a.volume for a in l2_depth.asks[0:5]]        
+        

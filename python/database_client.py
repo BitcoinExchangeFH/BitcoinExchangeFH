@@ -34,23 +34,26 @@ class DatabaseClient:
         """
         return True
 
-    def create(self, table, columns, types, is_ifnotexists=True):
+    def create(self, table, columns, types, primary_key_index=[], is_ifnotexists=True):
         """
         Create table in the database
         :param table: Table name
         :param columns: Column array
         :param types: Type array
+        :param primary_key_index: An array of indices of primary keys in columns, 
+                                  e.g. [0] means the first column is the primary key
         :param is_ifnotexists: Create table if not exists keyword
         """
         return True
 
-    def insert(self, table, columns, values, is_orreplace=False):
+    def insert(self, table, columns, values, is_orreplace=False, is_commit=True):
         """
         Insert into the table
         :param table: Table name
         :param columns: Column array
         :param values: Value array
         :param is_orreplace: Indicate if the query is "INSERT OR REPLACE"
+        :param is_commit: Indicate if the query is committed (in sql command database mostly)
         """
         return True
 

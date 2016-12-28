@@ -215,7 +215,7 @@ class ExchGwTemplate(ExchangeGateway):
                         self.api_socket.parse_l2_depth(instmt, data)
                         if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
                             instmt.incr_order_book_id()
-                            instmt.insert_order_book(instmt)
+                            self.insert_order_book(instmt)
             else:
                 Logger.info(self.__class__.__name__, json.dumps(message,indent=2))
         else:

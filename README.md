@@ -18,7 +18,6 @@ Users can
 
 ## Supported exchanges
 
-
 - Bitfinex (Websocket)
 - BitMEX (Websocket)
 - BTCC (RESTful)
@@ -92,6 +91,7 @@ python python/bitcoinexchangefh.py -csv -dbdir data/
 
 |Argument|Description|
 |---|---|
+|mode|Please refer to [Mode](# Mode)|
 |instmts|Instrument subscription file.|
 |sqlite|Use SQLite database.|
 |mysql|Use MySQL.|
@@ -103,6 +103,18 @@ python python/bitcoinexchangefh.py -csv -dbdir data/
 |dbpwd|Database password. Supported for database with connection.|
 |dbschema|Database schema. Supported for database with connection.|
 |output|Verbose output file path.|
+
+### Mode
+
+Currently it supports five modes to distribute market data.
+
+|Mode|Description|
+|---|---|
+|SNAPSHOT_ONLY|Market snapshot only. Shown in table exchange_snapshot|
+|ORDER_BOOK_ONLY|Order book only. Shown in tables exch_xxxx_yyyy_order_book, where xxxxx and yyyyy are the exchange and instrument name respectively|
+|TRADES_ONLY|Trades only. Shown in tables exch_xxxx_yyyy_trades, where xxxxx and yyyyy are the exchange and instrument name respectively|
+|ORDER_BOOK_AND_TRADES_ONLY|Order book and trades only|
+|ALL|Supports snapshot, order book and trades|
 
 ### Subscription
 All the instrument subscription are mentioned in the configuration file [subscriptions.ini](subscriptions.ini). For supported exchanges, you can include its instruments as a block of subscription.

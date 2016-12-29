@@ -24,14 +24,14 @@
         <mark key="." line="159" column="64" />
         <mark key="^" line="159" column="64" />
       </file>
-      <file name="/Python Console" timestamp="1483013765138">
+      <file name="/Python Console" timestamp="1483014347680">
         <mark key="[" line="0" column="0" />
       </file>
-      <file name="/fragment.py" timestamp="1483013788652">
+      <file name="/fragment.py" timestamp="1483014405097">
         <mark key="'" line="0" column="23" />
         <mark key="[" line="0" column="0" />
-        <mark key="]" line="0" column="27" />
-        <mark key="." line="0" column="27" />
+        <mark key="]" line="0" column="0" />
+        <mark key="." line="0" column="0" />
         <mark key="^" line="0" column="1" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/config_manager.py" timestamp="1482193287422">
@@ -96,16 +96,19 @@
         <mark key="^" line="183" column="64" />
         <mark key="." line="183" column="64" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/bitcoinexchangefh.py" timestamp="1481758519635">
-        <mark key="'" line="79" column="36" />
-        <mark key="[" line="80" column="26" />
-        <mark key="]" line="80" column="30" />
-        <mark key="." line="80" column="30" />
-        <mark key="^" line="80" column="30" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/bitcoinexchangefh.py" timestamp="1483014778633">
+        <mark key="'" line="84" column="36" />
+        <mark key="[" line="67" column="35" />
+        <mark key="]" line="68" column="59" />
+        <mark key="." line="68" column="59" />
+        <mark key="^" line="68" column="59" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/test/test_kdbplus_client.py" timestamp="1483013594621">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/test/test_kdbplus_client.py" timestamp="1483014659827">
         <mark key="'" line="3" column="22" />
-        <mark key="^" line="131" column="32" />
+        <mark key="[" line="157" column="0" />
+        <mark key="]" line="157" column="0" />
+        <mark key="^" line="153" column="29" />
+        <mark key="." line="157" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/instrument.py" timestamp="1480842028394">
         <mark key="'" line="95" column="44" />
@@ -238,12 +241,12 @@
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/.gitignore" timestamp="1481644678099">
         <mark key="[" line="2" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/kdbplus_client.py" timestamp="1483013887959">
-        <mark key="'" line="134" column="8" />
-        <mark key="[" line="6" column="33" />
-        <mark key="]" line="6" column="30" />
-        <mark key="." line="6" column="30" />
-        <mark key="^" line="6" column="30" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/kdbplus_client.py" timestamp="1483014631056">
+        <mark key="'" line="135" column="8" />
+        <mark key="[" line="234" column="50" />
+        <mark key="]" line="234" column="50" />
+        <mark key="." line="234" column="50" />
+        <mark key="^" line="234" column="50" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_huobi.py" timestamp="1482964716989">
         <mark key="'" line="180" column="16" />
@@ -376,7 +379,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>QTable</text>
+        <text>KdbPlusClient</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1590,48 +1593,40 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>QTable</text>
+        <text>csv file as database.')</text>
       </register>
       <register name="/" type="4">
         <text>print</text>
       </register>
-      <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgWydOb05vTm8nLCcyMDE2MTAyNicsJzEwOjAwOjA0LjAwMDAwMCcsMiwxMC41XSwK</text>
+      <register name="0" type="4">
+        <text>KdbPlusClient</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICBzZWxmLmFzc2VydEVxdWFsKHJvd1sxXVswXSwgMikKICAgICAgICBzZWxmLmFzc2VydEVxdWFsKHJvd1sxXVsxXSwgIjIwMTYxMDI2IikK</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICBzZWxmLmFzc2VydEVxdWFsKHJvd1sxXVsxXSwgMykK</text>
+        <text encoding="base64">ICAgICAgICAjIE5lZ2F0aXZlIGNhc2UKICAgICAgICBzZWxmLmFzc2VydFRydWUobm90IHNlbGYuZGJfY2xpZW50LmNyZWF0ZSh0YWJsZV9uYW1lLCBjb2x1bW5zWzE6Ol0sIHR5cGVzKSkKICAgICAgICBzZWxmLmFzc2VydFRydWUobm90IHNlbGYuZGJfY2xpZW50Lmluc2VydCh0YWJsZV9uYW1lLCBjb2x1bW5zLCBbXSkpCg==</text>
       </register>
-      <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICBzZWxmLmFzc2VydEVxdWFsKHJvd1syXVsxXSwgMikK</text>
+      <register name="3" type="8">
+        <text encoding="base64">IyAKIyAKIyA=</text>
       </register>
-      <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICBzZWxmLmFzc2VydEVxdWFsKHJvd1swXVsxXSwgMSkK</text>
+      <register name="4" type="8">
+        <text encoding="base64">IyAKIyAKIyAKIyAKIyAKIyA=</text>
       </register>
-      <register name="5" type="8">
-        <text encoding="base64">IyAKIyAKIyAKIyAKIyAKIyAKIyAKIyAKIyA=</text>
+      <register name="5" type="2">
+        <text encoding="base64">ICAgICAgICBzZWxmLmFzc2VydEVxdWFsKHJvd1sxXVsyXSwgMykK</text>
       </register>
-      <register name="6" type="8">
-        <text>1
-1
-1
-1
-1</text>
+      <register name="6" type="2">
+        <text encoding="base64">ICAgICAgICBzZWxmLmFzc2VydEVxdWFsKHJvd1swXVsyXSwgMSkK</text>
       </register>
       <register name="7" type="8">
-        <text>2
-2
-2
-2
-2</text>
+        <text encoding="base64">IyAKIyAKIyAKIyAKIyAKIyAKIyAKIyAKIyAKIyAKIyAKIyAKIyAKIyAKIyAKIyAKIyA=</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">ICAgICAgICBzZWxmLmFzc2VydEVxdWFsKHJvd1sxXVszXSwgMykK</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIAo=</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">ICAgICAgICBzZWxmLmFzc2VydEVxdWFsKHJvd1sxXVswXSwgJ0VmZ2gnKQo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgcGFzcwo=</text>
       </register>
       <register name=":" type="4">
         <text>w</text>

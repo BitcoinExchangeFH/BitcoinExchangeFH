@@ -138,6 +138,10 @@ exch_<exchange name>_<instrument name>_book
 exch_<exchange name>_<instrument name>_trades
 ```
 
+## Inquiries
+
+You can first look up to the page [FAQ](https://github.com/gavincyi/BitcoinExchangeFH/wiki/FAQ). For more inquiries, you can either leave it in issues or drop me an email. I will get you back as soon as possible.
+
 ## Compatibility
 The application is compatible with version higher or equal to python 3.0.
 

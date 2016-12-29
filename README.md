@@ -94,6 +94,7 @@ python python/bitcoinexchangefh.py -csv -dbdir data/
 |---|---|
 |mode|Please refer to [Mode](#mode)|
 |instmts|Instrument subscription file.|
+|exchtime|Use exchange timestamp if possible.|
 |sqlite|Use SQLite database.|
 |mysql|Use MySQL.|
 |csv|Use CSV file as database.|

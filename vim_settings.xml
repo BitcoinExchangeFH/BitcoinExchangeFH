@@ -24,10 +24,10 @@
         <mark key="." line="159" column="64" />
         <mark key="^" line="159" column="64" />
       </file>
-      <file name="/Python Console" timestamp="1482935987861">
+      <file name="/Python Console" timestamp="1483013765138">
         <mark key="[" line="0" column="0" />
       </file>
-      <file name="/fragment.py" timestamp="1482365005346">
+      <file name="/fragment.py" timestamp="1483013788652">
         <mark key="'" line="0" column="23" />
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="27" />
@@ -84,12 +84,6 @@
         <mark key="." line="81" column="26" />
         <mark key="^" line="81" column="26" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exchange.py" timestamp="1482965944566">
-        <mark key="[" line="168" column="77" />
-        <mark key="]" line="168" column="86" />
-        <mark key="^" line="168" column="86" />
-        <mark key="." line="168" column="86" />
-      </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" timestamp="1482193950081">
         <mark key="[" line="14" column="44" />
         <mark key="]" line="14" column="44" />
@@ -109,11 +103,9 @@
         <mark key="." line="80" column="30" />
         <mark key="^" line="80" column="30" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/test/test_kdbplus_client.py" timestamp="1482968995518">
-        <mark key="[" line="11" column="24" />
-        <mark key="]" line="11" column="37" />
-        <mark key="." line="11" column="24" />
-        <mark key="^" line="4" column="39" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/test/test_kdbplus_client.py" timestamp="1483013594621">
+        <mark key="'" line="3" column="22" />
+        <mark key="^" line="131" column="32" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/instrument.py" timestamp="1480842028394">
         <mark key="'" line="95" column="44" />
@@ -246,11 +238,12 @@
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/.gitignore" timestamp="1481644678099">
         <mark key="[" line="2" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/kdbplus_client.py" timestamp="1482969151520">
-        <mark key="[" line="2" column="23" />
-        <mark key="]" line="3" column="30" />
-        <mark key="^" line="3" column="30" />
-        <mark key="." line="3" column="30" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/kdbplus_client.py" timestamp="1483013887959">
+        <mark key="'" line="134" column="8" />
+        <mark key="[" line="6" column="33" />
+        <mark key="]" line="6" column="30" />
+        <mark key="." line="6" column="30" />
+        <mark key="^" line="6" column="30" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_huobi.py" timestamp="1482964716989">
         <mark key="'" line="180" column="16" />
@@ -280,12 +273,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="190" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_okcoin.py" />
-      <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_okcoin.py" />
-      <jump line="82" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_okcoin.py" />
-      <jump line="53" column="26" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_okcoin.py" />
-      <jump line="16" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/database_client.py" />
-      <jump line="25" column="18" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/database_client.py" />
       <jump line="18" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/sql_client.py" />
       <jump line="24" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/test/test_file_client.py" />
       <jump line="163" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/test/test_file_client.py" />
@@ -380,10 +367,16 @@
       <jump line="220" column="39" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="93" column="29" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="74" column="23" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket.py" />
+      <jump line="214" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/kdbplus_client.py" />
+      <jump line="221" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/kdbplus_client.py" />
+      <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/kdbplus_client.py" />
+      <jump line="230" column="46" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/kdbplus_client.py" />
+      <jump line="3" column="22" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/test/test_kdbplus_client.py" />
+      <jump line="133" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/kdbplus_client.py" />
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text encoding="base64">IGFuZCBzZWxmLmN1cnNvciBpcyBub3QgTm9uZQ==</text>
+        <text>QTable</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1597,49 +1590,57 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text encoding="base64">IGFuZCBzZWxmLmN1cnNvciBpcyBub3QgTm9uZQ==</text>
+        <text>QTable</text>
       </register>
       <register name="/" type="4">
-        <text>Does not contain</text>
+        <text>print</text>
       </register>
       <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICBob3N0ID0ga3dhcmdzWydob3N0J10KICAgICAgICB1c2VyID0ga3dhcmdzWyd1c2VyJ10K</text>
+        <text encoding="base64">ICAgICAgICAgICAgWydOb05vTm8nLCcyMDE2MTAyNicsJzEwOjAwOjA0LjAwMDAwMCcsMiwxMC41XSwK</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICBzZWxmLmN1cnNvciA9IHNlbGYuY29ubi5jdXJzb3IoKQo=</text>
+        <text encoding="base64">ICAgICAgICBzZWxmLmFzc2VydEVxdWFsKHJvd1sxXVswXSwgMikKICAgICAgICBzZWxmLmFzc2VydEVxdWFsKHJvd1sxXVsxXSwgIjIwMTYxMDI2IikK</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICBzZWxmLmNvbm4gPSBzcWxpdGUzLmNvbm5lY3QocGF0aCwgY2hlY2tfc2FtZV90aHJlYWQ9RmFsc2UpCg==</text>
+        <text encoding="base64">ICAgICAgICBzZWxmLmFzc2VydEVxdWFsKHJvd1sxXVsxXSwgMykK</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICBwYXRoID0ga3dhcmdzWydwYXRoJ10K</text>
+        <text encoding="base64">ICAgICAgICBzZWxmLmFzc2VydEVxdWFsKHJvd1syXVsxXSwgMikK</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICBzcWwgPSAiZGVsZXRlIGZyb20gJXMiICUgdGFibGUKICAgICAgICBpZiBsZW4oY29uZGl0aW9uKSA+IDA6CiAgICAgICAgICAgIHNxbCArPSAiIHdoZXJlICVzIiAlIGNvbmRpdGlvbgoKICAgICAgICBzZWxmLmxvY2suYWNxdWlyZSgpCiAgICAgICAgc2VsZi5leGVjdXRlKHNxbCkKICAgICAgICBzZWxmLmNvbW1pdCgpCiAgICAgICAgc2VsZi5sb2NrLnJlbGVhc2UoKQo=</text>
+        <text encoding="base64">ICAgICAgICBzZWxmLmFzc2VydEVxdWFsKHJvd1swXVsxXSwgMSkK</text>
       </register>
-      <register name="5" type="2">
-        <text encoding="base64">ICAgICAgICBzcWwgPSAic2VsZWN0ICVzIGZyb20gJXMiICUgKCcsJy5qb2luKGNvbHVtbnMpLCB0YWJsZSkKICAgICAgICBpZiBsZW4oY29uZGl0aW9uKSA+IDA6CiAgICAgICAgICAgIHNxbCArPSAiIHdoZXJlICVzIiAlIGNvbmRpdGlvbgoKICAgICAgICBpZiBsZW4ob3JkZXJieSkgPiAwOgogICAgICAgICAgICBzcWwgKz0gIiBvcmRlciBieSAlcyIgJSBvcmRlcmJ5CgogICAgICAgIGlmIGxpbWl0ID4gMDoKICAgICAgICAgICAgc3FsICs9ICIgbGltaXQgJWQiICUgbGltaXQKCiAgICAgICAgc2VsZi5sb2NrLmFjcXVpcmUoKQogICAgICAgIHNlbGYuZXhlY3V0ZShzcWwpCiAgICAgICAgaWYgaXNGZXRjaEFsbDoKICAgICAgICAgICAgcmV0ID0gc2VsZi5mZXRjaGFsbCgpCiAgICAgICAgICAgIHNlbGYubG9jay5yZWxlYXNlKCkKICAgICAgICAgICAgcmV0dXJuIHJldAogICAgICAgIGVsc2U6CiAgICAgICAgICAgIHJldCA9IHNlbGYuZmV0Y2hvbmUoKQogICAgICAgICAgICBzZWxmLmxvY2sucmVsZWFzZSgpCiAgICAgICAgICAgIHJldHVybiByZXQK</text>
+      <register name="5" type="8">
+        <text encoding="base64">IyAKIyAKIyAKIyAKIyAKIyAKIyAKIyAKIyA=</text>
       </register>
-      <register name="6" type="2">
-        <text encoding="base64">Cg==</text>
+      <register name="6" type="8">
+        <text>1
+1
+1
+1
+1</text>
       </register>
-      <register name="7" type="2">
-        <text encoding="base64">ICAgICAgICBjb2x1bW5fbmFtZXMgPSAnLCcuam9pbihjb2x1bW5zKQogICAgICAgIHZhbHVlX3N0cmluZyA9ICcsJy5qb2luKFtTcWxDbGllbnQuY29udmVydF9zdHIoZSkgZm9yIGUgaW4gdmFsdWVzXSkKICAgICAgICBpZiBpc19vcnJlcGxhY2U6CiAgICAgICAgICAgIHNxbCA9ICIlcyAlcyAoJXMpIHZhbHVlcyAoJXMpIiAlIChzZWxmLnJlcGxhY2Vfa2V5d29yZCgpLCB0YWJsZSwgY29sdW1uX25hbWVzLCB2YWx1ZV9zdHJpbmcpCiAgICAgICAgZWxzZToKICAgICAgICAgICAgc3FsID0gImluc2VydCBpbnRvICVzICglcykgdmFsdWVzICglcykiICUgKHRhYmxlLCBjb2x1bW5fbmFtZXMsIHZhbHVlX3N0cmluZykKCiAgICAgICAgc2VsZi5sb2NrLmFjcXVpcmUoKQogICAgICAgIHRyeToKICAgICAgICAgICAgc2VsZi5leGVjdXRlKHNxbCkKICAgICAgICAgICAgaWYgaXNfY29tbWl0OgogICAgICAgICAgICAgICAgc2VsZi5jb21taXQoKQogICAgICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICAgICAgTG9nZ2VyLmluZm8oc2VsZi5fX2NsYXNzX18uX19uYW1lX18sICJTUUwgZXJyb3I6ICVzXG5TUUw6ICVzIiAlIChlLCBzcWwpKQogICAgICAgIHNlbGYubG9jay5yZWxlYXNlKCkK</text>
+      <register name="7" type="8">
+        <text>2
+2
+2
+2
+2</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">ICAgICAgICBjb2x1bW5fbmFtZXMgPSAnJwogICAgICAgIGZvciBpIGluIHJhbmdlKDAsIGxlbihjb2x1bW5zKSk6CiAgICAgICAgICAgIGNvbHVtbl9uYW1lcyArPSAnJXMgJXMsJyAlIChjb2x1bW5zW2ldLCB0eXBlc1tpXSkKICAgICAgICAKICAgICAgICBpZiBsZW4ocHJpbWFyeV9rZXlfaW5kZXgpID4gMDoKICAgICAgICAgICAgY29sdW1uX25hbWVzICs9ICdQUklNQVJZIEtFWSAoJXMpJyAlICgiLCIuam9pbihbY29sdW1uc1tlXSBmb3IgZSBpbiBwcmltYXJ5X2tleV9pbmRleF0pKQogICAgICAgIGVsc2U6CiAgICAgICAgICAgIGNvbHVtbl9uYW1lcyA9IGNvbHVtbl9uYW1lc1swOmxlbihjb2x1bW5fbmFtZXMpLTFdCgogICAgICAgIGlmIGlzX2lmbm90ZXhpc3RzOgogICAgICAgICAgICBzcWwgPSAiY3JlYXRlIHRhYmxlIGlmIG5vdCBleGlzdHMgJXMgKCVzKSIgJSAodGFibGUsIGNvbHVtbl9uYW1lcykKICAgICAgICBlbHNlOgogICAgICAgICAgICBzcWwgPSAiY3JlYXRlIHRhYmxlICVzICglcykiICUgKHRhYmxlLCBjb2x1bW5fbmFtZXMpCgogICAgICAgIHNlbGYubG9jay5hY3F1aXJlKCkKICAgICAgICAKICAgICAgICB0cnk6CiAgICAgICAgICAgIHNlbGYuZXhlY3V0ZShzcWwpCiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICByYWlzZSBFeGNlcHRpb24oIkVycm9yIGluIGNyZWF0ZSBzdGF0ZW1lbnQgKCVzKS5cbkVycm9yOiAlc1xuIiAlIChzcWwsIGUpKQogICAgICAgICAgICAKICAgICAgICBzZWxmLmNvbW1pdCgpCiAgICAgICAgc2VsZi5sb2NrLnJlbGVhc2UoKQo=</text>
+        <text encoding="base64">ICAgICAgICBzZWxmLmFzc2VydEVxdWFsKHJvd1sxXVszXSwgMykK</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">ICAgICAgICBzZWxmLmN1cnNvciA9IE5vbmUK</text>
+        <text encoding="base64">ICAgICAgICBzZWxmLmFzc2VydEVxdWFsKHJvd1sxXVswXSwgJ0VmZ2gnKQo=</text>
       </register>
       <register name=":" type="4">
         <text>w</text>
       </register>
     </registers>
     <search>
-      <last-search>Does not contain</last-search>
+      <last-search>print</last-search>
       <last-offset />
-      <last-pattern>Does not contain</last-pattern>
+      <last-pattern>print</last-pattern>
       <last-replace>enabled = 1</last-replace>
       <last-substitute>enabled = 0</last-substitute>
       <last-dir>1</last-dir>
@@ -1647,7 +1648,6 @@
     </search>
     <history>
       <history-search>
-        <entry>enabled = 0</entry>
         <entry>count</entry>
         <entry>send</entry>
         <entry>Template</entry>
@@ -1667,6 +1667,7 @@
         <entry>try</entry>
         <entry>Error in trades</entry>
         <entry>Does not contain</entry>
+        <entry>print</entry>
       </history-search>
       <history-cmd>
         <entry encoding="base64">JzwsJz5zL2JpZHMvYXNrcy9n</entry>

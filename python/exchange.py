@@ -1,6 +1,7 @@
 #!/bin/python
 from database_client import DatabaseClient
 from market_data import L2Depth, Trade, Snapshot
+from datetime import datetime
 
 class ExchangeGateway:
     
@@ -24,7 +25,16 @@ class ExchangeGateway:
         def fromstring(cls, str):
             return getattr(cls, str.upper(), None)
     
-    data_mode = DataMode.ALL
+    ############################################################################
+    # Static variable data_mode
+    # Applied on all gateways whether to record snapshot, order book and trades
+    data_mode = DataMode.ALL    
+    ############################################################################
+    # Static variable 
+    # Applied on all gateways whether to record the timestamp in local machine,
+    # rather than exchange timestamp given by the API
+    is_local_timestamp = True
+    ############################################################################
     
     """
     Exchange gateway
@@ -157,6 +167,9 @@ class ExchangeGateway:
         Insert order book row into the database client
         :param instmt: Instrument
         """
+        if self.is_local_timestamp:
+            instmt.get_l2_depth().date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
+        
         if self.data_mode & ExchangeGateway.DataMode.SNAPSHOT_ONLY and \
            instmt.get_l2_depth() is not None and \
            instmt.get_last_trade() is not None:
@@ -180,6 +193,9 @@ class ExchangeGateway:
         Insert trade row into the database client
         :param instmt: Instrument
         """
+        if self.is_local_timestamp:
+            trade.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
+            
         instmt.set_last_trade(trade)
 
         if self.data_mode & ExchangeGateway.DataMode.SNAPSHOT_ONLY and \

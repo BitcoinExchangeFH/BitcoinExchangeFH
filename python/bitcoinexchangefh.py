@@ -23,6 +23,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Bitcoin exchange market data feed handler.')
     parser.add_argument('-mode', action='store', help='Mode. Supports ALL, ORDER_BOOK_AND_TRADES_ONLY, SNAPSHOT_ONLY, ORDER_BOOK_ONLY and TRADES_ONLY', default='ALL')
     parser.add_argument('-instmts', action='store', help='Instrument subscription file.', default='subscriptions.ini')
+    parser.add_argument('-exchtime', action='store_true', help='Use exchange timestamp.')
     parser.add_argument('-csv', action='store_true', help='Use csv file as database.')
     parser.add_argument('-sqlite', action='store_true', help='Use SQLite database.')
     parser.add_argument('-mysql', action='store_true', help='Use MySQL.')
@@ -72,9 +73,13 @@ if __name__ == '__main__':
         parser.print_help()
         sys.exit(1)
         
-    # Mode
+    # Data mode
     if args.mode is not None:
         ExchangeGateway.data_mode = ExchangeGateway.DataMode.fromstring(args.mode)
+        
+    # Use exchange timestamp rather than local timestamp
+    if args.exchtime:
+        ExchangeGateway.is_local_timestamp = False
 
     Logger.init_log(args.output)
     subscription_instmts = SubscriptionManager(args.instmts).get_subscriptions()

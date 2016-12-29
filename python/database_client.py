@@ -46,12 +46,15 @@ class DatabaseClient:
         """
         return True
 
-    def insert(self, table, columns, values, is_orreplace=False, is_commit=True):
+    def insert(self, table, columns, types, values, primary_key_index=[], is_orreplace=False, is_commit=True):
         """
         Insert into the table
         :param table: Table name
         :param columns: Column array
+        :param types: Type array
         :param values: Value array
+        :param primary_key_index: An array of indices of primary keys in columns,
+                                  e.g. [0] means the first column is the primary key
         :param is_orreplace: Indicate if the query is "INSERT OR REPLACE"
         :param is_commit: Indicate if the query is committed (in sql command database mostly)
         """

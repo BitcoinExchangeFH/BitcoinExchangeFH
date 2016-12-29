@@ -12,6 +12,7 @@ from exch_kraken import ExchGwKraken
 from exch_huobi import ExchGwHuobi
 from exch_gdax import ExchGwGdax
 from exch_bitstamp import ExchGwBitstamp
+from kdbplus_client import KdbPlusClient
 from mysql_client import MysqlClient
 from sqlite_client import SqliteClient
 from file_client import FileClient
@@ -24,6 +25,7 @@ if __name__ == '__main__':
     parser.add_argument('-mode', action='store', help='Mode. Supports ALL, ORDER_BOOK_AND_TRADES_ONLY, SNAPSHOT_ONLY, ORDER_BOOK_ONLY and TRADES_ONLY', default='ALL')
     parser.add_argument('-instmts', action='store', help='Instrument subscription file.', default='subscriptions.ini')
     parser.add_argument('-exchtime', action='store_true', help='Use exchange timestamp.')
+    parser.add_argument('-kdb', action='store_true', help='Use Kdb+ as database.')
     parser.add_argument('-csv', action='store_true', help='Use csv file as database.')
     parser.add_argument('-sqlite', action='store_true', help='Use SQLite database.')
     parser.add_argument('-mysql', action='store_true', help='Use MySQL.')
@@ -47,13 +49,15 @@ if __name__ == '__main__':
                         help='Verbose output file path')
     args = parser.parse_args()
 
+    Logger.init_log(args.output)
+
     if args.sqlite:
         db_client = SqliteClient()
         db_client.connect(path=args.dbpath)
     elif args.mysql:
         db_client = MysqlClient()
         db_client.connect(host=args.dbaddr,
-                          port=args.dbport,
+                          port=int(args.dbport),
                           user=args.dbuser,
                           pwd=args.dbpwd,
                           schema=args.dbschema)
@@ -62,6 +66,9 @@ if __name__ == '__main__':
             db_client = FileClient(dir=args.dbdir)
         else:
             db_client = FileClient()
+    elif args.kdb:
+        db_client = KdbPlusClient()
+        db_client.connect(host=args.dbaddr, port=int(args.dbport))
     else:
         print('Error: Please define which database is used.')
         parser.print_help()
@@ -81,7 +88,6 @@ if __name__ == '__main__':
     if args.exchtime:
         ExchangeGateway.is_local_timestamp = False
 
-    Logger.init_log(args.output)
     subscription_instmts = SubscriptionManager(args.instmts).get_subscriptions()
     ExchangeGateway.init_snapshot_table(ExchangeGateway.data_mode, db_client)
 

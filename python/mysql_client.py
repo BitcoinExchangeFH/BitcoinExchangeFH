@@ -17,10 +17,12 @@ class MysqlClient(SqlClient):
         :param path: sqlite file to connect
         """
         host = kwargs['host']
+        port = kwargs['port']
         user = kwargs['user']
         pwd = kwargs['pwd']
         schema = kwargs['schema']
         self.conn = pymysql.connect(host=host,
+                                    port=port,
                                     user=user,
                                     password=pwd,
                                     db=schema,

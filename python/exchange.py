@@ -143,12 +143,12 @@ class ExchangeGateway:
                                         orderby="id desc",
                                         limit=1)
             trade_id_ret = self.db_client.select(table=table_name,
-                                           columns=['trade_id'],
+                                           columns=['id', 'trade_id'],
                                            orderby="id desc",
                                            limit=1)
     
             if len(id_ret) > 0 and len(trade_id_ret) > 0:
-                return id_ret[0][0], trade_id_ret[0][0]
+                return id_ret[0][0], trade_id_ret[0][1]
             else:
                 return 0, 0
         else:
@@ -177,11 +177,13 @@ class ExchangeGateway:
            instmt.get_last_trade() is not None:
             self.db_client.insert(table=self.get_snapshot_table_name(),
                                   columns=Snapshot.columns(),
+                                  types=Snapshot.types(),
                                   values=Snapshot.values(instmt.get_exchange_name(),
                                                          instmt.get_instmt_name(),
                                                          instmt.get_l2_depth(),
                                                          instmt.get_last_trade(),
                                                          Snapshot.UpdateType.ORDER_BOOK),
+                                  primary_key_index=[0,1],
                                   is_orreplace=True,
                                   is_commit=not(self.data_mode & ExchangeGateway.DataMode.ORDER_BOOK_ONLY))
             
@@ -189,6 +191,7 @@ class ExchangeGateway:
         if self.data_mode & ExchangeGateway.DataMode.ORDER_BOOK_ONLY:
             self.db_client.insert(table=instmt.get_order_book_table_name(),
                                   columns=['id'] + L2Depth.columns(),
+                                  types=['int'] + L2Depth.types(),
                                   values=[instmt.get_order_book_id()] + instmt.get_l2_depth().values())
 
     def insert_trade(self, instmt, trade):
@@ -218,6 +221,8 @@ class ExchangeGateway:
                                                          instmt.get_l2_depth(),
                                                          instmt.get_last_trade(),
                                                          Snapshot.UpdateType.TRADES),
+                                  types=Snapshot.types(),
+                                  primary_key_index=[0,1],
                                   is_orreplace=True,
                                   is_commit=not(self.data_mode & ExchangeGateway.DataMode.TRADES_ONLY))
         
@@ -225,4 +230,5 @@ class ExchangeGateway:
         if self.data_mode & ExchangeGateway.DataMode.TRADES_ONLY:
             self.db_client.insert(table=instmt.get_trades_table_name(),
                                   columns=['id']+Trade.columns(),
+                                  types=['int']+Trade.types(),
                                   values=[instmt.get_trade_id()]+trade.values())

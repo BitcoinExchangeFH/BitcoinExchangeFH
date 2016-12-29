@@ -90,8 +90,8 @@ class ExchGwOkCoinWs(WebSocketApiClient):
         """
         trade = Trade()
         trade_id = raw[0]
-        trade_price = raw[1]
-        trade_volume = raw[2]
+        trade_price = float(raw[1])
+        trade_volume = float(raw[2])
         timestamp = raw[3]
         trade_side = raw[4]
         

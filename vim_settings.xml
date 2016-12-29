@@ -41,7 +41,7 @@
         <mark key="^" line="18" column="61" />
         <mark key="." line="18" column="61" />
       </file>
-      <file name="/a.dummy" timestamp="1482964672983">
+      <file name="/a.dummy" timestamp="1482968463316">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" timestamp="1482356430832">
@@ -109,8 +109,11 @@
         <mark key="." line="80" column="30" />
         <mark key="^" line="80" column="30" />
       </file>
-      <file name="$USER_HOME$/Anaconda3/Lib/site-packages/websocket/_app.py" timestamp="1482797438624">
-        <mark key="'" line="191" column="40" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/test/test_kdbplus_client.py" timestamp="1482968995518">
+        <mark key="[" line="11" column="24" />
+        <mark key="]" line="11" column="37" />
+        <mark key="." line="11" column="24" />
+        <mark key="^" line="4" column="39" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/instrument.py" timestamp="1480842028394">
         <mark key="'" line="95" column="44" />
@@ -137,15 +140,15 @@
         <mark key="." line="74" column="0" />
         <mark key="^" line="74" column="31" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/gdax_test.py" timestamp="1482798360549">
-        <mark key="[" line="59" column="0" />
-        <mark key="]" line="59" column="23" />
-      </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/sqlite_client.py" timestamp="1482934558740">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/sqlite_client.py" timestamp="1482969058645">
         <mark key="[" line="11" column="16" />
         <mark key="]" line="11" column="25" />
         <mark key="." line="11" column="25" />
         <mark key="^" line="11" column="25" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/mysql_client.py" timestamp="1482969116211">
+        <mark key="[" line="18" column="0" />
+        <mark key="]" line="19" column="28" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_ws_template.py" timestamp="1482150295873">
         <mark key="'" line="0" column="0" />
@@ -243,12 +246,24 @@
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/.gitignore" timestamp="1481644678099">
         <mark key="[" line="2" column="0" />
       </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/kdbplus_client.py" timestamp="1482969151520">
+        <mark key="[" line="2" column="23" />
+        <mark key="]" line="3" column="30" />
+        <mark key="^" line="3" column="30" />
+        <mark key="." line="3" column="30" />
+      </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_huobi.py" timestamp="1482964716989">
         <mark key="'" line="180" column="16" />
         <mark key="[" line="200" column="63" />
         <mark key="]" line="200" column="64" />
         <mark key="^" line="200" column="64" />
         <mark key="." line="200" column="64" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/kdb_client.py" timestamp="1482968435192">
+        <mark key="[" line="4" column="6" />
+        <mark key="]" line="4" column="12" />
+        <mark key="." line="4" column="12" />
+        <mark key="^" line="4" column="12" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/sql_client.py" timestamp="1480519246204">
         <mark key="'" line="111" column="23" />
@@ -368,7 +383,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>Refactored</text>
+        <text encoding="base64">IGFuZCBzZWxmLmN1cnNvciBpcyBub3QgTm9uZQ==</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1582,40 +1597,40 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>Refactored</text>
+        <text encoding="base64">IGFuZCBzZWxmLmN1cnNvciBpcyBub3QgTm9uZQ==</text>
       </register>
       <register name="/" type="4">
         <text>Does not contain</text>
       </register>
       <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgU25hcHNob3QuVXBkYXRlVHlwZS5UUkFERVMpLAo=</text>
+        <text encoding="base64">ICAgICAgICBob3N0ID0ga3dhcmdzWydob3N0J10KICAgICAgICB1c2VyID0ga3dhcmdzWyd1c2VyJ10K</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgU25hcHNob3QuVXBkYXRlVHlwZS5UUkFERVMpLAo=</text>
+        <text encoding="base64">ICAgICAgICBzZWxmLmN1cnNvciA9IHNlbGYuY29ubi5jdXJzb3IoKQo=</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgU25hcHNob3QuVXBkYXRlVHlwZS5PUkRFUl9CT09LKSwK</text>
+        <text encoding="base64">ICAgICAgICBzZWxmLmNvbm4gPSBzcWxpdGUzLmNvbm5lY3QocGF0aCwgY2hlY2tfc2FtZV90aHJlYWQ9RmFsc2UpCg==</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgIGNsYXNzIFVwZGF0ZVR5cGU6CiAgICAgICAgTk9ORSA9IDAKICAgICAgICBPUkRFUl9CT09LID0gMQogICAgICAgIFRSQURFUyA9IDIK</text>
+        <text encoding="base64">ICAgICAgICBwYXRoID0ga3dhcmdzWydwYXRoJ10K</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICdkYXRlX3RpbWUnLCAndXBkYXRlX3R5cGUnLAo=</text>
+        <text encoding="base64">ICAgICAgICBzcWwgPSAiZGVsZXRlIGZyb20gJXMiICUgdGFibGUKICAgICAgICBpZiBsZW4oY29uZGl0aW9uKSA+IDA6CiAgICAgICAgICAgIHNxbCArPSAiIHdoZXJlICVzIiAlIGNvbmRpdGlvbgoKICAgICAgICBzZWxmLmxvY2suYWNxdWlyZSgpCiAgICAgICAgc2VsZi5leGVjdXRlKHNxbCkKICAgICAgICBzZWxmLmNvbW1pdCgpCiAgICAgICAgc2VsZi5sb2NrLnJlbGVhc2UoKQo=</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">UmVmYWN0b3JlZAo=</text>
+        <text encoding="base64">ICAgICAgICBzcWwgPSAic2VsZWN0ICVzIGZyb20gJXMiICUgKCcsJy5qb2luKGNvbHVtbnMpLCB0YWJsZSkKICAgICAgICBpZiBsZW4oY29uZGl0aW9uKSA+IDA6CiAgICAgICAgICAgIHNxbCArPSAiIHdoZXJlICVzIiAlIGNvbmRpdGlvbgoKICAgICAgICBpZiBsZW4ob3JkZXJieSkgPiAwOgogICAgICAgICAgICBzcWwgKz0gIiBvcmRlciBieSAlcyIgJSBvcmRlcmJ5CgogICAgICAgIGlmIGxpbWl0ID4gMDoKICAgICAgICAgICAgc3FsICs9ICIgbGltaXQgJWQiICUgbGltaXQKCiAgICAgICAgc2VsZi5sb2NrLmFjcXVpcmUoKQogICAgICAgIHNlbGYuZXhlY3V0ZShzcWwpCiAgICAgICAgaWYgaXNGZXRjaEFsbDoKICAgICAgICAgICAgcmV0ID0gc2VsZi5mZXRjaGFsbCgpCiAgICAgICAgICAgIHNlbGYubG9jay5yZWxlYXNlKCkKICAgICAgICAgICAgcmV0dXJuIHJldAogICAgICAgIGVsc2U6CiAgICAgICAgICAgIHJldCA9IHNlbGYuZmV0Y2hvbmUoKQogICAgICAgICAgICBzZWxmLmxvY2sucmVsZWFzZSgpCiAgICAgICAgICAgIHJldHVybiByZXQK</text>
       </register>
       <register name="6" type="2">
         <text encoding="base64">Cg==</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgIGRlZiAK</text>
+        <text encoding="base64">ICAgICAgICBjb2x1bW5fbmFtZXMgPSAnLCcuam9pbihjb2x1bW5zKQogICAgICAgIHZhbHVlX3N0cmluZyA9ICcsJy5qb2luKFtTcWxDbGllbnQuY29udmVydF9zdHIoZSkgZm9yIGUgaW4gdmFsdWVzXSkKICAgICAgICBpZiBpc19vcnJlcGxhY2U6CiAgICAgICAgICAgIHNxbCA9ICIlcyAlcyAoJXMpIHZhbHVlcyAoJXMpIiAlIChzZWxmLnJlcGxhY2Vfa2V5d29yZCgpLCB0YWJsZSwgY29sdW1uX25hbWVzLCB2YWx1ZV9zdHJpbmcpCiAgICAgICAgZWxzZToKICAgICAgICAgICAgc3FsID0gImluc2VydCBpbnRvICVzICglcykgdmFsdWVzICglcykiICUgKHRhYmxlLCBjb2x1bW5fbmFtZXMsIHZhbHVlX3N0cmluZykKCiAgICAgICAgc2VsZi5sb2NrLmFjcXVpcmUoKQogICAgICAgIHRyeToKICAgICAgICAgICAgc2VsZi5leGVjdXRlKHNxbCkKICAgICAgICAgICAgaWYgaXNfY29tbWl0OgogICAgICAgICAgICAgICAgc2VsZi5jb21taXQoKQogICAgICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICAgICAgTG9nZ2VyLmluZm8oc2VsZi5fX2NsYXNzX18uX19uYW1lX18sICJTUUwgZXJyb3I6ICVzXG5TUUw6ICVzIiAlIChlLCBzcWwpKQogICAgICAgIHNlbGYubG9jay5yZWxlYXNlKCkK</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">ICAgICAgICAgICBjbHMuZ2V0X3RyYWRlX3NpZGVfZmllbGRfbmFtZSgpIGluIGtleXMgYW5kIFwK</text>
+        <text encoding="base64">ICAgICAgICBjb2x1bW5fbmFtZXMgPSAnJwogICAgICAgIGZvciBpIGluIHJhbmdlKDAsIGxlbihjb2x1bW5zKSk6CiAgICAgICAgICAgIGNvbHVtbl9uYW1lcyArPSAnJXMgJXMsJyAlIChjb2x1bW5zW2ldLCB0eXBlc1tpXSkKICAgICAgICAKICAgICAgICBpZiBsZW4ocHJpbWFyeV9rZXlfaW5kZXgpID4gMDoKICAgICAgICAgICAgY29sdW1uX25hbWVzICs9ICdQUklNQVJZIEtFWSAoJXMpJyAlICgiLCIuam9pbihbY29sdW1uc1tlXSBmb3IgZSBpbiBwcmltYXJ5X2tleV9pbmRleF0pKQogICAgICAgIGVsc2U6CiAgICAgICAgICAgIGNvbHVtbl9uYW1lcyA9IGNvbHVtbl9uYW1lc1swOmxlbihjb2x1bW5fbmFtZXMpLTFdCgogICAgICAgIGlmIGlzX2lmbm90ZXhpc3RzOgogICAgICAgICAgICBzcWwgPSAiY3JlYXRlIHRhYmxlIGlmIG5vdCBleGlzdHMgJXMgKCVzKSIgJSAodGFibGUsIGNvbHVtbl9uYW1lcykKICAgICAgICBlbHNlOgogICAgICAgICAgICBzcWwgPSAiY3JlYXRlIHRhYmxlICVzICglcykiICUgKHRhYmxlLCBjb2x1bW5fbmFtZXMpCgogICAgICAgIHNlbGYubG9jay5hY3F1aXJlKCkKICAgICAgICAKICAgICAgICB0cnk6CiAgICAgICAgICAgIHNlbGYuZXhlY3V0ZShzcWwpCiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICByYWlzZSBFeGNlcHRpb24oIkVycm9yIGluIGNyZWF0ZSBzdGF0ZW1lbnQgKCVzKS5cbkVycm9yOiAlc1xuIiAlIChzcWwsIGUpKQogICAgICAgICAgICAKICAgICAgICBzZWxmLmNvbW1pdCgpCiAgICAgICAgc2VsZi5sb2NrLnJlbGVhc2UoKQo=</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICByZXR1cm4gImh0dHBzOi8vcHJvLWRhdGEuYnRjYy5jb20vZGF0YS9wcm8vaGlzdG9yeWRhdGE/bGltaXQ9MTAwMCZzeW1ib2w9JXMiICUgXAo=</text>
+        <text encoding="base64">ICAgICAgICBzZWxmLmN1cnNvciA9IE5vbmUK</text>
       </register>
       <register name=":" type="4">
         <text>w</text>

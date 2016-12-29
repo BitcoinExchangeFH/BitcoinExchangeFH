@@ -210,6 +210,12 @@ class ExchGwKraken(ExchangeGateway):
                 for trade in ret:
                     instmt.incr_trade_id()
                     self.insert_trade(instmt, trade)
+                    
+                # After the first time of getting the trade, indicate the instrument
+                # is recovered
+                if not instmt.get_recovered():
+                    instmt.set_recovered(True)
+                    
             except Exception as e:
                 Logger.error(self.__class__.__name__,
                           "Error in trades: %s\nReturn: %s" % (e, ret))

@@ -22,6 +22,7 @@ class Instrument(object):
         self.trade_id = 0
         self.exch_trade_id = '0'
         self.subscribed = False
+        self.recovered = True
         self.l2_depth = None
         self.prev_l2_depth = None
         self.last_trade = None
@@ -41,6 +42,7 @@ class Instrument(object):
         self.trade_id = obj.trade_id
         self.exch_trade_id = obj.exch_trade_id
         self.subscribed = obj.subscribed
+        self.recovered = obj.recovered
         self.l2_depth = obj.l2_depth
         self.prev_l2_depth = obj.prev_l2_depth
         self.last_trade = obj.last_trade
@@ -73,6 +75,9 @@ class Instrument(object):
 
     def get_subscribed(self):
         return self.subscribed
+
+    def get_recovered(self):
+        return self.recovered
 
     def get_l2_depth(self):
         return self.l2_depth
@@ -110,6 +115,9 @@ class Instrument(object):
     def set_subscribed(self, subscribed):
         self.subscribed = subscribed
 
+    def set_recovered(self, recovered):
+        self.recovered = recovered
+        
     def set_l2_depth(self, l2_depth):
         self.l2_depth = l2_depth
         

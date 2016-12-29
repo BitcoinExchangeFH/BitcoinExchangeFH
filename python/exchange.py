@@ -167,9 +167,11 @@ class ExchangeGateway:
         Insert order book row into the database client
         :param instmt: Instrument
         """
+        # If local timestamp indicator is on, assign the local timestamp again
         if self.is_local_timestamp:
             instmt.get_l2_depth().date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
         
+        # Update the snapshot
         if self.data_mode & ExchangeGateway.DataMode.SNAPSHOT_ONLY and \
            instmt.get_l2_depth() is not None and \
            instmt.get_last_trade() is not None:
@@ -183,6 +185,7 @@ class ExchangeGateway:
                                   is_orreplace=True,
                                   is_commit=not(self.data_mode & ExchangeGateway.DataMode.ORDER_BOOK_ONLY))
             
+        # Update its order book table
         if self.data_mode & ExchangeGateway.DataMode.ORDER_BOOK_ONLY:
             self.db_client.insert(table=instmt.get_order_book_table_name(),
                                   columns=['id'] + L2Depth.columns(),
@@ -193,11 +196,18 @@ class ExchangeGateway:
         Insert trade row into the database client
         :param instmt: Instrument
         """
+        # If the instrument is not recovered, skip inserting into the table
+        if not instmt.get_recovered():
+            return
+        
+        # If local timestamp indicator is on, assign the local timestamp again
         if self.is_local_timestamp:
             trade.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
-            
+        
+        # Set the last trade to the current one
         instmt.set_last_trade(trade)
 
+        # Update the snapshot
         if self.data_mode & ExchangeGateway.DataMode.SNAPSHOT_ONLY and \
            instmt.get_l2_depth() is not None and \
            instmt.get_last_trade() is not None:
@@ -211,6 +221,7 @@ class ExchangeGateway:
                                   is_orreplace=True,
                                   is_commit=not(self.data_mode & ExchangeGateway.DataMode.TRADES_ONLY))
         
+        # Update its trade table
         if self.data_mode & ExchangeGateway.DataMode.TRADES_ONLY:
             self.db_client.insert(table=instmt.get_trades_table_name(),
                                   columns=['id']+Trade.columns(),

@@ -223,6 +223,12 @@ class ExchGwBtcc(ExchangeGateway):
                         instmt.set_exch_trade_id(int(trade.trade_id))
                         instmt.incr_trade_id()
                         self.insert_trade(instmt, trade)
+                
+                # After the first time of getting the trade, indicate the instrument
+                # is recovered
+                if not instmt.get_recovered():
+                    instmt.set_recovered(True)
+                    
             except Exception as e:
                 Logger.error(self.__class__.__name__, "Error in trades: %s" % e)
             time.sleep(1)
@@ -239,6 +245,7 @@ class ExchGwBtcc(ExchangeGateway):
                                                                         instmt.get_instmt_name()))
         instmt.set_trades_table_name(self.get_trades_table_name(instmt.get_exchange_name(),
                                                                 instmt.get_instmt_name()))
+        instmt.set_recovered(False)
         t1 = threading.Thread(target=partial(self.get_order_book_worker, instmt))
         t1.start()
         t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))

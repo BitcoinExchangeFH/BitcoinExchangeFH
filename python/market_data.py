@@ -181,7 +181,7 @@ class Trade(MarketDataBase):
         """
         Return static column types
         """
-        return ['varchar(25)', 'text', 'decimal(10,5)', 'decimal(20,8)', 'text']
+        return ['varchar(25)', 'text', 'decimal(10,5)', 'decimal(20,8)', 'int']
 
     def values(self):
         """

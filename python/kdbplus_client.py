@@ -1,9 +1,10 @@
 import threading
 import re
+import numpy
 from database_client import DatabaseClient
 from util import Logger
 from qpython import qconnection
-from qpython.qcollection import QTable,QKeyedTable
+from qpython.qcollection import QTable, QKeyedTable, QList
 
 class KdbPlusClient(DatabaseClient):
     """
@@ -47,6 +48,18 @@ class KdbPlusClient(DatabaseClient):
             return int
         else:
             raise Exception("Failed to convert type (%s)" % type)
+
+    @classmethod
+    def decode_qtypes(cls, value):
+        """
+        Decode all the QCollection items to normal python types
+        """
+        if isinstance(value, numpy.bytes_):
+            return value.decode("utf-8")
+        elif isinstance(value, list):
+            return value
+        else:
+            return value.item()
 
     def __init__(self):
         """
@@ -115,19 +128,23 @@ class KdbPlusClient(DatabaseClient):
                 (columns, types))
 
         if is_ifnotexists:
-            try:
-                self.conn("%s" % table)
-                Logger.info(self.__class__.__name__, "Table %s has been created." % table)
-                return True
-            except Exception as e:
-                Logger.info(self.__class__.__name__, "Table %s is going to be created." % table)
-
+            ret = self.conn("\\v")
+            if ret is not None:
+                for t in ret:
+                    if table == str(t):
+                        Logger.info(self.__class__.__name__, "Table %s has been created." % table)
+                        return True
+            Logger.info(self.__class__.__name__, "Table %s is going to be created." % table)
+            
         c = columns[:]
         
         for i in range(0, len(types)):
             type = self.convert_type(types[i])
             if type is str:
-                c[i] += ":()"
+                if columns[i].find('date_time') > -1:
+                    c[i] += ":`timestamp$()"
+                else:
+                    c[i] += ":`symbol$()"
             elif type is float:
                 c[i] += ":`float$()"
             elif type is int:
@@ -145,7 +162,10 @@ class KdbPlusClient(DatabaseClient):
         else:
             command = '%s:(%s)' % (table, '; '.join(c))
 
-        self.conn.sync(command)
+        try:
+            self.conn.sync(command)
+        except Exception as e:
+            Logger.error(self.__class__.__name__, "Error in creat statement(%s).\n%s" % (command, e))
         
         return True
 
@@ -170,7 +190,12 @@ class KdbPlusClient(DatabaseClient):
             if i in primary_key_index:
                 v[i] = "`" + v[i]
             elif type is str:
-                v[i] = "\"" + v[i] + "\""
+                if columns[i].find('date_time') > -1:
+                    v_len = len(v[i])
+                    v[i] = re.sub("(\d{4})(\d{2})(\d{2}) (\d{2}):(\d{2}):(\d{2}).(\d*)", \
+                                  "\\1.\\2.\\3D\\4:\\5:\\6.\\7", v[i]) + "0" * (27-v_len)
+                else:
+                    v[i] = "`$\"" + v[i] + "\""
             elif type is float:
                 v[i] = float(v[i])
             elif type is int:
@@ -250,12 +275,25 @@ class KdbPlusClient(DatabaseClient):
                 ret.append(row)
         elif isinstance(select_ret, QTable):
             # Empty records
-            if select_ret[0][0].item() == -2147483648:
+            if select_ret[0][0] == -2147483648:
                 return []
             else:
                 for value in select_ret:
-                    row = [e.item() if not isinstance(e, numpy.bytes_) else e.decode("utf-8") for e in value]
-                    ret.append(row)
+                    if len(value) == 0 or \
+                       (isinstance(value[0], list) and len(value[0]) == 0):
+                        pass
+                    else:
+                        row = []
+                        for e in value:
+                            row.append(self.decode_qtypes(e))
+                            
+                        ret.append(row)
+        elif isinstance(select_ret, QList):
+            for e in select_ret:
+                ret.append(self.decode_qtypes(e))
+        elif select_ret is None:
+            # Return empty list
+            pass
         else:
             raise Exception("Unknown type (%s) in kdb client select statement.\n%s" % (type(select_ret), select_ret))
 

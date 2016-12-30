@@ -234,17 +234,24 @@ class ExchGwBitfinex(ExchangeGateway):
                     self.insert_order_book(instmt)
 
             elif message[0] == instmt.get_trades_channel_id():
-                if isinstance(message[1], list):
-                    raw_trades = message[1]
-                    raw_trades.sort(key=lambda x:x[0])
-                    for raw in raw_trades:
-                        trade = self.api_socket.parse_trade(instmt, raw)
-                        if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
-                            instmt.incr_trade_id()
-                            instmt.set_exch_trade_id(trade.trade_id)
-                            self.insert_trade(instmt, trade)
+                # No recovery trade
+                
+                # if isinstance(message[1], list):
+                #     raw_trades = message[1]
+                #     raw_trades.sort(key=lambda x:x[0])
+                #     for raw in raw_trades:
+                #         trade = self.api_socket.parse_trade(instmt, raw)
+                #         try:
+                #             if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
+                #                 instmt.incr_trade_id()
+                #                 instmt.set_exch_trade_id(trade.trade_id)
+                #                 self.insert_trade(instmt, trade)
+                #         except Exception as e:
+                #             Logger.info('test', "trade.trade_id(%s):%s" % (type(trade.trade_id), trade.trade_id))
+                #             Logger.info('test', "instmt.get_exch_trade_id()(%s):%s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id()))
+                #             raise e                            
 
-                elif message[1] == 'tu':
+                if message[1] == 'tu':
                     trade = self.api_socket.parse_trade(instmt, message[3:])
                     if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
                         instmt.incr_trade_id()

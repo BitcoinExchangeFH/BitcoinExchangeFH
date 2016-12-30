@@ -6,6 +6,8 @@ from restful_api_socket import RESTfulApiSocket
 from exchange import ExchangeGateway
 from market_data import L2Depth, Trade
 from util import Logger
+from instrument import Instrument
+from sql_client_template import SqlClientTemplate
 
 
 class ExchGwBtccRestfulApi(RESTfulApiSocket):
@@ -220,7 +222,7 @@ class ExchGwBtcc(ExchangeGateway):
                 ret = self.api_socket.get_trades(instmt)
                 for trade in ret:
                     if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
-                        instmt.set_exch_trade_id(int(trade.trade_id))
+                        instmt.set_exch_trade_id(trade.trade_id)
                         instmt.incr_trade_id()
                         self.insert_trade(instmt, trade)
                 
@@ -404,3 +406,21 @@ class ExchGwBtccFuture(ExchGwBtcc):
         :return: Exchange name string
         """
         return 'BTCC_Future'        
+        
+        
+if __name__ == '__main__':
+    Logger.init_log()
+    exchange_name = 'BTCC_Spot'
+    instmt_name = 'BTCCNY'
+    instmt_code = 'btccny'
+    instmt = Instrument(exchange_name, instmt_name, instmt_code)    
+    db_client = SqlClientTemplate()
+    exch = ExchGwBtccSpot(db_client)
+    instmt.set_l2_depth(L2Depth(5))
+    instmt.set_prev_l2_depth(L2Depth(5))
+    instmt.set_order_book_table_name(exch.get_order_book_table_name(instmt.get_exchange_name(),
+                                                                    instmt.get_instmt_name()))
+    instmt.set_trades_table_name(exch.get_trades_table_name(instmt.get_exchange_name(),
+                                                            instmt.get_instmt_name()))
+    instmt.set_recovered(False)    
+    exch.get_order_book_worker(instmt)

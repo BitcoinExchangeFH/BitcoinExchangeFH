@@ -172,11 +172,11 @@ class ExchGwKraken(ExchangeGateway):
                                                  limit=1)
 
             if len(id_ret) > 0 and len(trade_id_ret) > 0:
-                return id_ret[0][0], trade_id_ret[0][1][25:]
+                return int(id_ret[0][0]), trade_id_ret[0][1][25:]
             else:
-                return 0, ''
+                return 0, '0'
         else:
-            return 0, ''
+            return 0, '0'
 
     def get_order_book_worker(self, instmt):
         """

@@ -220,7 +220,15 @@ class ExchGwBtcc(ExchangeGateway):
         while True:
             try:
                 ret = self.api_socket.get_trades(instmt)
+                if ret is None or len(ret) == 0:
+                    continue
+            except Exception as e:
+                Logger.error(self.__class__.__name__, "Error in trades: %s" % e)                
+                
                 for trade in ret:
+                    assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
+                    assert isinstance(instmt.get_exch_trade_id(), str), \
+                           "instmt.get_exch_trade_id()(%s) = %s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id())
                     if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
                         instmt.set_exch_trade_id(trade.trade_id)
                         instmt.incr_trade_id()
@@ -230,9 +238,7 @@ class ExchGwBtcc(ExchangeGateway):
                 # is recovered
                 if not instmt.get_recovered():
                     instmt.set_recovered(True)
-                    
-            except Exception as e:
-                Logger.error(self.__class__.__name__, "Error in trades: %s" % e)
+
             time.sleep(1)
 
     def start(self, instmt):

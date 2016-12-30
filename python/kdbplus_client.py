@@ -163,10 +163,13 @@ class KdbPlusClient(DatabaseClient):
         else:
             command = '%s:(%s)' % (table, '; '.join(c))
 
+        self.lock.acquire()
         try:
             self.conn.sync(command)
         except Exception as e:
             Logger.error(self.__class__.__name__, "Error in creat statement(%s).\n%s" % (command, e))
+        finally:
+            self.lock.release()
         
         return True
 
@@ -263,40 +266,43 @@ class KdbPlusClient(DatabaseClient):
         if limit > 0:
             command = "%d#%s" % (limit, command)
 
+        self.lock.acquire()
         try:
             select_ret = self.conn(command)
+            ret = []
+            if isinstance(select_ret, QKeyedTable):
+                for key, value in select_ret.iteritems():
+                    row = list(key) + list(value)
+                    row = [self.decode_qtypes(e) for e in row]
+                    ret.append(row)
+            elif isinstance(select_ret, QTable):
+                # Empty records
+                if select_ret[0][0] == -2147483648:
+                    pass
+                else:
+                    for value in select_ret:
+                        if len(value) == 0 or \
+                           (isinstance(value[0], list) and len(value[0]) == 0):
+                            pass
+                        else:
+                            row = []
+                            for e in value:
+                                row.append(self.decode_qtypes(e))
+                                
+                            ret.append(row)
+            elif isinstance(select_ret, QList):
+                for e in select_ret:
+                    ret.append(self.decode_qtypes(e))
+            elif select_ret is None:
+                # Return empty list
+                pass
+            else:
+                raise Exception("Unknown type (%s) in kdb client select statement.\n%s" % (type(select_ret), select_ret))
+
         except Exception as e:
             raise Exception("Error in running select statement (%s).\n%s" % (command, e))
-        ret = []
-
-        if isinstance(select_ret, QKeyedTable):
-            for key, value in select_ret.iteritems():
-                row = list(key) + list(value)
-                row = [self.decode_qtypes(e) for e in row]
-                ret.append(row)
-        elif isinstance(select_ret, QTable):
-            # Empty records
-            if select_ret[0][0] == -2147483648:
-                return []
-            else:
-                for value in select_ret:
-                    if len(value) == 0 or \
-                       (isinstance(value[0], list) and len(value[0]) == 0):
-                        pass
-                    else:
-                        row = []
-                        for e in value:
-                            row.append(self.decode_qtypes(e))
-                            
-                        ret.append(row)
-        elif isinstance(select_ret, QList):
-            for e in select_ret:
-                ret.append(self.decode_qtypes(e))
-        elif select_ret is None:
-            # Return empty list
-            pass
-        else:
-            raise Exception("Unknown type (%s) in kdb client select statement.\n%s" % (type(select_ret), select_ret))
+        finally:
+            self.lock.release()
 
         return ret
 

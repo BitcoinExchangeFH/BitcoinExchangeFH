@@ -131,9 +131,11 @@ class Instrument(object):
         self.order_book_channel_id = order_book_channel_id
         
     def incr_order_book_id(self):
+        assert isinstance(self.order_book_id, int), "Type(self.order_book_id) = %s" % type(self.order_book_id)
         self.order_book_id += 1
 
     def incr_trade_id(self):
+        assert isinstance(self.trade_id, int), "Type(self.trade_id) = %s" % type(self.trade_id)
         self.trade_id += 1        
         
         

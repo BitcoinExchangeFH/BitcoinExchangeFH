@@ -246,7 +246,7 @@ class ExchGwTemplate(ExchangeGateway):
 if __name__ == '__main__':
     exchange_name = 'Template'
     instmt_name = 'XBTUSD'
-    instmt_code = 'XBTUSD'
+    instmt_code = 'XBTH17'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)
     db_client = SqlClientTemplate()
     Logger.init_log()

@@ -122,7 +122,7 @@ class ExchangeGateway:
                                         orderby='id desc',
                                         limit=1)
             if len(ret) > 0:
-                assert isinstance(ret[0][0], int), "Type(ret[0][0]) = %s" % type(ret[0][0])
+                assert isinstance(ret[0][0], int), "ret[0][0](%s) = %s" % (type(ret[0][0]), ret)
                 return ret[0][0]
             else:
                 return 0

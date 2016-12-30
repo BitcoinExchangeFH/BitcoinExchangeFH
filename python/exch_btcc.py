@@ -221,6 +221,7 @@ class ExchGwBtcc(ExchangeGateway):
             try:
                 ret = self.api_socket.get_trades(instmt)
                 if ret is None or len(ret) == 0:
+                    time.sleep(1)
                     continue
             except Exception as e:
                 Logger.error(self.__class__.__name__, "Error in trades: %s" % e)                

@@ -172,6 +172,7 @@ class ExchGwKraken(ExchangeGateway):
                                                  limit=1)
 
             if len(id_ret) > 0 and len(trade_id_ret) > 0:
+                assert isinstance(id_ret[0][0], int), "id_ret[0][0](%s) = %s" % (type(id_ret[0][0]), id_ret)
                 return int(id_ret[0][0]), trade_id_ret[0][1][25:]
             else:
                 return 0, '0'

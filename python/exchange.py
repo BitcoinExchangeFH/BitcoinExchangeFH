@@ -151,9 +151,9 @@ class ExchangeGateway:
             if len(id_ret) > 0 and len(trade_id_ret) > 0:
                 return id_ret[0][0], trade_id_ret[0][1]
             else:
-                return 0, 0
+                return 0, '0'
         else:
-            return 0, 0
+            return 0, '0'
     
     def start(self, instmt):
         """

@@ -159,7 +159,8 @@ class ExchGwBtccRestfulApi(RESTfulApiSocket):
         :param trade_id: Trade id
         :return: List of trades
         """
-        res = cls.request(cls.get_trades_link(instmt))
+        link = cls.get_trades_link(instmt)
+        res = cls.request(link)
         trades = []
         if len(res) > 0:
             for t in res:
@@ -226,19 +227,19 @@ class ExchGwBtcc(ExchangeGateway):
             except Exception as e:
                 Logger.error(self.__class__.__name__, "Error in trades: %s" % e)                
                 
-                for trade in ret:
-                    assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
-                    assert isinstance(instmt.get_exch_trade_id(), str), \
-                           "instmt.get_exch_trade_id()(%s) = %s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id())
-                    if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
-                        instmt.set_exch_trade_id(trade.trade_id)
-                        instmt.incr_trade_id()
-                        self.insert_trade(instmt, trade)
-                
-                # After the first time of getting the trade, indicate the instrument
-                # is recovered
-                if not instmt.get_recovered():
-                    instmt.set_recovered(True)
+            for trade in ret:
+                assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
+                assert isinstance(instmt.get_exch_trade_id(), str), \
+                       "instmt.get_exch_trade_id()(%s) = %s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id())
+                if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
+                    instmt.set_exch_trade_id(trade.trade_id)
+                    instmt.incr_trade_id()
+                    self.insert_trade(instmt, trade)
+            
+            # After the first time of getting the trade, indicate the instrument
+            # is recovered
+            if not instmt.get_recovered():
+                instmt.set_recovered(True)
 
             time.sleep(1)
 
@@ -312,10 +313,10 @@ class ExchGwBtccSpotRestfulApi(ExchGwBtccRestfulApi):
     @classmethod
     def get_trades_link(cls, instmt):
         if int(instmt.get_exch_trade_id()) > 0:
-            return "https://data.btcchina.com/data/trades?market=%s&since=%s" % \
+            return "https://data.btcchina.com/data/historydata?market=%s&since=%s" % \
                 (instmt.get_instmt_code(), instmt.get_exch_trade_id())
         else:
-            return "https://data.btcchina.com/data/trades?limit=100&market=%s" % \
+            return "https://data.btcchina.com/data/historydata?limit=100&market=%s" % \
                 (instmt.get_instmt_code())        
 
 class ExchGwBtccFutureRestfulApi(ExchGwBtccRestfulApi):

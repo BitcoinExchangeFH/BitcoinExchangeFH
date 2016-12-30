@@ -123,7 +123,7 @@
         <mark key="^" line="77" column="18" />
         <mark key="." line="77" column="37" />
       </file>
-      <file name="/Dummy.txt" timestamp="1483022118952">
+      <file name="/Dummy.txt" timestamp="1483056159584">
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="0" />
         <mark key="." line="0" column="0" />
@@ -248,12 +248,12 @@
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/.gitignore" timestamp="1481644678099">
         <mark key="[" line="2" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/kdbplus_client.py" timestamp="1483022026019">
-        <mark key="'" line="3" column="0" />
-        <mark key="[" line="175" column="34" />
-        <mark key="]" line="177" column="30" />
-        <mark key="." line="177" column="30" />
-        <mark key="^" line="177" column="30" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/kdbplus_client.py" timestamp="1483056131968">
+        <mark key="'" line="2" column="0" />
+        <mark key="[" line="2" column="0" />
+        <mark key="]" line="2" column="0" />
+        <mark key="." line="2" column="0" />
+        <mark key="^" line="176" column="30" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_huobi.py" timestamp="1482964716989">
         <mark key="'" line="180" column="16" />
@@ -385,8 +385,8 @@
       <jump line="70" column="9" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICA6cGFyYW0gdHlwZXM6IFR5cGUgYXJyYXkK</text>
+      <register name="&quot;" type="4">
+        <text>Enhanced</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1600,7 +1600,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>)</text>
+        <text>Enhanced</text>
       </register>
       <register name="/" type="4">
         <text>enabled = 0</text>
@@ -1609,31 +1609,31 @@
         <text encoding="base64">ICAgICAgICA6cGFyYW0gdHlwZXM6IFR5cGUgYXJyYXkK</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICA6cGFyYW0gCg==</text>
+        <text encoding="base64">aW1wb3J0IG51bXB5Cg==</text>
       </register>
       <register name="2" type="2">
+        <text encoding="base64">ICAgICAgICA6cGFyYW0gCg==</text>
+      </register>
+      <register name="3" type="2">
         <text encoding="base64">Cg==</text>
       </register>
-      <register name="3" type="8">
+      <register name="4" type="8">
         <text encoding="base64">IyAKIyAKIyAKIyAKIyAKIyA=</text>
       </register>
-      <register name="4" type="2">
+      <register name="5" type="2">
         <text encoding="base64">ICAgICAgICAgICAgY1tpXSA9IGNbaV0gKyAiOigpIgo=</text>
       </register>
-      <register name="5" type="2">
+      <register name="6" type="2">
         <text encoding="base64">ICAgICAgICAgICAgCiAgICAgICAgdiA9IFsiXCIiICsgZSArICJcIiIgaWYgaXNpbnN0YW5jZShlLCBzdHIpIGVsc2UgZSBmb3IgZSBpbiB2XQo=</text>
       </register>
-      <register name="6" type="2">
+      <register name="7" type="2">
         <text encoding="base64">ICAgICAgICBzZWxmLmNvbm4uc3luYyhjb21tYW5kKQo=</text>
       </register>
-      <register name="7" type="2">
+      <register name="8" type="2">
         <text encoding="base64">Cg==</text>
       </register>
-      <register name="8" type="2">
-        <text encoding="base64">ZnJvbSBzeXMgaW1wb3J0IG1heAo=</text>
-      </register>
       <register name="9" type="2">
-        <text encoding="base64">aW1wb3J0IHN5cwo=</text>
+        <text encoding="base64">ZnJvbSBzeXMgaW1wb3J0IG1heAo=</text>
       </register>
       <register name=":" type="4">
         <text>w</text>

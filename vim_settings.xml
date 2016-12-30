@@ -187,6 +187,12 @@
         <mark key="." line="178" column="23" />
         <mark key="^" line="178" column="23" />
       </file>
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/backtest_machine.py" timestamp="1483102188033">
+        <mark key="[" line="0" column="41" />
+        <mark key="]" line="1" column="0" />
+        <mark key="^" line="1" column="0" />
+        <mark key="." line="1" column="0" />
+      </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/market_data.py" timestamp="1482965916910">
         <mark key="'" line="33" column="12" />
         <mark key="[" line="235" column="77" />
@@ -201,9 +207,9 @@
         <mark key="^" line="147" column="35" />
         <mark key="." line="147" column="35" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/pipe_factory.py" timestamp="1482276186930">
-        <mark key="[" line="74" column="27" />
-        <mark key="]" line="74" column="48" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/pipe_factory.py" timestamp="1483102170713">
+        <mark key="[" line="27" column="6" />
+        <mark key="]" line="27" column="21" />
         <mark key="^" line="74" column="48" />
         <mark key="." line="74" column="48" />
       </file>
@@ -373,8 +379,8 @@
       <jump line="70" column="9" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">QWRkZWQgcG9wIG5leHQK</text>
+      <register name="&quot;" type="4">
+        <text>Mysql</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1588,13 +1594,13 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>Enhanced</text>
+        <text>Mysql</text>
       </register>
       <register name="/" type="4">
         <text>enabled = 0</text>
       </register>
-      <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICA6cGFyYW0gdHlwZXM6IFR5cGUgYXJyYXkK</text>
+      <register name="0" type="4">
+        <text>MysqlPipeFactory</text>
       </register>
       <register name="1" type="2">
         <text encoding="base64">QWRkZWQgcG9wIG5leHQK</text>

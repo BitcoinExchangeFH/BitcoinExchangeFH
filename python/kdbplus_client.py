@@ -131,23 +131,24 @@ class KdbPlusClient(DatabaseClient):
             ret = self.conn("\\v")
             if ret is not None:
                 for t in ret:
-                    if table == str(t):
+                    if table == self.decode_qtypes(t):
                         Logger.info(self.__class__.__name__, "Table %s has been created." % table)
                         return True
+                        
             Logger.info(self.__class__.__name__, "Table %s is going to be created." % table)
             
         c = columns[:]
         
         for i in range(0, len(types)):
-            type = self.convert_type(types[i])
-            if type is str:
+            t = self.convert_type(types[i])
+            if t is str:
                 if columns[i].find('date_time') > -1:
                     c[i] += ":`timestamp$()"
                 else:
                     c[i] += ":`symbol$()"
-            elif type is float:
+            elif t is float:
                 c[i] += ":`float$()"
-            elif type is int:
+            elif t is int:
                 c[i] += ":`int$()"
         
         keys = []
@@ -271,7 +272,7 @@ class KdbPlusClient(DatabaseClient):
         if isinstance(select_ret, QKeyedTable):
             for key, value in select_ret.iteritems():
                 row = list(key) + list(value)
-                row = [e.item() if not isinstance(e, numpy.bytes_) else e.decode("utf-8") for e in row]
+                row = [self.decode_qtypes(e) for e in row]
                 ret.append(row)
         elif isinstance(select_ret, QTable):
             # Empty records

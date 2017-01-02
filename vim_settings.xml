@@ -6,6 +6,20 @@
       <file name="/a.dummy" timestamp="1483022034936">
         <mark key="[" line="0" column="0" />
       </file>
+      <file name="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" timestamp="1482356430832">
+        <mark key="'" line="88" column="13" />
+        <mark key="[" line="94" column="34" />
+        <mark key="]" line="94" column="34" />
+        <mark key="." line="94" column="34" />
+        <mark key="^" line="94" column="34" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/exch_bitfinex.py" timestamp="1479738556101">
+        <mark key="'" line="173" column="8" />
+        <mark key="[" line="173" column="8" />
+        <mark key="]" line="173" column="8" />
+        <mark key="." line="173" column="8" />
+        <mark key="^" line="173" column="8" />
+      </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/mysql_client.py" timestamp="1480521556229">
         <mark key="[" line="80" column="11" />
         <mark key="]" line="81" column="26" />
@@ -23,6 +37,20 @@
         <mark key="]" line="183" column="64" />
         <mark key="^" line="183" column="64" />
         <mark key="." line="183" column="64" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/bitcoinexchangefh.py" timestamp="1483015518649">
+        <mark key="'" line="86" column="36" />
+        <mark key="[" line="51" column="32" />
+        <mark key="]" line="52" column="3" />
+        <mark key="^" line="52" column="3" />
+        <mark key="." line="52" column="3" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/test/test_kdbplus_client.py" timestamp="1483014659827">
+        <mark key="'" line="3" column="22" />
+        <mark key="[" line="157" column="0" />
+        <mark key="]" line="157" column="0" />
+        <mark key="^" line="153" column="29" />
+        <mark key="." line="157" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/sql_client.py" timestamp="1483022077475">
         <mark key="[" line="90" column="0" />
@@ -48,11 +76,39 @@
         <mark key="." line="24" column="45" />
         <mark key="^" line="24" column="45" />
       </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket.py" timestamp="1482964649468">
+        <mark key="'" line="76" column="23" />
+        <mark key="[" line="74" column="33" />
+        <mark key="]" line="75" column="97" />
+        <mark key="." line="75" column="97" />
+        <mark key="^" line="75" column="97" />
+      </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/requirement.txt" timestamp="1483056296620">
         <mark key="[" line="3" column="22" />
         <mark key="]" line="4" column="4" />
         <mark key="^" line="4" column="4" />
         <mark key="." line="4" column="4" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" timestamp="1483020462836">
+        <mark key="'" line="70" column="9" />
+        <mark key="[" line="4" column="10" />
+        <mark key="]" line="4" column="10" />
+        <mark key="^" line="4" column="10" />
+        <mark key="." line="4" column="10" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/market_data.py" timestamp="1482965916910">
+        <mark key="'" line="33" column="12" />
+        <mark key="[" line="235" column="77" />
+        <mark key="]" line="235" column="77" />
+        <mark key="^" line="245" column="61" />
+        <mark key="." line="235" column="77" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitfinex.py" timestamp="1483020940682">
+        <mark key="'" line="27" column="8" />
+        <mark key="[" line="147" column="35" />
+        <mark key="]" line="147" column="35" />
+        <mark key="^" line="147" column="35" />
+        <mark key="." line="147" column="35" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/pipe_factory.py" timestamp="1483321957298">
         <mark key="'" line="30" column="11" />
@@ -67,12 +123,12 @@
         <mark key="." line="77" column="21" />
         <mark key="^" line="77" column="21" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/ticktickbacktest.py" timestamp="1483322787698">
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/ticktickbacktest.py" timestamp="1483324708320">
         <mark key="'" line="1" column="40" />
-        <mark key="[" line="50" column="39" />
-        <mark key="]" line="50" column="57" />
-        <mark key="." line="50" column="57" />
-        <mark key="^" line="50" column="57" />
+        <mark key="[" line="61" column="64" />
+        <mark key="]" line="61" column="64" />
+        <mark key="." line="61" column="64" />
+        <mark key="^" line="61" column="64" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/file_client.py" timestamp="1483021639403">
         <mark key="'" line="114" column="8" />
@@ -93,6 +149,13 @@
         <mark key="." line="11" column="57" />
         <mark key="^" line="11" column="57" />
       </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_gdax.py" timestamp="1482964331253">
+        <mark key="'" line="0" column="0" />
+        <mark key="[" line="226" column="63" />
+        <mark key="]" line="226" column="64" />
+        <mark key="." line="226" column="64" />
+        <mark key="^" line="226" column="64" />
+      </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" timestamp="1483017753341">
         <mark key="'" line="303" column="36" />
         <mark key="[" line="301" column="58" />
@@ -100,7 +163,14 @@
         <mark key="^" line="301" column="67" />
         <mark key="." line="301" column="67" />
       </file>
-      <file name="/Python Console" timestamp="1483322790098">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_okcoin.py" timestamp="1483020688125">
+        <mark key="'" line="149" column="46" />
+        <mark key="[" line="93" column="35" />
+        <mark key="]" line="93" column="35" />
+        <mark key="." line="93" column="35" />
+        <mark key="^" line="93" column="35" />
+      </file>
+      <file name="/Python Console" timestamp="1483324741250">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/order.py" timestamp="1483105862579">
@@ -109,11 +179,11 @@
         <mark key="." line="13" column="24" />
         <mark key="^" line="13" column="36" />
       </file>
-      <file name="/fragment.py" timestamp="1483321978893">
+      <file name="/fragment.py" timestamp="1483324485489">
         <mark key="'" line="0" column="23" />
-        <mark key="[" line="0" column="0" />
-        <mark key="]" line="0" column="34" />
-        <mark key="." line="0" column="34" />
+        <mark key="[" line="0" column="15" />
+        <mark key="]" line="0" column="15" />
+        <mark key="." line="0" column="15" />
         <mark key="^" line="0" column="8" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/strategy.py" timestamp="1483106099856">
@@ -129,11 +199,25 @@
         <mark key="." line="21" column="33" />
         <mark key="^" line="21" column="33" />
       </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" timestamp="1482964697071">
+        <mark key="'" line="94" column="26" />
+        <mark key="[" line="182" column="63" />
+        <mark key="]" line="182" column="64" />
+        <mark key="." line="182" column="64" />
+        <mark key="^" line="182" column="64" />
+      </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/util.py" timestamp="1480848134126">
         <mark key="[" line="16" column="11" />
         <mark key="]" line="16" column="25" />
         <mark key="." line="16" column="25" />
         <mark key="^" line="16" column="25" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_poloniex.py" timestamp="1480510650366">
+        <mark key="'" line="2" column="0" />
+        <mark key="[" line="150" column="16" />
+        <mark key="]" line="150" column="24" />
+        <mark key="." line="150" column="24" />
+        <mark key="^" line="150" column="24" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exchange.py" timestamp="1483021625720">
         <mark key="[" line="231" column="65" />
@@ -141,12 +225,26 @@
         <mark key="^" line="232" column="61" />
         <mark key="." line="232" column="61" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/market_data.py" timestamp="1483323746681">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/instrument.py" timestamp="1480842028394">
+        <mark key="'" line="95" column="44" />
+        <mark key="[" line="77" column="37" />
+        <mark key="]" line="77" column="54" />
+        <mark key="^" line="77" column="18" />
+        <mark key="." line="77" column="37" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/market_data.py" timestamp="1483324431729">
         <mark key="'" line="0" column="0" />
-        <mark key="[" line="155" column="17" />
-        <mark key="]" line="155" column="26" />
-        <mark key="." line="155" column="26" />
-        <mark key="^" line="155" column="26" />
+        <mark key="[" line="60" column="0" />
+        <mark key="]" line="60" column="0" />
+        <mark key="." line="60" column="0" />
+        <mark key="^" line="59" column="34" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_ws_template.py" timestamp="1482150295873">
+        <mark key="'" line="0" column="0" />
+        <mark key="[" line="173" column="0" />
+        <mark key="]" line="174" column="74" />
+        <mark key="." line="218" column="0" />
+        <mark key="^" line="217" column="58" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/config.ini" timestamp="1482155093067">
         <mark key="[" line="2" column="0" />
@@ -161,11 +259,18 @@
         <mark key="." line="178" column="23" />
         <mark key="^" line="178" column="23" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/backtest_machine.py" timestamp="1483323156402">
-        <mark key="[" line="12" column="19" />
-        <mark key="]" line="12" column="18" />
-        <mark key="." line="12" column="18" />
-        <mark key="^" line="12" column="18" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/backtest_machine.py" timestamp="1483324734793">
+        <mark key="[" line="70" column="0" />
+        <mark key="]" line="70" column="0" />
+        <mark key="." line="70" column="0" />
+        <mark key="^" line="67" column="22" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/test/test_file_client.py" timestamp="1481153644877">
+        <mark key="'" line="111" column="0" />
+        <mark key="[" line="110" column="8" />
+        <mark key="]" line="110" column="8" />
+        <mark key="^" line="105" column="39" />
+        <mark key="." line="110" column="8" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/.gitignore" timestamp="1482155117814">
         <mark key="[" line="91" column="6" />
@@ -175,6 +280,20 @@
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/.gitignore" timestamp="1481644678099">
         <mark key="[" line="2" column="0" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_huobi.py" timestamp="1482964716989">
+        <mark key="'" line="180" column="16" />
+        <mark key="[" line="200" column="63" />
+        <mark key="]" line="200" column="64" />
+        <mark key="^" line="200" column="64" />
+        <mark key="." line="200" column="64" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/sql_client.py" timestamp="1480519246204">
+        <mark key="'" line="111" column="23" />
+        <mark key="[" line="14" column="36" />
+        <mark key="]" line="15" column="27" />
+        <mark key="." line="15" column="27" />
+        <mark key="^" line="15" column="27" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/data_pipe.py" timestamp="1483101547579">
         <mark key="[" line="5" column="11" />
@@ -286,8 +405,8 @@
       <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/market_data.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="4">
-        <text>__getattribute__(key) = data_dict[key]</text>
+      <register name="&quot;" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgcGFzcwo=</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1501,40 +1620,40 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>__getattribute__(key) = data_dict[key]</text>
+        <text>key, row))</text>
       </register>
       <register name="/" type="4">
         <text>enabled = 0</text>
       </register>
       <register name="0" type="2">
-        <text encoding="base64">ICAgICMgZm9yIGkgaW4gcmFuZ2UoMCwgMTAwKToKICAgICMgICAgIGtleSwgcm93ID0gcGlwZV9mYWN0b3J5LnBvcF9uZXh0KCkKICAgICMgICAgIGxvZ2dlci5pbmZvKCclZDogJXMgLSBOZXh0ID0gJXMnICUgKGksIGtleSwgcm93KSkK</text>
+        <text encoding="base64">ICAgICAgICAgICAgdXBkYXRlX3R5cGUgPSBCYWNrdGVzdE1hY2hpbmUuVXBkYXRlVHlwZS5ERVBUSAo=</text>
       </register>
-      <register name="1" type="4">
-        <text encoding="base64">IyEvYmluL3B5dGhvbgpmcm9tIGRhdGV0aW1lIGltcG9ydCBkYXRldGltZQppbXBvcnQgY29weQoKCmNsYXNzIE1hcmtldERhdGFCYXNlOgogICAgIiIiCiAgICBBYnN0cmFjdCBjbGFzcyBvZiBhIG1hcmtldCBkYXRhCiAgICAiIiIKICAgIGNsYXNzIFNpZGU6CiAgICAgICAgTk9ORSA9IDAKICAgICAgICBCVVkgPSAxCiAgICAgICAgU0VMTCA9IDIKCiAgICBjbGFzcyBEZXB0aChvYmplY3QpOgogICAgICAgIGRlZiBfX2luaXRfXyhzZWxmLCBwcmljZT0wLjAsIGNvdW50PTAsIHZvbHVtZT0wLjApOgogICAgICAgICAgICAiIiIKICAgICAgICAgICAgQ29uc3RydWN0b3IKICAgICAgICAgICAgIiIiCiAgICAgICAgICAgIHNlbGYucHJpY2UgPSBwcmljZQogICAgICAgICAgICBzZWxmLmNvdW50ID0gY291bnQKICAgICAgICAgICAgc2VsZi52b2x1bWUgPSB2b2x1bWUKCiAgICAgICAgZGVmIGNvcHkoc2VsZik6CiAgICAgICAgICAgIHJldHVybiBjb3B5LmRlZXBjb3B5KHNlbGYpCgogICAgQHN0YXRpY21ldGhvZAogICAgZGVmIHBhcnNlX3NpZGUodmFsdWUpOgogICAgICAgICIiIgogICAgICAgIERlY29kZSB0aGUgdmFsdWUgdG8gU2lkZSAoQlVZL1NFTEwpCiAgICAgICAgOnBhcmFtIHZhbHVlOiBJbnRlZ2VyIG9yIHN0cmluZwogICAgICAgIDpyZXR1cm46IFNpZGUgKE5PTkUsIEJVWSwgU0VMTCkKICAgICAgICAiIiIKICAgICAgICBpZiB0eXBlKHZhbHVlKSAhPSBpbnQ6CiAgICAgICAgICAgIHZhbHVlID0gdmFsdWUubG93ZXIoKQogICAgICAgICAgICBpZiB2YWx1ZSA9PSAnYnV5JyBvciB2YWx1ZSA9PSAnYmlkJzoKICAgICAgICAgICAgICAgIHJldHVybiBNYXJrZXREYXRhQmFzZS5TaWRlLkJVWQogICAgICAgICAgICBlbGlmIHZhbHVlID09ICdzZWxsJyBvciB2YWx1ZSA9PSAnYXNrJzoKICAgICAgICAgICAgICAgIHJldHVybiBNYXJrZXREYXRhQmFzZS5TaWRlLlNFTEwKICAgICAgICAgICAgZWxzZToKICAgICAgICAgICAgICAgIHJldHVybiBNYXJrZXREYXRhQmFzZS5TaWRlLk5PTkUKCiAgICAgICAgaWYgdmFsdWUgPT0gMToKICAgICAgICAgICAgcmV0dXJuIE1hcmtldERhdGFCYXNlLlNpZGUuQlVZCiAgICAgICAgZWxpZiB2YWx1ZSA9PSAyOgogICAgICAgICAgICByZXR1cm4gTWFya2V0RGF0YUJhc2UuU2lkZS5TRUxMCiAgICAgICAgZWxzZToKICAgICAgICAgICAgcmV0dXJuIE1hcmtldERhdGFCYXNlLlNpZGUuTk9ORQoKICAgIGRlZiBfX2luaXRfXyhzZWxmKToKICAgICAgICAiIiIKICAgICAgICBDb25zdHJ1Y3RvcgogICAgICAgICIiIgogICAgICAgIHBhc3MKCgpjbGFzcyBMMkRlcHRoKE1hcmtldERhdGFCYXNlKToKICAgICIiIgogICAgTDIgcHJpY2UgZGVwdGguIENvbnRhaW5lciBvZiBkYXRlLCB0aW1lLCBiaWQgYW5kIGFzayB1cCB0byA1IGxldmVscwogICAgIiIiCiAgICBkZWYgX19pbml0X18oc2VsZiwgZGVwdGg9NSk6CiAgICAgICAgIiIiCiAgICAgICAgQ29uc3RydWN0b3IKICAgICAgICA6cGFyYW0gZGVwdGg6IE51bWJlciBvZiBkZXB0aAogICAgICAgICIiIgogICAgICAgIE1hcmtldERhdGFCYXNlLl9faW5pdF9fKHNlbGYpCiAgICAgICAgc2VsZi5kYXRlX3RpbWUgPSBkYXRldGltZS51dGNub3coKS5zdHJmdGltZSgiJVklbSVkICVIOiVNOiVTLiVmIikKICAgICAgICBzZWxmLmRlcHRoID0gZGVwdGgKICAgICAgICBzZWxmLmJpZHMgPSBbTWFya2V0RGF0YUJhc2UuRGVwdGgoKSBmb3IgaSBpbiByYW5nZSgwLCBzZWxmLmRlcHRoKV0KICAgICAgICBzZWxmLmFza3MgPSBbTWFya2V0RGF0YUJhc2UuRGVwdGgoKSBmb3IgaSBpbiByYW5nZSgwLCBzZWxmLmRlcHRoKV0KCiAgICBAc3RhdGljbWV0aG9kCiAgICBkZWYgY29sdW1ucygpOgogICAgICAgICIiIgogICAgICAgIFJldHVybiBzdGF0aWMgY29sdW1ucyBuYW1lcwogICAgICAgICIiIgogICAgICAgIHJldHVybiBbJ2RhdGVfdGltZScsCiAgICAgICAgICAgICAgICAnYjEnLCAnYjInLCAnYjMnLCAnYjQnLCAnYjUnLAogICAgICAgICAgICAgICAgJ2ExJywgJ2EyJywgJ2EzJywgJ2E0JywgJ2E1JywKICAgICAgICAgICAgICAgICdicTEnLCAnYnEyJywgJ2JxMycsICdicTQnLCAnYnE1JywKICAgICAgICAgICAgICAgICdhcTEnLCAnYXEyJywgJ2FxMycsICdhcTQnLCAnYXE1J10KCiAgICBAc3RhdGljbWV0aG9kCiAgICBkZWYgdHlwZXMoKToKICAgICAgICAiIiIKICAgICAgICBSZXR1cm4gc3RhdGljIGNvbHVtbiB0eXBlcwogICAgICAgICIiIgogICAgICAgIHJldHVybiBbJ3RleHQnXSArIFwKICAgICAgICAgICAgICAgWydkZWNpbWFsKDEwLDUpJ10gKiAxMCArIFwKICAgICAgICAgICAgICAgWydkZWNpbWFsKDIwLDgpJ10gKiAxMAoKICAgIGRlZiB2YWx1ZXMoc2VsZik6CiAgICAgICAgIiIiCiAgICAgICAgUmV0dXJuIHZhbHVlcyBpbiBhIGxpc3QKICAgICAgICAiIiIKICAgICAgICBpZiBzZWxmLmRlcHRoID09IDU6CiAgICAgICAgICAgIHJldHVybiBbc2VsZi5kYXRlX3RpbWVdICsgXAogICAgICAgICAgICAgICAgICAgW2IucHJpY2UgZm9yIGIgaW4gc2VsZi5iaWRzXSArIFwKICAgICAgICAgICAgICAgICAgIFthLnByaWNlIGZvciBhIGluIHNlbGYuYXNrc10gKyBcCiAgICAgICAgICAgICAgICAgICBbYi52b2x1bWUgZm9yIGIgaW4gc2VsZi5iaWRzXSArIFwKICAgICAgICAgICAgICAgICAgIFthLnZvbHVtZSBmb3IgYSBpbiBzZWxmLmFza3NdCiAgICAgICAgZWxzZToKICAgICAgICAgICAgcmV0dXJuIFtzZWxmLmRhdGVfdGltZV0gKyBcCiAgICAgICAgICAgICAgICAgICBbYi5wcmljZSBmb3IgYiBpbiBzZWxmLmJpZHNbMDo1XV0gKyBcCiAgICAgICAgICAgICAgICAgICBbYS5wcmljZSBmb3IgYSBpbiBzZWxmLmFza3NbMDo1XV0gKyBcCiAgICAgICAgICAgICAgICAgICBbYi52b2x1bWUgZm9yIGIgaW4gc2VsZi5iaWRzWzA6NV1dICsgXAogICAgICAgICAgICAgICAgICAgW2Eudm9sdW1lIGZvciBhIGluIHNlbGYuYXNrc1swOjVdXQoKICAgIGRlZiBzb3J0X2JpZHMoc2VsZik6CiAgICAgICAgIiIiCiAgICAgICAgU29ydGluZyBiaWRzCiAgICAgICAgOnJldHVybjoKICAgICAgICAiIiIKICAgICAgICBzZWxmLmJpZHMuc29ydChrZXk9bGFtYmRhIHg6eC5wcmljZSwgcmV2ZXJzZT1UcnVlKQogICAgICAgIGlmIGxlbihzZWxmLmJpZHMpID4gc2VsZi5kZXB0aDoKICAgICAgICAgICAgc2VsZi5iaWRzID0gc2VsZi5iaWRzWzA6c2VsZi5kZXB0aF0KCiAgICBkZWYgc29ydF9hc2tzKHNlbGYpOgogICAgICAgICIiIgogICAgICAgIFNvcnRpbmcgYmlkcwogICAgICAgIDpyZXR1cm46CiAgICAgICAgIiIiCiAgICAgICAgc2VsZi5hc2tzLnNvcnQoa2V5PWxhbWJkYSB4OngucHJpY2UpCiAgICAgICAgaWYgbGVuKHNlbGYuYXNrcykgPiBzZWxmLmRlcHRoOgogICAgICAgICAgICBzZWxmLmFza3MgPSBzZWxmLmFza3NbMDpzZWxmLmRlcHRoXQoKICAgIGRlZiBjb3B5KHNlbGYpOgogICAgICAgICIiIgogICAgICAgIENvcHkKICAgICAgICAiIiIKICAgICAgICByZXR1cm4gY29weS5kZWVwY29weShzZWxmKQoKICAgIGRlZiBpc19kaWZmKHNlbGYsIGwyX2RlcHRoKToKICAgICAgICAiIiIKICAgICAgICBDb21wYXJlIHRoZSBmaXJzdCA1IHByaWNlIGRlcHRoCiAgICAgICAgOnBhcmFtIGwyX2RlcHRoOiBBbm90aGVyIEwyRGVwdGggb2JqZWN0CiAgICAgICAgOnJldHVybjogVHJ1ZSBpZiB0aGV5IGFyZSBkaWZmZXJlbnQKICAgICAgICAiIiIKICAgICAgICBmb3IgaSBpbiByYW5nZSgwLCA1KToKICAgICAgICAgICAgaWYgc2VsZi5iaWRzW2ldLnByaWNlICE9IGwyX2RlcHRoLmJpZHNbaV0ucHJpY2Ugb3IgXAogICAgICAgICAgICAgICBzZWxmLmJpZHNbaV0udm9sdW1lICE9IGwyX2RlcHRoLmJpZHNbaV0udm9sdW1lOgogICAgICAgICAgICAgICAgcmV0dXJuIFRydWUKICAgICAgICAgICAgZWxpZiBzZWxmLmFza3NbaV0ucHJpY2UgIT0gbDJfZGVwdGguYXNrc1tpXS5wcmljZSBvciBcCiAgICAgICAgICAgICAgICBzZWxmLmFza3NbaV0udm9sdW1lICE9IGwyX2RlcHRoLmFza3NbaV0udm9sdW1lOgogICAgICAgICAgICAgICAgcmV0dXJuIFRydWUKICAgICAgICByZXR1cm4gRmFsc2UKCmNsYXNzIFRyYWRlKE1hcmtldERhdGFCYXNlKToKICAgICIiIgogICAgVHJhZGUuIENvbnRhaW5lciBvZiBkYXRlLCB0aW1lLCB0cmFkZSBwcmljZSwgdm9sdW1lIGFuZCBzaWRlLgogICAgIiIiCiAgICBkZWYgX19pbml0X18oc2VsZik6CiAgICAgICAgIiIiCiAgICAgICAgQ29uc3RydWN0b3IKICAgICAgICA6cGFyYW0gZXhjaDogRXhjaGFuZ2UgbmFtZQogICAgICAgIDpwYXJhbSBpbnN0bXQ6IEluc3RydW1lbnQgbmFtZQogICAgICAgIDpwYXJhbSBkZWZhdWx0X2Zvcm1hdDogRGVmYXVsdCBkYXRlIHRpbWUgZm9ybWF0CiAgICAgICAgIiIiCiAgICAgICAgTWFya2V0RGF0YUJhc2UuX19pbml0X18oc2VsZikKICAgICAgICBzZWxmLmRhdGVfdGltZSA9IGRhdGV0aW1lLnV0Y25vdygpLnN0cmZ0aW1lKCIlWSVtJWQgJUg6JU06JVMuJWYiKQogICAgICAgIHNlbGYudHJhZGVfaWQgPSAnJwogICAgICAgIHNlbGYudHJhZGVfcHJpY2UgPSAwLjAKICAgICAgICBzZWxmLnRyYWRlX3ZvbHVtZSA9IDAuMAogICAgICAgIHNlbGYudHJhZGVfc2lkZSA9IE1hcmtldERhdGFCYXNlLlNpZGUuTk9ORQogICAgICAgIHNlbGYudXBkYXRlX2RhdGVfdGltZSA9IGRhdGV0aW1lLnV0Y25vdygpCgoKICAgIEBzdGF0aWNtZXRob2QKICAgIGRlZiBjb2x1bW5zKCk6CiAgICAgICAgIiIiCiAgICAgICAgUmV0dXJuIHN0YXRpYyBjb2x1bW5zIG5hbWVzCiAgICAgICAgIiIiCiAgICAgICAgcmV0dXJuIFsnZGF0ZV90aW1lJywgJ3RyYWRlX2lkJywgJ3RyYWRlX3ByaWNlJywgJ3RyYWRlX3ZvbHVtZScsICd0cmFkZV9zaWRlJ10KCiAgICBAc3RhdGljbWV0aG9kCiAgICBkZWYgdHlwZXMoKToKICAgICAgICAiIiIKICAgICAgICBSZXR1cm4gc3RhdGljIGNvbHVtbiB0eXBlcwogICAgICAgICIiIgogICAgICAgIHJldHVybiBbJ3RleHQnLCAndGV4dCcsICdkZWNpbWFsKDEwLDUpJywgJ2RlY2ltYWwoMjAsOCknLCAndGV4dCddCgogICAgZGVmIHZhbHVlcyhzZWxmKToKICAgICAgICAiIiIKICAgICAgICBSZXR1cm4gdmFsdWVzIGluIGEgbGlzdAogICAgICAgICIiIgogICAgICAgIHJldHVybiBbc2VsZi5kYXRlX3RpbWVdICsgXAogICAgICAgICAgICAgICBbc2VsZi50cmFkZV9pZF0gKyBbc2VsZi50cmFkZV9wcmljZV0gKyBbc2VsZi50cmFkZV92b2x1bWVdICsgW3NlbGYudHJhZGVfc2lkZV0=</text>
+      <register name="1" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgcGFzcwo=</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgaW5zdG10LmwyX2RlcHRoLnVwZGF0ZShyb3cpCg==</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgIGRlZiBwcmVwYXJlX2V4Y2hhbmdlcyhzZWxmKToKICAgICAgICBwYXNzCg==</text>
-      </register>
-      <register name="4" type="2">
         <text encoding="base64">ICAgICAgICA6cmV0dXJuOiAK</text>
       </register>
+      <register name="4" type="2">
+        <text encoding="base64">ICAgIGRlZiB1cGRhdGUoc2VsZiwgZGF0YV9kaWN0KToKICAgICAgICBmb3Iga2V5IGluIHNlbGYuY29sdW1ucygpOgogICAgICAgICAgICBzZWxmLl9fc2V0YXR0cl9fKGtleSwgZGF0YV9kaWN0W2tleV0pCg==</text>
+      </register>
       <register name="5" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgIyBpbnN0bXQubDJfZGVwdGguCg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgcGFzcwo=</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICByZXR1cm4ga2V5LCByb3cK</text>
-      </register>
-      <register name="7" type="2">
         <text encoding="base64">Cg==</text>
       </register>
-      <register name="8" type="8">
-        <text encoding="base64">IyAKIyAKIyA=</text>
+      <register name="7" type="4">
+        <text encoding="base64">IyEvYmluL3B5dGhvbgpmcm9tIGRhdGV0aW1lIGltcG9ydCBkYXRldGltZQppbXBvcnQgY29weQoKCmNsYXNzIE1hcmtldERhdGFCYXNlOgogICAgIiIiCiAgICBBYnN0cmFjdCBjbGFzcyBvZiBhIG1hcmtldCBkYXRhCiAgICAiIiIKICAgIGNsYXNzIFNpZGU6CiAgICAgICAgTk9ORSA9IDAKICAgICAgICBCVVkgPSAxCiAgICAgICAgU0VMTCA9IDIKCiAgICBjbGFzcyBEZXB0aChvYmplY3QpOgogICAgICAgIGRlZiBfX2luaXRfXyhzZWxmLCBwcmljZT0wLjAsIGNvdW50PTAsIHZvbHVtZT0wLjApOgogICAgICAgICAgICAiIiIKICAgICAgICAgICAgQ29uc3RydWN0b3IKICAgICAgICAgICAgIiIiCiAgICAgICAgICAgIHNlbGYucHJpY2UgPSBwcmljZQogICAgICAgICAgICBzZWxmLmNvdW50ID0gY291bnQKICAgICAgICAgICAgc2VsZi52b2x1bWUgPSB2b2x1bWUKCiAgICAgICAgZGVmIGNvcHkoc2VsZik6CiAgICAgICAgICAgIHJldHVybiBjb3B5LmRlZXBjb3B5KHNlbGYpCgogICAgQHN0YXRpY21ldGhvZAogICAgZGVmIHBhcnNlX3NpZGUodmFsdWUpOgogICAgICAgICIiIgogICAgICAgIERlY29kZSB0aGUgdmFsdWUgdG8gU2lkZSAoQlVZL1NFTEwpCiAgICAgICAgOnBhcmFtIHZhbHVlOiBJbnRlZ2VyIG9yIHN0cmluZwogICAgICAgIDpyZXR1cm46IFNpZGUgKE5PTkUsIEJVWSwgU0VMTCkKICAgICAgICAiIiIKICAgICAgICBpZiB0eXBlKHZhbHVlKSAhPSBpbnQ6CiAgICAgICAgICAgIHZhbHVlID0gdmFsdWUubG93ZXIoKQogICAgICAgICAgICBpZiB2YWx1ZSA9PSAnYnV5JyBvciB2YWx1ZSA9PSAnYmlkJzoKICAgICAgICAgICAgICAgIHJldHVybiBNYXJrZXREYXRhQmFzZS5TaWRlLkJVWQogICAgICAgICAgICBlbGlmIHZhbHVlID09ICdzZWxsJyBvciB2YWx1ZSA9PSAnYXNrJzoKICAgICAgICAgICAgICAgIHJldHVybiBNYXJrZXREYXRhQmFzZS5TaWRlLlNFTEwKICAgICAgICAgICAgZWxzZToKICAgICAgICAgICAgICAgIHJldHVybiBNYXJrZXREYXRhQmFzZS5TaWRlLk5PTkUKCiAgICAgICAgaWYgdmFsdWUgPT0gMToKICAgICAgICAgICAgcmV0dXJuIE1hcmtldERhdGFCYXNlLlNpZGUuQlVZCiAgICAgICAgZWxpZiB2YWx1ZSA9PSAyOgogICAgICAgICAgICByZXR1cm4gTWFya2V0RGF0YUJhc2UuU2lkZS5TRUxMCiAgICAgICAgZWxzZToKICAgICAgICAgICAgcmV0dXJuIE1hcmtldERhdGFCYXNlLlNpZGUuTk9ORQoKICAgIGRlZiBfX2luaXRfXyhzZWxmKToKICAgICAgICAiIiIKICAgICAgICBDb25zdHJ1Y3RvcgogICAgICAgICIiIgogICAgICAgIHBhc3MKCgpjbGFzcyBMMkRlcHRoKE1hcmtldERhdGFCYXNlKToKICAgICIiIgogICAgTDIgcHJpY2UgZGVwdGguIENvbnRhaW5lciBvZiBkYXRlLCB0aW1lLCBiaWQgYW5kIGFzayB1cCB0byA1IGxldmVscwogICAgIiIiCiAgICBkZWYgX19pbml0X18oc2VsZiwgZGVwdGg9NSk6CiAgICAgICAgIiIiCiAgICAgICAgQ29uc3RydWN0b3IKICAgICAgICA6cGFyYW0gZGVwdGg6IE51bWJlciBvZiBkZXB0aAogICAgICAgICIiIgogICAgICAgIE1hcmtldERhdGFCYXNlLl9faW5pdF9fKHNlbGYpCiAgICAgICAgc2VsZi5kYXRlX3RpbWUgPSBkYXRldGltZS51dGNub3coKS5zdHJmdGltZSgiJVklbSVkICVIOiVNOiVTLiVmIikKICAgICAgICBzZWxmLmRlcHRoID0gZGVwdGgKICAgICAgICBzZWxmLmJpZHMgPSBbTWFya2V0RGF0YUJhc2UuRGVwdGgoKSBmb3IgaSBpbiByYW5nZSgwLCBzZWxmLmRlcHRoKV0KICAgICAgICBzZWxmLmFza3MgPSBbTWFya2V0RGF0YUJhc2UuRGVwdGgoKSBmb3IgaSBpbiByYW5nZSgwLCBzZWxmLmRlcHRoKV0KCiAgICBAc3RhdGljbWV0aG9kCiAgICBkZWYgY29sdW1ucygpOgogICAgICAgICIiIgogICAgICAgIFJldHVybiBzdGF0aWMgY29sdW1ucyBuYW1lcwogICAgICAgICIiIgogICAgICAgIHJldHVybiBbJ2RhdGVfdGltZScsCiAgICAgICAgICAgICAgICAnYjEnLCAnYjInLCAnYjMnLCAnYjQnLCAnYjUnLAogICAgICAgICAgICAgICAgJ2ExJywgJ2EyJywgJ2EzJywgJ2E0JywgJ2E1JywKICAgICAgICAgICAgICAgICdicTEnLCAnYnEyJywgJ2JxMycsICdicTQnLCAnYnE1JywKICAgICAgICAgICAgICAgICdhcTEnLCAnYXEyJywgJ2FxMycsICdhcTQnLCAnYXE1J10KCiAgICBAc3RhdGljbWV0aG9kCiAgICBkZWYgdHlwZXMoKToKICAgICAgICAiIiIKICAgICAgICBSZXR1cm4gc3RhdGljIGNvbHVtbiB0eXBlcwogICAgICAgICIiIgogICAgICAgIHJldHVybiBbJ3RleHQnXSArIFwKICAgICAgICAgICAgICAgWydkZWNpbWFsKDEwLDUpJ10gKiAxMCArIFwKICAgICAgICAgICAgICAgWydkZWNpbWFsKDIwLDgpJ10gKiAxMAoKICAgIGRlZiB2YWx1ZXMoc2VsZik6CiAgICAgICAgIiIiCiAgICAgICAgUmV0dXJuIHZhbHVlcyBpbiBhIGxpc3QKICAgICAgICAiIiIKICAgICAgICBpZiBzZWxmLmRlcHRoID09IDU6CiAgICAgICAgICAgIHJldHVybiBbc2VsZi5kYXRlX3RpbWVdICsgXAogICAgICAgICAgICAgICAgICAgW2IucHJpY2UgZm9yIGIgaW4gc2VsZi5iaWRzXSArIFwKICAgICAgICAgICAgICAgICAgIFthLnByaWNlIGZvciBhIGluIHNlbGYuYXNrc10gKyBcCiAgICAgICAgICAgICAgICAgICBbYi52b2x1bWUgZm9yIGIgaW4gc2VsZi5iaWRzXSArIFwKICAgICAgICAgICAgICAgICAgIFthLnZvbHVtZSBmb3IgYSBpbiBzZWxmLmFza3NdCiAgICAgICAgZWxzZToKICAgICAgICAgICAgcmV0dXJuIFtzZWxmLmRhdGVfdGltZV0gKyBcCiAgICAgICAgICAgICAgICAgICBbYi5wcmljZSBmb3IgYiBpbiBzZWxmLmJpZHNbMDo1XV0gKyBcCiAgICAgICAgICAgICAgICAgICBbYS5wcmljZSBmb3IgYSBpbiBzZWxmLmFza3NbMDo1XV0gKyBcCiAgICAgICAgICAgICAgICAgICBbYi52b2x1bWUgZm9yIGIgaW4gc2VsZi5iaWRzWzA6NV1dICsgXAogICAgICAgICAgICAgICAgICAgW2Eudm9sdW1lIGZvciBhIGluIHNlbGYuYXNrc1swOjVdXQoKICAgIGRlZiBzb3J0X2JpZHMoc2VsZik6CiAgICAgICAgIiIiCiAgICAgICAgU29ydGluZyBiaWRzCiAgICAgICAgOnJldHVybjoKICAgICAgICAiIiIKICAgICAgICBzZWxmLmJpZHMuc29ydChrZXk9bGFtYmRhIHg6eC5wcmljZSwgcmV2ZXJzZT1UcnVlKQogICAgICAgIGlmIGxlbihzZWxmLmJpZHMpID4gc2VsZi5kZXB0aDoKICAgICAgICAgICAgc2VsZi5iaWRzID0gc2VsZi5iaWRzWzA6c2VsZi5kZXB0aF0KCiAgICBkZWYgc29ydF9hc2tzKHNlbGYpOgogICAgICAgICIiIgogICAgICAgIFNvcnRpbmcgYmlkcwogICAgICAgIDpyZXR1cm46CiAgICAgICAgIiIiCiAgICAgICAgc2VsZi5hc2tzLnNvcnQoa2V5PWxhbWJkYSB4OngucHJpY2UpCiAgICAgICAgaWYgbGVuKHNlbGYuYXNrcykgPiBzZWxmLmRlcHRoOgogICAgICAgICAgICBzZWxmLmFza3MgPSBzZWxmLmFza3NbMDpzZWxmLmRlcHRoXQoKICAgIGRlZiBjb3B5KHNlbGYpOgogICAgICAgICIiIgogICAgICAgIENvcHkKICAgICAgICAiIiIKICAgICAgICByZXR1cm4gY29weS5kZWVwY29weShzZWxmKQoKICAgIGRlZiBpc19kaWZmKHNlbGYsIGwyX2RlcHRoKToKICAgICAgICAiIiIKICAgICAgICBDb21wYXJlIHRoZSBmaXJzdCA1IHByaWNlIGRlcHRoCiAgICAgICAgOnBhcmFtIGwyX2RlcHRoOiBBbm90aGVyIEwyRGVwdGggb2JqZWN0CiAgICAgICAgOnJldHVybjogVHJ1ZSBpZiB0aGV5IGFyZSBkaWZmZXJlbnQKICAgICAgICAiIiIKICAgICAgICBmb3IgaSBpbiByYW5nZSgwLCA1KToKICAgICAgICAgICAgaWYgc2VsZi5iaWRzW2ldLnByaWNlICE9IGwyX2RlcHRoLmJpZHNbaV0ucHJpY2Ugb3IgXAogICAgICAgICAgICAgICBzZWxmLmJpZHNbaV0udm9sdW1lICE9IGwyX2RlcHRoLmJpZHNbaV0udm9sdW1lOgogICAgICAgICAgICAgICAgcmV0dXJuIFRydWUKICAgICAgICAgICAgZWxpZiBzZWxmLmFza3NbaV0ucHJpY2UgIT0gbDJfZGVwdGguYXNrc1tpXS5wcmljZSBvciBcCiAgICAgICAgICAgICAgICBzZWxmLmFza3NbaV0udm9sdW1lICE9IGwyX2RlcHRoLmFza3NbaV0udm9sdW1lOgogICAgICAgICAgICAgICAgcmV0dXJuIFRydWUKICAgICAgICByZXR1cm4gRmFsc2UKCmNsYXNzIFRyYWRlKE1hcmtldERhdGFCYXNlKToKICAgICIiIgogICAgVHJhZGUuIENvbnRhaW5lciBvZiBkYXRlLCB0aW1lLCB0cmFkZSBwcmljZSwgdm9sdW1lIGFuZCBzaWRlLgogICAgIiIiCiAgICBkZWYgX19pbml0X18oc2VsZik6CiAgICAgICAgIiIiCiAgICAgICAgQ29uc3RydWN0b3IKICAgICAgICA6cGFyYW0gZXhjaDogRXhjaGFuZ2UgbmFtZQogICAgICAgIDpwYXJhbSBpbnN0bXQ6IEluc3RydW1lbnQgbmFtZQogICAgICAgIDpwYXJhbSBkZWZhdWx0X2Zvcm1hdDogRGVmYXVsdCBkYXRlIHRpbWUgZm9ybWF0CiAgICAgICAgIiIiCiAgICAgICAgTWFya2V0RGF0YUJhc2UuX19pbml0X18oc2VsZikKICAgICAgICBzZWxmLmRhdGVfdGltZSA9IGRhdGV0aW1lLnV0Y25vdygpLnN0cmZ0aW1lKCIlWSVtJWQgJUg6JU06JVMuJWYiKQogICAgICAgIHNlbGYudHJhZGVfaWQgPSAnJwogICAgICAgIHNlbGYudHJhZGVfcHJpY2UgPSAwLjAKICAgICAgICBzZWxmLnRyYWRlX3ZvbHVtZSA9IDAuMAogICAgICAgIHNlbGYudHJhZGVfc2lkZSA9IE1hcmtldERhdGFCYXNlLlNpZGUuTk9ORQogICAgICAgIHNlbGYudXBkYXRlX2RhdGVfdGltZSA9IGRhdGV0aW1lLnV0Y25vdygpCgoKICAgIEBzdGF0aWNtZXRob2QKICAgIGRlZiBjb2x1bW5zKCk6CiAgICAgICAgIiIiCiAgICAgICAgUmV0dXJuIHN0YXRpYyBjb2x1bW5zIG5hbWVzCiAgICAgICAgIiIiCiAgICAgICAgcmV0dXJuIFsnZGF0ZV90aW1lJywgJ3RyYWRlX2lkJywgJ3RyYWRlX3ByaWNlJywgJ3RyYWRlX3ZvbHVtZScsICd0cmFkZV9zaWRlJ10KCiAgICBAc3RhdGljbWV0aG9kCiAgICBkZWYgdHlwZXMoKToKICAgICAgICAiIiIKICAgICAgICBSZXR1cm4gc3RhdGljIGNvbHVtbiB0eXBlcwogICAgICAgICIiIgogICAgICAgIHJldHVybiBbJ3RleHQnLCAndGV4dCcsICdkZWNpbWFsKDEwLDUpJywgJ2RlY2ltYWwoMjAsOCknLCAndGV4dCddCgogICAgZGVmIHZhbHVlcyhzZWxmKToKICAgICAgICAiIiIKICAgICAgICBSZXR1cm4gdmFsdWVzIGluIGEgbGlzdAogICAgICAgICIiIgogICAgICAgIHJldHVybiBbc2VsZi5kYXRlX3RpbWVdICsgXAogICAgICAgICAgICAgICBbc2VsZi50cmFkZV9pZF0gKyBbc2VsZi50cmFkZV9wcmljZV0gKyBbc2VsZi50cmFkZV92b2x1bWVdICsgW3NlbGYudHJhZGVfc2lkZV0=</text>
+      </register>
+      <register name="8" type="2">
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">ICAgIGJhY2t0ZXN0X21hY2hpbmUucGlwZS4K</text>
+        <text encoding="base64">ICAgIGRlZiBwcmVwYXJlX2V4Y2hhbmdlcyhzZWxmKToKICAgICAgICBwYXNzCg==</text>
       </register>
       <register name=":" type="4">
         <text>w</text>

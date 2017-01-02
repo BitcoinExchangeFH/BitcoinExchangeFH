@@ -26,11 +26,11 @@
         <mark key="." line="81" column="26" />
         <mark key="^" line="81" column="26" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" timestamp="1483143232436">
-        <mark key="[" line="14" column="50" />
-        <mark key="]" line="18" column="10" />
-        <mark key="." line="18" column="10" />
-        <mark key="^" line="18" column="10" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" timestamp="1483318472997">
+        <mark key="[" line="37" column="38" />
+        <mark key="]" line="37" column="38" />
+        <mark key="." line="37" column="38" />
+        <mark key="^" line="37" column="38" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitstamp.py" timestamp="1482964703926">
         <mark key="[" line="183" column="63" />
@@ -123,7 +123,7 @@
         <mark key="." line="77" column="21" />
         <mark key="^" line="77" column="21" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/ticktickbacktest.py" timestamp="1483142734902">
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/ticktickbacktest.py" timestamp="1483318550706">
         <mark key="'" line="1" column="40" />
         <mark key="[" line="53" column="47" />
         <mark key="]" line="53" column="51" />
@@ -170,7 +170,7 @@
         <mark key="." line="93" column="35" />
         <mark key="^" line="93" column="35" />
       </file>
-      <file name="/Python Console" timestamp="1483021966253">
+      <file name="/Python Console" timestamp="1483318684448">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/order.py" timestamp="1483105862579">
@@ -179,12 +179,12 @@
         <mark key="." line="13" column="24" />
         <mark key="^" line="13" column="36" />
       </file>
-      <file name="/fragment.py" timestamp="1483016008436">
+      <file name="/fragment.py" timestamp="1483318722557">
         <mark key="'" line="0" column="23" />
-        <mark key="[" line="0" column="0" />
-        <mark key="]" line="0" column="0" />
-        <mark key="." line="0" column="0" />
-        <mark key="^" line="0" column="1" />
+        <mark key="[" line="0" column="10" />
+        <mark key="]" line="0" column="10" />
+        <mark key="." line="0" column="10" />
+        <mark key="^" line="0" column="8" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/strategy.py" timestamp="1483106099856">
         <mark key="[" line="20" column="17" />
@@ -192,12 +192,12 @@
         <mark key="^" line="20" column="94" />
         <mark key="." line="20" column="94" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/config_manager.py" timestamp="1482193287422">
-        <mark key="'" line="5" column="0" />
-        <mark key="[" line="18" column="21" />
-        <mark key="]" line="18" column="61" />
-        <mark key="^" line="18" column="61" />
-        <mark key="." line="18" column="61" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/config_manager.py" timestamp="1483318535410">
+        <mark key="'" line="99" column="45" />
+        <mark key="[" line="99" column="28" />
+        <mark key="]" line="99" column="28" />
+        <mark key="." line="99" column="28" />
+        <mark key="^" line="99" column="36" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" timestamp="1482964697071">
         <mark key="'" line="94" column="26" />
@@ -302,9 +302,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" />
-      <jump line="32" column="24" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" />
-      <jump line="52" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" />
       <jump line="6" column="25" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" />
       <jump line="16" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" />
       <jump line="40" column="10" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" />
@@ -402,10 +399,13 @@
       <jump line="70" column="9" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" />
       <jump line="79" column="49" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/market_data.py" />
       <jump line="27" column="11" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/pipe_factory.py" />
+      <jump line="46" column="47" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/config_manager.py" />
+      <jump line="77" column="62" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/config_manager.py" />
+      <jump line="99" column="45" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/config_manager.py" />
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>product</text>
+        <text>.get_exchange_names()</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1619,40 +1619,40 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>product</text>
+        <text>.get_exchange_names()</text>
       </register>
       <register name="/" type="4">
         <text>enabled = 0</text>
       </register>
       <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAicHJvZHVjdCI6ICJYQlRVU0QiLAo=</text>
+        <text encoding="base64">ICAgIGRlZiBnZXRfZGF0YV9uYW1lcyhzZWxmKToKICAgICAgICByZXR1cm4gc2VsZi5fX2NvbmZpZ1tzZWxmLl9fZGF0YV9zZWN0aW9uX25hbWVdLmtleSgpCg==</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICA6cmV0dXJuOiAK</text>
+        <text encoding="base64">ICAgICAgICAK</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgcGlwZV9mYWN0b3J5LnByZXBhcmUoZGF0YSkKICAgICAgICAK</text>
+        <text encoding="base64">ICAgICAgICAiIiIiIiIK</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICAK</text>
+        <text encoding="base64">ICAgICAgICA6cmV0dXJuOiAK</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICAK</text>
+        <text encoding="base64">ICAgICAgICAgICAgcGlwZV9mYWN0b3J5LnByZXBhcmUoZGF0YSkKICAgICAgICAK</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">ICAgIGRlZiBvcGVuCg==</text>
+        <text encoding="base64">ICAgICAgICAK</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgIGNsYXNzIFNpZGU6CiAgICAgICAgIiIiCiAgICAgICAgT3JkZXIgc2lkZQogICAgICAgICIiIgogICAgICAgIEJVWSA9IDEKICAgICAgICBTRUxMID0gMgogICAgICAgIAo=</text>
+        <text encoding="base64">ICAgICAgICAK</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgIAo=</text>
+        <text encoding="base64">ICAgIGRlZiBvcGVuCg==</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">ICAgIGNsYXNzCg==</text>
+        <text encoding="base64">ICAgIGNsYXNzIFNpZGU6CiAgICAgICAgIiIiCiAgICAgICAgT3JkZXIgc2lkZQogICAgICAgICIiIgogICAgICAgIEJVWSA9IDEKICAgICAgICBTRUxMID0gMgogICAgICAgIAo=</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">QWRkZWQgcG9wIG5leHQK</text>
+        <text encoding="base64">ICAgIAo=</text>
       </register>
       <register name=":" type="4">
         <text>w</text>

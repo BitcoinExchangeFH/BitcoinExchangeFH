@@ -141,12 +141,12 @@
         <mark key="^" line="232" column="61" />
         <mark key="." line="232" column="61" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/market_data.py" timestamp="1483326290346">
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/market_data.py" timestamp="1483357828614">
         <mark key="'" line="168" column="17" />
         <mark key="[" line="168" column="18" />
-        <mark key="]" line="3" column="8" />
-        <mark key="." line="3" column="8" />
-        <mark key="^" line="3" column="8" />
+        <mark key="]" line="168" column="20" />
+        <mark key="." line="168" column="20" />
+        <mark key="^" line="168" column="20" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/config.ini" timestamp="1482155093067">
         <mark key="[" line="2" column="0" />
@@ -286,8 +286,8 @@
       <jump line="167" column="17" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/market_data.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgc2VsZi5fX3NldGF0dHJfXyhrZXksIGRhdGFfZGljdFtrZXldKQo=</text>
+      <register name="&quot;" type="4">
+        <text>compile</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1501,7 +1501,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>l2_depth</text>
+        <text>compile</text>
       </register>
       <register name="/" type="4">
         <text>enabled = 0</text>

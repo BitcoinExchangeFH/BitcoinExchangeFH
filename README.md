@@ -37,11 +37,10 @@ Scheduled exchange supported soon:
 
 ## Supported database
 
-- Sqlite
+- Kdb+
 - MySQL
+- Sqlite
 - CSV
-
-Currently the support of other databases is still under development.
 
 ## Getting started
 
@@ -56,6 +55,16 @@ pip install -r python/requirement.txt
 #### Sqlite
 
 No further setup is required.
+
+#### Kdb+
+
+First, start your Kdb+ database. You can either choose your own binary or the binary in the [third-party](https://github.com/gavincyi/BitcoinExchangeFH/tree/master/third-party) folder.
+
+```
+q -p 5000
+```
+
+Then connect to the database with dedicated port (for example 5000 in the example).
 
 #### MySQL
 
@@ -74,6 +83,12 @@ For testing, you can quick start with Sqlite as follows. It uses the default sub
 
 ```
 python python/bitcoinexchangefh.py -sqlite
+```
+
+To record the data to Kdb+ database, for example connecting to localhost at port 5000, you can run the following command
+
+```
+python python/bitcoinexchangefh.py -kdb -dbaddr localhost -dbport 5000
 ```
 
 To record the data to MySQL database, for example connecting to localhost with user "bitcoin" and schema "bcex", you can run the following command.
@@ -95,6 +110,7 @@ python python/bitcoinexchangefh.py -csv -dbdir data/
 |mode|Please refer to [Mode](#mode)|
 |instmts|Instrument subscription file.|
 |exchtime|Use exchange timestamp if possible.|
+|kdb|Use Kdb+ database.|
 |sqlite|Use SQLite database.|
 |mysql|Use MySQL.|
 |csv|Use CSV file as database.|

@@ -3,7 +3,7 @@
     <state version="4" enabled="true" />
     <globalmarks />
     <filemarks>
-      <file name="/a.dummy" timestamp="1483022034936">
+      <file name="/a.dummy" timestamp="1483456969935">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" timestamp="1482356430832">
@@ -12,6 +12,13 @@
         <mark key="]" line="94" column="34" />
         <mark key="." line="94" column="34" />
         <mark key="^" line="94" column="34" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/EStatementParser/main.py" timestamp="1483456957975">
+        <mark key="'" line="3" column="14" />
+        <mark key="[" line="65" column="37" />
+        <mark key="]" line="65" column="38" />
+        <mark key="." line="65" column="38" />
+        <mark key="^" line="65" column="38" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/exch_bitfinex.py" timestamp="1479738556101">
         <mark key="'" line="173" column="8" />
@@ -169,7 +176,7 @@
         <mark key="." line="93" column="35" />
         <mark key="^" line="93" column="35" />
       </file>
-      <file name="/Python Console" timestamp="1483451332784">
+      <file name="/Python Console" timestamp="1483456127013">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/order.py" timestamp="1483105862579">
@@ -178,11 +185,11 @@
         <mark key="." line="13" column="24" />
         <mark key="^" line="13" column="36" />
       </file>
-      <file name="/fragment.py" timestamp="1483326151883">
+      <file name="/fragment.py" timestamp="1483456159342">
         <mark key="'" line="0" column="23" />
         <mark key="[" line="0" column="0" />
-        <mark key="]" line="0" column="15" />
-        <mark key="." line="0" column="15" />
+        <mark key="]" line="0" column="0" />
+        <mark key="." line="0" column="0" />
         <mark key="^" line="0" column="8" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/strategy.py" timestamp="1483452618652">
@@ -308,9 +315,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="42" column="37" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
-      <jump line="54" column="22" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
-      <jump line="174" column="32" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_huobi.py" />
       <jump line="257" column="24" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_huobi.py" />
       <jump line="149" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_huobi.py" />
       <jump line="214" column="42" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_huobi.py" />
@@ -408,10 +412,13 @@
       <jump line="167" column="17" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/market_data.py" />
       <jump line="177" column="39" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/market_data.py" />
       <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/market_data.py" />
+      <jump line="21" column="28" filename="$USER_HOME$/Documents/Source Codes/EStatementParser/main.py" />
+      <jump line="55" column="28" filename="$USER_HOME$/Documents/Source Codes/EStatementParser/main.py" />
+      <jump line="3" column="14" filename="$USER_HOME$/Documents/Source Codes/EStatementParser/main.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ZnJvbSBwaXBlX2ZhY3RvcnkgaW1wb3J0IE15c3FsUGlwZUZhY3RvcnkK</text>
+      <register name="&quot;" type="8">
+        <text>,%.2f</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1625,58 +1632,56 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>++</text>
+        <text>statement.__dict__)</text>
       </register>
       <register name="/" type="4">
-        <text>update_date_time</text>
+        <text>total_(.*)_re.*</text>
       </register>
-      <register name="0" type="2">
-        <text encoding="base64">ICAgIGRlZiBvcGVuX29yZGVyKHNlbGYsICoqa3dhcmdzKToKICAgICAgICAiIiIKICAgICAgICBPcGVuIG9yZGVyCiAgICAgICAgOnBhcmFtIGt3YXJnczogTmFtZWQgYXJndW1lbnRzCiAgICAgICAgOnJldHVybjogTm9uZSBpZiBubyBvcmRlciBpcyBvcGVuZWQ7IE90aGVyd2lzZSBhbiBvcmRlciBvYmplY3QgaXMgcmV0dXJuZWQuCiAgICAgICAgIiIiCiAgICAgICAgcmV0dXJuIE5vbmUK</text>
+      <register name="0" type="8">
+        <text>,%.2f</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ZnJvbSBwaXBlX2ZhY3RvcnkgaW1wb3J0IE15c3FsUGlwZUZhY3RvcnkK</text>
+        <text encoding="base64">ICAgICAgICAK</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgICAgICBwcmludCgnJXM6ICVzJyAlIChmaWxlX25hbWUsIHN0YXRlbWVudC5fX2RpY3RfXykpCg==</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgIGkgPSAwCiAgICB3aGlsZSBUcnVlOgogICAgICAgIGV4Y2hhbmdlLCBpbnN0bXQsIHVwZGF0ZV90eXBlID0gYmFja3Rlc3RfbWFjaGluZS51cGRhdGVfbmV4dCgpCiAgICAgICAgaWYgZXhjaGFuZ2UgaXMgbm90IE5vbmU6CiAgICAgICAgICAgIGkgKz0gMQogICAgICAgICAgICBsb2dnZXIuaW5mbygnJWQ6ICVkIC0gTmV4dCA9ICVzXG5UcmFkZSA9ICVzJyAlIChpLCB1cGRhdGVfdHlwZSwgaW5zdG10LmwyX2RlcHRoLnZhbHVlcygpLCBpbnN0bXQubGFzdF90cmFkZS52YWx1ZXMoKSkpCiAgICAgICAgZWxzZToKICAgICAgICAgICAgYnJlYWsK</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">CiAgICBkZWYgY2xvc2Uoc2VsZik6CiAgICAgICAgc2VsZi5waXBlLmNsb3NlKCkK</text>
+        <text encoding="base64">ICAgICAgICAgICAgc3RhdGVtZW50LmRhdGUgPSBkYXRldGltZS5kYXRldGltZS5zdHJwdGltZShzdGF0ZW1lbnQuZGF0ZSwgJyVkICVCICVZJykuc3RyZnRpbWUoIiVZJW0lZCIpCg==</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">ICAgICAgICA6cmV0dXJuOiAK</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIAo=</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgICAgICBwcmludChkaWN0KHN0YXRlbWVudCkpCg==</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgICAgICBkYXRlX3RpbWUgPSByb3dbXQo=</text>
+        <text encoding="base64">ICAgICAgICAK</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">aW1wb3J0IGRhdGV0aW1lCg==</text>
+        <text encoding="base64">ICAgICAgICAK</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgIGZpbGVfbmFtZSA9ICdlU3RhdGVtZW50ICgxMykucGRmJwo=</text>
       </register>
       <register name=":" type="4">
         <text>w</text>
       </register>
     </registers>
     <search>
-      <last-search>update_date_time</last-search>
+      <last-search>total_(.*)_re.*</last-search>
       <last-offset />
-      <last-pattern>update_date_time</last-pattern>
-      <last-replace>enabled = 1</last-replace>
-      <last-substitute>enabled = 0</last-substitute>
+      <last-pattern>total_(.*)_re.*</last-pattern>
+      <last-replace>total\1 = 0.0</last-replace>
+      <last-substitute>total_(.*)_re.*</last-substitute>
       <last-dir>1</last-dir>
       <show-last>false</show-last>
     </search>
     <history>
       <history-search>
-        <entry encoding="base64">XDxwYXJzZV9sMl9kZXB0aFw+</entry>
-        <entry>insert</entry>
         <entry>get_order_book</entry>
         <entry>parse_order</entry>
         <entry>parse</entry>
@@ -1695,6 +1700,8 @@
         <entry>Kra</entry>
         <entry>enabled = 0</entry>
         <entry>update_date_time</entry>
+        <entry encoding="base64">ID0=</entry>
+        <entry>total_(.*)_re.*</entry>
       </history-search>
       <history-cmd>
         <entry encoding="base64">JzwsJz5zL2JpZHMvYXNrcy9n</entry>
@@ -1711,6 +1718,10 @@
         <entry>%s/enabled = 0/enable = 1/g</entry>
         <entry>%s/enabled = 0/enabled = 1/g</entry>
         <entry>wq</entry>
+        <entry encoding="base64">JzwsJz4lcy8gPS9fcmUgPS9n</entry>
+        <entry encoding="base64">JzwsJz4lcy90b3RhbF8oLiopX3JlLiovdG90YWxcMSA9IDAuMC8=</entry>
+        <entry encoding="base64">JzwsJz4lcy90b3RhbF8oLiopX3JlLiovdG90YWxcMSA9IDAuMC9nYQ==</entry>
+        <entry encoding="base64">JzwsJz4lcy90b3RhbF8oLiopX3JlLiovdG90YWxcMSA9IDAuMC9nYw==</entry>
         <entry>w</entry>
       </history-cmd>
       <history-expr />

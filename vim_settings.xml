@@ -233,10 +233,11 @@
         <mark key="^" line="77" column="18" />
         <mark key="." line="77" column="37" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/trade_monitor.py" timestamp="1483505273849">
-        <mark key="[" line="64" column="0" />
-        <mark key="]" line="64" column="0" />
-        <mark key="." line="64" column="0" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/trade_monitor.py" timestamp="1483506187350">
+        <mark key="[" line="67" column="8" />
+        <mark key="]" line="67" column="9" />
+        <mark key="." line="67" column="9" />
+        <mark key="^" line="67" column="9" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/market_data.py" timestamp="1483489364702">
         <mark key="'" line="213" column="43" />
@@ -411,7 +412,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgcGx0LnNob3coYmxvY2s9RmFsc2UpCg==</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1625,40 +1626,40 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>0</text>
+        <text>30</text>
       </register>
       <register name="/" type="4">
         <text>total_(.*)_re.*</text>
       </register>
       <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICBwbHQucGF1c2UoMC4xKQo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgcGx0LmRyYXcoKQogICAgICAgICAgICBwbHQucGF1c2UoMzApCg==</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgcGx0LnNob3coYmxvY2s9RmFsc2UpCg==</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgcGx0LnNob3coYmxvY2s9RikK</text>
+        <text encoding="base64">ICAgICAgICBzZWxmLmdyYXBoX3Nob3dfaW5kZXggKz0gMQo=</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgcGx0LnNob3coKQogICAgICAgICAgICBwbHQuc2hvdyhibG9jaz1GYWxzZSkK</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">aW1wb3J0IG51bXB5Cg==</text>
+        <text encoding="base64">ICAgICAgICBpZiBzZWxmLmdyYXBoIGlzIE5vbmU6CiAgICAgICAgICAgIHNlbGYuZ3JhcGgsID0gcGx0LnBsb3QoW3RyYWRlLmRhdGVfdGltZV0sIFt0cmFkZS50cmFkZV9wcmljZV0pCiAgICAgICAgICAgIHBsdC5kcmF3KCkKICAgICAgICAgICAgcGx0LnBhdXNlKDUpCiAgICAgICAgZWxpZiBzZWxmLmdyYXBoX3Nob3dfaW5kZXggJSAxMDAwMCA9PSAwOgogICAgICAgICAgICBzZWxmLmdyYXBoLnNldF94ZGF0YShudW1weS5hcHBlbmQoc2VsZi5ncmFwaC5nZXRfeGRhdGEoKSwgdHJhZGUuZGF0ZV90aW1lKSkKICAgICAgICAgICAgc2VsZi5ncmFwaC5zZXRfeWRhdGEobnVtcHkuYXBwZW5kKHNlbGYuZ3JhcGguZ2V0X3lkYXRhKCksIHRyYWRlLnRyYWRlX3ByaWNlKSkKICAgICAgICAgICAgcGx0LmRyYXcoKQogICAgICAgICAgICBwbHQucGF1c2UoNSkK</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">ICAgIAo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgcGx0LmRyYXcoKQogICAgICAgICAgICBwbHQucGF1c2UoMC4xKQo=</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgCg==</text>
+        <text encoding="base64">ICAgICAgICBwbHQuaW50ZXJhY3RpdmUoRmFsc2UpCg==</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgIGRlZiB1cGRhdGVfcHJpY2VfaW5mbyhzZWxmLCBsMl9kZXB0aCk6CiAgICAgICAgcGFzcwo=</text>
+        <text encoding="base64">Cg==</text>
       </register>
-      <register name="8" type="8">
-        <text encoding="base64">IyAKIyAKIyAKIyAKIyAKIyAKIyAKIyAKIyAKIyA=</text>
+      <register name="8" type="2">
+        <text encoding="base64">ICAgICAgICBwbHQuZHJhdygpCiAgICAgICAgcGx0LnNob3coYmxvY2s9RmFsc2UpCiAgICAgICAgcGx0LnBhdXNlKDAuMSkK</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgcGx0LnNob3coYmxvY2s9RmFsc2UpCg==</text>
       </register>
       <register name=":" type="4">
         <text>w</text>

@@ -188,12 +188,12 @@
         <mark key="." line="0" column="0" />
         <mark key="^" line="0" column="8" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/strategy.py" timestamp="1483541043099">
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/strategy.py" timestamp="1483541801368">
         <mark key="'" line="3" column="0" />
-        <mark key="[" line="48" column="54" />
-        <mark key="]" line="48" column="54" />
-        <mark key="." line="48" column="54" />
-        <mark key="^" line="48" column="36" />
+        <mark key="[" line="48" column="48" />
+        <mark key="]" line="48" column="33" />
+        <mark key="." line="48" column="33" />
+        <mark key="^" line="48" column="33" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/config_manager.py" timestamp="1483322854748">
         <mark key="'" line="101" column="48" />
@@ -417,7 +417,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>]</text>
+        <text>plot</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1631,7 +1631,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>]</text>
+        <text>plot</text>
       </register>
       <register name="/" type="4">
         <text>total_(.*)_re.*</text>

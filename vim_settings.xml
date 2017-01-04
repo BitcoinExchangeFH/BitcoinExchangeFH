@@ -188,12 +188,12 @@
         <mark key="." line="0" column="0" />
         <mark key="^" line="0" column="8" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/strategy.py" timestamp="1483568935751">
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/strategy.py" timestamp="1483570031174">
         <mark key="'" line="53" column="17" />
-        <mark key="[" line="53" column="60" />
-        <mark key="]" line="53" column="79" />
-        <mark key="." line="53" column="79" />
-        <mark key="^" line="53" column="79" />
+        <mark key="[" line="65" column="35" />
+        <mark key="]" line="66" column="27" />
+        <mark key="." line="66" column="27" />
+        <mark key="^" line="66" column="27" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/config_manager.py" timestamp="1483322854748">
         <mark key="'" line="101" column="48" />
@@ -235,11 +235,11 @@
         <mark key="^" line="77" column="18" />
         <mark key="." line="77" column="37" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/trade_monitor.py" timestamp="1483568667153">
-        <mark key="[" line="59" column="12" />
-        <mark key="]" line="59" column="27" />
-        <mark key="." line="59" column="27" />
-        <mark key="^" line="59" column="27" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/trade_monitor.py" timestamp="1483570043865">
+        <mark key="[" line="68" column="123" />
+        <mark key="]" line="69" column="22" />
+        <mark key="." line="69" column="22" />
+        <mark key="^" line="69" column="22" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/market_data.py" timestamp="1483489364702">
         <mark key="'" line="213" column="43" />
@@ -416,8 +416,8 @@
       <jump line="52" column="17" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/strategy.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="4">
-        <text encoding="base64">IA==</text>
+      <register name="&quot;" type="2">
+        <text encoding="base64">ICAgICAgICBwbHQuc2hvdygpCg==</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1631,7 +1631,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text encoding="base64">IA==</text>
+        <text>1</text>
       </register>
       <register name="/" type="4">
         <text>total_(.*)_re.*</text>
@@ -1640,31 +1640,31 @@
         <text encoding="base64">ICAgICAgICAgICAgcGx0LnhsaW0oW2RhdGVfdGltZSwgZGF0ZV90aW1lICsgZGF0ZXRpbWUudGltZWRlbHRhKGRheXM9MSldKQo=</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgc2VsZi5wbG90Xwo=</text>
+        <text encoding="base64">ICAgICAgICBwbHQuc2hvdygpCg==</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICBzZWxmLmdyYXBoID0gTm9uZQo=</text>
+        <text encoding="base64">ICAgICAgICBpZiBpc2luc3RhbmNlKHByaWNlLCBkZWNpbWFsLkRlY2ltYWwpOgogICAgICAgICAgICBwcmljZSA9IGZsb2F0KGRlY2ltYWwpCiAgICAgICAgICAgIAo=</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgc2VsZi5sb2dnZXIuaW5mbygnUGxvdCBub3cuJykKICAgICAgICAgICAgc2VsZi5ncmFwaC5zZXRfeGRhdGEobnVtcHkuYXBwZW5kKHNlbGYuZ3JhcGguZ2V0X3hkYXRhKCksIHRyYWRlLmRhdGVfdGltZSkpCiAgICAgICAgICAgIHNlbGYuZ3JhcGguc2V0X3lkYXRhKG51bXB5LmFwcGVuZChzZWxmLmdyYXBoLmdldF95ZGF0YSgpLCB0cmFkZS50cmFkZV9wcmljZSkpCiAgICAgICAgICAgIHBsdC5kcmF3KCkKICAgICAgICAgICAgcGx0LnBhdXNlKDEpCg==</text>
-      </register>
-      <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICBpZiBzZWxmLmdyYXBoIGlzIE5vbmU6CiAgICAgICAgICAgIHNlbGYuZ3JhcGgsID0gcGx0LnBsb3QoW3RyYWRlLmRhdGVfdGltZV0sIFt0cmFkZS50cmFkZV9wcmljZV0pCiAgICAgICAgICAgIHBsdC54bGltKFt0cmFkZS5kYXRlX3RpbWUsIHRyYWRlLmRhdGVfdGltZSArIGRhdGV0aW1lLnRpbWVkZWx0YShkYXlzPTEpXSkKICAgICAgICAgICAgcGx0LmdjZigpLmF1dG9mbXRfeGRhdGUoKQogICAgICAgICAgICBwbHQuZHJhdygpCiAgICAgICAgICAgIHBsdC5wYXVzZSgxKQo=</text>
-      </register>
-      <register name="5" type="2">
         <text encoding="base64">Cg==</text>
       </register>
+      <register name="4" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgc2VsZi5wbG90Xwo=</text>
+      </register>
+      <register name="5" type="2">
+        <text encoding="base64">ICAgICAgICBzZWxmLmdyYXBoID0gTm9uZQo=</text>
+      </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgcGx0LmdjZigpLmF1dG9mbXRfeGRhdGUoKQo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgc2VsZi5sb2dnZXIuaW5mbygnUGxvdCBub3cuJykKICAgICAgICAgICAgc2VsZi5ncmFwaC5zZXRfeGRhdGEobnVtcHkuYXBwZW5kKHNlbGYuZ3JhcGguZ2V0X3hkYXRhKCksIHRyYWRlLmRhdGVfdGltZSkpCiAgICAgICAgICAgIHNlbGYuZ3JhcGguc2V0X3lkYXRhKG51bXB5LmFwcGVuZChzZWxmLmdyYXBoLmdldF95ZGF0YSgpLCB0cmFkZS50cmFkZV9wcmljZSkpCiAgICAgICAgICAgIHBsdC5kcmF3KCkKICAgICAgICAgICAgcGx0LnBhdXNlKDEpCg==</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgICAgICA6cmV0dXJuOiAK</text>
+        <text encoding="base64">ICAgICAgICBpZiBzZWxmLmdyYXBoIGlzIE5vbmU6CiAgICAgICAgICAgIHNlbGYuZ3JhcGgsID0gcGx0LnBsb3QoW3RyYWRlLmRhdGVfdGltZV0sIFt0cmFkZS50cmFkZV9wcmljZV0pCiAgICAgICAgICAgIHBsdC54bGltKFt0cmFkZS5kYXRlX3RpbWUsIHRyYWRlLmRhdGVfdGltZSArIGRhdGV0aW1lLnRpbWVkZWx0YShkYXlzPTEpXSkKICAgICAgICAgICAgcGx0LmdjZigpLmF1dG9mbXRfeGRhdGUoKQogICAgICAgICAgICBwbHQuZHJhdygpCiAgICAgICAgICAgIHBsdC5wYXVzZSgxKQo=</text>
       </register>
       <register name="8" type="2">
         <text encoding="base64">Cg==</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgcGx0LmdjZigpLmF1dG9mbXRfeGRhdGUoKQo=</text>
       </register>
       <register name=":" type="4">
         <text>w</text>

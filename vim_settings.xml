@@ -3,7 +3,7 @@
     <state version="4" enabled="true" />
     <globalmarks />
     <filemarks>
-      <file name="/a.dummy" timestamp="1483456969935">
+      <file name="/a.dummy" timestamp="1483495739093">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" timestamp="1482356430832">
@@ -27,11 +27,11 @@
         <mark key="." line="173" column="8" />
         <mark key="^" line="173" column="8" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/mysql_client.py" timestamp="1480521556229">
-        <mark key="[" line="80" column="11" />
-        <mark key="]" line="81" column="26" />
-        <mark key="." line="81" column="26" />
-        <mark key="^" line="81" column="26" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/mysql_client.py" timestamp="1483495699730">
+        <mark key="[" line="51" column="38" />
+        <mark key="]" line="51" column="36" />
+        <mark key="." line="51" column="36" />
+        <mark key="^" line="51" column="36" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" timestamp="1483320579387">
         <mark key="[" line="10" column="19" />
@@ -58,11 +58,6 @@
         <mark key="]" line="157" column="0" />
         <mark key="^" line="153" column="29" />
         <mark key="." line="157" column="0" />
-      </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/sql_client.py" timestamp="1483022077475">
-        <mark key="[" line="90" column="0" />
-        <mark key="]" line="90" column="32" />
-        <mark key="." line="90" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/database_client.py" timestamp="1483021561031">
         <mark key="'" line="23" column="18" />
@@ -238,11 +233,11 @@
         <mark key="^" line="77" column="18" />
         <mark key="." line="77" column="37" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/trade_monitor.py" timestamp="1483492379641">
-        <mark key="[" line="23" column="8" />
-        <mark key="]" line="23" column="8" />
-        <mark key="." line="23" column="8" />
-        <mark key="^" line="33" column="9" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/trade_monitor.py" timestamp="1483495843285">
+        <mark key="[" line="34" column="12" />
+        <mark key="]" line="34" column="13" />
+        <mark key="." line="34" column="13" />
+        <mark key="^" line="34" column="13" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/market_data.py" timestamp="1483489364702">
         <mark key="'" line="213" column="43" />
@@ -416,8 +411,8 @@
       <jump line="67" column="21" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/ticktickbacktest.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="8">
-        <text encoding="base64">IyAKIyAKIyAKIyAKIyAKIyAKIyAKIyAKIyAKIyA=</text>
+      <register name="&quot;" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgICAgIGxvZ2dlci5pbmZvKCclc1xuJXNcbiVzXG4lcycsIFwKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGluc3RtdC5wcmV2X2wyX2RlcHRoLnZhbHVlcygpLCBcCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBpbnN0bXQubDJfZGVwdGgudmFsdWVzKCksIFwKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGluc3RtdC5sYXN0X3RyYWRlLnZhbHVlcygpLCBcCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBbZS50cmFkZV9wcmljZSBmb3IgZSBpbiBpbnN0bXQudHJhZGVfaGlzdG9yeV0pCg==</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1631,13 +1626,13 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>5</text>
+        <text>1</text>
       </register>
       <register name="/" type="4">
         <text>total_(.*)_re.*</text>
       </register>
       <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgc2VsZi5ob3VyX3ZvbHVtZVt0cmFkZS5kYXRlX3RpbWUuaG91cl0gPSB0cmFkZS50cmFkZV92b2x1bWUK</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIGxvZ2dlci5pbmZvKCclc1xuJXNcbiVzXG4lcycsIFwKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGluc3RtdC5wcmV2X2wyX2RlcHRoLnZhbHVlcygpLCBcCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBpbnN0bXQubDJfZGVwdGgudmFsdWVzKCksIFwKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGluc3RtdC5sYXN0X3RyYWRlLnZhbHVlcygpLCBcCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBbZS50cmFkZV9wcmljZSBmb3IgZSBpbiBpbnN0bXQudHJhZGVfaGlzdG9yeV0pCg==</text>
       </register>
       <register name="1" type="8">
         <text encoding="base64">IyAKIyAKIyAKIyAKIyAKIyAKIyAKIyAKIyAKIyA=</text>

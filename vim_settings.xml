@@ -149,11 +149,11 @@
         <mark key="." line="4" column="12" />
         <mark key="^" line="4" column="12" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/exchange.py" timestamp="1483489534322">
-        <mark key="[" line="36" column="74" />
-        <mark key="]" line="36" column="14" />
-        <mark key="." line="36" column="14" />
-        <mark key="^" line="36" column="14" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/exchange.py" timestamp="1483489602786">
+        <mark key="[" line="39" column="21" />
+        <mark key="]" line="40" column="15" />
+        <mark key="." line="40" column="15" />
+        <mark key="^" line="40" column="15" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_gdax.py" timestamp="1482964331253">
         <mark key="'" line="0" column="0" />
@@ -238,11 +238,11 @@
         <mark key="^" line="77" column="18" />
         <mark key="." line="77" column="37" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/trade_monitor.py" timestamp="1483489072327">
-        <mark key="[" line="24" column="33" />
-        <mark key="]" line="24" column="44" />
-        <mark key="." line="24" column="33" />
-        <mark key="^" line="24" column="32" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/trade_monitor.py" timestamp="1483490410238">
+        <mark key="[" line="34" column="39" />
+        <mark key="]" line="34" column="36" />
+        <mark key="." line="34" column="36" />
+        <mark key="^" line="34" column="36" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/market_data.py" timestamp="1483489364702">
         <mark key="'" line="213" column="43" />
@@ -258,11 +258,11 @@
         <mark key="." line="218" column="0" />
         <mark key="^" line="217" column="58" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/config.ini" timestamp="1482155093067">
-        <mark key="[" line="2" column="0" />
-        <mark key="]" line="2" column="0" />
-        <mark key="." line="2" column="0" />
-        <mark key="^" line="16" column="56" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/config.ini" timestamp="1483490256361">
+        <mark key="[" line="23" column="0" />
+        <mark key="]" line="23" column="0" />
+        <mark key="." line="23" column="0" />
+        <mark key="^" line="23" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" timestamp="1483018442121">
         <mark key="'" line="0" column="0" />
@@ -418,7 +418,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>(</text>
+        <text encoding="base64">aG9zdCA=</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1632,7 +1632,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>(</text>
+        <text encoding="base64">aG9zdCA=</text>
       </register>
       <register name="/" type="4">
         <text>total_(.*)_re.*</text>

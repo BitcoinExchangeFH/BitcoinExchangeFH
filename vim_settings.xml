@@ -172,7 +172,7 @@
         <mark key="." line="93" column="35" />
         <mark key="^" line="93" column="35" />
       </file>
-      <file name="/Python Console" timestamp="1483568924153">
+      <file name="/Python Console" timestamp="1483650250342">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/order.py" timestamp="1483487339225">
@@ -188,12 +188,12 @@
         <mark key="." line="0" column="0" />
         <mark key="^" line="0" column="8" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/strategy.py" timestamp="1483570031174">
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/strategy.py" timestamp="1483650311835">
         <mark key="'" line="53" column="17" />
-        <mark key="[" line="65" column="35" />
-        <mark key="]" line="66" column="27" />
-        <mark key="." line="66" column="27" />
-        <mark key="^" line="66" column="27" />
+        <mark key="[" line="51" column="17" />
+        <mark key="]" line="51" column="17" />
+        <mark key="." line="51" column="17" />
+        <mark key="^" line="51" column="31" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/config_manager.py" timestamp="1483322854748">
         <mark key="'" line="101" column="48" />
@@ -416,8 +416,8 @@
       <jump line="52" column="17" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/strategy.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICBwbHQuc2hvdygpCg==</text>
+      <register name="&quot;" type="4">
+        <text>,</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1631,7 +1631,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>1</text>
+        <text>,</text>
       </register>
       <register name="/" type="4">
         <text>total_(.*)_re.*</text>

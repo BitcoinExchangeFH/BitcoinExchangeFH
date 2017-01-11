@@ -69,8 +69,19 @@ class MysqlClient(SqlClient):
         :param isFetchAll: Indicator of fetching all
         :return Result rows
         """
-        ret = SqlClient.select(self, table, columns, condition, orderby, limit, isFetchAll)
-        if len(ret) > 0:
-            return [list(e.values()) for e in ret]
-        else:
+        select = SqlClient.select(self, table, columns, condition, orderby, limit, isFetchAll)
+        if len(select) > 0:
+            if columns[0] != '*':
+                ret = []
+                for ele in select:
+                        row = []
+                        for column in columns:
+                            row.append(ele[column])
+
+                        ret.append(row)
+            else:
+                ret = [list(e.values()) for e in select]
+
             return ret
+        else:
+            return select

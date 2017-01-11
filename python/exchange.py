@@ -133,8 +133,11 @@ class ExchangeGateway:
         """
         Initialization method in get_trades
         :param instmt: Instrument
-        :return: Last id
+        :return: Last id and last exchange trade id
         """
+        trade_id = 0
+        exch_trade_id = '0'
+
         if self.data_mode & ExchangeGateway.DataMode.TRADES_ONLY:
             table_name = self.get_trades_table_name(instmt.get_exchange_name(),
                                                     instmt.get_instmt_name())            
@@ -149,11 +152,17 @@ class ExchangeGateway:
                                            limit=1)
     
             if len(id_ret) > 0 and len(trade_id_ret) > 0:
-                return id_ret[0][0], trade_id_ret[0][1]
-            else:
-                return 0, '0'
-        else:
-            return 0, '0'
+                trade_id = id_ret[0][0]
+                exch_trade_id = trade_id_ret[0][1]
+
+                # Convert back to proper type
+                if isinstance(trade_id, str):
+                    trade_id = int(trade_id)
+
+                if isinstance(exch_trade_id, int):
+                    exch_trade_id = str(exch_trade_id)
+
+        return trade_id, exch_trade_id
     
     def start(self, instmt):
         """

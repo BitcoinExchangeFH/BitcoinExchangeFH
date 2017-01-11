@@ -18,6 +18,7 @@ class WebSocketApiClient(ApiSocket):
         self.ws = None              # Web socket
         self.id = id
         self.wst = None             # Web socket thread
+        self._connecting = False
         self._connected = False
         self.on_message_handlers = []
         self.on_open_handlers = []
@@ -51,7 +52,8 @@ class WebSocketApiClient(ApiSocket):
         if on_error_handler is not None:
             self.on_error_handlers.append(on_error_handler)
 
-        if not self._connected:
+        if not self._connecting and not self._connected:
+            self._connecting = True
             self.ws = websocket.WebSocketApp(url,
                                              on_message=self.__on_message,
                                              on_close=self.__on_close,
@@ -89,6 +91,7 @@ class WebSocketApiClient(ApiSocket):
         
     def __on_close(self, ws):
         Logger.info(self.__class__.__name__, "Socket <%s> is closed." % self.id)
+        self._connecting = False
         self._connected = False
         for handler in self.on_close_handlers:
             handler(ws)

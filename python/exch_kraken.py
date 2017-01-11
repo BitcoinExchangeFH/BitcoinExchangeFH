@@ -120,7 +120,7 @@ class ExchGwKrakenRestfulApi(RESTfulApiSocket):
         if len(res) > 0 and 'error' in res and len(res['error']) == 0:
             res = res['result']
             if 'last' in res.keys():
-                instmt.set_exch_trade_id(int(res['last']))
+                instmt.set_exch_trade_id(res['last'])
                 del res['last']
 
             res = list(res.values())[0]
@@ -213,6 +213,7 @@ class ExchGwKraken(ExchangeGateway):
                 ret = self.api_socket.get_trades(instmt)
                 for trade in ret:
                     instmt.incr_trade_id()
+                    instmt.set_exch_trade_id(trade.trade_id)
                     self.insert_trade(instmt, trade)
                     
                 # After the first time of getting the trade, indicate the instrument

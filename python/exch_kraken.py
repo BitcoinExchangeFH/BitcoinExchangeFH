@@ -213,7 +213,6 @@ class ExchGwKraken(ExchangeGateway):
                 ret = self.api_socket.get_trades(instmt)
                 for trade in ret:
                     instmt.incr_trade_id()
-                    instmt.set_exch_trade_id(trade.trade_id)
                     self.insert_trade(instmt, trade)
                     
                 # After the first time of getting the trade, indicate the instrument

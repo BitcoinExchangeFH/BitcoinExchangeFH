@@ -73,11 +73,11 @@
         <mark key="." line="11" column="25" />
         <mark key="^" line="11" column="25" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/mysql_client.py" timestamp="1483015426024">
-        <mark key="[" line="23" column="46" />
-        <mark key="]" line="24" column="45" />
-        <mark key="." line="24" column="45" />
-        <mark key="^" line="24" column="45" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/mysql_client.py" timestamp="1484092570178">
+        <mark key="[" line="82" column="49" />
+        <mark key="]" line="82" column="54" />
+        <mark key="." line="82" column="54" />
+        <mark key="^" line="82" column="54" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket.py" timestamp="1484090692301">
         <mark key="'" line="78" column="23" />
@@ -172,7 +172,7 @@
         <mark key="." line="93" column="35" />
         <mark key="^" line="93" column="35" />
       </file>
-      <file name="/Python Console" timestamp="1484091776958">
+      <file name="/Python Console" timestamp="1484092649799">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/order.py" timestamp="1483487339225">
@@ -181,7 +181,7 @@
         <mark key="." line="18" column="94" />
         <mark key="^" line="18" column="94" />
       </file>
-      <file name="/fragment.py" timestamp="1483568932698">
+      <file name="/fragment.py" timestamp="1484091856835">
         <mark key="'" line="0" column="23" />
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="0" />
@@ -202,10 +202,10 @@
         <mark key="." line="21" column="33" />
         <mark key="^" line="21" column="33" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" timestamp="1484091611477">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" timestamp="1484091996808">
         <mark key="'" line="94" column="26" />
-        <mark key="[" line="182" column="63" />
-        <mark key="]" line="182" column="64" />
+        <mark key="[" line="207" column="0" />
+        <mark key="]" line="207" column="68" />
         <mark key="." line="182" column="64" />
         <mark key="^" line="182" column="64" />
       </file>
@@ -264,12 +264,12 @@
         <mark key="." line="23" column="0" />
         <mark key="^" line="23" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" timestamp="1483018442121">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" timestamp="1484092645384">
         <mark key="'" line="0" column="0" />
-        <mark key="[" line="176" column="28" />
-        <mark key="]" line="178" column="23" />
-        <mark key="." line="178" column="23" />
-        <mark key="^" line="178" column="23" />
+        <mark key="[" line="122" column="52" />
+        <mark key="]" line="122" column="52" />
+        <mark key="." line="122" column="52" />
+        <mark key="^" line="215" column="19" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/backtest_machine.py" timestamp="1483492367352">
         <mark key="[" line="58" column="0" />
@@ -417,7 +417,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>0, '0'</text>
+        <text>)</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1631,40 +1631,40 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>0, '0'</text>
+        <text>)</text>
       </register>
       <register name="/" type="4">
         <text>total_(.*)_re.*</text>
       </register>
-      <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgIGFzc2VydCBpc2luc3RhbmNlKGluc3RtdC5nZXRfZXhjaF90cmFkZV9pZCgpLCBzdHIpLCBcCiAgICAgICAgICAgICAgICAgICAgICAgImluc3RtdC5nZXRfZXhjaF90cmFkZV9pZCgpKCVzKSA9ICVzIiAlICh0eXBlKGluc3RtdC5nZXRfZXhjaF90cmFkZV9pZCgpKSwgaW5zdG10LmdldF9leGNoX3RyYWRlX2lkKCkpCg==</text>
+      <register name="0" type="4">
+        <text>select</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgCg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIGlmIGNvbHVtbnNbMF0gIT0gJyonOgo=</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICBlbHNlOgo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAK</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgcmV0Cg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIGVsc2U6CiAgICAgICAgICAgICAgICAgICAgcmV0LmFwcGVuZCgpCg==</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgZWxzZToKICAgICAgICAgICAgICAgIHJldHVybiAwLCAnMCcK</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIGZvciBrZXksIHZhbHVlIGluIGVsZS5pdGVtcygpOgogICAgICAgICAgICAgICAgICAgIHJvdy5hcHBlbmQodmFsdWUpCiAgICAgICAgICAgICAgICByZXQuYXBwZW5kKHJvdykK</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgIHJldHVybiBpZF9yZXRbMF1bMF0sIHRyYWRlX2lkX3JldFswXVsxXQo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAK</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICBhc3NlcnQgCg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgcmV0ID0gW10K</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgICAgICBwbHQuc2hvdygpCg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAK</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">ICAgICAgICBpZiBpc2luc3RhbmNlKHByaWNlLCBkZWNpbWFsLkRlY2ltYWwpOgogICAgICAgICAgICBwcmljZSA9IGZsb2F0KGRlY2ltYWwpCiAgICAgICAgICAgIAo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgCg==</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgICAgICBlbHNlOgo=</text>
       </register>
       <register name=":" type="4">
         <text>w</text>

@@ -28,7 +28,8 @@ class WebSocketApiClient(ApiSocket):
                 on_message_handler=None,
                 on_open_handler=None,
                 on_close_handler=None,
-                on_error_handler=None):
+                on_error_handler=None,
+                reconnect_interval=10):
         """
         :param url: Url link
         :param on_message_handler: Message handler which take the message as
@@ -40,6 +41,7 @@ class WebSocketApiClient(ApiSocket):
         :param on_error_handler: Socket error handler which take the socket as
                            the first argument and the error as the second
                            argument
+        :param reconnect_interval: The time interval for reconnection
         """
         Logger.info(self.__class__.__name__, "Connecting to socket <%s>..." % self.id)
         if on_message_handler is not None:
@@ -57,7 +59,7 @@ class WebSocketApiClient(ApiSocket):
                                              on_close=self.__on_close,
                                              on_open=self.__on_open,
                                              on_error=self.__on_error)
-            self.wst = threading.Thread(target=lambda: self.ws.run_forever())
+            self.wst = threading.Thread(target=lambda: self.__start(reconnect_interval=reconnect_interval))
             self.wst.start()
 
         return self.wst
@@ -70,30 +72,40 @@ class WebSocketApiClient(ApiSocket):
         """
         self.ws.send(msg)
 
-    def __start(self):
+    def __start(self, reconnect_interval=10):
         while True:
             self.ws.run_forever()
             Logger.info(self.__class__.__name__, "Socket <%s> is going to reconnect..." % self.id)
-            time.sleep(1)
+            time.sleep(reconnect_interval)
 
     def __on_message(self, ws, m):
         m = json.loads(m)
-        for handler in self.on_message_handlers:
-            handler(m)
+        if len(self.on_message_handlers) > 0:
+            for handler in self.on_message_handlers:
+                handler(m)
 
     def __on_open(self, ws):
         Logger.info(self.__class__.__name__, "Socket <%s> is opened." % self.id)
         self._connected = True
-        for handler in self.on_open_handlers:
-            handler(ws)
+        if len(self.on_open_handlers) > 0:
+            for handler in self.on_open_handlers:
+                handler(ws)
         
     def __on_close(self, ws):
         Logger.info(self.__class__.__name__, "Socket <%s> is closed." % self.id)
         self._connected = False
-        for handler in self.on_close_handlers:
-            handler(ws)
+        if len(self.on_close_handlers) > 0:
+            for handler in self.on_close_handlers:
+                handler(ws)
         
     def __on_error(self, ws, error):
         Logger.info(self.__class__.__name__, "Socket <%s> error:\n %s" % (self.id, error))
-        for handler in self.on_error_handlers:
-            handler(ws, error)
+        if len(self.on_error_handlers) > 0:
+            for handler in self.on_error_handlers:
+                handler(ws, error)
+
+if __name__ == '__main__':
+    Logger.init_log()
+    socket = WebSocketApiClient('test')
+    socket.connect('ws://localhost', reconnect_interval=1)
+    time.sleep(10)

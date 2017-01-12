@@ -110,6 +110,8 @@ class Instrument(object):
         self.order_book_id = order_book_id
 
     def set_exch_trade_id(self, exch_trade_id):
+        assert isinstance(exch_trade_id, str), \
+            "exch_trade_id (%s) = %s" % (type(exch_trade_id), exch_trade_id)
         self.exch_trade_id = exch_trade_id
 
     def set_subscribed(self, subscribed):

@@ -120,7 +120,7 @@ class ExchGwKrakenRestfulApi(RESTfulApiSocket):
         if len(res) > 0 and 'error' in res and len(res['error']) == 0:
             res = res['result']
             if 'last' in res.keys():
-                instmt.set_exch_trade_id(int(res['last']))
+                instmt.set_exch_trade_id(res['last'])
                 del res['last']
 
             res = list(res.values())[0]

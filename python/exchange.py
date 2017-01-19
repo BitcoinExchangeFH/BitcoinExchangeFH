@@ -183,15 +183,14 @@ class ExchangeGateway:
         
         # Update the snapshot
         if self.data_mode & ExchangeGateway.DataMode.SNAPSHOT_ONLY and \
-           instmt.get_l2_depth() is not None and \
-           instmt.get_last_trade() is not None:
+           instmt.get_l2_depth() is not None:
             self.db_client.insert(table=self.get_snapshot_table_name(),
                                   columns=Snapshot.columns(),
                                   types=Snapshot.types(),
                                   values=Snapshot.values(instmt.get_exchange_name(),
                                                          instmt.get_instmt_name(),
                                                          instmt.get_l2_depth(),
-                                                         instmt.get_last_trade(),
+                                                         Trade() if instmt.get_last_trade() is None else instmt.get_last_trade(),
                                                          Snapshot.UpdateType.ORDER_BOOK),
                                   primary_key_index=[0,1],
                                   is_orreplace=True,

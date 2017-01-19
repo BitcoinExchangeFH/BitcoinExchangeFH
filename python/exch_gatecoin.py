@@ -142,7 +142,7 @@ class ExchGwApiGatecoin(RESTfulApiSocket):
             trade.trade_side = 1
                 
             # Trade id
-            trade.trade_id = raw[cls.get_trade_id_field_name()]
+            trade.trade_id = str(raw[cls.get_trade_id_field_name()])
             
             # Trade price
             trade.trade_price = float(str(raw[cls.get_trade_price_field_name()]))
@@ -180,10 +180,11 @@ class ExchGwApiGatecoin(RESTfulApiSocket):
         """
         link = cls.get_trades_link(instmt)
         res = cls.request(link)
+        trades = []
         if 'transactions' in res.keys():
-            trades = res['transactionss']
-            if len(trades) > 0:
-                for t in trades:
+            trades_raw = res['transactions']
+            if len(trades_raw) > 0:
+                for t in trades_raw:
                     trade = cls.parse_trade(instmt=instmt,
                                              raw=t)
                     trades.append(trade)
@@ -298,5 +299,5 @@ if __name__ == '__main__':
     instmt.set_trades_table_name(exch.get_trades_table_name(instmt.get_exchange_name(),
                                                             instmt.get_instmt_name()))
     instmt.set_recovered(False)    
-    exch.get_order_book_worker(instmt)
+    # exch.get_order_book_worker(instmt)
     exch.get_trades_worker(instmt)

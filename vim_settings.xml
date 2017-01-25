@@ -24,7 +24,7 @@
         <mark key="." line="93" column="35" />
         <mark key="^" line="93" column="35" />
       </file>
-      <file name="/Python Console" timestamp="1485354706935">
+      <file name="/Python Console" timestamp="1485355761808">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/order.py" timestamp="1483487339225">
@@ -144,11 +144,11 @@
         <mark key="^" line="113" column="26" />
         <mark key="." line="113" column="26" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/trade_monitor.py" timestamp="1485354705471">
-        <mark key="[" line="71" column="12" />
-        <mark key="]" line="71" column="16" />
-        <mark key="." line="71" column="16" />
-        <mark key="^" line="71" column="16" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/trade_monitor.py" timestamp="1485355691699">
+        <mark key="[" line="74" column="51" />
+        <mark key="]" line="74" column="54" />
+        <mark key="." line="74" column="54" />
+        <mark key="^" line="74" column="54" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/market_data.py" timestamp="1483489364702">
         <mark key="'" line="213" column="43" />
@@ -215,7 +215,7 @@
         <mark key="]" line="215" column="0" />
         <mark key="." line="215" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/backtest_machine.py" timestamp="1485300358139">
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/backtest_machine.py" timestamp="1485355765090">
         <mark key="[" line="64" column="0" />
         <mark key="]" line="64" column="0" />
         <mark key="." line="64" column="0" />
@@ -414,7 +414,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text encoding="base64">aW5zdG10X25hbWUg</text>
+        <text>str(value))</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1628,7 +1628,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text encoding="base64">aW5zdG10X25hbWUg</text>
+        <text>str(value))</text>
       </register>
       <register name="/" type="4">
         <text>0117</text>

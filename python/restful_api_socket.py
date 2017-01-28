@@ -23,7 +23,9 @@ class RESTfulApiSocket(ApiSocket):
         :param: url: The url link
         :return JSON object
         """
-        res = urlrequest.urlopen(url)
+        req = urlrequest.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        # res = urlrequest.urlopen(url)
+        res = urlrequest.urlopen(req)
         try:
             res = json.loads(res.read().decode('utf8'))
             return res

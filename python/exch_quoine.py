@@ -65,7 +65,7 @@ class ExchGwApiQuoine(RESTfulApiSocket):
         :param instmt: Instrument
         :param raw: Raw data in JSON
         """
-        l2_depth = L2Depth(20)
+        l2_depth = L2Depth()
         keys = list(raw.keys())
         if cls.get_bids_field_name() in keys and \
            cls.get_asks_field_name() in keys:

@@ -163,7 +163,6 @@ class ExchGwApiQuoine(RESTfulApiSocket):
         for page in range(1, page_limit+1):
             link = cls.get_trades_link(instmt, page)
             res = cls.request(link)
-            Logger.info('test', res)
             if len(res) > 0:
                 if 'models' not in res.keys():
                     break
@@ -184,6 +183,10 @@ class ExchGwApiQuoine(RESTfulApiSocket):
 
 
 class ExchGwQuoine(ExchangeGateway):
+    # static variable to control to request rate
+    num_of_connections = 0
+    num_of_connections_lock = threading.Lock()
+    
     """
     Exchange gateway
     """
@@ -207,6 +210,10 @@ class ExchGwQuoine(ExchangeGateway):
         Get order book worker
         :param instmt: Instrument
         """
+        ExchGwQuoine.num_of_connections_lock.acquire()
+        ExchGwQuoine.num_of_connections += 1
+        Logger.info(self.__class__.__name__, "Current number of connections = %d" % ExchGwQuoine.num_of_connections)
+        ExchGwQuoine.num_of_connections_lock.release()
         instmt.set_order_book_id(self.get_order_book_init(instmt))
 
         while True:
@@ -219,13 +226,19 @@ class ExchGwQuoine(ExchangeGateway):
                     self.insert_order_book(instmt)
             except Exception as e:
                 Logger.error(self.__class__.__name__, "Error in order book: %s" % e)
-            time.sleep(1)
+            ExchGwQuoine.num_of_connections_lock.acquire()
+            time.sleep(ExchGwQuoine.num_of_connections + 0.1)
+            ExchGwQuoine.num_of_connections_lock.release()
 
     def get_trades_worker(self, instmt):
         """
         Get order book worker thread
         :param instmt: Instrument name
         """
+        ExchGwQuoine.num_of_connections_lock.acquire()
+        ExchGwQuoine.num_of_connections += 1
+        Logger.info(self.__class__.__name__, "Current number of connections = %d" % ExchGwQuoine.num_of_connections)
+        ExchGwQuoine.num_of_connections_lock.release()        
         trade_id, exch_trade_id = self.get_trades_init(instmt)
         instmt.set_trade_id(trade_id)
         instmt.set_exch_trade_id(exch_trade_id)
@@ -253,7 +266,9 @@ class ExchGwQuoine(ExchangeGateway):
             if not instmt.get_recovered():
                 instmt.set_recovered(True)
 
-            time.sleep(1)
+            ExchGwQuoine.num_of_connections_lock.acquire()
+            time.sleep(ExchGwQuoine.num_of_connections + 0.1)
+            ExchGwQuoine.num_of_connections_lock.release()
 
     def start(self, instmt):
         """

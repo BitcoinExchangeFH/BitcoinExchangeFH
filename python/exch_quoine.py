@@ -186,6 +186,7 @@ class ExchGwQuoine(ExchangeGateway):
     # static variable to control to request rate
     num_of_connections = 0
     num_of_connections_lock = threading.Lock()
+    extra_waiting_sec = 0.5
     
     """
     Exchange gateway
@@ -227,7 +228,7 @@ class ExchGwQuoine(ExchangeGateway):
             except Exception as e:
                 Logger.error(self.__class__.__name__, "Error in order book: %s" % e)
             ExchGwQuoine.num_of_connections_lock.acquire()
-            time.sleep(ExchGwQuoine.num_of_connections + 0.1)
+            time.sleep(ExchGwQuoine.num_of_connections + ExchGwApiQuoine.extra_waiting_sec)
             ExchGwQuoine.num_of_connections_lock.release()
 
     def get_trades_worker(self, instmt):
@@ -267,7 +268,7 @@ class ExchGwQuoine(ExchangeGateway):
                 instmt.set_recovered(True)
 
             ExchGwQuoine.num_of_connections_lock.acquire()
-            time.sleep(ExchGwQuoine.num_of_connections + 0.1)
+            time.sleep(ExchGwQuoine.num_of_connections + ExchGwApiQuoine.extra_waiting_sec)
             ExchGwQuoine.num_of_connections_lock.release()
 
     def start(self, instmt):

@@ -113,11 +113,12 @@
         <mark key="^" line="147" column="35" />
         <mark key="." line="147" column="35" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/pipe_factory.py" timestamp="1485787861621">
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/pipe_factory.py" timestamp="1485788736715">
         <mark key="'" line="30" column="11" />
-        <mark key="[" line="94" column="0" />
-        <mark key="]" line="94" column="0" />
-        <mark key="." line="94" column="0" />
+        <mark key="[" line="94" column="12" />
+        <mark key="]" line="94" column="13" />
+        <mark key="." line="94" column="13" />
+        <mark key="^" line="94" column="13" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket2.py" timestamp="1481726023243">
         <mark key="[" line="77" column="22" />
@@ -426,7 +427,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgcmFpc2UgZQo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIHJldHVybiBGYWxzZSwgbWluX2FyZ3Nfa2V5LCBtaW5fYXJncy5jdXJyX2N1cnNvcgo=</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1646,7 +1647,7 @@
         <text encoding="base64">XDxfX3VwZGF0ZV9uZXh0XD4=</text>
       </register>
       <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICByZXR1cm4gbWluX2FyZ3Nfa2V5LCBtaW5fYXJncy5jdXJyX2N1cnNvcgo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIHJldHVybiBGYWxzZSwgbWluX2FyZ3Nfa2V5LCBtaW5fYXJncy5jdXJyX2N1cnNvcgo=</text>
       </register>
       <register name="1" type="2">
         <text encoding="base64">ICAgICAgICAgICAgcmFpc2UgZQo=</text>

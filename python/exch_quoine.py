@@ -228,7 +228,7 @@ class ExchGwQuoine(ExchangeGateway):
             except Exception as e:
                 Logger.error(self.__class__.__name__, "Error in order book: %s" % e)
             ExchGwQuoine.num_of_connections_lock.acquire()
-            time.sleep(ExchGwQuoine.num_of_connections + ExchGwApiQuoine.extra_waiting_sec)
+            time.sleep(ExchGwQuoine.num_of_connections + ExchGwQuoine.extra_waiting_sec)
             ExchGwQuoine.num_of_connections_lock.release()
 
     def get_trades_worker(self, instmt):
@@ -268,7 +268,7 @@ class ExchGwQuoine(ExchangeGateway):
                 instmt.set_recovered(True)
 
             ExchGwQuoine.num_of_connections_lock.acquire()
-            time.sleep(ExchGwQuoine.num_of_connections + ExchGwApiQuoine.extra_waiting_sec)
+            time.sleep(ExchGwQuoine.num_of_connections + ExchGwQuoine.extra_waiting_sec)
             ExchGwQuoine.num_of_connections_lock.release()
 
     def start(self, instmt):

@@ -33,25 +33,18 @@
         <mark key="." line="51" column="36" />
         <mark key="^" line="51" column="36" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" timestamp="1485872975605">
-        <mark key="'" line="77" column="0" />
-        <mark key="[" line="34" column="0" />
-        <mark key="]" line="34" column="0" />
-        <mark key="." line="34" column="0" />
-        <mark key="^" line="31" column="46" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" timestamp="1485948182511">
+        <mark key="'" line="97" column="39" />
+        <mark key="[" line="31" column="48" />
+        <mark key="]" line="32" column="28" />
+        <mark key="^" line="32" column="28" />
+        <mark key="." line="32" column="28" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitstamp.py" timestamp="1482964703926">
         <mark key="[" line="183" column="63" />
         <mark key="]" line="183" column="64" />
         <mark key="^" line="183" column="64" />
         <mark key="." line="183" column="64" />
-      </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/bitcoinexchangefh.py" timestamp="1483015518649">
-        <mark key="'" line="86" column="36" />
-        <mark key="[" line="51" column="32" />
-        <mark key="]" line="52" column="3" />
-        <mark key="^" line="52" column="3" />
-        <mark key="." line="52" column="3" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/test/test_kdbplus_client.py" timestamp="1483014659827">
         <mark key="'" line="3" column="22" />
@@ -78,13 +71,6 @@
         <mark key="]" line="82" column="54" />
         <mark key="." line="82" column="54" />
         <mark key="^" line="82" column="54" />
-      </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/ws_api_socket.py" timestamp="1484090692301">
-        <mark key="'" line="78" column="23" />
-        <mark key="[" line="55" column="31" />
-        <mark key="]" line="55" column="34" />
-        <mark key="." line="55" column="34" />
-        <mark key="^" line="55" column="34" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/requirement.txt" timestamp="1483056296620">
         <mark key="[" line="3" column="22" />
@@ -158,8 +144,8 @@
         <mark key="." line="226" column="64" />
         <mark key="^" line="226" column="64" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" timestamp="1484091535613">
-        <mark key="'" line="303" column="36" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" timestamp="1485907859574">
+        <mark key="'" line="148" column="23" />
         <mark key="[" line="231" column="0" />
         <mark key="]" line="232" column="124" />
         <mark key="^" line="301" column="67" />
@@ -172,7 +158,7 @@
         <mark key="." line="93" column="35" />
         <mark key="^" line="93" column="35" />
       </file>
-      <file name="/Python Console" timestamp="1485785991433">
+      <file name="/Python Console" timestamp="1485947811297">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/order.py" timestamp="1483487339225">
@@ -254,7 +240,7 @@
         <mark key="." line="230" column="32" />
         <mark key="^" line="230" column="32" />
       </file>
-      <file name="/Dummy.txt" timestamp="1485789543697">
+      <file name="/Dummy.txt" timestamp="1485907954855">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_ws_template.py" timestamp="1482150295873">
@@ -282,6 +268,12 @@
         <mark key="]" line="58" column="34" />
         <mark key="." line="58" column="34" />
         <mark key="^" line="58" column="34" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_quoine.py" timestamp="1485907948250">
+        <mark key="'" line="270" column="73" />
+        <mark key="[" line="270" column="57" />
+        <mark key="]" line="270" column="69" />
+        <mark key="." line="270" column="57" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/test/test_file_client.py" timestamp="1481153644877">
         <mark key="'" line="111" column="0" />
@@ -327,11 +319,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="172" column="48" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_huobi.py" />
-      <jump line="180" column="16" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_huobi.py" />
-      <jump line="15" column="0" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
-      <jump line="131" column="20" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
-      <jump line="146" column="8" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
       <jump line="67" column="8" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
       <jump line="74" column="26" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
       <jump line="102" column="32" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
@@ -427,10 +414,15 @@
       <jump line="111" column="15" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" />
       <jump line="70" column="0" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" />
       <jump line="85" column="8" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/backtest_machine.py" />
+      <jump line="270" column="73" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_quoine.py" />
+      <jump line="201" column="43" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
+      <jump line="148" column="23" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
+      <jump line="97" column="16" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" />
+      <jump line="96" column="39" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" />
     </jumps>
     <registers>
       <register name="&quot;" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAiZXhjaGFuZ2UiOiAiQml0TUVYIiwK</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1647,38 +1639,37 @@
         <text>,</text>
       </register>
       <register name="/" type="4">
-        <text encoding="base64">XDxfX3VwZGF0ZV9uZXh0XD4=</text>
+        <text>xbtusd</text>
       </register>
       <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICJtYWtlcl9mZWUiOiAiMC4wMDEiLAo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAiZXhjaGFuZ2UiOiAiQml0ZmluZXgiLAo=</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAiZXhjaGFuZ2UiOiAiQml0TUVYIiwK</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgcmFpc2UgZQo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAiZXhjaGFuZ2UiOiAiQml0TUVYIiwK</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgIHJldHVybiBGYWxzZSwgTm9uZSwgTm9uZQo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiYml0eF94YnRoMTdfdHJhZGVzXzIwMTcwMTE3IiwKICAgICAgICAgICAgICAgICAgICAiZXhjaGFuZ2UiOiAiQml0TUVYIiwKICAgICAgICAgICAgICAgICAgICAicHJvZHVjdCI6ICJYQlRVU0RfRlVUIiwKICAgICAgICAgICAgICAgICAgICAiZGF0ZSI6ICIyMDE3MDExNyIsCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAidHJhZGVzIiwKICAgICAgICAgICAgICAgICAgICAidGFibGUiOiAiYmtfZXhjaF9iaXRtZXhfeGJ0aDE3X3RyYWRlc18yMDE3MDExNyIsCiAgICAgICAgICAgICAgICAgICAgImRhdGV0aW1lX2ZpZWxkIjogImRhdGVfdGltZSIsCiAgICAgICAgICAgICAgICAgICAgImRhdGV0aW1lX2Zvcm1hdCI6ICIlWSVtJWQgJUg6JU06JVMuJWYiCiAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiYml0bWV4X3hidGgxN190cmFkZXNfMjAxNzAxMTciLAogICAgICAgICAgICAgICAgICAgICJleGNoYW5nZSI6ICJCaXRNRVgiLAogICAgICAgICAgICAgICAgICAgICJwcm9kdWN0IjogIlhCVFVTRF9GVVQiLAogICAgICAgICAgICAgICAgICAgICJkYXRlIjogIjIwMTcwMTE3IiwKICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJ0cmFkZXMiLAogICAgICAgICAgICAgICAgICAgICJ0YWJsZSI6ICJia19leGNoX2JpdG1leF94YnRoMTdfdHJhZGVzXzIwMTcwMTE3IiwKICAgICAgICAgICAgICAgICAgICAiZGF0ZXRpbWVfZmllbGQiOiAiZGF0ZV90aW1lIiwKICAgICAgICAgICAgICAgICAgICAiZGF0ZXRpbWVfZm9ybWF0IjogIiVZJW0lZCAlSDolTTolUy4lZiIKICAgICAgICAgICAgICAgICB9Cg==</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgIHNlbGYuc3ByZWFkcywgZGVsaW1pdGVyPSIsIikK</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">aW1wb3J0IG51bXB5IGFzIG5wCg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgcmFpc2UgZQo=</text>
       </register>
-      <register name="6" type="4">
-        <text>,
-                   self.spreads, delimiter=&quot;,&quot;)</text>
+      <register name="6" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgICAgIHJldHVybiBGYWxzZSwgTm9uZSwgTm9uZQo=</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgICAgICBzZWxmLnNwcmVhZHMgPSBucC5hc2FycmF5KHNlbGYuc3ByZWFkcykK</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgIHNlbGYuc3ByZWFkcywgZGVsaW1pdGVyPSIsIikK</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">ICAgICAgICBmb3IgaSBpbiByYW5nZSgwLCBsZW4oc2VsZi5zcHJlYWRzKSk6CiAgICAgICAgICAgIHN3YXBfaW5zdG10X2RhdGVfdGltZSA9IHNlbGYuc3ByZWFkc1tpXVswXS5zdHJmdGltZSgiJVklbSVkICVIOiVNOiVTLiVmIikKICAgICAgICAgICAgZnV0X2luc3RtdF9kYXRlX3RpbWUgPSBzZWxmLnNwcmVhZHNbaV1bMV0uc3RyZnRpbWUoIiVZJW0lZCAlSDolTTolUy4lZiIpCiAgICAgICAgICAgIHNlbGYuc3ByZWFkc1tpXSA9IFtzd2FwX2luc3RtdF9kYXRlX3RpbWUsIGZ1dF9pbnN0bXRfZGF0ZV90aW1lLCBzZWxmLnNwcmVhZHNbaV1bMl0sIHNlbGYuc3ByZWFkc1tpXVszXV0K</text>
+        <text encoding="base64">aW1wb3J0IG51bXB5IGFzIG5wCg==</text>
       </register>
       <register name="9" type="4">
-        <text>np.savetxt(&quot;future_spread_%s&quot; % arbitrary_info.date_time.strftime(&quot;%Y%m%d&quot;),
+        <text>,
                    self.spreads, delimiter=&quot;,&quot;)</text>
       </register>
       <register name=":" type="4">
@@ -1686,21 +1677,16 @@
       </register>
     </registers>
     <search>
-      <last-search encoding="base64">XDxfX3VwZGF0ZV9uZXh0XD4=</last-search>
+      <last-search>xbtusd</last-search>
       <last-offset />
-      <last-pattern encoding="base64">XDxfX3VwZGF0ZV9uZXh0XD4=</last-pattern>
-      <last-replace>0117</last-replace>
-      <last-substitute>0118</last-substitute>
+      <last-pattern>xbtusd</last-pattern>
+      <last-replace>btcusd</last-replace>
+      <last-substitute>xbtusd</last-substitute>
       <last-dir>1</last-dir>
       <show-last>false</show-last>
     </search>
     <history>
       <history-search>
-        <entry>print</entry>
-        <entry>Logger</entry>
-        <entry>test</entry>
-        <entry>maxint</entry>
-        <entry>sys.</entry>
         <entry>Error in order book</entry>
         <entry>enabled = 1</entry>
         <entry>kraken</entry>
@@ -1716,10 +1702,13 @@
         <entry>20170118</entry>
         <entry>0118</entry>
         <entry encoding="base64">XDxfX3VwZGF0ZV9uZXh0XD4=</entry>
+        <entry encoding="base64">XDxleHRyYV93YWl0aW5nX3NlY1w+</entry>
+        <entry encoding="base64">XDxnZXRfb3JkZXJfYm9va1w+</entry>
+        <entry encoding="base64">XDxwYXJzZV9sMl9kZXB0aFw+</entry>
+        <entry>bitmex</entry>
+        <entry>xbtusd</entry>
       </history-search>
       <history-cmd>
-        <entry>%s/print_log/Logger.info/g</entry>
-        <entry>:w</entry>
         <entry>w!</entry>
         <entry>wq!</entry>
         <entry>g</entry>
@@ -1737,6 +1726,8 @@
         <entry encoding="base64">JzwsJz5zLzIwMTcwMTE4LzIwMTcwMTE5L2c=</entry>
         <entry encoding="base64">JzwsJz5zLzAxMTgvMDExNy9n</entry>
         <entry>wq</entry>
+        <entry encoding="base64">JzwsJz5zL2JpdG1leC9iaXRmaW5leC9n</entry>
+        <entry encoding="base64">JzwsJz5zL3hidHVzZC9idGN1c2QvZw==</entry>
         <entry>w</entry>
       </history-cmd>
       <history-expr />

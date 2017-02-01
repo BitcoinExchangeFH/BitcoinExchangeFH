@@ -33,6 +33,13 @@
         <mark key="." line="51" column="36" />
         <mark key="^" line="51" column="36" />
       </file>
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/spot_spread_analysis.py" timestamp="1485991659987">
+        <mark key="'" line="6" column="0" />
+        <mark key="[" line="25" column="67" />
+        <mark key="]" line="25" column="68" />
+        <mark key="." line="25" column="68" />
+        <mark key="^" line="25" column="68" />
+      </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" timestamp="1485989452425">
         <mark key="'" line="97" column="39" />
         <mark key="[" line="167" column="52" />
@@ -112,11 +119,12 @@
         <mark key="." line="77" column="21" />
         <mark key="^" line="77" column="21" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/ticktickbacktest.py" timestamp="1485956772540">
-        <mark key="[" line="58" column="0" />
-        <mark key="]" line="58" column="0" />
-        <mark key="." line="58" column="0" />
-        <mark key="^" line="57" column="70" />
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/ticktickbacktest.py" timestamp="1485990938975">
+        <mark key="'" line="5" column="36" />
+        <mark key="[" line="5" column="33" />
+        <mark key="]" line="5" column="36" />
+        <mark key="." line="5" column="36" />
+        <mark key="^" line="5" column="36" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/file_client.py" timestamp="1483021639403">
         <mark key="'" line="114" column="8" />
@@ -158,7 +166,7 @@
         <mark key="." line="93" column="35" />
         <mark key="^" line="93" column="35" />
       </file>
-      <file name="/Python Console" timestamp="1485989632915">
+      <file name="/Python Console" timestamp="1485991619689">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/order.py" timestamp="1483487339225">
@@ -174,12 +182,12 @@
         <mark key="." line="0" column="24" />
         <mark key="^" line="0" column="8" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/strategy.py" timestamp="1485511431178">
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/strategy.py" timestamp="1485990970141">
         <mark key="'" line="3" column="26" />
-        <mark key="[" line="35" column="20" />
-        <mark key="]" line="35" column="29" />
-        <mark key="^" line="35" column="29" />
-        <mark key="." line="35" column="29" />
+        <mark key="[" line="85" column="107" />
+        <mark key="]" line="85" column="107" />
+        <mark key="^" line="85" column="107" />
+        <mark key="." line="85" column="107" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/config_manager.py" timestamp="1483322854748">
         <mark key="'" line="101" column="48" />
@@ -214,7 +222,7 @@
         <mark key="." line="164" column="37" />
         <mark key="^" line="164" column="37" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/future_spread_analysis.py" timestamp="1485735774797">
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/future_spread_analysis.py" timestamp="1485990180376">
         <mark key="[" line="29" column="21" />
         <mark key="]" line="29" column="29" />
         <mark key="." line="29" column="21" />
@@ -318,10 +326,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="67" column="8" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
-      <jump line="74" column="26" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
-      <jump line="102" column="32" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
-      <jump line="103" column="36" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
       <jump line="104" column="20" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
       <jump line="87" column="7" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
       <jump line="116" column="33" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
@@ -418,10 +422,14 @@
       <jump line="148" column="23" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_btcc.py" />
       <jump line="97" column="16" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" />
       <jump line="96" column="39" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" />
+      <jump line="3" column="28" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/spot_spread_analysis.py" />
+      <jump line="45" column="0" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/spot_spread_analysis.py" />
+      <jump line="5" column="0" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/spot_spread_analysis.py" />
+      <jump line="5" column="36" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/ticktickbacktest.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICBlbGlmIGlzX2NvbnRpbnVlID09IEZhbHNlOgogICAgICAgICAgICBzZWxmLmxvZ2dlci5pbmZvKCdpc19jb250aW51ZSBpcyBGYWxzZScpCg==</text>
+      <register name="&quot;" type="4">
+        <text>.</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1635,40 +1643,40 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>s</text>
+        <text>.</text>
       </register>
       <register name="/" type="4">
         <text>xbtusd</text>
       </register>
       <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgaXNpbnN0YW5jZShzZWxmLmV4Y2hhbmdlc1snQml0TUVYJ10uaW5zdG10c1snWEJUVVNEX0ZVVCddLmwyX2RlcHRoLmRhdGVfdGltZSwgc3RyKSBhbmQgXAo=</text>
+        <text encoding="base64">ZnJvbSBmdXR1cmVfc3ByZWFkX2FuYWx5c2lzIGltcG9ydCBGdXR1cmVTcHJlYWRBbmFseXNpcwo=</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICBlbGlmIGlzX2NvbnRpbnVlID09IEZhbHNlOgogICAgICAgICAgICBzZWxmLmxvZ2dlci5pbmZvKCdpc19jb250aW51ZSBpcyBGYWxzZScpCg==</text>
+        <text encoding="base64">ZnJvbSBkYXRldGltZSBpbXBvcnQgZGF0ZXRpbWUK</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">CiAgICAgICAgaWYgJ0JpdE1FWCcgaW4gc2VsZi5leGNoYW5nZXMua2V5cygpIGFuZCBcCiAgICAgICAgICAgICdYQlRVU0RfRlVUJyBpbiBzZWxmLmV4Y2hhbmdlc1snQml0TUVYJ10uaW5zdG10cy5rZXlzKCkgYW5kIFwKICAgICAgICAgICAgaXNpbnN0YW5jZShzZWxmLmV4Y2hhbmdlc1snQml0TUVYJ10uaW5zdG10c1snWEJUVVNEX0ZVVCddLmwyX2RlcHRoLmRhdGVfdGltZSwgc3RyKSBhbmQgXAogICAgICAgICAgICBzZWxmLmV4Y2hhbmdlc1snQml0TUVYJ10uaW5zdG10c1snWEJUVVNEX0ZVVCddLmwyX2RlcHRoLmRhdGVfdGltZVs6OF0gPT0gJzIwMTcwMjAxJzoKICAgICAgICAgICAgc2VsZi5sb2dnZXIuaW5mbygnU29tZXRoaW5nIGdvZXMgd3Jvbmc/IScpCg==</text>
+        <text encoding="base64">ICAgICAgICBzd2FwX2luc3RtdCA9IGV4Y2hhbmdlLmluc3RtdHNbJ1hCVFVTRCddCiAgICAgICAgZnV0X2luc3RtdCA9IGV4Y2hhbmdlLmluc3RtdHNbJ1hCVFVTRF9GVVQnXQoKICAgICAgICBpZiB1cGRhdGVfdHlwZSA9PSBCYWNrdGVzdE1hY2hpbmUuVXBkYXRlVHlwZS5UUkFERVM6CiAgICAgICAgICAgIGlmIHN3YXBfaW5zdG10Lmxhc3RfdHJhZGUgaXMgbm90IE5vbmUgYW5kIFwKICAgICAgICAgICAgICAgIGZ1dF9pbnN0bXQubGFzdF90cmFkZSBpcyBub3QgTm9uZSBhbmQgXAogICAgICAgICAgICAgICAgc3dhcF9pbnN0bXQubGFzdF90cmFkZS50cmFkZV9wcmljZSA+IDAgYW5kIFwKICAgICAgICAgICAgICAgIGZ1dF9pbnN0bXQubGFzdF90cmFkZS50cmFkZV9wcmljZSA+IDAgOgo=</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICAgICAga2V5ID09ICdiaXRtZXhfeGJ0Jwo=</text>
+        <text encoding="base64">ICAgICAgICAK</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">IFwKIFwK</text>
+        <text encoding="base64">ICAgICAgICAgICAgc3dhcF9pbnN0bXQubGFzdF90cmFkZSBpcyBOb25lIG9yIFwKICAgICAgICAgICAgc3BvdF9pbnN0bXQubGFzdF90cmFkZSBpcyBOb25lIG9yIFwKICAgICAgICAgICAgc3dhcF9pbnN0bXQubGFzdF90cmFkZS50cmFkZV9wcmljZQo=</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgcGFzcwo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgcmV0ID0gCg==</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICBlbGlmIEZhbHNlID09IGlzX2NvbnRpbnVlOgogICAgICAgICAgICByZXR1cm4gRmFsc2UsIGV4Y2hhbmdlCg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgcmV0dXJuIGV4Y2hhbmdlc1tleGNoYW5nZV9uYW1lXS5pbnN0bXRzW2luc3RtdF9uYW1lXQo=</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAiZXhjaGFuZ2UiOiAiQml0TUVYIiwK</text>
+        <text encoding="base64">ICAgICAgICBzd2FwX2luc3RtdCA9IFN0cmF0ZWd5LmNoZWNrX2luc3RtdF9leGlzdChleGNoYW5nZXMsICdCaXRNRVgnLCAnWEJUVVNEJykKICAgICAgICBzcG90X2luc3RtdCA9IFN0cmF0ZWd5LmNoZWNrX2luc3RtdF9leGlzdChleGNoYW5nZXMsICdCaXRmaW5leCcsICdCVENVU0QnKQoK</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAiZXhjaGFuZ2UiOiAiQml0TUVYIiwK</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiYml0eF94YnRoMTdfdHJhZGVzXzIwMTcwMTE3IiwKICAgICAgICAgICAgICAgICAgICAiZXhjaGFuZ2UiOiAiQml0TUVYIiwKICAgICAgICAgICAgICAgICAgICAicHJvZHVjdCI6ICJYQlRVU0RfRlVUIiwKICAgICAgICAgICAgICAgICAgICAiZGF0ZSI6ICIyMDE3MDExNyIsCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAidHJhZGVzIiwKICAgICAgICAgICAgICAgICAgICAidGFibGUiOiAiYmtfZXhjaF9iaXRtZXhfeGJ0aDE3X3RyYWRlc18yMDE3MDExNyIsCiAgICAgICAgICAgICAgICAgICAgImRhdGV0aW1lX2ZpZWxkIjogImRhdGVfdGltZSIsCiAgICAgICAgICAgICAgICAgICAgImRhdGV0aW1lX2Zvcm1hdCI6ICIlWSVtJWQgJUg6JU06JVMuJWYiCiAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiYml0bWV4X3hidGgxN190cmFkZXNfMjAxNzAxMTciLAogICAgICAgICAgICAgICAgICAgICJleGNoYW5nZSI6ICJCaXRNRVgiLAogICAgICAgICAgICAgICAgICAgICJwcm9kdWN0IjogIlhCVFVTRF9GVVQiLAogICAgICAgICAgICAgICAgICAgICJkYXRlIjogIjIwMTcwMTE3IiwKICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJ0cmFkZXMiLAogICAgICAgICAgICAgICAgICAgICJ0YWJsZSI6ICJia19leGNoX2JpdG1leF94YnRoMTdfdHJhZGVzXzIwMTcwMTE3IiwKICAgICAgICAgICAgICAgICAgICAiZGF0ZXRpbWVfZmllbGQiOiAiZGF0ZV90aW1lIiwKICAgICAgICAgICAgICAgICAgICAiZGF0ZXRpbWVfZm9ybWF0IjogIiVZJW0lZCAlSDolTTolUy4lZiIKICAgICAgICAgICAgICAgICB9Cg==</text>
+        <text encoding="base64">ICAgICAgICBpZiAnQml0TUVYJyBub3QgaW4gZXhjaGFuZ2VzLmtleXMoKSBvciBcCiAgICAgICAgICAgICdCaXRmaW5leCcgbm90IGluIGV4Y2hhbmdlcy5rZXlzKCkgb3IgXAogICAgICAgICAgICAnWEJUVVNEJyBub3QgaW4gZXhjaGFuZ2VzWydCaXRNRVgnXS5pbnN0bXRzLmtleXMoKSBvciBcCiAgICAgICAgICAgICdCVENVU0QnIG5vdCBpbiBleGNoYW5nZXNbJ0JpdGZpbmV4J10uaW5zdG10cy5rZXlzKCk6CiAgICAgICAgICAgIHJldHVybiBOb25lCg==</text>
       </register>
       <register name=":" type="4">
         <text>w</text>

@@ -158,7 +158,7 @@
         <mark key="." line="93" column="35" />
         <mark key="^" line="93" column="35" />
       </file>
-      <file name="/Python Console" timestamp="1485957344290">
+      <file name="/Python Console" timestamp="1485959666471">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/order.py" timestamp="1483487339225">
@@ -262,12 +262,12 @@
         <mark key="]" line="215" column="0" />
         <mark key="." line="215" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/backtest_machine.py" timestamp="1485957336578">
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/backtest_machine.py" timestamp="1485959662535">
         <mark key="'" line="86" column="8" />
-        <mark key="[" line="59" column="30" />
-        <mark key="]" line="59" column="35" />
-        <mark key="." line="59" column="35" />
-        <mark key="^" line="59" column="35" />
+        <mark key="[" line="96" column="34" />
+        <mark key="]" line="97" column="49" />
+        <mark key="." line="97" column="49" />
+        <mark key="^" line="97" column="49" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_quoine.py" timestamp="1485907948250">
         <mark key="'" line="270" column="73" />
@@ -421,8 +421,8 @@
       <jump line="96" column="39" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" />
     </jumps>
     <registers>
-      <register name="&quot;" type="4">
-        <text>None:</text>
+      <register name="&quot;" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgcGFzcwo=</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1645,32 +1645,31 @@
         <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAiZXhjaGFuZ2UiOiAiQml0ZmluZXgiLAo=</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAiZXhjaGFuZ2UiOiAiQml0TUVYIiwK</text>
+        <text encoding="base64">ICAgICAgICAgICAgcGFzcwo=</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAiZXhjaGFuZ2UiOiAiQml0TUVYIiwK</text>
+        <text encoding="base64">ICAgICAgICBlbGlmIEZhbHNlID09IGlzX2NvbnRpbnVlOgogICAgICAgICAgICByZXR1cm4gRmFsc2UsIGV4Y2hhbmdlCg==</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiYml0eF94YnRoMTdfdHJhZGVzXzIwMTcwMTE3IiwKICAgICAgICAgICAgICAgICAgICAiZXhjaGFuZ2UiOiAiQml0TUVYIiwKICAgICAgICAgICAgICAgICAgICAicHJvZHVjdCI6ICJYQlRVU0RfRlVUIiwKICAgICAgICAgICAgICAgICAgICAiZGF0ZSI6ICIyMDE3MDExNyIsCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAidHJhZGVzIiwKICAgICAgICAgICAgICAgICAgICAidGFibGUiOiAiYmtfZXhjaF9iaXRtZXhfeGJ0aDE3X3RyYWRlc18yMDE3MDExNyIsCiAgICAgICAgICAgICAgICAgICAgImRhdGV0aW1lX2ZpZWxkIjogImRhdGVfdGltZSIsCiAgICAgICAgICAgICAgICAgICAgImRhdGV0aW1lX2Zvcm1hdCI6ICIlWSVtJWQgJUg6JU06JVMuJWYiCiAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiYml0bWV4X3hidGgxN190cmFkZXNfMjAxNzAxMTciLAogICAgICAgICAgICAgICAgICAgICJleGNoYW5nZSI6ICJCaXRNRVgiLAogICAgICAgICAgICAgICAgICAgICJwcm9kdWN0IjogIlhCVFVTRF9GVVQiLAogICAgICAgICAgICAgICAgICAgICJkYXRlIjogIjIwMTcwMTE3IiwKICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJ0cmFkZXMiLAogICAgICAgICAgICAgICAgICAgICJ0YWJsZSI6ICJia19leGNoX2JpdG1leF94YnRoMTdfdHJhZGVzXzIwMTcwMTE3IiwKICAgICAgICAgICAgICAgICAgICAiZGF0ZXRpbWVfZmllbGQiOiAiZGF0ZV90aW1lIiwKICAgICAgICAgICAgICAgICAgICAiZGF0ZXRpbWVfZm9ybWF0IjogIiVZJW0lZCAlSDolTTolUy4lZiIKICAgICAgICAgICAgICAgICB9Cg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAiZXhjaGFuZ2UiOiAiQml0TUVYIiwK</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAiZXhjaGFuZ2UiOiAiQml0TUVYIiwK</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgcmFpc2UgZQo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiYml0eF94YnRoMTdfdHJhZGVzXzIwMTcwMTE3IiwKICAgICAgICAgICAgICAgICAgICAiZXhjaGFuZ2UiOiAiQml0TUVYIiwKICAgICAgICAgICAgICAgICAgICAicHJvZHVjdCI6ICJYQlRVU0RfRlVUIiwKICAgICAgICAgICAgICAgICAgICAiZGF0ZSI6ICIyMDE3MDExNyIsCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAidHJhZGVzIiwKICAgICAgICAgICAgICAgICAgICAidGFibGUiOiAiYmtfZXhjaF9iaXRtZXhfeGJ0aDE3X3RyYWRlc18yMDE3MDExNyIsCiAgICAgICAgICAgICAgICAgICAgImRhdGV0aW1lX2ZpZWxkIjogImRhdGVfdGltZSIsCiAgICAgICAgICAgICAgICAgICAgImRhdGV0aW1lX2Zvcm1hdCI6ICIlWSVtJWQgJUg6JU06JVMuJWYiCiAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiYml0bWV4X3hidGgxN190cmFkZXNfMjAxNzAxMTciLAogICAgICAgICAgICAgICAgICAgICJleGNoYW5nZSI6ICJCaXRNRVgiLAogICAgICAgICAgICAgICAgICAgICJwcm9kdWN0IjogIlhCVFVTRF9GVVQiLAogICAgICAgICAgICAgICAgICAgICJkYXRlIjogIjIwMTcwMTE3IiwKICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJ0cmFkZXMiLAogICAgICAgICAgICAgICAgICAgICJ0YWJsZSI6ICJia19leGNoX2JpdG1leF94YnRoMTdfdHJhZGVzXzIwMTcwMTE3IiwKICAgICAgICAgICAgICAgICAgICAiZGF0ZXRpbWVfZmllbGQiOiAiZGF0ZV90aW1lIiwKICAgICAgICAgICAgICAgICAgICAiZGF0ZXRpbWVfZm9ybWF0IjogIiVZJW0lZCAlSDolTTolUy4lZiIKICAgICAgICAgICAgICAgICB9Cg==</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgIHJldHVybiBGYWxzZSwgTm9uZSwgTm9uZQo=</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgIHNlbGYuc3ByZWFkcywgZGVsaW1pdGVyPSIsIikK</text>
+        <text encoding="base64">ICAgICAgICAgICAgcmFpc2UgZQo=</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">aW1wb3J0IG51bXB5IGFzIG5wCg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIHJldHVybiBGYWxzZSwgTm9uZSwgTm9uZQo=</text>
       </register>
-      <register name="9" type="4">
-        <text>,
-                   self.spreads, delimiter=&quot;,&quot;)</text>
+      <register name="9" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgIHNlbGYuc3ByZWFkcywgZGVsaW1pdGVyPSIsIikK</text>
       </register>
       <register name=":" type="4">
         <text>w</text>

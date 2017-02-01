@@ -112,7 +112,7 @@
         <mark key="." line="77" column="21" />
         <mark key="^" line="77" column="21" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/ticktickbacktest.py" timestamp="1485509987027">
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/ticktickbacktest.py" timestamp="1485956772540">
         <mark key="[" line="58" column="0" />
         <mark key="]" line="58" column="0" />
         <mark key="." line="58" column="0" />
@@ -158,7 +158,7 @@
         <mark key="." line="93" column="35" />
         <mark key="^" line="93" column="35" />
       </file>
-      <file name="/Python Console" timestamp="1485956101919">
+      <file name="/Python Console" timestamp="1485957344290">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/order.py" timestamp="1483487339225">
@@ -262,12 +262,12 @@
         <mark key="]" line="215" column="0" />
         <mark key="." line="215" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/backtest_machine.py" timestamp="1485785979644">
+      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/backtest_machine.py" timestamp="1485957336578">
         <mark key="'" line="86" column="8" />
-        <mark key="[" line="58" column="25" />
-        <mark key="]" line="58" column="34" />
-        <mark key="." line="58" column="34" />
-        <mark key="^" line="58" column="34" />
+        <mark key="[" line="59" column="30" />
+        <mark key="]" line="59" column="35" />
+        <mark key="." line="59" column="35" />
+        <mark key="^" line="59" column="35" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_quoine.py" timestamp="1485907948250">
         <mark key="'" line="270" column="73" />
@@ -421,8 +421,8 @@
       <jump line="96" column="39" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAiZXhjaGFuZ2UiOiAiQml0TUVYIiwK</text>
+      <register name="&quot;" type="4">
+        <text>None:</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1636,7 +1636,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>,</text>
+        <text>None:</text>
       </register>
       <register name="/" type="4">
         <text>xbtusd</text>

@@ -1,8 +1,8 @@
+from bitcoinexchangefh.database_client import DatabaseClient
+from bitcoinexchangefh.util import Logger
 import threading
 import re
 import numpy
-from database_client import DatabaseClient
-from util import Logger
 from qpython import qconnection
 from qpython.qcollection import QTable, QKeyedTable, QList
 

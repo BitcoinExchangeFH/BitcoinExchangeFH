@@ -1,10 +1,10 @@
+from bitcoinexchangefh.api_socket import ApiSocket
 try:
     import urllib.request as urlrequest
 except ImportError:
     import urllib as urlrequest
 
 import json
-from api_socket import ApiSocket
 
 class RESTfulApiSocket(ApiSocket):
     """

@@ -1,18 +1,18 @@
+from bitcoinexchangefh.restful_api_socket import RESTfulApiSocket
+from bitcoinexchangefh.exchange import ExchangeGateway
+from bitcoinexchangefh.market_data import L2Depth, Trade
+from bitcoinexchangefh.util import Logger
+from bitcoinexchangefh.instrument import Instrument
+from bitcoinexchangefh.sql_client_template import SqlClientTemplate
 import time
 import threading
 from functools import partial
 from datetime import datetime
-from restful_api_socket import RESTfulApiSocket
-from exchange import ExchangeGateway
-from market_data import L2Depth, Trade
-from util import Logger
-from instrument import Instrument
-from sql_client_template import SqlClientTemplate
 
 
-class ExchGwApiTemplate(RESTfulApiSocket):
+class ExchGwBtccRestfulApi(RESTfulApiSocket):
     """
-    Exchange gateway RESTfulApi
+    Exchange gateway BTCC RESTfulApi
     """
     def __init__(self):
         RESTfulApiSocket.__init__(self)
@@ -23,48 +23,43 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         
     @classmethod
     def get_order_book_timestamp_field_name(cls):
-        return 'date'
+        return ''
         
     @classmethod
     def get_trades_timestamp_field_name(cls):
-        return 'date'
-    
+        return ''
+        
     @classmethod
     def get_bids_field_name(cls):
-        return 'bids'
+        return ''
         
     @classmethod
     def get_asks_field_name(cls):
-        return 'asks'
+        return ''
         
     @classmethod
     def get_trade_side_field_name(cls):
-        return 'type'
+        return ''
         
     @classmethod
     def get_trade_id_field_name(cls):
-        return 'tid'
+        return ''
         
     @classmethod
     def get_trade_price_field_name(cls):
-        return 'price'        
+        return ''        
         
     @classmethod
     def get_trade_volume_field_name(cls):
-        return 'amount'        
+        return ''        
         
     @classmethod
     def get_order_book_link(cls, instmt):
-        return "https://data.btcchina.com/data/orderbook?limit=5&market=%s" % instmt.get_instmt_code()
+        return ""
 
     @classmethod
-    def get_trades_link(cls, instmt):
-        if int(instmt.get_exch_trade_id()) > 0:
-            return "https://data.btcchina.com/data/historydata?market=%s&since=%s" % \
-                (instmt.get_instmt_code(), instmt.get_exch_trade_id())
-        else:
-            return "https://data.btcchina.com/data/historydata?limit=100&market=%s" % \
-                (instmt.get_instmt_code())         
+    def get_trades_link(cls, instmt, trade_id=''):
+        return ""
                 
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
@@ -176,16 +171,16 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         return trades
 
 
-class ExchGwTemplate(ExchangeGateway):
+class ExchGwBtcc(ExchangeGateway):
     """
-    Exchange gateway
+    Exchange gateway BTCC
     """
     def __init__(self, db_client):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwApiTemplate(), db_client)
+        ExchangeGateway.__init__(self, ExchGwBtccRestfulApi(), db_client)
 
     @classmethod
     def get_exchange_name(cls):
@@ -193,7 +188,7 @@ class ExchGwTemplate(ExchangeGateway):
         Get exchange name
         :return: Exchange name string
         """
-        return 'Template'
+        return 'BTCC'
 
     def get_order_book_worker(self, instmt):
         """
@@ -266,16 +261,169 @@ class ExchGwTemplate(ExchangeGateway):
         t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))
         t2.start()
         return [t1, t2]
+
+
+class ExchGwBtccSpotRestfulApi(ExchGwBtccRestfulApi):
+    """
+    Exchange gateway Spot Instrument RESTful API
+    """
+    def __init__(self):
+        ExchGwBtccRestfulApi.__init__(self)
+        
+    @classmethod
+    def get_timestamp_offset(cls):
+        return 1
+        
+    @classmethod
+    def get_order_book_timestamp_field_name(cls):
+        return 'date'
+        
+    @classmethod
+    def get_trades_timestamp_field_name(cls):
+        return 'date'
+    
+    @classmethod
+    def get_bids_field_name(cls):
+        return 'bids'
+        
+    @classmethod
+    def get_asks_field_name(cls):
+        return 'asks'
+        
+    @classmethod
+    def get_trade_side_field_name(cls):
+        return 'type'
+        
+    @classmethod
+    def get_trade_id_field_name(cls):
+        return 'tid'
+        
+    @classmethod
+    def get_trade_price_field_name(cls):
+        return 'price'        
+        
+    @classmethod
+    def get_trade_volume_field_name(cls):
+        return 'amount'        
+        
+    @classmethod
+    def get_order_book_link(cls, instmt):
+        return "https://data.btcchina.com/data/orderbook?limit=5&market=%s" % instmt.get_instmt_code()
+
+    @classmethod
+    def get_trades_link(cls, instmt):
+        if int(instmt.get_exch_trade_id()) > 0:
+            return "https://data.btcchina.com/data/historydata?market=%s&since=%s" % \
+                (instmt.get_instmt_code(), instmt.get_exch_trade_id())
+        else:
+            return "https://data.btcchina.com/data/historydata?limit=100&market=%s" % \
+                (instmt.get_instmt_code())        
+
+class ExchGwBtccFutureRestfulApi(ExchGwBtccRestfulApi):
+    """
+    Exchange gateway Spot Instrument RESTful API
+    """
+    def __init__(self):
+        ExchGwBtccRestfulApi.__init__(self)
+        
+    @classmethod
+    def get_timestamp_offset(cls):
+        return 1000
+        
+    @classmethod
+    def get_order_book_timestamp_field_name(cls):
+        return 'date'
+        
+    @classmethod
+    def get_trades_timestamp_field_name(cls):
+        return 'Timestamp'
+    
+    @classmethod
+    def get_bids_field_name(cls):
+        return 'bids'
+        
+    @classmethod
+    def get_asks_field_name(cls):
+        return 'asks'
+        
+    @classmethod
+    def get_trade_side_field_name(cls):
+        return 'Side'
+        
+    @classmethod
+    def get_trade_id_field_name(cls):
+        return 'Id'
+        
+    @classmethod
+    def get_trade_price_field_name(cls):
+        return 'Price'        
+        
+    @classmethod
+    def get_trade_volume_field_name(cls):
+        return 'Quantity'        
+        
+    @classmethod
+    def get_order_book_link(cls, instmt):
+        return "https://pro-data.btcc.com/data/pro/orderbook?limit=5&symbol=%s" % instmt.get_instmt_code()
+
+    @classmethod
+    def get_trades_link(cls, instmt):
+        if int(instmt.get_exch_trade_id()) > 0:
+            return "https://pro-data.btcc.com/data/pro/historydata?symbol=%s&since=%s" % \
+                (instmt.get_instmt_code(), instmt.get_exch_trade_id())
+        else:
+            return "https://pro-data.btcc.com/data/pro/historydata?limit=100&symbol=%s" % \
+                (instmt.get_instmt_code())        
+
+
+class ExchGwBtccSpot(ExchGwBtcc):
+    """
+    Exchange gateway BTCC-Spot
+    """
+    def __init__(self, db_client):
+        """
+        Constructor
+        :param db_client: Database client
+        """
+        ExchangeGateway.__init__(self, ExchGwBtccSpotRestfulApi(), db_client)
+
+    @classmethod
+    def get_exchange_name(cls):
+        """
+        Get exchange name
+        :return: Exchange name string
+        """
+        return 'BTCC_Spot'
+        
+        
+class ExchGwBtccFuture(ExchGwBtcc):
+    """
+    Exchange gateway BTCC-Future
+    """
+    def __init__(self, db_client):
+        """
+        Constructor
+        :param db_client: Database client
+        """
+        ExchangeGateway.__init__(self, ExchGwBtccFutureRestfulApi(), db_client)
+
+    @classmethod
+    def get_exchange_name(cls):
+        """
+        Get exchange name
+        :return: Exchange name string
+        """
+        return 'BTCC_Future'        
         
         
 if __name__ == '__main__':
     Logger.init_log()
-    exchange_name = 'Template'
+    exchange_name = 'BTCC_Spot'
     instmt_name = 'BTCCNY'
     instmt_code = 'btccny'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)    
     db_client = SqlClientTemplate()
-    exch = ExchGwTemplate(db_client)
+    exch = ExchGwBtccSpot(db_client)
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
     instmt.set_order_book_table_name(exch.get_order_book_table_name(instmt.get_exchange_name(),
@@ -284,4 +432,3 @@ if __name__ == '__main__':
                                                             instmt.get_instmt_name()))
     instmt.set_recovered(False)    
     exch.get_order_book_worker(instmt)
-    exch.get_trades_worker(instmt)

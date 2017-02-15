@@ -1,13 +1,13 @@
+from bitcoinexchangefh.market_data import L2Depth, Trade
+from bitcoinexchangefh.exchange import ExchangeGateway
+from bitcoinexchangefh.instrument import Instrument
+from bitcoinexchangefh.ws_api_socket import WebSocketApiClient
+from bitcoinexchangefh.util import Logger
 import time
 import threading
 import json
 from functools import partial
 from datetime import datetime
-from ws_api_socket import WebSocketApiClient
-from market_data import L2Depth, Trade
-from exchange import ExchangeGateway
-from instrument import Instrument
-from util import Logger
 
 
 class ExchGwBitfinexWs(WebSocketApiClient):

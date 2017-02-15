@@ -1,16 +1,17 @@
+from bitcoinexchangefh.ws_api_socket import WebSocketApiClient
+from bitcoinexchangefh.market_data import L2Depth, Trade
+from bitcoinexchangefh.exchange import ExchangeGateway
+from bitcoinexchangefh.instrument import Instrument
+from bitcoinexchangefh.sql_client_template import SqlClientTemplate
+from bitcoinexchangefh.util import Logger
 import time
 import threading
 import json
 from functools import partial
 from datetime import datetime
-from ws_api_socket import WebSocketApiClient
-from market_data import L2Depth, Trade
-from exchange import ExchangeGateway
-from instrument import Instrument
-from util import Logger
 
 
-class ExchGwBitmexWs(WebSocketApiClient):
+class ExchGwApiTemplate(WebSocketApiClient):
     """
     Exchange socket
     """
@@ -18,7 +19,7 @@ class ExchGwBitmexWs(WebSocketApiClient):
         """
         Constructor
         """
-        WebSocketApiClient.__init__(self, 'ExchGwBitMEX')
+        WebSocketApiClient.__init__(self, 'Template')
         
     @classmethod
     def get_order_book_timestamp_field_name(cls):
@@ -55,15 +56,15 @@ class ExchGwBitmexWs(WebSocketApiClient):
     @classmethod
     def get_link(cls):
         return 'wss://www.bitmex.com/realtime'
-
+        
     @classmethod
     def get_order_book_subscription_string(cls, instmt):
         return json.dumps({"op":"subscribe", "args": ["orderBook10:%s" % instmt.get_instmt_code()]})
-
+        
     @classmethod
     def get_trades_subscription_string(cls, instmt):
         return json.dumps({"op":"subscribe", "args": ["trade:%s" % instmt.get_instmt_code()]})
-
+            
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
@@ -142,7 +143,7 @@ class ExchGwBitmexWs(WebSocketApiClient):
         return trade        
 
 
-class ExchGwBitmex(ExchangeGateway):
+class ExchGwTemplate(ExchangeGateway):
     """
     Exchange gateway
     """
@@ -151,7 +152,7 @@ class ExchGwBitmex(ExchangeGateway):
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwBitmexWs(), db_client)
+        ExchangeGateway.__init__(self, ExchGwApiTemplate(), db_client)
 
     @classmethod
     def get_exchange_name(cls):
@@ -159,7 +160,7 @@ class ExchGwBitmex(ExchangeGateway):
         Get exchange name
         :return: Exchange name string
         """
-        return 'BitMEX'
+        return 'Template'
 
     def on_open_handler(self, instmt, ws):
         """
@@ -180,7 +181,7 @@ class ExchGwBitmex(ExchangeGateway):
         :param instmt: Instrument
         :param ws: Web socket
         """
-        Logger.info(self.__class__.__name__, "Instrument %s is unsubscribed in channel %s" % \
+        Logger.info(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
                   (instmt.get_instmt_code(), instmt.get_exchange_name()))
         instmt.set_subscribed(False)
 
@@ -240,4 +241,15 @@ class ExchGwBitmex(ExchangeGateway):
                                         on_message_handler=partial(self.on_message_handler, instmt),
                                         on_open_handler=partial(self.on_open_handler, instmt),
                                         on_close_handler=partial(self.on_close_handler, instmt))]
+                                        
+
+if __name__ == '__main__':
+    exchange_name = 'Template'
+    instmt_name = 'XBTUSD'
+    instmt_code = 'XBTH17'
+    instmt = Instrument(exchange_name, instmt_name, instmt_code)
+    db_client = SqlClientTemplate()
+    Logger.init_log()
+    exch = ExchGwTemplate(db_client)
+    td = exch.start(instmt)
 

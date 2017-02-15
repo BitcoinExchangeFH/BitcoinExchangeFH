@@ -1,6 +1,6 @@
-from database_client import DatabaseClient
+from bitcoinexchangefh.database_client import DatabaseClient
+from bitcoinexchangefh.util import Logger
 import threading
-from util import Logger
 
 class SqlClient(DatabaseClient):
     """

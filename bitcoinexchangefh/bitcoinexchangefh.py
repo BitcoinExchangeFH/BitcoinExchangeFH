@@ -3,26 +3,27 @@
 import argparse
 import sys
 
-from exchange import ExchangeGateway
-from exch_bitmex import ExchGwBitmex
-from exch_btcc import ExchGwBtccSpot, ExchGwBtccFuture
-from exch_bitfinex import ExchGwBitfinex
-from exch_okcoin import ExchGwOkCoin
-from exch_kraken import ExchGwKraken
-from exch_huobi import ExchGwHuobi
-from exch_gdax import ExchGwGdax
-from exch_bitstamp import ExchGwBitstamp
-from exch_gatecoin import ExchGwGatecoin
-from exch_quoine import ExchGwQuoine
-from kdbplus_client import KdbPlusClient
-from mysql_client import MysqlClient
-from sqlite_client import SqliteClient
-from file_client import FileClient
-from subscription_manager import SubscriptionManager
-from util import Logger
+from bitcoinexchangefh.exchange import ExchangeGateway
+from bitcoinexchangefh.exch_bitmex import ExchGwBitmex
+from bitcoinexchangefh.exch_btcc import ExchGwBtccSpot, ExchGwBtccFuture
+from bitcoinexchangefh.exch_bitfinex import ExchGwBitfinex
+from bitcoinexchangefh.exch_okcoin import ExchGwOkCoin
+from bitcoinexchangefh.exch_kraken import ExchGwKraken
+from bitcoinexchangefh.exch_huobi import ExchGwHuobi
+from bitcoinexchangefh.exch_gdax import ExchGwGdax
+from bitcoinexchangefh.exch_bitstamp import ExchGwBitstamp
+from bitcoinexchangefh.exch_gatecoin import ExchGwGatecoin
+from bitcoinexchangefh.exch_quoine import ExchGwQuoine
+from bitcoinexchangefh.kdbplus_client import KdbPlusClient
+from bitcoinexchangefh.mysql_client import MysqlClient
+from bitcoinexchangefh.sqlite_client import SqliteClient
+from bitcoinexchangefh.file_client import FileClient
+from bitcoinexchangefh.zmq_client import ZmqClient
+from bitcoinexchangefh.subscription_manager import SubscriptionManager
+from bitcoinexchangefh.util import Logger
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description='Bitcoin exchange market data feed handler.')
     parser.add_argument('-mode', action='store', help='Mode. Supports ALL, ORDER_BOOK_AND_TRADES_ONLY, SNAPSHOT_ONLY, ORDER_BOOK_ONLY and TRADES_ONLY', default='ALL')
     parser.add_argument('-instmts', action='store', help='Instrument subscription file.', default='subscriptions.ini')
@@ -31,6 +32,7 @@ if __name__ == '__main__':
     parser.add_argument('-csv', action='store_true', help='Use csv file as database.')
     parser.add_argument('-sqlite', action='store_true', help='Use SQLite database.')
     parser.add_argument('-mysql', action='store_true', help='Use MySQL.')
+    parser.add_argument('-zmq', action='store_true', help='Use zmq publisher.')
     parser.add_argument('-dbpath', action='store', dest='dbpath',
                         help='Database file path. Supported for SQLite only.',
                         default='bitcoinexchange.raw')
@@ -71,6 +73,9 @@ if __name__ == '__main__':
     elif args.kdb:
         db_client = KdbPlusClient()
         db_client.connect(host=args.dbaddr, port=int(args.dbport))
+    elif args.zmq:
+        db_client = ZmqClient()
+        db_client.connect(addr=args.dbaddr)
     else:
         print('Error: Please define which database is used.')
         parser.print_help()
@@ -117,3 +122,5 @@ if __name__ == '__main__':
                     (instmt.get_exchange_name(), instmt.get_instmt_name()))
                 threads += exch.start(instmt)
 
+if __name__ == '__main__':
+    main()

@@ -1,6 +1,6 @@
 #!/bin/python
-from database_client import DatabaseClient
-from market_data import L2Depth, Trade, Snapshot
+from bitcoinexchangefh.database_client import DatabaseClient
+from bitcoinexchangefh.market_data import L2Depth, Trade, Snapshot
 from datetime import datetime
 
 class ExchangeGateway:

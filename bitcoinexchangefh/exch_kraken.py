@@ -1,12 +1,12 @@
+from bitcoinexchangefh.restful_api_socket import RESTfulApiSocket
+from bitcoinexchangefh.exchange import ExchangeGateway
+from bitcoinexchangefh.market_data import L2Depth, Trade
+from bitcoinexchangefh.instrument import Instrument
+from bitcoinexchangefh.util import Logger
 import time
 import threading
 from functools import partial
 from datetime import datetime
-from restful_api_socket import RESTfulApiSocket
-from exchange import ExchangeGateway
-from market_data import L2Depth, Trade
-from instrument import Instrument
-from util import Logger
 
 
 class ExchGwKrakenRestfulApi(RESTfulApiSocket):

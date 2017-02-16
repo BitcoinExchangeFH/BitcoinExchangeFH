@@ -166,7 +166,7 @@
         <mark key="." line="93" column="35" />
         <mark key="^" line="93" column="35" />
       </file>
-      <file name="/Python Console" timestamp="1487203314371">
+      <file name="/Python Console" timestamp="1487203961199">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/order.py" timestamp="1483487339225">
@@ -215,6 +215,9 @@
         <mark key="]" line="150" column="24" />
         <mark key="." line="150" column="24" />
         <mark key="^" line="150" column="24" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/bitcoinexchangefh/exch_btcc.py" timestamp="1487203956731">
+        <mark key="'" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exchange.py" timestamp="1484091772516">
         <mark key="[" line="164" column="15" />
@@ -326,8 +329,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="104" column="20" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
-      <jump line="87" column="7" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
       <jump line="116" column="33" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
       <jump line="9" column="4" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
       <jump line="110" column="33" filename="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" />
@@ -426,6 +427,8 @@
       <jump line="45" column="0" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/spot_spread_analysis.py" />
       <jump line="5" column="0" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/spot_spread_analysis.py" />
       <jump line="5" column="36" filename="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/ticktickbacktest.py" />
+      <jump line="184" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/bitcoinexchangefh/exch_btcc.py" />
+      <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/bitcoinexchangefh/exch_btcc.py" />
     </jumps>
     <registers>
       <register name="&quot;" type="4">
@@ -1646,7 +1649,7 @@
         <text>.</text>
       </register>
       <register name="/" type="4">
-        <text>xbtusd</text>
+        <text>Error in order</text>
       </register>
       <register name="0" type="2">
         <text encoding="base64">ZnJvbSBmdXR1cmVfc3ByZWFkX2FuYWx5c2lzIGltcG9ydCBGdXR1cmVTcHJlYWRBbmFseXNpcwo=</text>
@@ -1683,9 +1686,9 @@
       </register>
     </registers>
     <search>
-      <last-search>xbtusd</last-search>
+      <last-search>Error in order</last-search>
       <last-offset />
-      <last-pattern>xbtusd</last-pattern>
+      <last-pattern>Error in order</last-pattern>
       <last-replace>btcusd</last-replace>
       <last-substitute>xbtusd</last-substitute>
       <last-dir>1</last-dir>
@@ -1693,7 +1696,6 @@
     </search>
     <history>
       <history-search>
-        <entry>Error in order book</entry>
         <entry>enabled = 1</entry>
         <entry>kraken</entry>
         <entry>Kra</entry>
@@ -1713,6 +1715,7 @@
         <entry encoding="base64">XDxwYXJzZV9sMl9kZXB0aFw+</entry>
         <entry>bitmex</entry>
         <entry>xbtusd</entry>
+        <entry>Error in order</entry>
       </history-search>
       <history-cmd>
         <entry>w!</entry>

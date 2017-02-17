@@ -1,7 +1,7 @@
 #!/bin/python
 
-from bitcoinexchangefh.sql_client import SqlClient
-from bitcoinexchangefh.util import Logger
+from befh.sql_client import SqlClient
+from befh.util import Logger
 
 class SqlClientTemplate(SqlClient):
     """

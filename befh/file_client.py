@@ -1,5 +1,5 @@
-from bitcoinexchangefh.database_client import DatabaseClient
-from bitcoinexchangefh.util import Logger
+from befh.database_client import DatabaseClient
+from befh.util import Logger
 import threading
 import os
 import csv

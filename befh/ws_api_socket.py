@@ -1,5 +1,5 @@
-from bitcoinexchangefh.api_socket import ApiSocket
-from bitcoinexchangefh.util import Logger
+from befh.api_socket import ApiSocket
+from befh.util import Logger
 import websocket
 import threading
 import json

@@ -1,4 +1,4 @@
-from bitcoinexchangefh.sql_client import SqlClient
+from befh.sql_client import SqlClient
 import pymysql
 
 class MysqlClient(SqlClient):

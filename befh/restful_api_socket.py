@@ -1,4 +1,4 @@
-from bitcoinexchangefh.api_socket import ApiSocket
+from befh.api_socket import ApiSocket
 try:
     import urllib.request as urlrequest
 except ImportError:

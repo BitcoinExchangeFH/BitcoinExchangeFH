@@ -1,8 +1,8 @@
-from bitcoinexchangefh.restful_api_socket import RESTfulApiSocket
-from bitcoinexchangefh.exchange import ExchangeGateway
-from bitcoinexchangefh.market_data import L2Depth, Trade
-from bitcoinexchangefh.instrument import Instrument
-from bitcoinexchangefh.util import Logger
+from befh.restful_api_socket import RESTfulApiSocket
+from befh.exchange import ExchangeGateway
+from befh.market_data import L2Depth, Trade
+from befh.instrument import Instrument
+from befh.util import Logger
 import time
 import threading
 from functools import partial

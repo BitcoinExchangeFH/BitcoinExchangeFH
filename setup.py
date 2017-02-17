@@ -5,12 +5,12 @@ setup(
     version='0.1.1',
     author='Gavin Chan',
     author_email='gavincyi@gmail.com',
-    packages=['bitcoinexchangefh'],
+    packages=['befh'],
     url='http://pypi.python.org/pypi/BitcoinExchangeFH/',
     license='LICENSE.txt',
     description='Cryptocurrency exchange market data feed handler.',
     entry_points={
-            'console_scripts': ['bitcoinexchangefh=bitcoinexchangefh.bitcoinexchangefh:main']
+            'console_scripts': ['befh=befh.befh:main']
         },
     install_requires=[
             'pymysql',

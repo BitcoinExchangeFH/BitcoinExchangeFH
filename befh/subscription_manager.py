@@ -1,4 +1,4 @@
-from bitcoinexchangefh.instrument import Instrument
+from befh.instrument import Instrument
 try:
     import ConfigParser
 except ImportError:

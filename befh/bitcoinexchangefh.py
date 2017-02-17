@@ -3,24 +3,24 @@
 import argparse
 import sys
 
-from bitcoinexchangefh.exchange import ExchangeGateway
-from bitcoinexchangefh.exch_bitmex import ExchGwBitmex
-from bitcoinexchangefh.exch_btcc import ExchGwBtccSpot, ExchGwBtccFuture
-from bitcoinexchangefh.exch_bitfinex import ExchGwBitfinex
-from bitcoinexchangefh.exch_okcoin import ExchGwOkCoin
-from bitcoinexchangefh.exch_kraken import ExchGwKraken
-from bitcoinexchangefh.exch_huobi import ExchGwHuobi
-from bitcoinexchangefh.exch_gdax import ExchGwGdax
-from bitcoinexchangefh.exch_bitstamp import ExchGwBitstamp
-from bitcoinexchangefh.exch_gatecoin import ExchGwGatecoin
-from bitcoinexchangefh.exch_quoine import ExchGwQuoine
-from bitcoinexchangefh.kdbplus_client import KdbPlusClient
-from bitcoinexchangefh.mysql_client import MysqlClient
-from bitcoinexchangefh.sqlite_client import SqliteClient
-from bitcoinexchangefh.file_client import FileClient
-from bitcoinexchangefh.zmq_client import ZmqClient
-from bitcoinexchangefh.subscription_manager import SubscriptionManager
-from bitcoinexchangefh.util import Logger
+from befh.exchange import ExchangeGateway
+from befh.exch_bitmex import ExchGwBitmex
+from befh.exch_btcc import ExchGwBtccSpot, ExchGwBtccFuture
+from befh.exch_bitfinex import ExchGwBitfinex
+from befh.exch_okcoin import ExchGwOkCoin
+from befh.exch_kraken import ExchGwKraken
+from befh.exch_huobi import ExchGwHuobi
+from befh.exch_gdax import ExchGwGdax
+from befh.exch_bitstamp import ExchGwBitstamp
+from befh.exch_gatecoin import ExchGwGatecoin
+from befh.exch_quoine import ExchGwQuoine
+from befh.kdbplus_client import KdbPlusClient
+from befh.mysql_client import MysqlClient
+from befh.sqlite_client import SqliteClient
+from befh.file_client import FileClient
+from befh.zmq_client import ZmqClient
+from befh.subscription_manager import SubscriptionManager
+from befh.util import Logger
 
 
 def main():

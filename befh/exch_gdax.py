@@ -1,10 +1,10 @@
-from bitcoinexchangefh.restful_api_socket import RESTfulApiSocket
-from bitcoinexchangefh.ws_api_socket import WebSocketApiClient
-from bitcoinexchangefh.market_data import L2Depth, Trade
-from bitcoinexchangefh.exchange import ExchangeGateway
-from bitcoinexchangefh.instrument import Instrument
-from bitcoinexchangefh.sql_client_template import SqlClientTemplate
-from bitcoinexchangefh.util import Logger
+from befh.restful_api_socket import RESTfulApiSocket
+from befh.ws_api_socket import WebSocketApiClient
+from befh.market_data import L2Depth, Trade
+from befh.exchange import ExchangeGateway
+from befh.instrument import Instrument
+from befh.sql_client_template import SqlClientTemplate
+from befh.util import Logger
 import time
 import threading
 import json

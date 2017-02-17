@@ -1,6 +1,6 @@
 #!/bin/python
 
-from bitcoinexchangefh.sql_client import SqlClient
+from befh.sql_client import SqlClient
 import sqlite3
 
 class SqliteClient(SqlClient):

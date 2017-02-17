@@ -1,8 +1,8 @@
-from bitcoinexchangefh.ws_api_socket import WebSocketApiClient
-from bitcoinexchangefh.market_data import L2Depth, Trade
-from bitcoinexchangefh.exchange import ExchangeGateway
-from bitcoinexchangefh.instrument import Instrument
-from bitcoinexchangefh.util import Logger
+from befh.ws_api_socket import WebSocketApiClient
+from befh.market_data import L2Depth, Trade
+from befh.exchange import ExchangeGateway
+from befh.instrument import Instrument
+from befh.util import Logger
 import time
 import threading
 import json

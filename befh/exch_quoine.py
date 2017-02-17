@@ -1,16 +1,16 @@
-from bitcoinexchangefh.restful_api_socket import RESTfulApiSocket
-from bitcoinexchangefh.exchange import ExchangeGateway
-from bitcoinexchangefh.market_data import L2Depth, Trade
-from bitcoinexchangefh.util import Logger
-from bitcoinexchangefh.instrument import Instrument
-from bitcoinexchangefh.sql_client_template import SqlClientTemplate
+from befh.restful_api_socket import RESTfulApiSocket
+from befh.exchange import ExchangeGateway
+from befh.market_data import L2Depth, Trade
+from befh.util import Logger
+from befh.instrument import Instrument
+from befh.sql_client_template import SqlClientTemplate
 import time
 import threading
 from functools import partial
 from datetime import datetime
 
 
-class ExchGwApiTemplate(RESTfulApiSocket):
+class ExchGwApiQuoine(RESTfulApiSocket):
     """
     Exchange gateway RESTfulApi
     """
@@ -22,28 +22,24 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         return 1
         
     @classmethod
-    def get_order_book_timestamp_field_name(cls):
-        return 'date'
-        
-    @classmethod
     def get_trades_timestamp_field_name(cls):
-        return 'date'
+        return 'created_at'
     
     @classmethod
     def get_bids_field_name(cls):
-        return 'bids'
+        return 'buy_price_levels'
         
     @classmethod
     def get_asks_field_name(cls):
-        return 'asks'
+        return 'sell_price_levels'
         
     @classmethod
     def get_trade_side_field_name(cls):
-        return 'type'
+        return 'taker_side'
         
     @classmethod
     def get_trade_id_field_name(cls):
-        return 'tid'
+        return 'id'
         
     @classmethod
     def get_trade_price_field_name(cls):
@@ -51,20 +47,16 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         
     @classmethod
     def get_trade_volume_field_name(cls):
-        return 'amount'        
+        return 'quantity'
         
     @classmethod
     def get_order_book_link(cls, instmt):
-        return "https://data.btcchina.com/data/orderbook?limit=5&market=%s" % instmt.get_instmt_code()
+        return "https://api.quoine.com/products/%s/price_levels" % instmt.get_instmt_code()
 
     @classmethod
-    def get_trades_link(cls, instmt):
-        if int(instmt.get_exch_trade_id()) > 0:
-            return "https://data.btcchina.com/data/historydata?market=%s&since=%s" % \
-                (instmt.get_instmt_code(), instmt.get_exch_trade_id())
-        else:
-            return "https://data.btcchina.com/data/historydata?limit=100&market=%s" % \
-                (instmt.get_instmt_code())         
+    def get_trades_link(cls, instmt, page=1):
+            return "https://api.quoine.com/executions?product_id=%s&page=%d" % \
+                   (instmt.get_instmt_code(), page)
                 
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
@@ -75,14 +67,11 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         """
         l2_depth = L2Depth()
         keys = list(raw.keys())
-        if cls.get_order_book_timestamp_field_name() in keys and \
-           cls.get_bids_field_name() in keys and \
+        if cls.get_bids_field_name() in keys and \
            cls.get_asks_field_name() in keys:
             
             # Date time
-            date_time = float(raw[cls.get_order_book_timestamp_field_name()])
-            date_time = date_time / cls.get_timestamp_offset()
-            l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
+            l2_depth.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
             
             # Bids
             bids = raw[cls.get_bids_field_name()]
@@ -117,7 +106,8 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         if cls.get_trades_timestamp_field_name() in keys and \
            cls.get_trade_id_field_name() in keys and \
            cls.get_trade_price_field_name() in keys and \
-           cls.get_trade_volume_field_name() in keys:
+           cls.get_trade_volume_field_name() in keys and \
+           cls.get_trade_side_field_name() in keys:
         
             # Date time
             date_time = float(raw[cls.get_trades_timestamp_field_name()])
@@ -149,7 +139,8 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         :param instmt: Instrument
         :return: Object L2Depth
         """
-        res = cls.request(cls.get_order_book_link(instmt))
+        link = cls.get_order_book_link(instmt)
+        res = cls.request(link)
         if len(res) > 0:
             return cls.parse_l2_depth(instmt=instmt,
                                        raw=res)
@@ -164,19 +155,39 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         :param trade_id: Trade id
         :return: List of trades
         """
-        link = cls.get_trades_link(instmt)
-        res = cls.request(link)
+        exch_trade_id = int(instmt.get_exch_trade_id())
+        page_limit = 10 if exch_trade_id > 0 else 1
         trades = []
-        if len(res) > 0:
-            for t in res:
-                trade = cls.parse_trade(instmt=instmt,
-                                         raw=t)
-                trades.append(trade)
+        is_continue = True
+
+        for page in range(1, page_limit+1):
+            link = cls.get_trades_link(instmt, page)
+            res = cls.request(link)
+            if len(res) > 0:
+                if 'models' not in res.keys():
+                    break
+                res = res['models']
+                for t in res:
+                    trade = cls.parse_trade(instmt=instmt,
+                                             raw=t)
+                    if int(trade.trade_id) > exch_trade_id:
+                        trades.append(trade)
+                    else:
+                        is_continue = False
+                        break
+
+                if not is_continue:
+                    break
 
         return trades
 
 
-class ExchGwTemplate(ExchangeGateway):
+class ExchGwQuoine(ExchangeGateway):
+    # static variable to control to request rate
+    num_of_connections = 0
+    num_of_connections_lock = threading.Lock()
+    extra_waiting_sec = 0.5
+    
     """
     Exchange gateway
     """
@@ -185,7 +196,7 @@ class ExchGwTemplate(ExchangeGateway):
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwApiTemplate(), db_client)
+        ExchangeGateway.__init__(self, ExchGwApiQuoine(), db_client)
 
     @classmethod
     def get_exchange_name(cls):
@@ -193,13 +204,17 @@ class ExchGwTemplate(ExchangeGateway):
         Get exchange name
         :return: Exchange name string
         """
-        return 'Template'
+        return 'Quoine'
 
     def get_order_book_worker(self, instmt):
         """
         Get order book worker
         :param instmt: Instrument
         """
+        ExchGwQuoine.num_of_connections_lock.acquire()
+        ExchGwQuoine.num_of_connections += 1
+        Logger.info(self.__class__.__name__, "Current number of connections = %d" % ExchGwQuoine.num_of_connections)
+        ExchGwQuoine.num_of_connections_lock.release()
         instmt.set_order_book_id(self.get_order_book_init(instmt))
 
         while True:
@@ -212,13 +227,19 @@ class ExchGwTemplate(ExchangeGateway):
                     self.insert_order_book(instmt)
             except Exception as e:
                 Logger.error(self.__class__.__name__, "Error in order book: %s" % e)
-            time.sleep(1)
+            ExchGwQuoine.num_of_connections_lock.acquire()
+            time.sleep(ExchGwQuoine.num_of_connections + ExchGwQuoine.extra_waiting_sec)
+            ExchGwQuoine.num_of_connections_lock.release()
 
     def get_trades_worker(self, instmt):
         """
         Get order book worker thread
         :param instmt: Instrument name
         """
+        ExchGwQuoine.num_of_connections_lock.acquire()
+        ExchGwQuoine.num_of_connections += 1
+        Logger.info(self.__class__.__name__, "Current number of connections = %d" % ExchGwQuoine.num_of_connections)
+        ExchGwQuoine.num_of_connections_lock.release()        
         trade_id, exch_trade_id = self.get_trades_init(instmt)
         instmt.set_trade_id(trade_id)
         instmt.set_exch_trade_id(exch_trade_id)
@@ -246,7 +267,9 @@ class ExchGwTemplate(ExchangeGateway):
             if not instmt.get_recovered():
                 instmt.set_recovered(True)
 
-            time.sleep(1)
+            ExchGwQuoine.num_of_connections_lock.acquire()
+            time.sleep(ExchGwQuoine.num_of_connections + ExchGwQuoine.extra_waiting_sec)
+            ExchGwQuoine.num_of_connections_lock.release()
 
     def start(self, instmt):
         """
@@ -270,12 +293,12 @@ class ExchGwTemplate(ExchangeGateway):
         
 if __name__ == '__main__':
     Logger.init_log()
-    exchange_name = 'Template'
-    instmt_name = 'BTCCNY'
-    instmt_code = 'btccny'
+    exchange_name = 'Quoine'
+    instmt_name = 'BTCUSD'
+    instmt_code = '1'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)    
     db_client = SqlClientTemplate()
-    exch = ExchGwTemplate(db_client)
+    exch = ExchGwQuoine(db_client)
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
     instmt.set_order_book_table_name(exch.get_order_book_table_name(instmt.get_exchange_name(),
@@ -283,5 +306,5 @@ if __name__ == '__main__':
     instmt.set_trades_table_name(exch.get_trades_table_name(instmt.get_exchange_name(),
                                                             instmt.get_instmt_name()))
     instmt.set_recovered(False)    
-    exch.get_order_book_worker(instmt)
+    # exch.get_order_book_worker(instmt)
     exch.get_trades_worker(instmt)

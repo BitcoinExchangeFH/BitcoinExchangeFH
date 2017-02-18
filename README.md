@@ -112,25 +112,25 @@ SELECT
 For testing, you can quick start with Sqlite as follows. It uses the default subscription list and records the data to default sqlite file "bitcoinexchange.raw"
 
 ```
-bitcoinexchangefh.py -sqlite
+bitcoinexchangefh -sqlite
 ```
 
 To record the data to Kdb+ database, for example connecting to localhost at port 5000, you can run the following command
 
 ```
-bitcoinexchangefh.py -kdb -dbaddr localhost -dbport 5000
+bitcoinexchangefh -kdb -dbaddr localhost -dbport 5000
 ```
 
 To record the data to MySQL database, for example connecting to localhost with user "bitcoin" and schema "bcex", you can run the following command.
 
 ```
-bitcoinexchangefh.py -mysql -dbaddr localhost -dbport 3306 -dbuser bitcoin -dbpwd bitcoin -dbschema bcex
+bitcoinexchangefh -mysql -dbaddr localhost -dbport 3306 -dbuser bitcoin -dbpwd bitcoin -dbschema bcex
 ```
 
 To record the data to csv files, for example to a folder named "data", you can run the following command.
 
 ```
-bitcoinexchangefh.py -csv -dbdir data/
+bitcoinexchangefh -csv -dbdir data/
 ```
 
 ### Arguments

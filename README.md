@@ -8,9 +8,10 @@ BitcoinExchangeFH is a slim application to record the price depth and trades in 
 
 Users can
 
-1. Recording market data for backtesting and analysis.
-2. Recording market data to a in-memory database and other applications can quickly access to it.
-3. Customize the project for trading use.
+1. Streaming market data to a target application (via ZeroMQ)
+2. Recording market data for backtesting and analysis.
+3. Recording market data to a in-memory database and other applications can quickly access to it.
+4. Customize the project for trading use.
 
 <p align="center">
   <img src="doc/sample.jpg">
@@ -49,10 +50,37 @@ Scheduled exchange supported soon:
 It is highly recommended to use pip for installing python dependence. 
 
 ```
-pip install -r python/requirement.txt
+pip install bitcoinexchangefh
 ```
 
-### Database
+If your operation system has pythons with version 2 and 3, please specify
+pip3 for python 3 installation.
+
+```
+pip3 install bitcoinexchangefh
+```
+
+### Destination
+
+#### Applications
+
+You can write your application to receive the market data via ZeroMQ socket.
+
+BitcoinExchangeFH acts as a publisher in the 
+[Publish/Subscibe](http://learning-0mq-with-pyzmq.readthedocs.io/en/latest/pyzmq/patterns/pubsub.html) model.
+You can open a TCP or inter-process traffic.
+
+For example, if you decide the data feed is subscribed at localhost at port 6001.
+
+```
+bitcoinexchangefh -zmq -dbaddr "tcp://localhost:6001"
+```
+
+If the data feed is subscribed via inter-process shared memory with address "bitcoin".
+
+```
+bitcoinexchangefh -zmq -dbaddr "ipc://bitcoin"
+```
 
 #### Sqlite
 
@@ -84,25 +112,25 @@ SELECT
 For testing, you can quick start with Sqlite as follows. It uses the default subscription list and records the data to default sqlite file "bitcoinexchange.raw"
 
 ```
-python python/bitcoinexchangefh.py -sqlite
+bitcoinexchangefh.py -sqlite
 ```
 
 To record the data to Kdb+ database, for example connecting to localhost at port 5000, you can run the following command
 
 ```
-python python/bitcoinexchangefh.py -kdb -dbaddr localhost -dbport 5000
+bitcoinexchangefh.py -kdb -dbaddr localhost -dbport 5000
 ```
 
 To record the data to MySQL database, for example connecting to localhost with user "bitcoin" and schema "bcex", you can run the following command.
 
 ```
-python python/bitcoinexchangefh.py -mysql -dbaddr localhost -dbport 3306 -dbuser bitcoin -dbpwd bitcoin -dbschema bcex
+bitcoinexchangefh.py -mysql -dbaddr localhost -dbport 3306 -dbuser bitcoin -dbpwd bitcoin -dbschema bcex
 ```
 
 To record the data to csv files, for example to a folder named "data", you can run the following command.
 
 ```
-python python/bitcoinexchangefh.py -csv -dbdir data/
+bitcoinexchangefh.py -csv -dbdir data/
 ```
 
 ### Arguments
@@ -112,6 +140,7 @@ python python/bitcoinexchangefh.py -csv -dbdir data/
 |mode|Please refer to [Mode](#mode)|
 |instmts|Instrument subscription file.|
 |exchtime|Use exchange timestamp if possible.|
+|zmq|Streamed with ZeroMQ sockets.|
 |kdb|Use Kdb+ database.|
 |sqlite|Use SQLite database.|
 |mysql|Use MySQL.|

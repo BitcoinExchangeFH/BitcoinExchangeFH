@@ -1,12 +1,12 @@
+from befh.restful_api_socket import RESTfulApiSocket
+from befh.exchange import ExchangeGateway
+from befh.market_data import L2Depth, Trade
+from befh.instrument import Instrument
+from befh.util import Logger
 import time
 import threading
 from functools import partial
 from datetime import datetime
-from restful_api_socket import RESTfulApiSocket
-from exchange import ExchangeGateway
-from market_data import L2Depth, Trade
-from instrument import Instrument
-from util import Logger
 
 
 class ExchGwKrakenRestfulApi(RESTfulApiSocket):

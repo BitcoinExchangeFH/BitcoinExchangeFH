@@ -1,5 +1,5 @@
+from befh.sql_client import SqlClient
 import pymysql
-from sql_client import SqlClient
 
 class MysqlClient(SqlClient):
     """

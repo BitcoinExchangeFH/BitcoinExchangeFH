@@ -1,6 +1,6 @@
 #!/bin/python
-from database_client import DatabaseClient
-from market_data import L2Depth, Trade, Snapshot
+from befh.database_client import DatabaseClient
+from befh.market_data import L2Depth, Trade, Snapshot
 from datetime import datetime
 
 class ExchangeGateway:

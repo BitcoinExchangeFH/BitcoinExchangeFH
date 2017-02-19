@@ -1,8 +1,8 @@
+from befh.instrument import Instrument
 try:
     import ConfigParser
 except ImportError:
     import configparser as ConfigParser
-from instrument import Instrument
 
 class SubscriptionManager:
     def __init__(self, config_path):

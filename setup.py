@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='BitcoinExchangeFH',
-    version='0.1.1',
+    version='0.1.1rc3',
     author='Gavin Chan',
     author_email='gavincyi@gmail.com',
     packages=['befh'],
@@ -10,7 +10,7 @@ setup(
     license='LICENSE.txt',
     description='Cryptocurrency exchange market data feed handler.',
     entry_points={
-            'console_scripts': ['befh=befh.befh:main']
+            'console_scripts': ['bitcoinexchangefh=befh.bitcoinexchangefh:main']
         },
     install_requires=[
             'pymysql',

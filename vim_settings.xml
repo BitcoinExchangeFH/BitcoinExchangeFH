@@ -26,12 +26,12 @@
         <mark key="." line="65" column="38" />
         <mark key="^" line="65" column="38" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" timestamp="1488501136532">
-        <mark key="'" line="173" column="36" />
-        <mark key="[" line="204" column="47" />
-        <mark key="]" line="204" column="51" />
-        <mark key="." line="204" column="47" />
-        <mark key="^" line="196" column="48" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" timestamp="1488517944837">
+        <mark key="'" line="134" column="67" />
+        <mark key="[" line="134" column="67" />
+        <mark key="]" line="134" column="67" />
+        <mark key="." line="134" column="67" />
+        <mark key="^" line="134" column="67" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/exch_bitfinex.py" timestamp="1479738556101">
         <mark key="'" line="173" column="8" />
@@ -345,10 +345,17 @@
     </filemarks>
     <jumps>
       <jump line="173" column="36" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" />
+      <jump line="70" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" />
+      <jump line="71" column="60" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" />
+      <jump line="204" column="19" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" />
+      <jump line="209" column="16" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" />
+      <jump line="95" column="17" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" />
+      <jump line="119" column="19" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" />
+      <jump line="134" column="67" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="4">
-        <text>no market data from bitstamp</text>
+      <register name="&quot;" type="2">
+        <text encoding="base64">ICAgICAgICBpZiBpbnN0bXQuZ2V0X2luc3RtdF9jb2RlKCkgPT0gIlwiXCIiOgo=</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1562,49 +1569,49 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>no market data from bitstamp</text>
+        <text>instmt.get_instmt_code() == &quot;\&quot;\&quot;&quot;:</text>
       </register>
       <register name="/" type="4">
-        <text encoding="base64">XDxnZXRfb3JkZXJfYm9va19zdWJzY3JpcHRpb25fc3RyaW5nXD4=</text>
+        <text>trade_id</text>
       </register>
-      <register name="0" type="8">
-        <text>\&quot;\&quot;</text>
+      <register name="0" type="2">
+        <text encoding="base64">ICAgICAgICBpZiBjbHMuaXNfZGVmYXVsdF9pbnN0bXQoaW5zdG10KToK</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICBpZiBpbnN0bXQuZ2V0X2luc3RtdF9jb2RlKCkgPT0gIiI6Cg==</text>
+        <text encoding="base64">ICAgICAgICBpZiBpbnN0bXQuZ2V0X2luc3RtdF9jb2RlKCkgPT0gIlwiXCIiOgo=</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgYXNrcyA9IHNvcnRlZChhc2tzLCBrZXk9bGFtYmRhIHg6IHhbMF0pCg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgZWxpZiAoaW5zdG10LmdldF9pbnN0bXRfY29kZSgpID09ICJcIlwiIiBhbmQgY2hhbm5lbF9uYW1lID09ICJsaXZlX3RyYWRlcyIpIG9yIFwKICAgICAgICAgICAgICAgICAoaW5zdG10LmdldF9pbnN0bXRfY29kZSgpICE9ICJcIlwiIiBhbmQgY2hhbm5lbF9uYW1lID09ICJsaXZlX3RyYWRlc18lcyIgJSBpbnN0bXQuZ2V0X2luc3RtdF9jb2RlKCkpOgo=</text>
       </register>
       <register name="3" type="8">
-        <text>min(l2_depth.bids, len(bids))</text>
+        <text>instmt.get_instmt_code() != &quot;\&quot;\&quot;&quot;</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgYmlkcyA9IHNvcnRlZChiaWRzLCBrZXk9bGFtYmRhIHg6IHhbMF0sIHJldmVyc2U9VHJ1ZSkK</text>
+        <text encoding="base64">ICAgICAgICBpZiBpbnN0bXQuZ2V0X2luc3RtdF9jb2RlKCkgPT0gIiI6Cg==</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">UmVzb2x2ZWQgaXNzdWUgZnJvbSAjMjAK</text>
+        <text encoding="base64">ICAgICAgICAgICAgYXNrcyA9IHNvcnRlZChhc2tzLCBrZXk9bGFtYmRhIHg6IHhbMF0pCg==</text>
       </register>
-      <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgYXNrcyA9IHJhd1tjbHMuZ2V0X2Fza3NfZmllbGRfbmFtZSgpXQo=</text>
+      <register name="6" type="8">
+        <text>min(l2_depth.bids, len(bids))</text>
       </register>
       <register name="7" type="2">
         <text encoding="base64">ICAgICAgICAgICAgYmlkcyA9IHNvcnRlZChiaWRzLCBrZXk9bGFtYmRhIHg6IHhbMF0sIHJldmVyc2U9VHJ1ZSkK</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgYXNrcyA9IHNvcnRlZChhc2tzLCBrZXk9bGFtYmRhIHg6IHhbMF0pCg==</text>
+        <text encoding="base64">UmVzb2x2ZWQgaXNzdWUgZnJvbSAjMjAK</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgaWYgbGVuKGFza3MpICE9IDU6CiAgICAgICAgICAgICAgICBhc3NlcnQgbGVuKGFza3MpID09IDUsICJJbnZhbGlkIHNpemUgJWQiICUgbGVuKGFza3MpCg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgYXNrcyA9IHJhd1tjbHMuZ2V0X2Fza3NfZmllbGRfbmFtZSgpXQo=</text>
       </register>
       <register name=":" type="4">
         <text>w</text>
       </register>
     </registers>
     <search>
-      <last-search encoding="base64">XDxnZXRfb3JkZXJfYm9va19zdWJzY3JpcHRpb25fc3RyaW5nXD4=</last-search>
+      <last-search>trade_id</last-search>
       <last-offset />
-      <last-pattern encoding="base64">XDxnZXRfb3JkZXJfYm9va19zdWJzY3JpcHRpb25fc3RyaW5nXD4=</last-pattern>
+      <last-pattern>trade_id</last-pattern>
       <last-replace>btcusd</last-replace>
       <last-substitute>xbtusd</last-substitute>
       <last-dir>1</last-dir>
@@ -1612,9 +1619,6 @@
     </search>
     <history>
       <history-search>
-        <entry>kraken</entry>
-        <entry>Kra</entry>
-        <entry>enabled = 0</entry>
         <entry>update_date_time</entry>
         <entry encoding="base64">ID0=</entry>
         <entry>total_(.*)_re.*</entry>
@@ -1632,6 +1636,9 @@
         <entry>xbtusd</entry>
         <entry>Error in order</entry>
         <entry encoding="base64">XDxnZXRfb3JkZXJfYm9va19zdWJzY3JpcHRpb25fc3RyaW5nXD4=</entry>
+        <entry>get_inst</entry>
+        <entry>get_instmt_code</entry>
+        <entry>trade_id</entry>
       </history-search>
       <history-cmd>
         <entry>w!</entry>

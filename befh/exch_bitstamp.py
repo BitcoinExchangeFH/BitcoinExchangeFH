@@ -55,15 +55,15 @@ class ExchGwApiBitstamp(WebSocketApiClient):
 
     @classmethod
     def get_order_book_subscription_string(cls, instmt):
-        if instmt.get_instmt_code() == "":
+        if instmt.get_instmt_code() == "\"\"":
             return json.dumps({"event":"pusher:subscribe","data":{"channel":"order_book"}})
         else:
             return json.dumps({"event":"pusher:subscribe","data":{"channel":"order_book_%s" % instmt.get_instmt_code()}})
 
     @classmethod
     def get_trades_subscription_string(cls, instmt):
-        if instmt.get_instmt_code() == "":
-            return json.dumps({"event":"pusher:subscribe","data":{"channel":"live_trades"}})        
+        if instmt.get_instmt_code() == "\"\"":
+            return json.dumps({"event":"pusher:subscribe","data":{"channel":"live_trades"}})
         else:
             return json.dumps({"event":"pusher:subscribe","data":{"channel":"live_trades_%s" % instmt.get_instmt_code()}})        
             
@@ -194,15 +194,15 @@ class ExchGwBitstamp(ExchangeGateway):
         keys = message.keys()
         if 'event' in keys and message['event'] in ['data', 'trade'] and 'channel' in keys and 'data' in keys:
             channel_name = message['channel']
-            if (instmt.get_instmt_code() == "" and channel_name == "order_book") or \
-               (instmt.get_instmt_code() != "" and channel_name == "order_book_%s" % instmt.get_instmt_code()):
+            if (instmt.get_instmt_code() == "\"\"" and channel_name == "order_book") or \
+               (instmt.get_instmt_code() != "\"\"" and channel_name == "order_book_%s" % instmt.get_instmt_code()):
                 instmt.set_prev_l2_depth(instmt.get_l2_depth().copy())
                 self.api_socket.parse_l2_depth(instmt, json.loads(message['data']))
                 if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
                     instmt.incr_order_book_id()
                     self.insert_order_book(instmt)    
-            elif (instmt.get_instmt_code() == "" and channel_name == "live_trades") or \
-                 (instmt.get_instmt_code() != "" and channel_name == "live_trades_%s" % instmt.get_instmt_code()):
+            elif (instmt.get_instmt_code() == "\"\"" and channel_name == "live_trades") or \
+                 (instmt.get_instmt_code() != "\"\"" and channel_name == "live_trades_%s" % instmt.get_instmt_code()):
                     trade = self.api_socket.parse_trade(instmt, json.loads(message['data']))
                     if trade.trade_id != instmt.get_exch_trade_id():
                         instmt.incr_trade_id()

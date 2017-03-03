@@ -4,7 +4,7 @@ import threading
 from functools import partial
 from socketIO_client import SocketIO
 
-class WebSocketApiClient(ApiSocket):
+class SocketIOApiClient(ApiSocket):
     """
     Generic REST API call
     """

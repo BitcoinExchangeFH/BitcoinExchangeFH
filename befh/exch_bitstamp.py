@@ -55,17 +55,21 @@ class ExchGwApiBitstamp(WebSocketApiClient):
 
     @classmethod
     def get_order_book_subscription_string(cls, instmt):
-        if instmt.get_instmt_code() == "\"\"":
+        if cls.is_default_instmt(instmt):
             return json.dumps({"event":"pusher:subscribe","data":{"channel":"order_book"}})
         else:
             return json.dumps({"event":"pusher:subscribe","data":{"channel":"order_book_%s" % instmt.get_instmt_code()}})
 
     @classmethod
     def get_trades_subscription_string(cls, instmt):
-        if instmt.get_instmt_code() == "\"\"":
+        if cls.is_default_instmt(instmt):
             return json.dumps({"event":"pusher:subscribe","data":{"channel":"live_trades"}})
         else:
-            return json.dumps({"event":"pusher:subscribe","data":{"channel":"live_trades_%s" % instmt.get_instmt_code()}})        
+            return json.dumps({"event":"pusher:subscribe","data":{"channel":"live_trades_%s" % instmt.get_instmt_code()}})
+
+    @classmethod
+    def is_default_instmt(cls, instmt):
+        return instmt.get_instmt_code() == "\"\"" or instmt.get_instmt_code() == "" or instmt.get_instmt_code() == "''"
             
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
@@ -128,7 +132,7 @@ class ExchGwApiBitstamp(WebSocketApiClient):
             trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()] + 1)
                 
             # Trade id
-            trade.trade_id = raw[cls.get_trade_id_field_name()]
+            trade.trade_id = str(raw[cls.get_trade_id_field_name()])
             
             # Trade price
             trade.trade_price = raw[cls.get_trade_price_field_name()]            
@@ -194,15 +198,15 @@ class ExchGwBitstamp(ExchangeGateway):
         keys = message.keys()
         if 'event' in keys and message['event'] in ['data', 'trade'] and 'channel' in keys and 'data' in keys:
             channel_name = message['channel']
-            if (instmt.get_instmt_code() == "\"\"" and channel_name == "order_book") or \
-               (instmt.get_instmt_code() != "\"\"" and channel_name == "order_book_%s" % instmt.get_instmt_code()):
+            if (self.api_socket.is_default_instmt(instmt) and channel_name == "order_book") or \
+               (not self.api_socket.is_default_instmt(instmt) and channel_name == "order_book_%s" % instmt.get_instmt_code()):
                 instmt.set_prev_l2_depth(instmt.get_l2_depth().copy())
                 self.api_socket.parse_l2_depth(instmt, json.loads(message['data']))
                 if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
                     instmt.incr_order_book_id()
-                    self.insert_order_book(instmt)    
-            elif (instmt.get_instmt_code() == "\"\"" and channel_name == "live_trades") or \
-                 (instmt.get_instmt_code() != "\"\"" and channel_name == "live_trades_%s" % instmt.get_instmt_code()):
+                    self.insert_order_book(instmt)
+            elif (self.api_socket.is_default_instmt(instmt) and channel_name == "live_trades") or \
+                 (not self.api_socket.is_default_instmt(instmt) and channel_name == "live_trades_%s" % instmt.get_instmt_code()):
                     trade = self.api_socket.parse_trade(instmt, json.loads(message['data']))
                     if trade.trade_id != instmt.get_exch_trade_id():
                         instmt.incr_trade_id()

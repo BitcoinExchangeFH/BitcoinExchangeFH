@@ -9,7 +9,7 @@
         <mark key="." line="91" column="39" />
         <mark key="^" line="91" column="39" />
       </file>
-      <file name="/a.dummy" timestamp="1485509953305">
+      <file name="/a.dummy" timestamp="1488550015039">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" timestamp="1482356430832">
@@ -26,9 +26,9 @@
         <mark key="." line="65" column="38" />
         <mark key="^" line="65" column="38" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" timestamp="1488517944837">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" timestamp="1488549763325">
         <mark key="'" line="134" column="67" />
-        <mark key="[" line="134" column="67" />
+        <mark key="[" line="71" column="83" />
         <mark key="]" line="134" column="67" />
         <mark key="." line="134" column="67" />
         <mark key="^" line="134" column="67" />
@@ -98,13 +98,6 @@
         <mark key="^" line="4" column="4" />
         <mark key="." line="4" column="4" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" timestamp="1483020462836">
-        <mark key="'" line="70" column="9" />
-        <mark key="[" line="4" column="10" />
-        <mark key="]" line="4" column="10" />
-        <mark key="^" line="4" column="10" />
-        <mark key="." line="4" column="10" />
-      </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/market_data.py" timestamp="1482965916910">
         <mark key="'" line="33" column="12" />
         <mark key="[" line="235" column="77" />
@@ -138,6 +131,12 @@
         <mark key="]" line="5" column="36" />
         <mark key="." line="5" column="36" />
         <mark key="^" line="5" column="36" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/setup.py" timestamp="1488549802919">
+        <mark key="[" line="18" column="34" />
+        <mark key="]" line="18" column="34" />
+        <mark key="." line="18" column="34" />
+        <mark key="^" line="18" column="34" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/file_client.py" timestamp="1483021639403">
         <mark key="'" line="114" column="8" />
@@ -264,8 +263,8 @@
         <mark key="." line="230" column="32" />
         <mark key="^" line="230" column="32" />
       </file>
-      <file name="/Dummy.txt" timestamp="1488501188368">
-        <mark key="[" line="0" column="22" />
+      <file name="/Dummy.txt" timestamp="1488549962911">
+        <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="22" />
         <mark key="." line="0" column="22" />
       </file>
@@ -352,10 +351,11 @@
       <jump line="95" column="17" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" />
       <jump line="119" column="19" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" />
       <jump line="134" column="67" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" />
+      <jump line="69" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICBpZiBpbnN0bXQuZ2V0X2luc3RtdF9jb2RlKCkgPT0gIlwiXCIiOgo=</text>
+      <register name="&quot;" type="4">
+        <text>0</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1569,10 +1569,10 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>instmt.get_instmt_code() == &quot;\&quot;\&quot;&quot;:</text>
+        <text>0</text>
       </register>
       <register name="/" type="4">
-        <text>trade_id</text>
+        <text>enabled = 1</text>
       </register>
       <register name="0" type="2">
         <text encoding="base64">ICAgICAgICBpZiBjbHMuaXNfZGVmYXVsdF9pbnN0bXQoaW5zdG10KToK</text>
@@ -1609,18 +1609,16 @@
       </register>
     </registers>
     <search>
-      <last-search>trade_id</last-search>
+      <last-search>enabled = 1</last-search>
       <last-offset />
-      <last-pattern>trade_id</last-pattern>
-      <last-replace>btcusd</last-replace>
-      <last-substitute>xbtusd</last-substitute>
+      <last-pattern>enabled = 1</last-pattern>
+      <last-replace>enabled = 0</last-replace>
+      <last-substitute>enabled = 1</last-substitute>
       <last-dir>1</last-dir>
       <show-last>false</show-last>
     </search>
     <history>
       <history-search>
-        <entry>update_date_time</entry>
-        <entry encoding="base64">ID0=</entry>
         <entry>total_(.*)_re.*</entry>
         <entry>20161123</entry>
         <entry>0117</entry>
@@ -1639,13 +1637,13 @@
         <entry>get_inst</entry>
         <entry>get_instmt_code</entry>
         <entry>trade_id</entry>
+        <entry>enabled= 1</entry>
+        <entry>enabled = 1</entry>
       </history-search>
       <history-cmd>
-        <entry>w!</entry>
         <entry>wq!</entry>
         <entry>g</entry>
         <entry>eq</entry>
-        <entry>%s/enabled = 1/enabled = 0/g</entry>
         <entry>%s/enabled = 0/enable = 1/g</entry>
         <entry>%s/enabled = 0/enabled = 1/g</entry>
         <entry encoding="base64">JzwsJz4lcy8gPS9fcmUgPS9n</entry>
@@ -1660,6 +1658,8 @@
         <entry>wq</entry>
         <entry encoding="base64">JzwsJz5zL2JpdG1leC9iaXRmaW5leC9n</entry>
         <entry encoding="base64">JzwsJz5zL3hidHVzZC9idGN1c2QvZw==</entry>
+        <entry>%s/enabled= 1/enabled = 0/g</entry>
+        <entry>%s/enabled = 1/enabled = 0/g</entry>
         <entry>w</entry>
       </history-cmd>
       <history-expr />

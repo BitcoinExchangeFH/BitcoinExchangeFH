@@ -84,17 +84,17 @@ class ExchGwApiBitstamp(WebSocketApiClient):
             
             # Bids
             bids = raw[cls.get_bids_field_name()]
-            for i in range(0, len(bids)):
+            bids_len = min(l2_depth.depth, len(bids))
+            for i in range(0, bids_len):
                 l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
                 l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
-            bids = sorted(bids, key=lambda x: x[0], reverse=True)
-                
+
             # Asks
             asks = raw[cls.get_asks_field_name()]
-            for i in range(0, len(asks)):
+            asks_len = min(l2_depth.depth, len(asks))
+            for i in range(0, asks_len):
                 l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
                 l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]            
-            asks = sorted(asks, key=lambda x: x[0])
         else:
             raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
@@ -169,7 +169,7 @@ class ExchGwBitstamp(ExchangeGateway):
         :param ws: Web socket
         """
         Logger.info(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
-                  (instmt.get_instmt_code(), instmt.get_exchange_name()))
+                  (instmt.get_instmt_name(), instmt.get_exchange_name()))
         if not instmt.get_subscribed():
             ws.send(self.api_socket.get_order_book_subscription_string(instmt))
             ws.send(self.api_socket.get_trades_subscription_string(instmt))            
@@ -182,7 +182,7 @@ class ExchGwBitstamp(ExchangeGateway):
         :param ws: Web socket
         """
         Logger.info(self.__class__.__name__, "Instrument %s is unsubscribed in channel %s" % \
-                  (instmt.get_instmt_code(), instmt.get_exchange_name()))
+                  (instmt.get_instmt_name(), instmt.get_exchange_name()))
         instmt.set_subscribed(False)
 
     def on_message_handler(self, instmt, message):

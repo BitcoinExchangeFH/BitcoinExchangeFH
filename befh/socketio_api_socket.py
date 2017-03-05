@@ -57,13 +57,17 @@ class SocketIOApiClient(ApiSocket):
         return self.wst
 
     def run(self, url, port):
-        self.ws = SocketIO(url, port)
-        self.ws.on('connect', self.__on_open)
-        self.ws.on('request', self.__on_message)
-        self.ws.on('message', self.__on_message)
-        self.ws.on('disconnect', self.__on_close)
         while True:
-            self.ws.wait(1)
+            self.ws = SocketIO(url, port)
+            self.ws.on('connect', self.__on_open)
+            self.ws.on('request', self.__on_message)
+            self.ws.on('message', self.__on_message)
+            self.ws.on('disconnect', self.__on_close)
+            try:
+                while True:
+                    self.ws.wait(1)
+            except Exception as e:
+                self._connected = False
 
     def send(self, msg):
         """

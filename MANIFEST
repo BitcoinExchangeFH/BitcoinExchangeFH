@@ -23,11 +23,11 @@ befh/kdbplus_client.py
 befh/market_data.py
 befh/mysql_client.py
 befh/restful_api_socket.py
+befh/socketio_api_socket.py
 befh/sql_client.py
 befh/sql_client_template.py
 befh/sqlite_client.py
 befh/subscription_manager.py
 befh/util.py
 befh/ws_api_socket.py
-befh/ws_api_socket2.py
 befh/zmq_client.py

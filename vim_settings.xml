@@ -243,12 +243,11 @@
         <mark key="." line="29" column="21" />
         <mark key="^" line="28" column="28" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" timestamp="1488696484664">
-        <mark key="'" line="252" column="38" />
-        <mark key="[" line="295" column="0" />
-        <mark key="]" line="295" column="21" />
-        <mark key="^" line="292" column="20" />
-        <mark key="." line="295" column="0" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" timestamp="1488699464599">
+        <mark key="[" line="273" column="25" />
+        <mark key="]" line="273" column="35" />
+        <mark key="." line="273" column="25" />
+        <mark key="^" line="221" column="29" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/instrument.py" timestamp="1484091582420">
         <mark key="'" line="95" column="44" />
@@ -361,10 +360,11 @@
       <jump line="69" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" />
       <jump line="167" column="34" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
       <jump line="252" column="38" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
+      <jump line="244" column="89" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICB0aW1lLnNsZWVwKDEpCg==</text>
+      <register name="&quot;" type="4">
+        <text>num_of_connections_lock</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1578,40 +1578,40 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>b</text>
+        <text>num_of_connections_lock</text>
       </register>
       <register name="/" type="4">
         <text encoding="base64">XDxnZXRfdHJhZGVzXD4=</text>
       </register>
-      <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICB0aW1lLnNsZWVwKDEpCg==</text>
+      <register name="0" type="4">
+        <text>query_lock</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICB0aW1lLnNsZWVwKDEpCg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgRXhjaEd3UXVvaW5lLm51bV9vZl9jb25uZWN0aW9uc19sb2NrLmFjcXVpcmUoKQo=</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICBzZWxmLgo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICB0aW1lLnNsZWVwKDEpCg==</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICBpZiBpbnN0bXQuZ2V0X2luc3RtdF9jb2RlKCkgPT0gIlwiXCIiOgo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgRXhjaEd3UXVvaW5lLm51bV9vZl9jb25uZWN0aW9uc19sb2NrLmFjcXVpcmUoKQo=</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgZWxpZiAoaW5zdG10LmdldF9pbnN0bXRfY29kZSgpID09ICJcIlwiIiBhbmQgY2hhbm5lbF9uYW1lID09ICJsaXZlX3RyYWRlcyIpIG9yIFwKICAgICAgICAgICAgICAgICAoaW5zdG10LmdldF9pbnN0bXRfY29kZSgpICE9ICJcIlwiIiBhbmQgY2hhbm5lbF9uYW1lID09ICJsaXZlX3RyYWRlc18lcyIgJSBpbnN0bXQuZ2V0X2luc3RtdF9jb2RlKCkpOgo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICB0aW1lLnNsZWVwKDEpCg==</text>
       </register>
-      <register name="5" type="8">
-        <text>instmt.get_instmt_code() != &quot;\&quot;\&quot;&quot;</text>
+      <register name="5" type="2">
+        <text encoding="base64">ICAgICAgICBFeGNoR3dRdW9pbmUubnVtX29mX2Nvbm5lY3Rpb25zX2xvY2suYWNxdWlyZSgpCg==</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICBpZiBpbnN0bXQuZ2V0X2luc3RtdF9jb2RlKCkgPT0gIiI6Cg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgRXhjaEd3UXVvaW5lLm51bV9vZl9jb25uZWN0aW9uc19sb2NrLmFjcXVpcmUoKQo=</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgYXNrcyA9IHNvcnRlZChhc2tzLCBrZXk9bGFtYmRhIHg6IHhbMF0pCg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgRXhjaEd3UXVvaW5lLm51bV9vZl9jb25uZWN0aW9uc19sb2NrLmFjcXVpcmUoKQo=</text>
       </register>
-      <register name="8" type="8">
-        <text>min(l2_depth.bids, len(bids))</text>
+      <register name="8" type="2">
+        <text encoding="base64">ICAgICAgICBFeGNoR3dRdW9pbmUubnVtX29mX2Nvbm5lY3Rpb25zX2xvY2suYWNxdWlyZSgpCiAgICAgICAgdGltZS5zbGVlcCgxKQogICAgICAgIEV4Y2hHd1F1b2luZS5udW1fb2ZfY29ubmVjdGlvbnNfbG9jay5yZWxlYXNlKCkK</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgYmlkcyA9IHNvcnRlZChiaWRzLCBrZXk9bGFtYmRhIHg6IHhbMF0sIHJldmVyc2U9VHJ1ZSkK</text>
+        <text encoding="base64">ICAgICAgICBFeGNoR3dRdW9pbmUubnVtX29mX2Nvbm5lY3Rpb25zX2xvY2suYWNxdWlyZSgpCiAgICAgICAgdGltZS5zbGVlcCgxKQogICAgICAgIEV4Y2hHd1F1b2luZS5udW1fb2ZfY29ubmVjdGlvbnNfbG9jay5yZWxlYXNlKCkK</text>
       </register>
       <register name=":" type="4">
         <text>w</text>

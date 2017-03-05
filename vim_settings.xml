@@ -178,7 +178,7 @@
         <mark key="." line="93" column="35" />
         <mark key="^" line="93" column="35" />
       </file>
-      <file name="/Python Console" timestamp="1488501057087">
+      <file name="/Python Console" timestamp="1488694720764">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/order.py" timestamp="1483487339225">
@@ -187,11 +187,11 @@
         <mark key="." line="18" column="94" />
         <mark key="^" line="18" column="94" />
       </file>
-      <file name="/fragment.py" timestamp="1488501068694">
+      <file name="/fragment.py" timestamp="1488694781154">
         <mark key="'" line="0" column="23" />
         <mark key="[" line="0" column="0" />
-        <mark key="]" line="0" column="24" />
-        <mark key="." line="0" column="24" />
+        <mark key="]" line="0" column="0" />
+        <mark key="." line="0" column="0" />
         <mark key="^" line="0" column="8" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/strategy.py" timestamp="1485990970141">
@@ -242,6 +242,13 @@
         <mark key="]" line="29" column="29" />
         <mark key="." line="29" column="21" />
         <mark key="^" line="28" column="28" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" timestamp="1488694820339">
+        <mark key="'" line="252" column="38" />
+        <mark key="[" line="145" column="34" />
+        <mark key="]" line="145" column="35" />
+        <mark key="." line="145" column="35" />
+        <mark key="^" line="145" column="35" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/instrument.py" timestamp="1484091582420">
         <mark key="'" line="95" column="44" />
@@ -352,10 +359,12 @@
       <jump line="119" column="19" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" />
       <jump line="134" column="67" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" />
       <jump line="69" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" />
+      <jump line="167" column="34" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
+      <jump line="252" column="38" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>0</text>
+        <text>b</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1569,49 +1578,49 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>0</text>
+        <text>b</text>
       </register>
       <register name="/" type="4">
-        <text>enabled = 1</text>
+        <text encoding="base64">XDxnZXRfdHJhZGVzXD4=</text>
       </register>
       <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICBpZiBjbHMuaXNfZGVmYXVsdF9pbnN0bXQoaW5zdG10KToK</text>
+        <text encoding="base64">ICAgICAgICBjbHMucmF3X2ZpbGUud3JpdGUoIiVzOiAlcyIgJSAoZGF0ZXRpbWUudXRjbm93KCkuc3RyZnRpbWUoIiVZJW0lZCAlSDolTTolUy4lZiIpLCByZXMpKQo=</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICBpZiBpbnN0bXQuZ2V0X2luc3RtdF9jb2RlKCkgPT0gIlwiXCIiOgo=</text>
+        <text encoding="base64">ICAgICAgICBzZWxmLgo=</text>
       </register>
       <register name="2" type="2">
+        <text encoding="base64">ICAgICAgICBpZiBpbnN0bXQuZ2V0X2luc3RtdF9jb2RlKCkgPT0gIlwiXCIiOgo=</text>
+      </register>
+      <register name="3" type="2">
         <text encoding="base64">ICAgICAgICAgICAgZWxpZiAoaW5zdG10LmdldF9pbnN0bXRfY29kZSgpID09ICJcIlwiIiBhbmQgY2hhbm5lbF9uYW1lID09ICJsaXZlX3RyYWRlcyIpIG9yIFwKICAgICAgICAgICAgICAgICAoaW5zdG10LmdldF9pbnN0bXRfY29kZSgpICE9ICJcIlwiIiBhbmQgY2hhbm5lbF9uYW1lID09ICJsaXZlX3RyYWRlc18lcyIgJSBpbnN0bXQuZ2V0X2luc3RtdF9jb2RlKCkpOgo=</text>
       </register>
-      <register name="3" type="8">
+      <register name="4" type="8">
         <text>instmt.get_instmt_code() != &quot;\&quot;\&quot;&quot;</text>
       </register>
-      <register name="4" type="2">
+      <register name="5" type="2">
         <text encoding="base64">ICAgICAgICBpZiBpbnN0bXQuZ2V0X2luc3RtdF9jb2RlKCkgPT0gIiI6Cg==</text>
       </register>
-      <register name="5" type="2">
+      <register name="6" type="2">
         <text encoding="base64">ICAgICAgICAgICAgYXNrcyA9IHNvcnRlZChhc2tzLCBrZXk9bGFtYmRhIHg6IHhbMF0pCg==</text>
       </register>
-      <register name="6" type="8">
+      <register name="7" type="8">
         <text>min(l2_depth.bids, len(bids))</text>
       </register>
-      <register name="7" type="2">
+      <register name="8" type="2">
         <text encoding="base64">ICAgICAgICAgICAgYmlkcyA9IHNvcnRlZChiaWRzLCBrZXk9bGFtYmRhIHg6IHhbMF0sIHJldmVyc2U9VHJ1ZSkK</text>
       </register>
-      <register name="8" type="2">
-        <text encoding="base64">UmVzb2x2ZWQgaXNzdWUgZnJvbSAjMjAK</text>
-      </register>
       <register name="9" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgYXNrcyA9IHJhd1tjbHMuZ2V0X2Fza3NfZmllbGRfbmFtZSgpXQo=</text>
+        <text encoding="base64">UmVzb2x2ZWQgaXNzdWUgZnJvbSAjMjAK</text>
       </register>
       <register name=":" type="4">
         <text>w</text>
       </register>
     </registers>
     <search>
-      <last-search>enabled = 1</last-search>
+      <last-search encoding="base64">XDxnZXRfdHJhZGVzXD4=</last-search>
       <last-offset />
-      <last-pattern>enabled = 1</last-pattern>
+      <last-pattern encoding="base64">XDxnZXRfdHJhZGVzXD4=</last-pattern>
       <last-replace>enabled = 0</last-replace>
       <last-substitute>enabled = 1</last-substitute>
       <last-dir>1</last-dir>
@@ -1619,8 +1628,6 @@
     </search>
     <history>
       <history-search>
-        <entry>total_(.*)_re.*</entry>
-        <entry>20161123</entry>
         <entry>0117</entry>
         <entry encoding="base64">XDxudW1weVw+</entry>
         <entry>0110</entry>
@@ -1639,6 +1646,8 @@
         <entry>trade_id</entry>
         <entry>enabled= 1</entry>
         <entry>enabled = 1</entry>
+        <entry>for trade in ret</entry>
+        <entry encoding="base64">XDxnZXRfdHJhZGVzXD4=</entry>
       </history-search>
       <history-cmd>
         <entry>wq!</entry>
@@ -1683,6 +1692,9 @@
       </shortcut-conflict>
       <shortcut-conflict owner="vim">
         <text>ctrl pressed A</text>
+      </shortcut-conflict>
+      <shortcut-conflict owner="vim">
+        <text>ctrl pressed X</text>
       </shortcut-conflict>
     </shortcut-conflicts>
   </component>

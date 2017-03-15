@@ -28,8 +28,6 @@ class FileClient(DatabaseClient):
 
         if dir is None or dir == '':
             raise Exception("FileClient does not accept empty directory.")
-        if dir[-1] != '\\':
-            dir += '\\'
 
         self.file_directory = dir
 
@@ -54,7 +52,8 @@ class FileClient(DatabaseClient):
         :param types: Type array
         :param is_ifnotexists: Create table if not exists keyword
         """
-        file_path = self.file_directory + table + ".csv"
+        file_path = os.path.join(self.file_directory, table + ".csv")
+        print(file_path)
         columns = [e.split(' ')[0] for e in columns]
         if len(columns) != len(types):
             return False
@@ -68,8 +67,8 @@ class FileClient(DatabaseClient):
 
         self.lock.release()
         return True
-
-    def insert(self, table, columns, types, values, primary_key_index=[], is_orreplace=False, is_commmit=True):
+    
+    def insert(self, table, columns, types, values, primary_key_index=[], is_orreplace=False, is_commit=True):
         """
         Insert into the table
         :param table: Table name

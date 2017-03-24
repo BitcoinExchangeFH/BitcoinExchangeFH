@@ -97,12 +97,12 @@
         <mark key="]" line="233" column="51" />
         <mark key="." line="233" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490362230339">
-        <mark key="'" line="71" column="8" />
-        <mark key="[" line="123" column="85" />
-        <mark key="]" line="123" column="97" />
-        <mark key="." line="123" column="85" />
-        <mark key="^" line="123" column="84" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490364929862">
+        <mark key="'" line="7" column="0" />
+        <mark key="[" line="169" column="0" />
+        <mark key="]" line="169" column="0" />
+        <mark key="^" line="124" column="89" />
+        <mark key="." line="169" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitmex.py" timestamp="1490314444935">
         <mark key="[" line="232" column="0" />
@@ -461,10 +461,11 @@
       <jump line="152" column="45" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="71" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="25" column="32" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" />
+      <jump line="7" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="4">
-        <text>946684800000</text>
+      <register name="&quot;" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW50KG5vdy50aW1lc3RhbXAoKSAqIDFlMykgLSBzZWxmLnN0YXJ0X3RpbWVdICsK</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1678,49 +1679,49 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text encoding="base64">IA==</text>
+        <text>ExchangeGateway.START_TIME] +</text>
       </register>
       <register name="/" type="4">
-        <text>get_order_book</text>
+        <text>START_TIME</text>
       </register>
-      <register name="0" type="4">
-        <text>946684800000</text>
+      <register name="0" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW50KGRhdGV0aW1lLnV0Y25vdygpLnRpbWVzdGFtcCgpICogMWUzKSAtIHNlbGYuc3RhcnRfdGltZV0gKwo=</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW5zdG10LmdldF9vcmRlcl9ib29rX2lkKCkgKyBpbnN0bXQuZ2V0X3RyYWRlX2lkKCldICsK</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW50KG5vdy50aW1lc3RhbXAoKSAqIDFlMykgLSBzZWxmLnN0YXJ0X3RpbWVdICsK</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHR5cGVzPVsnaW50J10gKyBTbmFwc2hvdC50eXBlcygpLAo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgbm93ID0gZGF0ZXRpbWUudXRjbm93KCkK</text>
       </register>
-      <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICBpZiBkYXRhX21vZGUgJiBFeGNoYW5nZUdhdGV3YXkuRGF0YU1vZGUuU05BUFNIT1RfT05MWToK</text>
+      <register name="3" type="8">
+        <text>now</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICBpZiBzZWxmLmRhdGFfbW9kZSAmIEV4Y2hhbmdlR2F0ZXdheS5EYXRhTW9kZS5UUkFERVNfT05MWToK</text>
+        <text encoding="base64">ICAgICAgICBzZWxmLnN0YXJ0X3RpbWUgPSBpbnQoZGF0ZXRpbWUudXRjbm93KCkudGltZXN0YW1wKCkgKiAxZTMpCg==</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X29yZGVyX2Jvb2tfaWQoc2VsZi5nZXRfb3JkZXJfYm9va19pbml0KGluc3RtdCkpCgo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW50KG5vdy50aW1lc3RhbXAoKSAqIDFlMykgLSBFeGNoYW5nZUdhdGV3YXkuU1RBUlRfVElNRV0gKwo=</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICB0cmFkZV9pZCwgZXhjaF90cmFkZV9pZCA9IHNlbGYuZ2V0X3RyYWRlc19pbml0KGluc3RtdCkKICAgICAgICBpbnN0bXQuc2V0X3RyYWRlX2lkKHRyYWRlX2lkKQogICAgICAgIGluc3RtdC5zZXRfZXhjaF90cmFkZV9pZChleGNoX3RyYWRlX2lkKQoK</text>
+        <text encoding="base64">ICAgIAo=</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X29yZGVyX2Jvb2tfaWQoc2VsZi5nZXRfb3JkZXJfYm9va19pbml0KGluc3RtdCkpCgo=</text>
+        <text encoding="base64">ICAgIFNUQVJUX1RJTUUgPSAK</text>
       </register>
-      <register name="8" type="2">
-        <text encoding="base64">Cg==</text>
+      <register name="8" type="8">
+        <text>int(datetime.utcnow().timestamp() * 1e3)</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">ICAgICAgICB0cmFkZV9pZCwgbGFzdF9leGNoX3RyYWRlX2lkID0gc2VsZi5nZXRfdHJhZGVzX2luaXQoaW5zdG10KQogICAgICAgIGluc3RtdC5zZXRfdHJhZGVfaWQodHJhZGVfaWQpCiAgICAgICAgaW5zdG10LnNldF9leGNoX3RyYWRlX2lkKGxhc3RfZXhjaF90cmFkZV9pZCkK</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW50KChub3cgLSBkYXRldGltZShub3cueWVhciwgMSwgMSwgMCwgMCwgMCkpLnRvdGFsX3NlY29uZHMoKSAqIDFlMyldICsK</text>
       </register>
       <register name=":" type="4">
         <text>w</text>
       </register>
     </registers>
     <search>
-      <last-search>get_order_book</last-search>
+      <last-search>START_TIME</last-search>
       <last-offset />
-      <last-pattern>get_order_book</last-pattern>
+      <last-pattern>START_TIME</last-pattern>
       <last-replace>instmt_snapshot</last-replace>
       <last-substitute>snapshots</last-substitute>
       <last-dir>1</last-dir>
@@ -1728,7 +1729,6 @@
     </search>
     <history>
       <history-search>
-        <entry>trade_id</entry>
         <entry>enabled= 1</entry>
         <entry>enabled = 1</entry>
         <entry>for trade in ret</entry>
@@ -1748,6 +1748,7 @@
         <entry>get_instmt_snapshot</entry>
         <entry encoding="base64">XDxnZXRfc25hcHNob3RfdGFibGVfbmFtZVw+</entry>
         <entry>get_order_book</entry>
+        <entry>START_TIME</entry>
       </history-search>
       <history-cmd>
         <entry>eq</entry>

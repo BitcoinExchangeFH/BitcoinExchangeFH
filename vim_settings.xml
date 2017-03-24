@@ -97,12 +97,12 @@
         <mark key="]" line="233" column="51" />
         <mark key="." line="233" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490360861617">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490362230339">
         <mark key="'" line="71" column="8" />
-        <mark key="[" line="166" column="80" />
-        <mark key="]" line="166" column="80" />
-        <mark key="." line="166" column="80" />
-        <mark key="^" line="166" column="80" />
+        <mark key="[" line="123" column="85" />
+        <mark key="]" line="123" column="97" />
+        <mark key="." line="123" column="85" />
+        <mark key="^" line="123" column="84" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitmex.py" timestamp="1490314444935">
         <mark key="[" line="232" column="0" />
@@ -464,7 +464,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>6</text>
+        <text>946684800000</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1678,13 +1678,13 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>6</text>
+        <text encoding="base64">IA==</text>
       </register>
       <register name="/" type="4">
         <text>get_order_book</text>
       </register>
-      <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1bZGF0ZXRpbWUudXRjbm93KCkudGltZXN0YW1wKCkgKiAxZTNdICsK</text>
+      <register name="0" type="4">
+        <text>946684800000</text>
       </register>
       <register name="1" type="2">
         <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW5zdG10LmdldF9vcmRlcl9ib29rX2lkKCkgKyBpbnN0bXQuZ2V0X3RyYWRlX2lkKCldICsK</text>

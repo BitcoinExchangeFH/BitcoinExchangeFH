@@ -91,12 +91,11 @@
         <mark key="]" line="233" column="51" />
         <mark key="." line="233" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490314552312">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490314784767">
         <mark key="'" line="71" column="8" />
-        <mark key="[" line="123" column="41" />
-        <mark key="]" line="81" column="33" />
-        <mark key="." line="79" column="25" />
-        <mark key="^" line="162" column="45" />
+        <mark key="[" line="165" column="0" />
+        <mark key="]" line="165" column="67" />
+        <mark key="." line="165" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitmex.py" timestamp="1490314444935">
         <mark key="[" line="232" column="0" />
@@ -309,8 +308,8 @@
         <mark key="." line="62" column="12" />
         <mark key="^" line="58" column="46" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" timestamp="1490309194331">
-        <mark key="'" line="18" column="13" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" timestamp="1490314712479">
+        <mark key="'" line="25" column="32" />
         <mark key="[" line="94" column="39" />
         <mark key="]" line="94" column="59" />
         <mark key="^" line="95" column="21" />
@@ -457,10 +456,11 @@
       <jump line="197" column="26" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
       <jump line="152" column="45" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="71" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
+      <jump line="25" column="32" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="4">
-        <text>get_instmt_snapshot_table_name</text>
+      <register name="&quot;" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHR5cGVzPVsnaW50J10gKyBTbmFwc2hvdC50eXBlcygpLAo=</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1674,49 +1674,49 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>get_instmt_snapshot_table_name</text>
+        <text encoding="base64">KyA=</text>
       </register>
       <register name="/" type="4">
-        <text encoding="base64">XDxnZXRfc25hcHNob3RfdGFibGVfbmFtZVw+</text>
+        <text>get_order_book</text>
       </register>
-      <register name="0" type="4">
-        <text>init_instmt_snapshot_table</text>
+      <register name="0" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW5zdG10LmdldF9vcmRlcl9ib29rX2lkKCkgKyBpbnN0bXQuZ2V0X3RyYWRlX2lkKCldICsK</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICBpZiBkYXRhX21vZGUgJiBFeGNoYW5nZUdhdGV3YXkuRGF0YU1vZGUuU05BUFNIT1RfT05MWToK</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHR5cGVzPVsnaW50J10gKyBTbmFwc2hvdC50eXBlcygpLAo=</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICBpZiBzZWxmLmRhdGFfbW9kZSAmIEV4Y2hhbmdlR2F0ZXdheS5EYXRhTW9kZS5UUkFERVNfT05MWToK</text>
+        <text encoding="base64">ICAgICAgICBpZiBkYXRhX21vZGUgJiBFeGNoYW5nZUdhdGV3YXkuRGF0YU1vZGUuU05BUFNIT1RfT05MWToK</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X29yZGVyX2Jvb2tfaWQoc2VsZi5nZXRfb3JkZXJfYm9va19pbml0KGluc3RtdCkpCgo=</text>
+        <text encoding="base64">ICAgICAgICBpZiBzZWxmLmRhdGFfbW9kZSAmIEV4Y2hhbmdlR2F0ZXdheS5EYXRhTW9kZS5UUkFERVNfT05MWToK</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICB0cmFkZV9pZCwgZXhjaF90cmFkZV9pZCA9IHNlbGYuZ2V0X3RyYWRlc19pbml0KGluc3RtdCkKICAgICAgICBpbnN0bXQuc2V0X3RyYWRlX2lkKHRyYWRlX2lkKQogICAgICAgIGluc3RtdC5zZXRfZXhjaF90cmFkZV9pZChleGNoX3RyYWRlX2lkKQoK</text>
-      </register>
-      <register name="5" type="2">
         <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X29yZGVyX2Jvb2tfaWQoc2VsZi5nZXRfb3JkZXJfYm9va19pbml0KGluc3RtdCkpCgo=</text>
       </register>
+      <register name="5" type="2">
+        <text encoding="base64">ICAgICAgICB0cmFkZV9pZCwgZXhjaF90cmFkZV9pZCA9IHNlbGYuZ2V0X3RyYWRlc19pbml0KGluc3RtdCkKICAgICAgICBpbnN0bXQuc2V0X3RyYWRlX2lkKHRyYWRlX2lkKQogICAgICAgIGluc3RtdC5zZXRfZXhjaF90cmFkZV9pZChleGNoX3RyYWRlX2lkKQoK</text>
+      </register>
       <register name="6" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X29yZGVyX2Jvb2tfaWQoc2VsZi5nZXRfb3JkZXJfYm9va19pbml0KGluc3RtdCkpCgo=</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgICAgICB0cmFkZV9pZCwgbGFzdF9leGNoX3RyYWRlX2lkID0gc2VsZi5nZXRfdHJhZGVzX2luaXQoaW5zdG10KQogICAgICAgIGluc3RtdC5zZXRfdHJhZGVfaWQodHJhZGVfaWQpCiAgICAgICAgaW5zdG10LnNldF9leGNoX3RyYWRlX2lkKGxhc3RfZXhjaF90cmFkZV9pZCkK</text>
-      </register>
-      <register name="8" type="2">
         <text encoding="base64">Cg==</text>
       </register>
+      <register name="8" type="2">
+        <text encoding="base64">ICAgICAgICB0cmFkZV9pZCwgbGFzdF9leGNoX3RyYWRlX2lkID0gc2VsZi5nZXRfdHJhZGVzX2luaXQoaW5zdG10KQogICAgICAgIGluc3RtdC5zZXRfdHJhZGVfaWQodHJhZGVfaWQpCiAgICAgICAgaW5zdG10LnNldF9leGNoX3RyYWRlX2lkKGxhc3RfZXhjaF90cmFkZV9pZCkK</text>
+      </register>
       <register name="9" type="2">
-        <text encoding="base64">ICAgIGRlZiBnZXRfdHJhZGVzX2luaXQoc2VsZiwgaW5zdG10KToKICAgICAgICAiIiIKICAgICAgICBJbml0aWFsaXphdGlvbiBtZXRob2QgaW4gZ2V0X3RyYWRlcwogICAgICAgIDpwYXJhbSBpbnN0bXQ6IEluc3RydW1lbnQKICAgICAgICA6cmV0dXJuOiBMYXN0IGlkCiAgICAgICAgIiIiCiAgICAgICAgaWYgc2VsZi5kYXRhX21vZGUgJiBFeGNoYW5nZUdhdGV3YXkuRGF0YU1vZGUuVFJBREVTX09OTFk6CiAgICAgICAgICAgIHRhYmxlX25hbWUgPSBzZWxmLmdldF90cmFkZXNfdGFibGVfbmFtZShpbnN0bXQuZ2V0X2V4Y2hhbmdlX25hbWUoKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGluc3RtdC5nZXRfaW5zdG10X25hbWUoKSkKICAgICAgICAgICAgc2VsZi5pbml0X3RyYWRlc190YWJsZShpbnN0bXQpCiAgICAgICAgICAgIGlkX3JldCA9IHNlbGYuZGJfY2xpZW50LnNlbGVjdCh0YWJsZT10YWJsZV9uYW1lLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY29sdW1ucz1bJ2lkJ10sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBvcmRlcmJ5PSJpZCBkZXNjIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGxpbWl0PTEpCiAgICAgICAgICAgIHRyYWRlX2lkX3JldCA9IHNlbGYuZGJfY2xpZW50LnNlbGVjdCh0YWJsZT10YWJsZV9uYW1lLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY29sdW1ucz1bJ2lkJywndHJhZGVfaWQnXSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG9yZGVyYnk9ImlkIGRlc2MiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbGltaXQ9MSkKCiAgICAgICAgICAgIGlmIGxlbihpZF9yZXQpID4gMCBhbmQgbGVuKHRyYWRlX2lkX3JldCkgPiAwOgogICAgICAgICAgICAgICAgYXNzZXJ0IGlzaW5zdGFuY2UoaWRfcmV0WzBdWzBdLCBpbnQpLCAiaWRfcmV0WzBdWzBdKCVzKSA9ICVzIiAlICh0eXBlKGlkX3JldFswXVswXSksIGlkX3JldCkKICAgICAgICAgICAgICAgIHJldHVybiBpbnQoaWRfcmV0WzBdWzBdKSwgdHJhZGVfaWRfcmV0WzBdWzFdWzI1Ol0KICAgICAgICAgICAgZWxzZToKICAgICAgICAgICAgICAgIHJldHVybiAwLCAnMCcKICAgICAgICBlbHNlOgogICAgICAgICAgICByZXR1cm4gMCwgJzAnCg==</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name=":" type="4">
         <text>w</text>
       </register>
     </registers>
     <search>
-      <last-search encoding="base64">XDxnZXRfc25hcHNob3RfdGFibGVfbmFtZVw+</last-search>
+      <last-search>get_order_book</last-search>
       <last-offset />
-      <last-pattern encoding="base64">XDxnZXRfc25hcHNob3RfdGFibGVfbmFtZVw+</last-pattern>
+      <last-pattern>get_order_book</last-pattern>
       <last-replace>instmt_snapshot</last-replace>
       <last-substitute>snapshots</last-substitute>
       <last-dir>1</last-dir>
@@ -1724,7 +1724,6 @@
     </search>
     <history>
       <history-search>
-        <entry>get_instmt_code</entry>
         <entry>trade_id</entry>
         <entry>enabled= 1</entry>
         <entry>enabled = 1</entry>
@@ -1744,6 +1743,7 @@
         <entry>get_instmt_</entry>
         <entry>get_instmt_snapshot</entry>
         <entry encoding="base64">XDxnZXRfc25hcHNob3RfdGFibGVfbmFtZVw+</entry>
+        <entry>get_order_book</entry>
       </history-search>
       <history-cmd>
         <entry>eq</entry>

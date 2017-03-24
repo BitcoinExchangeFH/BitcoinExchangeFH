@@ -79,6 +79,12 @@
         <mark key="^" line="153" column="29" />
         <mark key="." line="157" column="0" />
       </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/market_data.py" timestamp="1490354289931">
+        <mark key="[" line="163" column="33" />
+        <mark key="]" line="163" column="53" />
+        <mark key="." line="163" column="53" />
+        <mark key="^" line="163" column="53" />
+      </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" timestamp="1490314438663">
         <mark key="'" line="197" column="26" />
         <mark key="[" line="270" column="13" />
@@ -274,9 +280,6 @@
         <mark key="." line="150" column="24" />
         <mark key="^" line="150" column="24" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/bitcoinexchangefh/exch_btcc.py" timestamp="1487203956731">
-        <mark key="'" line="0" column="0" />
-      </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exchange.py" timestamp="1484091772516">
         <mark key="[" line="164" column="15" />
         <mark key="]" line="164" column="37" />
@@ -459,8 +462,8 @@
       <jump line="25" column="32" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHR5cGVzPVsnaW50J10gKyBTbmFwc2hvdC50eXBlcygpLAo=</text>
+      <register name="&quot;" type="4">
+        <text>.utcnow().strftime(&quot;%Y%m%d %H:%M:%S.%f&quot;)</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1674,7 +1677,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text encoding="base64">KyA=</text>
+        <text>.utcnow().strftime(&quot;%Y%m%d %H:%M:%S.%f&quot;)</text>
       </register>
       <register name="/" type="4">
         <text>get_order_book</text>
@@ -1710,7 +1713,7 @@
         <text encoding="base64">Cg==</text>
       </register>
       <register name=":" type="4">
-        <text>w</text>
+        <text>w!</text>
       </register>
     </registers>
     <search>
@@ -1763,9 +1766,9 @@
         <entry>%s/enabled= 1/enabled = 0/g</entry>
         <entry>%s/enabled = 1/enabled = 0/g</entry>
         <entry>%s/snapshots/instmt_snapshot/g</entry>
-        <entry>w!</entry>
         <entry>wq</entry>
         <entry>w</entry>
+        <entry>w!</entry>
       </history-cmd>
       <history-expr />
       <history-input />

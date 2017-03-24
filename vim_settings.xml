@@ -79,11 +79,11 @@
         <mark key="^" line="153" column="29" />
         <mark key="." line="157" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/market_data.py" timestamp="1490360430853">
-        <mark key="[" line="66" column="54" />
-        <mark key="]" line="163" column="84" />
-        <mark key="." line="163" column="84" />
-        <mark key="^" line="163" column="84" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/market_data.py" timestamp="1490395767026">
+        <mark key="[" line="253" column="11" />
+        <mark key="]" line="254" column="106" />
+        <mark key="." line="254" column="106" />
+        <mark key="^" line="254" column="106" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" timestamp="1490314438663">
         <mark key="'" line="197" column="26" />
@@ -97,12 +97,12 @@
         <mark key="]" line="233" column="51" />
         <mark key="." line="233" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490364929862">
-        <mark key="'" line="7" column="0" />
-        <mark key="[" line="169" column="0" />
-        <mark key="]" line="169" column="0" />
-        <mark key="^" line="124" column="89" />
-        <mark key="." line="169" column="0" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490395946421">
+        <mark key="'" line="131" column="44" />
+        <mark key="[" line="163" column="57" />
+        <mark key="]" line="163" column="81" />
+        <mark key="." line="163" column="81" />
+        <mark key="^" line="163" column="81" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitmex.py" timestamp="1490314444935">
         <mark key="[" line="232" column="0" />
@@ -225,7 +225,7 @@
         <mark key="." line="93" column="35" />
         <mark key="^" line="93" column="35" />
       </file>
-      <file name="/Python Console" timestamp="1490360864715">
+      <file name="/Python Console" timestamp="1490395309457">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/order.py" timestamp="1483487339225">
@@ -312,12 +312,11 @@
         <mark key="." line="62" column="12" />
         <mark key="^" line="58" column="46" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" timestamp="1490314712479">
-        <mark key="'" line="25" column="32" />
-        <mark key="[" line="94" column="39" />
-        <mark key="]" line="94" column="59" />
-        <mark key="^" line="95" column="21" />
-        <mark key="." line="94" column="39" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" timestamp="1490394667570">
+        <mark key="'" line="36" column="33" />
+        <mark key="]" line="0" column="0" />
+        <mark key="^" line="0" column="0" />
+        <mark key="." line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/market_data.py" timestamp="1483489364702">
         <mark key="'" line="213" column="43" />
@@ -430,7 +429,6 @@
       <jump line="103" column="10" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="14" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="131" column="48" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
-      <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="75" column="22" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="77" column="46" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="82" column="29" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
@@ -462,10 +460,17 @@
       <jump line="71" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="25" column="32" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" />
       <jump line="7" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
+      <jump line="126" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" />
+      <jump line="120" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
+      <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
+      <jump line="87" column="34" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
+      <jump line="123" column="44" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
+      <jump line="17" column="13" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" />
+      <jump line="36" column="33" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW50KG5vdy50aW1lc3RhbXAoKSAqIDFlMykgLSBzZWxmLnN0YXJ0X3RpbWVdICsK</text>
+      <register name="&quot;" type="4">
+        <text>'',</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1679,49 +1684,49 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>ExchangeGateway.START_TIME] +</text>
+        <text>'',</text>
       </register>
       <register name="/" type="4">
-        <text>START_TIME</text>
+        <text encoding="base64">XDxvcmRlcl9ib29rX2lkXD4=</text>
       </register>
       <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW50KGRhdGV0aW1lLnV0Y25vdygpLnRpbWVzdGFtcCgpICogMWUzKSAtIHNlbGYuc3RhcnRfdGltZV0gKwo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBTbmFwc2hvdC52YWx1ZXMoaW5zdG10LmdldF9leGNoYW5nZV9uYW1lKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGluc3RtdC5nZXRfaW5zdG10X25hbWUoKSwK</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW50KG5vdy50aW1lc3RhbXAoKSAqIDFlMykgLSBzZWxmLnN0YXJ0X3RpbWVdICsK</text>
+        <text encoding="base64">ICAgICAgICAgICAgd2l0aCBzZWxmLmxvY2s6CiAgICAgICAgICAgICAgICBpZCA9IGluc3RtdC5nZXRfb3JkZXJfYm9va19pZCgpICsgaW5zdG10LmdldF90cmFkZV9pZCgpCgo=</text>
       </register>
-      <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgbm93ID0gZGF0ZXRpbWUudXRjbm93KCkK</text>
+      <register name="2" type="8">
+        <text encoding="base64">J3ZhcmNoYXIoMjApJywgJ3ZhcmNoYXIoMjApJywg</text>
       </register>
-      <register name="3" type="8">
-        <text>now</text>
+      <register name="3" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baWRdKwo=</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICBzZWxmLnN0YXJ0X3RpbWUgPSBpbnQoZGF0ZXRpbWUudXRjbm93KCkudGltZXN0YW1wKCkgKiAxZTMpCg==</text>
+        <text encoding="base64">ICAgICAgICB3aXRoIAo=</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW50KG5vdy50aW1lc3RhbXAoKSAqIDFlMykgLSBFeGNoYW5nZUdhdGV3YXkuU1RBUlRfVElNRV0gKwo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgd2l0aCBzZWxmLmxvY2s6CiAgICAgICAgICAgICAgICBpZCA9IGluc3RtdC5nZXRfb3JkZXJfYm9va19pZCgpICsgaW5zdG10LmdldF90cmFkZV9pZCgpCgo=</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgIAo=</text>
+        <text encoding="base64">ICAgICAgICBzZWxmLnNuYXBzaG90X2lkID0gMAo=</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgIFNUQVJUX1RJTUUgPSAK</text>
+        <text encoding="base64">ICAgICAgICBzZWxmLnN0YXJ0X3RpbWUgPSBpbnQoZGF0ZXRpbWUudXRjbm93KCkudGltZXN0YW1wKCkgKiAxZTMpCg==</text>
       </register>
-      <register name="8" type="8">
-        <text>int(datetime.utcnow().timestamp() * 1e3)</text>
+      <register name="8" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgbm93ID0gZGF0ZXRpbWUudXRjbm93KCkK</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW50KChub3cgLSBkYXRldGltZShub3cueWVhciwgMSwgMSwgMCwgMCwgMCkpLnRvdGFsX3NlY29uZHMoKSAqIDFlMyldICsK</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBTbmFwc2hvdC52YWx1ZXMoaW5zdG10LmdldF9leGNoYW5nZV9uYW1lKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2YWx1ZXM9WyclcycgJSBkYXRldGltZS51dGNub3coKS50aW1lc3RhbXAoKSAqIDFlNl0gKwo=</text>
       </register>
       <register name=":" type="4">
         <text>w</text>
       </register>
     </registers>
     <search>
-      <last-search>START_TIME</last-search>
+      <last-search encoding="base64">XDxvcmRlcl9ib29rX2lkXD4=</last-search>
       <last-offset />
-      <last-pattern>START_TIME</last-pattern>
+      <last-pattern encoding="base64">XDxvcmRlcl9ib29rX2lkXD4=</last-pattern>
       <last-replace>instmt_snapshot</last-replace>
       <last-substitute>snapshots</last-substitute>
       <last-dir>1</last-dir>
@@ -1729,8 +1734,6 @@
     </search>
     <history>
       <history-search>
-        <entry>enabled= 1</entry>
-        <entry>enabled = 1</entry>
         <entry>for trade in ret</entry>
         <entry encoding="base64">XDxnZXRfdHJhZGVzXD4=</entry>
         <entry>table_name</entry>
@@ -1749,6 +1752,8 @@
         <entry encoding="base64">XDxnZXRfc25hcHNob3RfdGFibGVfbmFtZVw+</entry>
         <entry>get_order_book</entry>
         <entry>START_TIME</entry>
+        <entry>id</entry>
+        <entry encoding="base64">XDxvcmRlcl9ib29rX2lkXD4=</entry>
       </history-search>
       <history-cmd>
         <entry>eq</entry>

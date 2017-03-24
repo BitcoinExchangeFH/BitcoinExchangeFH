@@ -79,11 +79,11 @@
         <mark key="^" line="153" column="29" />
         <mark key="." line="157" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/market_data.py" timestamp="1490354289931">
-        <mark key="[" line="163" column="33" />
-        <mark key="]" line="163" column="53" />
-        <mark key="." line="163" column="53" />
-        <mark key="^" line="163" column="53" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/market_data.py" timestamp="1490360430853">
+        <mark key="[" line="66" column="54" />
+        <mark key="]" line="163" column="84" />
+        <mark key="." line="163" column="84" />
+        <mark key="^" line="163" column="84" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" timestamp="1490314438663">
         <mark key="'" line="197" column="26" />
@@ -97,11 +97,12 @@
         <mark key="]" line="233" column="51" />
         <mark key="." line="233" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490314784767">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490360861617">
         <mark key="'" line="71" column="8" />
-        <mark key="[" line="165" column="0" />
-        <mark key="]" line="165" column="67" />
-        <mark key="." line="165" column="0" />
+        <mark key="[" line="166" column="80" />
+        <mark key="]" line="166" column="80" />
+        <mark key="." line="166" column="80" />
+        <mark key="^" line="166" column="80" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitmex.py" timestamp="1490314444935">
         <mark key="[" line="232" column="0" />
@@ -224,7 +225,7 @@
         <mark key="." line="93" column="35" />
         <mark key="^" line="93" column="35" />
       </file>
-      <file name="/Python Console" timestamp="1488694720764">
+      <file name="/Python Console" timestamp="1490360864715">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/order.py" timestamp="1483487339225">
@@ -463,7 +464,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>.utcnow().strftime(&quot;%Y%m%d %H:%M:%S.%f&quot;)</text>
+        <text>6</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1677,43 +1678,43 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>.utcnow().strftime(&quot;%Y%m%d %H:%M:%S.%f&quot;)</text>
+        <text>6</text>
       </register>
       <register name="/" type="4">
         <text>get_order_book</text>
       </register>
       <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW5zdG10LmdldF9vcmRlcl9ib29rX2lkKCkgKyBpbnN0bXQuZ2V0X3RyYWRlX2lkKCldICsK</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1bZGF0ZXRpbWUudXRjbm93KCkudGltZXN0YW1wKCkgKiAxZTNdICsK</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHR5cGVzPVsnaW50J10gKyBTbmFwc2hvdC50eXBlcygpLAo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlcz1baW5zdG10LmdldF9vcmRlcl9ib29rX2lkKCkgKyBpbnN0bXQuZ2V0X3RyYWRlX2lkKCldICsK</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICBpZiBkYXRhX21vZGUgJiBFeGNoYW5nZUdhdGV3YXkuRGF0YU1vZGUuU05BUFNIT1RfT05MWToK</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHR5cGVzPVsnaW50J10gKyBTbmFwc2hvdC50eXBlcygpLAo=</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICBpZiBzZWxmLmRhdGFfbW9kZSAmIEV4Y2hhbmdlR2F0ZXdheS5EYXRhTW9kZS5UUkFERVNfT05MWToK</text>
+        <text encoding="base64">ICAgICAgICBpZiBkYXRhX21vZGUgJiBFeGNoYW5nZUdhdGV3YXkuRGF0YU1vZGUuU05BUFNIT1RfT05MWToK</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X29yZGVyX2Jvb2tfaWQoc2VsZi5nZXRfb3JkZXJfYm9va19pbml0KGluc3RtdCkpCgo=</text>
+        <text encoding="base64">ICAgICAgICBpZiBzZWxmLmRhdGFfbW9kZSAmIEV4Y2hhbmdlR2F0ZXdheS5EYXRhTW9kZS5UUkFERVNfT05MWToK</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">ICAgICAgICB0cmFkZV9pZCwgZXhjaF90cmFkZV9pZCA9IHNlbGYuZ2V0X3RyYWRlc19pbml0KGluc3RtdCkKICAgICAgICBpbnN0bXQuc2V0X3RyYWRlX2lkKHRyYWRlX2lkKQogICAgICAgIGluc3RtdC5zZXRfZXhjaF90cmFkZV9pZChleGNoX3RyYWRlX2lkKQoK</text>
-      </register>
-      <register name="6" type="2">
         <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X29yZGVyX2Jvb2tfaWQoc2VsZi5nZXRfb3JkZXJfYm9va19pbml0KGluc3RtdCkpCgo=</text>
       </register>
+      <register name="6" type="2">
+        <text encoding="base64">ICAgICAgICB0cmFkZV9pZCwgZXhjaF90cmFkZV9pZCA9IHNlbGYuZ2V0X3RyYWRlc19pbml0KGluc3RtdCkKICAgICAgICBpbnN0bXQuc2V0X3RyYWRlX2lkKHRyYWRlX2lkKQogICAgICAgIGluc3RtdC5zZXRfZXhjaF90cmFkZV9pZChleGNoX3RyYWRlX2lkKQoK</text>
+      </register>
       <register name="7" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X29yZGVyX2Jvb2tfaWQoc2VsZi5nZXRfb3JkZXJfYm9va19pbml0KGluc3RtdCkpCgo=</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">ICAgICAgICB0cmFkZV9pZCwgbGFzdF9leGNoX3RyYWRlX2lkID0gc2VsZi5nZXRfdHJhZGVzX2luaXQoaW5zdG10KQogICAgICAgIGluc3RtdC5zZXRfdHJhZGVfaWQodHJhZGVfaWQpCiAgICAgICAgaW5zdG10LnNldF9leGNoX3RyYWRlX2lkKGxhc3RfZXhjaF90cmFkZV9pZCkK</text>
-      </register>
-      <register name="9" type="2">
         <text encoding="base64">Cg==</text>
       </register>
+      <register name="9" type="2">
+        <text encoding="base64">ICAgICAgICB0cmFkZV9pZCwgbGFzdF9leGNoX3RyYWRlX2lkID0gc2VsZi5nZXRfdHJhZGVzX2luaXQoaW5zdG10KQogICAgICAgIGluc3RtdC5zZXRfdHJhZGVfaWQodHJhZGVfaWQpCiAgICAgICAgaW5zdG10LnNldF9leGNoX3RyYWRlX2lkKGxhc3RfZXhjaF90cmFkZV9pZCkK</text>
+      </register>
       <register name=":" type="4">
-        <text>w!</text>
+        <text>w</text>
       </register>
     </registers>
     <search>
@@ -1767,8 +1768,8 @@
         <entry>%s/enabled = 1/enabled = 0/g</entry>
         <entry>%s/snapshots/instmt_snapshot/g</entry>
         <entry>wq</entry>
-        <entry>w</entry>
         <entry>w!</entry>
+        <entry>w</entry>
       </history-cmd>
       <history-expr />
       <history-input />

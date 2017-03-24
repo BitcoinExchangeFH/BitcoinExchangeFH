@@ -3,13 +3,14 @@
     <state version="4" enabled="true" />
     <globalmarks />
     <filemarks>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_btcc.py" timestamp="1490312049738">
-        <mark key="[" line="255" column="0" />
-        <mark key="]" line="255" column="0" />
-        <mark key="." line="255" column="0" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_btcc.py" timestamp="1490314461087">
+        <mark key="'" line="249" column="0" />
+        <mark key="[" line="249" column="0" />
+        <mark key="]" line="249" column="51" />
+        <mark key="." line="249" column="0" />
         <mark key="^" line="91" column="39" />
       </file>
-      <file name="/a.dummy" timestamp="1488550015039">
+      <file name="/a.dummy" timestamp="1490314181430">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" timestamp="1482356430832">
@@ -26,15 +27,15 @@
         <mark key="." line="65" column="38" />
         <mark key="^" line="65" column="38" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_gdax.py" timestamp="1490312207697">
-        <mark key="[" line="275" column="0" />
-        <mark key="]" line="276" column="107" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_gdax.py" timestamp="1490314472669">
+        <mark key="[" line="277" column="0" />
+        <mark key="]" line="277" column="51" />
         <mark key="." line="277" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" timestamp="1490312165400">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" timestamp="1490314454405">
         <mark key="'" line="134" column="67" />
         <mark key="[" line="225" column="0" />
-        <mark key="]" line="225" column="0" />
+        <mark key="]" line="225" column="51" />
         <mark key="^" line="134" column="67" />
         <mark key="." line="225" column="0" />
       </file>
@@ -78,28 +79,28 @@
         <mark key="^" line="153" column="29" />
         <mark key="." line="157" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" timestamp="1490312140089">
-        <mark key="'" line="6" column="15" />
-        <mark key="[" line="270" column="0" />
-        <mark key="]" line="270" column="0" />
-        <mark key="^" line="269" column="81" />
-        <mark key="." line="270" column="0" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" timestamp="1490314438663">
+        <mark key="'" line="197" column="26" />
+        <mark key="[" line="270" column="13" />
+        <mark key="]" line="270" column="39" />
+        <mark key="^" line="270" column="49" />
+        <mark key="." line="270" column="13" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" timestamp="1490313646722">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" timestamp="1490314502629">
         <mark key="[" line="233" column="0" />
-        <mark key="]" line="233" column="0" />
+        <mark key="]" line="233" column="51" />
         <mark key="." line="233" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490313868804">
-        <mark key="'" line="68" column="66" />
-        <mark key="[" line="122" column="12" />
-        <mark key="]" line="122" column="16" />
-        <mark key="." line="122" column="16" />
-        <mark key="^" line="122" column="16" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490314552312">
+        <mark key="'" line="71" column="8" />
+        <mark key="[" line="123" column="41" />
+        <mark key="]" line="81" column="33" />
+        <mark key="." line="79" column="25" />
+        <mark key="^" line="162" column="45" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitmex.py" timestamp="1490312149053">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitmex.py" timestamp="1490314444935">
         <mark key="[" line="232" column="0" />
-        <mark key="]" line="232" column="0" />
+        <mark key="]" line="232" column="51" />
         <mark key="." line="232" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/database_client.py" timestamp="1483021561031">
@@ -167,10 +168,11 @@
         <mark key="." line="18" column="34" />
         <mark key="^" line="18" column="34" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_gatecoin.py" timestamp="1490312188509">
-        <mark key="[" line="274" column="0" />
-        <mark key="]" line="275" column="107" />
-        <mark key="." line="276" column="0" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_gatecoin.py" timestamp="1490314469115">
+        <mark key="'" line="272" column="38" />
+        <mark key="[" line="270" column="0" />
+        <mark key="]" line="270" column="51" />
+        <mark key="." line="270" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/file_client.py" timestamp="1483021639403">
         <mark key="'" line="114" column="8" />
@@ -191,10 +193,10 @@
         <mark key="." line="40" column="15" />
         <mark key="^" line="40" column="15" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_okcoin.py" timestamp="1490313602906">
-        <mark key="[" line="205" column="0" />
-        <mark key="]" line="206" column="107" />
-        <mark key="." line="205" column="109" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_okcoin.py" timestamp="1490314487981">
+        <mark key="[" line="207" column="0" />
+        <mark key="]" line="207" column="51" />
+        <mark key="." line="207" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_gdax.py" timestamp="1482964331253">
         <mark key="'" line="0" column="0" />
@@ -247,10 +249,11 @@
         <mark key="." line="21" column="33" />
         <mark key="^" line="21" column="33" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_restful_template.py" timestamp="1490313639470">
-        <mark key="[" line="258" column="0" />
-        <mark key="]" line="259" column="107" />
-        <mark key="." line="260" column="0" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_restful_template.py" timestamp="1490314497761">
+        <mark key="'" line="252" column="0" />
+        <mark key="[" line="254" column="0" />
+        <mark key="]" line="254" column="51" />
+        <mark key="." line="254" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_bitmex.py" timestamp="1484091996808">
         <mark key="'" line="94" column="26" />
@@ -287,10 +290,11 @@
         <mark key="." line="29" column="21" />
         <mark key="^" line="28" column="28" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" timestamp="1490313614429">
-        <mark key="[" line="281" column="0" />
-        <mark key="]" line="282" column="107" />
-        <mark key="." line="283" column="0" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" timestamp="1490314493323">
+        <mark key="'" line="296" column="34" />
+        <mark key="[" line="279" column="0" />
+        <mark key="]" line="279" column="51" />
+        <mark key="." line="279" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/instrument.py" timestamp="1484091582420">
         <mark key="'" line="95" column="44" />
@@ -324,9 +328,9 @@
         <mark key="]" line="0" column="22" />
         <mark key="." line="0" column="22" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_huobi.py" timestamp="1490312221850">
-        <mark key="[" line="234" column="0" />
-        <mark key="]" line="235" column="107" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_huobi.py" timestamp="1490314477927">
+        <mark key="[" line="236" column="0" />
+        <mark key="]" line="236" column="51" />
         <mark key="." line="236" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_ws_template.py" timestamp="1482150295873">
@@ -336,10 +340,11 @@
         <mark key="." line="218" column="0" />
         <mark key="^" line="217" column="58" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_kraken.py" timestamp="1490312234594">
-        <mark key="[" line="235" column="0" />
-        <mark key="]" line="236" column="107" />
-        <mark key="." line="237" column="0" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_kraken.py" timestamp="1490314482879">
+        <mark key="'" line="153" column="0" />
+        <mark key="[" line="204" column="0" />
+        <mark key="]" line="204" column="51" />
+        <mark key="." line="204" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/config.ini" timestamp="1483490256361">
         <mark key="[" line="23" column="0" />
@@ -423,20 +428,39 @@
       <jump line="14" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="131" column="48" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
-      <jump line="62" column="28" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
-      <jump line="71" column="21" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="75" column="22" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="77" column="46" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="82" column="29" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
-      <jump line="84" column="50" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="86" column="34" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="110" column="34" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="6" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
       <jump line="68" column="66" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
+      <jump line="264" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
+      <jump line="34" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
+      <jump line="84" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
+      <jump line="122" column="45" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
+      <jump line="164" column="45" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
+      <jump line="62" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
+      <jump line="281" column="76" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
+      <jump line="286" column="50" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
+      <jump line="299" column="34" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
+      <jump line="255" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_btcc.py" />
+      <jump line="277" column="38" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_gatecoin.py" />
+      <jump line="235" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_kraken.py" />
+      <jump line="153" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_kraken.py" />
+      <jump line="258" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_restful_template.py" />
+      <jump line="251" column="45" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
+      <jump line="0" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
+      <jump line="28" column="82" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
+      <jump line="32" column="84" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
+      <jump line="184" column="26" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
+      <jump line="197" column="26" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
+      <jump line="152" column="45" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
+      <jump line="71" column="8" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgZm9yIGRiX2NsaWVudCBpbiBzZWxmLmRiX2NsaWVudHM6Cg==</text>
+      <register name="&quot;" type="4">
+        <text>get_instmt_snapshot_table_name</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1650,49 +1674,49 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>get_order_book_table_name</text>
+        <text>get_instmt_snapshot_table_name</text>
       </register>
       <register name="/" type="4">
-        <text>db_clients</text>
+        <text encoding="base64">XDxnZXRfc25hcHNob3RfdGFibGVfbmFtZVw+</text>
       </register>
-      <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X2luc3RtdF9zbmFwc2hvdF90YWJsZV9uYW1lKHNlbGYuZ2V0X2luc3RtdF9zbmFwc2hvdF90YWJsZV9uYW1lKGluc3RtdC5nZXRfZXhjaGFuZ2VfbmFtZSgpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaW5zdG10LmdldF9pbnN0bXRfbmFtZSgpKSkK</text>
+      <register name="0" type="4">
+        <text>init_instmt_snapshot_table</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgZm9yIGRiX2NsaWVudCBpbiBzZWxmLmRiX2NsaWVudHM6Cg==</text>
+        <text encoding="base64">ICAgICAgICBpZiBkYXRhX21vZGUgJiBFeGNoYW5nZUdhdGV3YXkuRGF0YU1vZGUuU05BUFNIT1RfT05MWToK</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X29yZGVyX2Jvb2tfdGFibGVfbmFtZShzZWxmLmdldF9vcmRlcl9ib29rX3RhYmxlX25hbWUoaW5zdG10LmdldF9leGNoYW5nZV9uYW1lKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaW5zdG10LmdldF9pbnN0bXRfbmFtZSgpKSkKICAgICAgICBpbnN0bXQuc2V0X3RyYWRlc190YWJsZV9uYW1lKHNlbGYuZ2V0X3RyYWRlc190YWJsZV9uYW1lKGluc3RtdC5nZXRfZXhjaGFuZ2VfbmFtZSgpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpbnN0bXQuZ2V0X2luc3RtdF9uYW1lKCkpKQogICAgICAgIGluc3RtdC5zZXRfb3JkZXJfYm9va19pZChzZWxmLmdldF9vcmRlcl9ib29rX2luaXQoaW5zdG10KSkKICAgICAgICB0cmFkZV9pZCwgbGFzdF9leGNoX3RyYWRlX2lkID0gc2VsZi5nZXRfdHJhZGVzX2luaXQoaW5zdG10KQogICAgICAgIGluc3RtdC5zZXRfdHJhZGVfaWQodHJhZGVfaWQpCiAgICAgICAgaW5zdG10LnNldF9leGNoX3RyYWRlX2lkKGxhc3RfZXhjaF90cmFkZV9pZCkK</text>
+        <text encoding="base64">ICAgICAgICBpZiBzZWxmLmRhdGFfbW9kZSAmIEV4Y2hhbmdlR2F0ZXdheS5EYXRhTW9kZS5UUkFERVNfT05MWToK</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X29yZGVyX2Jvb2tfdGFibGVfbmFtZShzZWxmLmdldF9vcmRlcl9ib29rX3RhYmxlX25hbWUoaW5zdG10LmdldF9leGNoYW5nZV9uYW1lKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGluc3RtdC5nZXRfaW5zdG10X25hbWUoKSkpCiAgICAgICAgaW5zdG10LnNldF90cmFkZXNfdGFibGVfbmFtZShzZWxmLmdldF90cmFkZXNfdGFibGVfbmFtZShpbnN0bXQuZ2V0X2V4Y2hhbmdlX25hbWUoKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGluc3RtdC5nZXRfaW5zdG10X25hbWUoKSkpCg==</text>
+        <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X29yZGVyX2Jvb2tfaWQoc2VsZi5nZXRfb3JkZXJfYm9va19pbml0KGluc3RtdCkpCgo=</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X29yZGVyX2Jvb2tfdGFibGVfbmFtZShzZWxmLmdldF9vcmRlcl9ib29rX3RhYmxlX25hbWUoaW5zdG10LmdldF9leGNoYW5nZV9uYW1lKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGluc3RtdC5nZXRfaW5zdG10X25hbWUoKSkpCiAgICAgICAgaW5zdG10LnNldF90cmFkZXNfdGFibGVfbmFtZShzZWxmLmdldF90cmFkZXNfdGFibGVfbmFtZShpbnN0bXQuZ2V0X2V4Y2hhbmdlX25hbWUoKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGluc3RtdC5nZXRfaW5zdG10X25hbWUoKSkpCg==</text>
+        <text encoding="base64">ICAgICAgICB0cmFkZV9pZCwgZXhjaF90cmFkZV9pZCA9IHNlbGYuZ2V0X3RyYWRlc19pbml0KGluc3RtdCkKICAgICAgICBpbnN0bXQuc2V0X3RyYWRlX2lkKHRyYWRlX2lkKQogICAgICAgIGluc3RtdC5zZXRfZXhjaF90cmFkZV9pZChleGNoX3RyYWRlX2lkKQoK</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X29yZGVyX2Jvb2tfdGFibGVfbmFtZShzZWxmLmdldF9vcmRlcl9ib29rX3RhYmxlX25hbWUoaW5zdG10LmdldF9leGNoYW5nZV9uYW1lKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaW5zdG10LmdldF9pbnN0bXRfbmFtZSgpKSkKICAgICAgICBpbnN0bXQuc2V0X3RyYWRlc190YWJsZV9uYW1lKHNlbGYuZ2V0X3RyYWRlc190YWJsZV9uYW1lKGluc3RtdC5nZXRfZXhjaGFuZ2VfbmFtZSgpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpbnN0bXQuZ2V0X2luc3RtdF9uYW1lKCkpKQogICAgICAgIGluc3RtdC5zZXRfb3JkZXJfYm9va19pZChzZWxmLmdldF9vcmRlcl9ib29rX2luaXQoaW5zdG10KSkKICAgICAgICB0cmFkZV9pZCwgbGFzdF9leGNoX3RyYWRlX2lkID0gc2VsZi5nZXRfdHJhZGVzX2luaXQoaW5zdG10KQogICAgICAgIGluc3RtdC5zZXRfdHJhZGVfaWQodHJhZGVfaWQpCiAgICAgICAgaW5zdG10LnNldF9leGNoX3RyYWRlX2lkKGxhc3RfZXhjaF90cmFkZV9pZCkK</text>
+        <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X29yZGVyX2Jvb2tfaWQoc2VsZi5nZXRfb3JkZXJfYm9va19pbml0KGluc3RtdCkpCgo=</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X29yZGVyX2Jvb2tfdGFibGVfbmFtZShzZWxmLmdldF9vcmRlcl9ib29rX3RhYmxlX25hbWUoaW5zdG10LmdldF9leGNoYW5nZV9uYW1lKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpbnN0bXQuZ2V0X2luc3RtdF9uYW1lKCkpKQogICAgICAgIGluc3RtdC5zZXRfdHJhZGVzX3RhYmxlX25hbWUoc2VsZi5nZXRfdHJhZGVzX3RhYmxlX25hbWUoaW5zdG10LmdldF9leGNoYW5nZV9uYW1lKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaW5zdG10LmdldF9pbnN0bXRfbmFtZSgpKSkKCg==</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X29yZGVyX2Jvb2tfdGFibGVfbmFtZShzZWxmLmdldF9vcmRlcl9ib29rX3RhYmxlX25hbWUoaW5zdG10LmdldF9leGNoYW5nZV9uYW1lKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaW5zdG10LmdldF9pbnN0bXRfbmFtZSgpKSkKICAgICAgICBpbnN0bXQuc2V0X3RyYWRlc190YWJsZV9uYW1lKHNlbGYuZ2V0X3RyYWRlc190YWJsZV9uYW1lKGluc3RtdC5nZXRfZXhjaGFuZ2VfbmFtZSgpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpbnN0bXQuZ2V0X2luc3RtdF9uYW1lKCkpKQogICAgICAgIGluc3RtdC5zZXRfb3JkZXJfYm9va19pZChzZWxmLmdldF9vcmRlcl9ib29rX2luaXQoaW5zdG10KSkKICAgICAgICB0cmFkZV9pZCwgbGFzdF9leGNoX3RyYWRlX2lkID0gc2VsZi5nZXRfdHJhZGVzX2luaXQoaW5zdG10KQogICAgICAgIGluc3RtdC5zZXRfdHJhZGVfaWQodHJhZGVfaWQpCiAgICAgICAgaW5zdG10LnNldF9leGNoX3RyYWRlX2lkKGxhc3RfZXhjaF90cmFkZV9pZCkK</text>
+        <text encoding="base64">ICAgICAgICB0cmFkZV9pZCwgbGFzdF9leGNoX3RyYWRlX2lkID0gc2VsZi5nZXRfdHJhZGVzX2luaXQoaW5zdG10KQogICAgICAgIGluc3RtdC5zZXRfdHJhZGVfaWQodHJhZGVfaWQpCiAgICAgICAgaW5zdG10LnNldF9leGNoX3RyYWRlX2lkKGxhc3RfZXhjaF90cmFkZV9pZCkK</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X29yZGVyX2Jvb2tfdGFibGVfbmFtZShzZWxmLmdldF9vcmRlcl9ib29rX3RhYmxlX25hbWUoaW5zdG10LmdldF9leGNoYW5nZV9uYW1lKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaW5zdG10LmdldF9pbnN0bXRfbmFtZSgpKSkKICAgICAgICBpbnN0bXQuc2V0X3RyYWRlc190YWJsZV9uYW1lKHNlbGYuZ2V0X3RyYWRlc190YWJsZV9uYW1lKGluc3RtdC5nZXRfZXhjaGFuZ2VfbmFtZSgpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpbnN0bXQuZ2V0X2luc3RtdF9uYW1lKCkpKQogICAgICAgIGluc3RtdC5zZXRfb3JkZXJfYm9va19pZChzZWxmLmdldF9vcmRlcl9ib29rX2luaXQoaW5zdG10KSkKICAgICAgICB0cmFkZV9pZCwgbGFzdF9leGNoX3RyYWRlX2lkID0gc2VsZi5nZXRfdHJhZGVzX2luaXQoaW5zdG10KQogICAgICAgIGluc3RtdC5zZXRfdHJhZGVfaWQodHJhZGVfaWQpCiAgICAgICAgaW5zdG10LnNldF9leGNoX3RyYWRlX2lkKGxhc3RfZXhjaF90cmFkZV9pZCkK</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">ICAgICAgICBpbnN0bXQuc2V0X29yZGVyX2Jvb2tfdGFibGVfbmFtZShzZWxmLmdldF9vcmRlcl9ib29rX3RhYmxlX25hbWUoaW5zdG10LmdldF9leGNoYW5nZV9uYW1lKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaW5zdG10LmdldF9pbnN0bXRfbmFtZSgpKSkKICAgICAgICBpbnN0bXQuc2V0X3RyYWRlc190YWJsZV9uYW1lKHNlbGYuZ2V0X3RyYWRlc190YWJsZV9uYW1lKGluc3RtdC5nZXRfZXhjaGFuZ2VfbmFtZSgpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpbnN0bXQuZ2V0X2luc3RtdF9uYW1lKCkpKQogICAgICAgIGluc3RtdC5zZXRfb3JkZXJfYm9va19pZChzZWxmLmdldF9vcmRlcl9ib29rX2luaXQoaW5zdG10KSkKICAgICAgICB0cmFkZV9pZCwgbGFzdF9leGNoX3RyYWRlX2lkID0gc2VsZi5nZXRfdHJhZGVzX2luaXQoaW5zdG10KQogICAgICAgIGluc3RtdC5zZXRfdHJhZGVfaWQodHJhZGVfaWQpCiAgICAgICAgaW5zdG10LnNldF9leGNoX3RyYWRlX2lkKGxhc3RfZXhjaF90cmFkZV9pZCkK</text>
+        <text encoding="base64">ICAgIGRlZiBnZXRfdHJhZGVzX2luaXQoc2VsZiwgaW5zdG10KToKICAgICAgICAiIiIKICAgICAgICBJbml0aWFsaXphdGlvbiBtZXRob2QgaW4gZ2V0X3RyYWRlcwogICAgICAgIDpwYXJhbSBpbnN0bXQ6IEluc3RydW1lbnQKICAgICAgICA6cmV0dXJuOiBMYXN0IGlkCiAgICAgICAgIiIiCiAgICAgICAgaWYgc2VsZi5kYXRhX21vZGUgJiBFeGNoYW5nZUdhdGV3YXkuRGF0YU1vZGUuVFJBREVTX09OTFk6CiAgICAgICAgICAgIHRhYmxlX25hbWUgPSBzZWxmLmdldF90cmFkZXNfdGFibGVfbmFtZShpbnN0bXQuZ2V0X2V4Y2hhbmdlX25hbWUoKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGluc3RtdC5nZXRfaW5zdG10X25hbWUoKSkKICAgICAgICAgICAgc2VsZi5pbml0X3RyYWRlc190YWJsZShpbnN0bXQpCiAgICAgICAgICAgIGlkX3JldCA9IHNlbGYuZGJfY2xpZW50LnNlbGVjdCh0YWJsZT10YWJsZV9uYW1lLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY29sdW1ucz1bJ2lkJ10sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBvcmRlcmJ5PSJpZCBkZXNjIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGxpbWl0PTEpCiAgICAgICAgICAgIHRyYWRlX2lkX3JldCA9IHNlbGYuZGJfY2xpZW50LnNlbGVjdCh0YWJsZT10YWJsZV9uYW1lLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY29sdW1ucz1bJ2lkJywndHJhZGVfaWQnXSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG9yZGVyYnk9ImlkIGRlc2MiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbGltaXQ9MSkKCiAgICAgICAgICAgIGlmIGxlbihpZF9yZXQpID4gMCBhbmQgbGVuKHRyYWRlX2lkX3JldCkgPiAwOgogICAgICAgICAgICAgICAgYXNzZXJ0IGlzaW5zdGFuY2UoaWRfcmV0WzBdWzBdLCBpbnQpLCAiaWRfcmV0WzBdWzBdKCVzKSA9ICVzIiAlICh0eXBlKGlkX3JldFswXVswXSksIGlkX3JldCkKICAgICAgICAgICAgICAgIHJldHVybiBpbnQoaWRfcmV0WzBdWzBdKSwgdHJhZGVfaWRfcmV0WzBdWzFdWzI1Ol0KICAgICAgICAgICAgZWxzZToKICAgICAgICAgICAgICAgIHJldHVybiAwLCAnMCcKICAgICAgICBlbHNlOgogICAgICAgICAgICByZXR1cm4gMCwgJzAnCg==</text>
       </register>
       <register name=":" type="4">
         <text>w</text>
       </register>
     </registers>
     <search>
-      <last-search>db_clients</last-search>
+      <last-search encoding="base64">XDxnZXRfc25hcHNob3RfdGFibGVfbmFtZVw+</last-search>
       <last-offset />
-      <last-pattern>db_clients</last-pattern>
+      <last-pattern encoding="base64">XDxnZXRfc25hcHNob3RfdGFibGVfbmFtZVw+</last-pattern>
       <last-replace>instmt_snapshot</last-replace>
       <last-substitute>snapshots</last-substitute>
       <last-dir>1</last-dir>
@@ -1700,13 +1724,6 @@
     </search>
     <history>
       <history-search>
-        <entry encoding="base64">XDxnZXRfb3JkZXJfYm9va1w+</entry>
-        <entry encoding="base64">XDxwYXJzZV9sMl9kZXB0aFw+</entry>
-        <entry>bitmex</entry>
-        <entry>xbtusd</entry>
-        <entry>Error in order</entry>
-        <entry encoding="base64">XDxnZXRfb3JkZXJfYm9va19zdWJzY3JpcHRpb25fc3RyaW5nXD4=</entry>
-        <entry>get_inst</entry>
         <entry>get_instmt_code</entry>
         <entry>trade_id</entry>
         <entry>enabled= 1</entry>
@@ -1720,6 +1737,13 @@
         <entry encoding="base64">XDxPUkRFUl9CT09LX09OTFlcPg==</entry>
         <entry>table</entry>
         <entry>db_clients</entry>
+        <entry>get_instmt</entry>
+        <entry encoding="base64">XDxnZXRfaW5zdG10X3NuYXBzaG90X3RhYmxlX25hbWVcPg==</entry>
+        <entry>get_trades</entry>
+        <entry>get_trades_init</entry>
+        <entry>get_instmt_</entry>
+        <entry>get_instmt_snapshot</entry>
+        <entry encoding="base64">XDxnZXRfc25hcHNob3RfdGFibGVfbmFtZVw+</entry>
       </history-search>
       <history-cmd>
         <entry>eq</entry>

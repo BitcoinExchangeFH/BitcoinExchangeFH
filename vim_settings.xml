@@ -68,6 +68,13 @@
         <mark key="^" line="153" column="29" />
         <mark key="." line="157" column="0" />
       </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/ws_api_socket.py" timestamp="1490571092708">
+        <mark key="'" line="71" column="26" />
+        <mark key="[" line="63" column="58" />
+        <mark key="]" line="63" column="58" />
+        <mark key="." line="63" column="58" />
+        <mark key="^" line="63" column="95" />
+      </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/market_data.py" timestamp="1490486485705">
         <mark key="[" line="256" column="33" />
         <mark key="]" line="256" column="33" />
@@ -81,8 +88,8 @@
         <mark key="^" line="270" column="49" />
         <mark key="." line="270" column="13" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" timestamp="1490569174067">
-        <mark key="'" line="8" column="0" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" timestamp="1490571114745">
+        <mark key="'" line="226" column="39" />
         <mark key="[" line="8" column="0" />
         <mark key="]" line="8" column="0" />
         <mark key="." line="8" column="0" />
@@ -301,9 +308,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="69" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" />
-      <jump line="167" column="34" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
-      <jump line="252" column="38" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
       <jump line="244" column="89" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
       <jump line="19" column="28" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" />
       <jump line="38" column="24" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" />
@@ -401,10 +405,13 @@
       <jump line="1" column="32" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="17" column="13" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" />
       <jump line="8" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" />
+      <jump line="5" column="10" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/ws_api_socket.py" />
+      <jump line="71" column="26" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/ws_api_socket.py" />
+      <jump line="226" column="39" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ZnJvbSBkYXRldGltZSBpbXBvcnQgZGF0ZXRpbWUK</text>
+      <register name="&quot;" type="4">
+        <text>=</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1618,30 +1625,39 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>self.is_allowed_instmt_record(db_client):</text>
+        <text>=</text>
       </register>
       <register name="/" type="4">
-        <text encoding="base64">XDxLZGJQbHVzQ2xpZW50XD4=</text>
+        <text>Lock</text>
       </register>
       <register name="0" type="4">
         <text>is_allowed_instmt_record</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ZnJvbSBkYXRldGltZSBpbXBvcnQgZGF0ZXRpbWUK</text>
+        <text encoding="base64">ICAgICAgICAgICAgc2VsZi53c3QgPSBQcm9jZXNzKHRhcmdldD1zZWxmLl9fc3RhcnQsIGFyZ3M9KCkK</text>
       </register>
-      <register name="2" type="2">
-        <text encoding="base64">aW1wb3J0IHRpbWUK</text>
+      <register name="2" type="8">
+        <text>self.__start</text>
       </register>
       <register name="3" type="2">
         <text encoding="base64">aW1wb3J0IHRocmVhZGluZwo=</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHByaW1hcnlfa2V5X2luZGV4PVswXSwK</text>
+        <text encoding="base64">ZnJvbSBkYXRldGltZSBpbXBvcnQgZGF0ZXRpbWUK</text>
       </register>
       <register name="5" type="2">
+        <text encoding="base64">aW1wb3J0IHRpbWUK</text>
+      </register>
+      <register name="6" type="2">
+        <text encoding="base64">aW1wb3J0IHRocmVhZGluZwo=</text>
+      </register>
+      <register name="7" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHByaW1hcnlfa2V5X2luZGV4PVswXSwK</text>
+      </register>
+      <register name="8" type="2">
         <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcHJpbWFyeV9rZXlfaW5kZXg9WzBdLAo=</text>
       </register>
-      <register name="6" type="4">
+      <register name="9" type="4">
         <text>[BTCC-Spot-BTCCNY-Restful]
 exchange = BTCC_Spot
 instmt_name = BTCCNY
@@ -1726,23 +1742,14 @@ instmt_name = BTCUSD
 instmt_code = 1
 enabled = 1</text>
       </register>
-      <register name="7" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgIGlmIG5vdCBpc2luc3RhbmNlKGRiX2NsaWVudCwgS2RiUGx1c0NsaWVudCk6Cg==</text>
-      </register>
-      <register name="8" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgIGlmIG5vdCBpc2luc3RhbmNlKGRiX2NsaWVudCwgS2RiUGx1c0NsaWVudCk6Cg==</text>
-      </register>
-      <register name="9" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgIGlmIG5vdCBpc2luc3RhbmNlKGRiX2NsaWVudCwgRmlsZUNsaWVudCk6Cg==</text>
-      </register>
       <register name=":" type="4">
         <text>w</text>
       </register>
     </registers>
     <search>
-      <last-search encoding="base64">XDxLZGJQbHVzQ2xpZW50XD4=</last-search>
+      <last-search>Lock</last-search>
       <last-offset />
-      <last-pattern encoding="base64">XDxLZGJQbHVzQ2xpZW50XD4=</last-pattern>
+      <last-pattern>Lock</last-pattern>
       <last-replace>db_clients</last-replace>
       <last-substitute>db_client</last-substitute>
       <last-dir>1</last-dir>
@@ -1750,9 +1757,6 @@ enabled = 1</text>
     </search>
     <history>
       <history-search>
-        <entry>snapshots</entry>
-        <entry encoding="base64">XDxPUkRFUl9CT09LX09OTFlcPg==</entry>
-        <entry>table</entry>
         <entry>db_clients</entry>
         <entry>get_instmt</entry>
         <entry encoding="base64">XDxnZXRfaW5zdG10X3NuYXBzaG90X3RhYmxlX25hbWVcPg==</entry>
@@ -1770,6 +1774,9 @@ enabled = 1</text>
         <entry>db_client</entry>
         <entry encoding="base64">XDxjb252ZXJ0X3R5cGVcPg==</entry>
         <entry encoding="base64">XDxLZGJQbHVzQ2xpZW50XD4=</entry>
+        <entry>Process</entry>
+        <entry>lock</entry>
+        <entry>Lock</entry>
       </history-search>
       <history-cmd>
         <entry>%s/enabled = 0/enable = 1/g</entry>

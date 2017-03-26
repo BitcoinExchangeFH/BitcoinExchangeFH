@@ -1,4 +1,4 @@
-from befh.ws_api_socket2 import WebSocketApiClient
+from befh.socketio_api_socket import SocketIOApiClient
 from befh.market_data import L2Depth, Trade
 from befh.exchange import ExchangeGateway
 from befh.instrument import Instrument
@@ -11,7 +11,7 @@ from functools import partial
 from datetime import datetime
 
 
-class ExchGwApiHuobi(WebSocketApiClient):
+class ExchGwIOApiHuobi(SocketIOApiClient):
     """
     Exchange socket
     """
@@ -19,7 +19,7 @@ class ExchGwApiHuobi(WebSocketApiClient):
         """
         Constructor
         """
-        WebSocketApiClient.__init__(self, 'Huobi')
+        SocketIOApiClient.__init__(self, 'Huobi')
         
     @classmethod
     def get_order_book_timestamp_field_name(cls):
@@ -170,7 +170,7 @@ class ExchGwHuobi(ExchangeGateway):
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwApiHuobi(), db_client)
+        ExchangeGateway.__init__(self, ExchGwIOApiHuobi(), db_client)
 
     @classmethod
     def get_exchange_name(cls):

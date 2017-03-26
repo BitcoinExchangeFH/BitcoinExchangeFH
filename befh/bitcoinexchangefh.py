@@ -25,7 +25,6 @@ from befh.util import Logger
 
 def main():
     parser = argparse.ArgumentParser(description='Bitcoin exchange market data feed handler.')
-    parser.add_argument('-mode', action='store', help='Mode. Supports ALL, ORDER_BOOK_AND_TRADES_ONLY, SNAPSHOT_ONLY, ORDER_BOOK_ONLY and TRADES_ONLY', default='ALL')
     parser.add_argument('-instmts', action='store', help='Instrument subscription file.', default='subscriptions.ini')
     parser.add_argument('-exchtime', action='store_true', help='Use exchange timestamp.')
     parser.add_argument('-kdb', action='store_true', help='Use Kdb+ as database.')
@@ -87,21 +86,15 @@ def main():
         parser.print_help()
         sys.exit(1)
         
-    # Data mode
-    if args.mode is not None:
-        ExchangeGateway.data_mode = ExchangeGateway.DataMode.fromstring(args.mode)
-        
     # Use exchange timestamp rather than local timestamp
     if args.exchtime:
         ExchangeGateway.is_local_timestamp = False
 
     subscription_instmts = SubscriptionManager(args.instmts).get_subscriptions()
-    ExchangeGateway.init_snapshot_table(ExchangeGateway.data_mode, db_client)
+    ExchangeGateway.init_snapshot_table(db_client)
 
-    Logger.info('[main]', 'Current mode = %s' % args.mode)
     Logger.info('[main]', 'Subscription file = %s' % args.instmts)
     
-
     exch_gws = []
     exch_gws.append(ExchGwBtccSpot(db_client))
     exch_gws.append(ExchGwBtccFuture(db_client))

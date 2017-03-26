@@ -195,8 +195,6 @@ class ExchGwBtcc(ExchangeGateway):
         Get order book worker
         :param instmt: Instrument
         """
-        instmt.set_order_book_id(self.get_order_book_init(instmt))
-
         while True:
             try:
                 l2_depth = self.api_socket.get_order_book(instmt)
@@ -214,10 +212,6 @@ class ExchGwBtcc(ExchangeGateway):
         Get order book worker thread
         :param instmt: Instrument name
         """
-        trade_id, exch_trade_id = self.get_trades_init(instmt)
-        instmt.set_trade_id(trade_id)
-        instmt.set_exch_trade_id(exch_trade_id)
-
         while True:
             try:
                 ret = self.api_socket.get_trades(instmt)
@@ -251,10 +245,9 @@ class ExchGwBtcc(ExchangeGateway):
         """
         instmt.set_l2_depth(L2Depth(5))
         instmt.set_prev_l2_depth(L2Depth(5))
-        instmt.set_order_book_table_name(self.get_order_book_table_name(instmt.get_exchange_name(),
-                                                                        instmt.get_instmt_name()))
-        instmt.set_trades_table_name(self.get_trades_table_name(instmt.get_exchange_name(),
-                                                                instmt.get_instmt_name()))
+        instmt.set_instmt_snapshot_table_name(self.get_instmt_snapshot_table_name(instmt.get_exchange_name(),
+                                                                                  instmt.get_instmt_name()))
+        self.init_instmt_snapshot_table(instmt)
         instmt.set_recovered(False)
         t1 = threading.Thread(target=partial(self.get_order_book_worker, instmt))
         t1.start()

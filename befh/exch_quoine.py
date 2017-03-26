@@ -215,7 +215,6 @@ class ExchGwQuoine(ExchangeGateway):
         ExchGwQuoine.num_of_connections += 1
         Logger.info(self.__class__.__name__, "Current number of connections = %d" % ExchGwQuoine.num_of_connections)
         ExchGwQuoine.num_of_connections_lock.release()
-        instmt.set_order_book_id(self.get_order_book_init(instmt))
 
         while True:
             try:
@@ -240,9 +239,6 @@ class ExchGwQuoine(ExchangeGateway):
         ExchGwQuoine.num_of_connections += 1
         Logger.info(self.__class__.__name__, "Current number of connections = %d" % ExchGwQuoine.num_of_connections)
         ExchGwQuoine.num_of_connections_lock.release()        
-        trade_id, exch_trade_id = self.get_trades_init(instmt)
-        instmt.set_trade_id(trade_id)
-        instmt.set_exch_trade_id(exch_trade_id)
 
         while True:
             try:
@@ -279,10 +275,9 @@ class ExchGwQuoine(ExchangeGateway):
         """
         instmt.set_l2_depth(L2Depth(5))
         instmt.set_prev_l2_depth(L2Depth(5))
-        instmt.set_order_book_table_name(self.get_order_book_table_name(instmt.get_exchange_name(),
-                                                                        instmt.get_instmt_name()))
-        instmt.set_trades_table_name(self.get_trades_table_name(instmt.get_exchange_name(),
-                                                                instmt.get_instmt_name()))
+        instmt.set_instmt_snapshot_table_name(self.get_instmt_snapshot_table_name(instmt.get_exchange_name(),
+                                                                                  instmt.get_instmt_name()))
+        self.init_instmt_snapshot_table(instmt)
         instmt.set_recovered(False)
         t1 = threading.Thread(target=partial(self.get_order_book_worker, instmt))
         t1.start()

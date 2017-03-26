@@ -152,40 +152,11 @@ class ExchGwKraken(ExchangeGateway):
         """
         return 'Kraken'
 
-    def get_trades_init(self, instmt):
-        """
-        Initialization method in get_trades
-        :param instmt: Instrument
-        :return: Last id
-        """
-        if self.data_mode & ExchangeGateway.DataMode.TRADES_ONLY:
-            table_name = self.get_trades_table_name(instmt.get_exchange_name(),
-                                                    instmt.get_instmt_name())
-            self.init_trades_table(instmt)
-            id_ret = self.db_client.select(table=table_name,
-                                           columns=['id'],
-                                           orderby="id desc",
-                                           limit=1)
-            trade_id_ret = self.db_client.select(table=table_name,
-                                                 columns=['id','trade_id'],
-                                                 orderby="id desc",
-                                                 limit=1)
-
-            if len(id_ret) > 0 and len(trade_id_ret) > 0:
-                assert isinstance(id_ret[0][0], int), "id_ret[0][0](%s) = %s" % (type(id_ret[0][0]), id_ret)
-                return int(id_ret[0][0]), trade_id_ret[0][1][25:]
-            else:
-                return 0, '0'
-        else:
-            return 0, '0'
-
     def get_order_book_worker(self, instmt):
         """
         Get order book worker
         :param instmt: Instrument
         """
-        instmt.set_order_book_id(self.get_order_book_init(instmt))
-
         while True:
             try:
                 l2_depth = self.api_socket.get_order_book(instmt)
@@ -204,10 +175,6 @@ class ExchGwKraken(ExchangeGateway):
         Get order book worker thread
         :param instmt: Instrument name
         """
-        trade_id, last_exch_trade_id = self.get_trades_init(instmt)
-        instmt.set_trade_id(trade_id)
-        instmt.set_exch_trade_id(last_exch_trade_id)
-
         while True:
             try:
                 ret = self.api_socket.get_trades(instmt)
@@ -233,11 +200,9 @@ class ExchGwKraken(ExchangeGateway):
         """
         instmt.set_prev_l2_depth(L2Depth(5))
         instmt.set_l2_depth(L2Depth(5))
-        instmt.set_order_book_table_name(self.get_order_book_table_name(instmt.get_exchange_name(),
-                                                                         instmt.get_instmt_name()))
-        instmt.set_trades_table_name(self.get_trades_table_name(instmt.get_exchange_name(),
-                                                                 instmt.get_instmt_name()))
-
+        instmt.set_instmt_snapshot_table_name(self.get_instmt_snapshot_table_name(instmt.get_exchange_name(),
+                                                                                  instmt.get_instmt_name()))
+        self.init_instmt_snapshot_table(instmt)
         t1 = threading.Thread(target=partial(self.get_order_book_worker, instmt))
         t1.start()
         t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))

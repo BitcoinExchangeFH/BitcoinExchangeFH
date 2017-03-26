@@ -87,12 +87,12 @@
         <mark key="." line="247" column="36" />
         <mark key="^" line="247" column="36" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490496770184">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490497394592">
         <mark key="'" line="1" column="32" />
-        <mark key="[" line="166" column="0" />
-        <mark key="]" line="166" column="37" />
-        <mark key="." line="166" column="37" />
-        <mark key="^" line="1" column="44" />
+        <mark key="[" line="48" column="48" />
+        <mark key="]" line="48" column="63" />
+        <mark key="." line="48" column="63" />
+        <mark key="^" line="48" column="63" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitmex.py" timestamp="1490314444935">
         <mark key="[" line="232" column="0" />
@@ -413,8 +413,8 @@
       <jump line="1" column="32" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgIGlmIG5vdCBpc2luc3RhbmNlKGRiX2NsaWVudCwgS2RiUGx1c0NsaWVudCk6Cg==</text>
+      <register name="&quot;" type="4">
+        <text>year</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1628,7 +1628,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>, instmt):</text>
+        <text>year</text>
       </register>
       <register name="/" type="4">
         <text encoding="base64">XDxLZGJQbHVzQ2xpZW50XD4=</text>

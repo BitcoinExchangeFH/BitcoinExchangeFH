@@ -278,12 +278,12 @@
         <mark key="^" line="105" column="39" />
         <mark key="." line="110" column="8" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/bitcoinexchangefh.py" timestamp="1490490536497">
-        <mark key="'" line="102" column="35" />
-        <mark key="[" line="97" column="40" />
-        <mark key="]" line="97" column="49" />
-        <mark key="." line="97" column="49" />
-        <mark key="^" line="97" column="49" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/bitcoinexchangefh.py" timestamp="1490494241578">
+        <mark key="'" line="109" column="35" />
+        <mark key="[" line="82" column="92" />
+        <mark key="]" line="82" column="92" />
+        <mark key="." line="82" column="92" />
+        <mark key="^" line="82" column="92" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/.gitignore" timestamp="1481644678099">
         <mark key="[" line="2" column="0" />
@@ -407,7 +407,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>s</text>
+        <text>0</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1621,13 +1621,13 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>s</text>
+        <text>0</text>
       </register>
       <register name="/" type="4">
         <text>db_client</text>
       </register>
-      <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICBkYl9jbGllbnRzLmFwcGVuZChkYl9jbGllbnQpCg==</text>
+      <register name="0" type="8">
+        <text>args.kdbdest.split(':')[0]</text>
       </register>
       <register name="1" type="8">
         <text encoding="base64">c2VsZi4KICAgICAKICAgICAKICAgICAKICAgICAKICAgICAKICAgICAKICAgICAKICAgICAKICAgICAKICAgICAKc2VsZi4KICAgICAKICAgICAKICAgICAKICAgICAKICAgICAKICAgICAKICAgICAKICAgICAKICAgICAKICAgICA=</text>

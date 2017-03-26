@@ -81,11 +81,12 @@
         <mark key="^" line="270" column="49" />
         <mark key="." line="270" column="13" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" timestamp="1490493397084">
-        <mark key="[" line="247" column="36" />
-        <mark key="]" line="247" column="36" />
-        <mark key="." line="247" column="36" />
-        <mark key="^" line="247" column="36" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" timestamp="1490569174067">
+        <mark key="'" line="8" column="0" />
+        <mark key="[" line="8" column="0" />
+        <mark key="]" line="8" column="0" />
+        <mark key="." line="8" column="0" />
+        <mark key="^" line="244" column="36" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490567282320">
         <mark key="'" line="1" column="32" />
@@ -300,7 +301,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="134" column="67" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" />
       <jump line="69" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" />
       <jump line="167" column="34" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
       <jump line="252" column="38" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
@@ -400,10 +400,11 @@
       <jump line="109" column="20" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="1" column="32" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="17" column="13" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" />
+      <jump line="8" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="4">
-        <text>self.is_allowed_instmt_record(db_client):</text>
+      <register name="&quot;" type="2">
+        <text encoding="base64">ZnJvbSBkYXRldGltZSBpbXBvcnQgZGF0ZXRpbWUK</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1626,12 +1627,21 @@
         <text>is_allowed_instmt_record</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHByaW1hcnlfa2V5X2luZGV4PVswXSwK</text>
+        <text encoding="base64">ZnJvbSBkYXRldGltZSBpbXBvcnQgZGF0ZXRpbWUK</text>
       </register>
       <register name="2" type="2">
+        <text encoding="base64">aW1wb3J0IHRpbWUK</text>
+      </register>
+      <register name="3" type="2">
+        <text encoding="base64">aW1wb3J0IHRocmVhZGluZwo=</text>
+      </register>
+      <register name="4" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHByaW1hcnlfa2V5X2luZGV4PVswXSwK</text>
+      </register>
+      <register name="5" type="2">
         <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcHJpbWFyeV9rZXlfaW5kZXg9WzBdLAo=</text>
       </register>
-      <register name="3" type="4">
+      <register name="6" type="4">
         <text>[BTCC-Spot-BTCCNY-Restful]
 exchange = BTCC_Spot
 instmt_name = BTCCNY
@@ -1716,23 +1726,14 @@ instmt_name = BTCUSD
 instmt_code = 1
 enabled = 1</text>
       </register>
-      <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgIGlmIG5vdCBpc2luc3RhbmNlKGRiX2NsaWVudCwgS2RiUGx1c0NsaWVudCk6Cg==</text>
-      </register>
-      <register name="5" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgIGlmIG5vdCBpc2luc3RhbmNlKGRiX2NsaWVudCwgS2RiUGx1c0NsaWVudCk6Cg==</text>
-      </register>
-      <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgIGlmIG5vdCBpc2luc3RhbmNlKGRiX2NsaWVudCwgRmlsZUNsaWVudCk6Cg==</text>
-      </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgIAo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIGlmIG5vdCBpc2luc3RhbmNlKGRiX2NsaWVudCwgS2RiUGx1c0NsaWVudCk6Cg==</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIGlmIG5vdCBpc2luc3RhbmNlKGRiX2NsaWVudCwgS2RiUGx1c0NsaWVudCk6Cg==</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">ZnJvbSBiZWZoLmRhdGFiYXNlX2NsaWVudCBpbXBvcnQgRGF0YWJhc2VDbGllbnQK</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIGlmIG5vdCBpc2luc3RhbmNlKGRiX2NsaWVudCwgRmlsZUNsaWVudCk6Cg==</text>
       </register>
       <register name=":" type="4">
         <text>w</text>

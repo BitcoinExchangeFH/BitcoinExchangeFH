@@ -87,12 +87,12 @@
         <mark key="." line="247" column="36" />
         <mark key="^" line="247" column="36" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490497394592">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490518415542">
         <mark key="'" line="1" column="32" />
-        <mark key="[" line="48" column="48" />
-        <mark key="]" line="48" column="63" />
-        <mark key="." line="48" column="63" />
-        <mark key="^" line="48" column="63" />
+        <mark key="[" line="77" column="31" />
+        <mark key="]" line="77" column="31" />
+        <mark key="." line="77" column="31" />
+        <mark key="^" line="167" column="59" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitmex.py" timestamp="1490314444935">
         <mark key="[" line="232" column="0" />
@@ -174,7 +174,7 @@
         <mark key="." line="93" column="35" />
         <mark key="^" line="93" column="35" />
       </file>
-      <file name="/Python Console" timestamp="1490486431979">
+      <file name="/Python Console" timestamp="1490518256388">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="/fragment.py" timestamp="1490485951487">
@@ -265,12 +265,6 @@
         <mark key="." line="218" column="0" />
         <mark key="^" line="217" column="58" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_kraken.py" timestamp="1490314482879">
-        <mark key="'" line="153" column="0" />
-        <mark key="[" line="204" column="0" />
-        <mark key="]" line="204" column="51" />
-        <mark key="." line="204" column="0" />
-      </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/test/test_file_client.py" timestamp="1481153644877">
         <mark key="'" line="111" column="0" />
         <mark key="[" line="110" column="8" />
@@ -278,12 +272,12 @@
         <mark key="^" line="105" column="39" />
         <mark key="." line="110" column="8" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/bitcoinexchangefh.py" timestamp="1490508894264">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/bitcoinexchangefh.py" timestamp="1490517770082">
         <mark key="'" line="109" column="35" />
-        <mark key="[" line="75" column="16" />
-        <mark key="]" line="75" column="23" />
-        <mark key="." line="75" column="16" />
-        <mark key="^" line="82" column="92" />
+        <mark key="[" line="76" column="44" />
+        <mark key="]" line="76" column="51" />
+        <mark key="." line="76" column="44" />
+        <mark key="^" line="75" column="22" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/kdbplus_client.py" timestamp="1490496732026">
         <mark key="'" line="36" column="8" />
@@ -414,7 +408,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>dbdir</text>
+        <text>g</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1628,40 +1622,40 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>dbdir</text>
+        <text>g</text>
       </register>
       <register name="/" type="4">
         <text encoding="base64">XDxLZGJQbHVzQ2xpZW50XD4=</text>
       </register>
-      <register name="0" type="4">
-        <text>csvdest</text>
+      <register name="0" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgICAgIGlmIHNlbGYuaXNfYWxsb3dlZF9pbnN0bXRfcmVjb3JkKGRiX2NsaWVudCk6Cg==</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ZnJvbSBiZWZoLmRhdGFiYXNlX2NsaWVudCBpbXBvcnQgRGF0YWJhc2VDbGllbnQK</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIGlmIG5vdCBpc2luc3RhbmNlKGRiX2NsaWVudCwgS2RiUGx1c0NsaWVudCk6Cg==</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgaWQgPSBpbnQoZGF0ZXRpbWUudXRjbm93KCkudGltZXN0YW1wKCkqMWU2KQo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIGlmIG5vdCBpc2luc3RhbmNlKGRiX2NsaWVudCwgS2RiUGx1c0NsaWVudCk6Cg==</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICBlbGlmIHR5cGUgPT0gJ2xvbmcnIG9yIHR5cGUgPT0gJ2JpZ2ludCc6CiAgICAgICAgICAgIHJldHVybiBsb25nCg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIGlmIG5vdCBpc2luc3RhbmNlKGRiX2NsaWVudCwgRmlsZUNsaWVudCk6Cg==</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICBlbGlmIHR5cGUgPT0gJ2JpZ2ludCc6CiAgICAgICAgICAgIHJldHVybiBsb25nCg==</text>
+        <text encoding="base64">ICAgIAo=</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgaWQgPSBzZWxmLmdldF9pbnN0bXRfc25hcHNob3RfaWQoaW5zdG10KQo=</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgIGlkID0gc2VsZi5nZXRfaW5zdG10X3NuYXBzaG90X2lkKGluc3RtdCkK</text>
+        <text encoding="base64">ZnJvbSBiZWZoLmRhdGFiYXNlX2NsaWVudCBpbXBvcnQgRGF0YWJhc2VDbGllbnQK</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgIGlkID0gc2VsZi5nZXRfaW5zdG10X3NuYXBzaG90X2lkKGluc3RtdCkK</text>
+        <text encoding="base64">ICAgICAgICAgICAgaWQgPSBpbnQoZGF0ZXRpbWUudXRjbm93KCkudGltZXN0YW1wKCkqMWU2KQo=</text>
       </register>
-      <register name="8" type="8">
-        <text encoding="base64">ICAgCiAgIAogICAKICAgCiAgIA==</text>
+      <register name="8" type="2">
+        <text encoding="base64">ICAgICAgICBlbGlmIHR5cGUgPT0gJ2xvbmcnIG9yIHR5cGUgPT0gJ2JpZ2ludCc6CiAgICAgICAgICAgIHJldHVybiBsb25nCg==</text>
       </register>
-      <register name="9" type="8">
-        <text>self.get_instmt_snapshot_id(instmt)</text>
+      <register name="9" type="2">
+        <text encoding="base64">ICAgICAgICBlbGlmIHR5cGUgPT0gJ2JpZ2ludCc6CiAgICAgICAgICAgIHJldHVybiBsb25nCg==</text>
       </register>
       <register name=":" type="4">
         <text>w</text>

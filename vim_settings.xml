@@ -278,11 +278,11 @@
         <mark key="^" line="105" column="39" />
         <mark key="." line="110" column="8" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/bitcoinexchangefh.py" timestamp="1490494241578">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/bitcoinexchangefh.py" timestamp="1490508894264">
         <mark key="'" line="109" column="35" />
-        <mark key="[" line="82" column="92" />
-        <mark key="]" line="82" column="92" />
-        <mark key="." line="82" column="92" />
+        <mark key="[" line="75" column="16" />
+        <mark key="]" line="75" column="23" />
+        <mark key="." line="75" column="16" />
         <mark key="^" line="82" column="92" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/kdbplus_client.py" timestamp="1490496732026">
@@ -414,7 +414,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>year</text>
+        <text>dbdir</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1628,13 +1628,13 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>year</text>
+        <text>dbdir</text>
       </register>
       <register name="/" type="4">
         <text encoding="base64">XDxLZGJQbHVzQ2xpZW50XD4=</text>
       </register>
-      <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgIGlmIG5vdCBpc2luc3RhbmNlKGRiX2NsaWVudCwgS2RiUGx1c0NsaWVudCk6Cg==</text>
+      <register name="0" type="4">
+        <text>csvdest</text>
       </register>
       <register name="1" type="2">
         <text encoding="base64">ZnJvbSBiZWZoLmRhdGFiYXNlX2NsaWVudCBpbXBvcnQgRGF0YWJhc2VDbGllbnQK</text>

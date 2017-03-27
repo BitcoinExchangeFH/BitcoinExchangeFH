@@ -38,8 +38,9 @@ Scheduled exchange supported soon:
 - DABTC
 - FX rate (USDCNY, EURUSD)
 
-## Supported database
+## Supported database/channel
 
+- ZeroMQ
 - Kdb+
 - MySQL
 - Sqlite
@@ -73,18 +74,24 @@ You can open a TCP or inter-process traffic.
 For example, if you decide the data feed is subscribed at localhost at port 6001.
 
 ```
-bitcoinexchangefh -zmq -dbaddr "tcp://localhost:6001"
+bitcoinexchangefh -zmq -zmqdest "tcp://localhost:6001" -instmts subscription.ini
 ```
 
 If the data feed is subscribed via inter-process shared memory with address "bitcoin".
 
 ```
-bitcoinexchangefh -zmq -dbaddr "ipc://bitcoin"
+bitcoinexchangefh -zmq -zmqdest "ipc://bitcoin" -instmts subscription.ini
 ```
 
 #### Sqlite
 
-No further setup is required.
+No further setup is required. Just define the output sqlite file.
+
+For example, to record the data to default sqlite file "bitcoinexchange.raw", run the command
+
+```
+bitcoinexchangefh -sqlite -sqlpath bitcoinexchangefh.sqlite -instmts subscription.ini
+```
 
 #### Kdb+
 
@@ -95,6 +102,12 @@ q -p 5000
 ```
 
 Then connect to the database with dedicated port (for example 5000 in the example).
+
+For example connecting to localhost at port 5000, run the command
+
+```
+bitcoinexchangefh -kdb -kdbdest "localhost:5000" -instmts subscription.ini
+```
 
 #### MySQL
 
@@ -107,30 +120,30 @@ INSERT
 SELECT
 ```
 
-### Process startup
-
-For testing, you can quick start with Sqlite as follows. It uses the default subscription list and records the data to default sqlite file "bitcoinexchange.raw"
+For example connecting to localhost with user "bitcoin", password "bitcoin" and schema "bcex", run the command
 
 ```
-bitcoinexchangefh -sqlite
+bitcoinexchangefh -mysql -mysqldest "bitcoin:bitcoin@localhost:3306" -mysqlschema bcex -instmts subscription.ini
 ```
 
-To record the data to Kdb+ database, for example connecting to localhost at port 5000, you can run the following command
+#### CSV
+
+No further setup is required. Just define the output folder path.
+
+For example to a folder named "data", you can run the following command.
 
 ```
-bitcoinexchangefh -kdb -dbaddr localhost -dbport 5000
+bitcoinexchangefh -csv -csvpath data/ -instmts subscription.ini
 ```
 
-To record the data to MySQL database, for example connecting to localhost with user "bitcoin" and schema "bcex", you can run the following command.
+### Multiple destination.
+
+Bitcoinexchangefh supports multiple destinations. 
+
+For example, if you store the market data into the database and, at the same time, publish the data through ZeroMQ publisher, you can run the command
 
 ```
-bitcoinexchangefh -mysql -dbaddr localhost -dbport 3306 -dbuser bitcoin -dbpwd bitcoin -dbschema bcex
-```
-
-To record the data to csv files, for example to a folder named "data", you can run the following command.
-
-```
-bitcoinexchangefh -csv -dbdir data/
+bitcoinexchangefh -zmq -zmqdest "tcp://localhost:6001" -kdb -kdbdest "localhost:5000" -instmts subscription.ini
 ```
 
 ### Arguments
@@ -141,29 +154,16 @@ bitcoinexchangefh -csv -dbdir data/
 |instmts|Instrument subscription file.|
 |exchtime|Use exchange timestamp if possible.|
 |zmq|Streamed with ZeroMQ sockets.|
+|zmqdest|ZeroMQ destination. Formatted as "type://address(:port)", e.g. "tcp://127.0.0.1:6001".|
 |kdb|Use Kdb+ database.|
+|kdbdest|Kdb+ database destination. Formatted as "address:port", e.g. "127.0.0.1:5000".|
 |sqlite|Use SQLite database.|
+|sqlitepath|SQLite database file path, e.g. "bitcoinexchangefh.sqlite".|
 |mysql|Use MySQL.|
+|mysqldest|MySQL database destination. Formatted as "username:password@address:host", e.g. "peter:Password123@127.0.0.1:3306".|
 |csv|Use CSV file as database.|
-|dbpath|Database file path. Supported for SQLite only.|
-|dbaddr|Database address. Defaulted as localhost. Supported for database with connection.|
-|dbport|Database port, Defaulted as 3306. Supported for database with connection.|
-|dbuser|Database user. Supported for database with connection.|
-|dbpwd|Database password. Supported for database with connection.|
-|dbschema|Database schema. Supported for database with connection.|
+|csvpath|CSV file directory, e.g. "data/"|
 |output|Verbose output file path.|
-
-### Mode
-
-Currently it supports five modes to distribute market data.
-
-|Mode|Description|
-|---|---|
-|SNAPSHOT_ONLY|Market snapshot only. Shown in table exchange_snapshot|
-|ORDER_BOOK_ONLY|Order book only. Shown in tables exch_xxxx_yyyy_order_book, where xxxxx and yyyyy are the exchange and instrument name respectively|
-|TRADES_ONLY|Trades only. Shown in tables exch_xxxx_yyyy_trades, where xxxxx and yyyyy are the exchange and instrument name respectively|
-|ORDER_BOOK_AND_TRADES_ONLY|Order book and trades only|
-|ALL|Supports snapshot, order book and trades|
 
 ### Subscription
 All the instrument subscription are mentioned in the configuration file [subscriptions.ini](subscriptions.ini). For supported exchanges, you can include its instruments as a block of subscription.

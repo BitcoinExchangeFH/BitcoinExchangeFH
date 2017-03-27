@@ -146,12 +146,12 @@ class ExchGwBitmex(ExchangeGateway):
     """
     Exchange gateway
     """
-    def __init__(self, db_client):
+    def __init__(self, db_clients):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwBitmexWs(), db_client)
+        ExchangeGateway.__init__(self, ExchGwBitmexWs(), db_clients)
 
     @classmethod
     def get_exchange_name(cls):

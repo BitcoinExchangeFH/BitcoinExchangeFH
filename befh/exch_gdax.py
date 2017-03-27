@@ -190,12 +190,12 @@ class ExchGwGdax(ExchangeGateway):
     """
     Exchange gateway
     """
-    def __init__(self, db_client):
+    def __init__(self, db_clients):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwApiGdaxTrades(), db_client)
+        ExchangeGateway.__init__(self, ExchGwApiGdaxTrades(), db_clients)
         self.api_socket2 = ExchGwApiGdaxOrderBook()
 
     @classmethod
@@ -294,6 +294,6 @@ if __name__ == '__main__':
     instmt = Instrument(exchange_name, instmt_name, instmt_code)
     db_client = SqlClientTemplate()
     Logger.init_log()
-    exch = ExchGwGdax(db_client)
+    exch = ExchGwGdax([db_client])
     td = exch.start(instmt)
 

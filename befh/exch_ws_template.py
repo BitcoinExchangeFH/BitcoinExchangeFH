@@ -147,12 +147,12 @@ class ExchGwTemplate(ExchangeGateway):
     """
     Exchange gateway
     """
-    def __init__(self, db_client):
+    def __init__(self, db_clients):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwApiTemplate(), db_client)
+        ExchangeGateway.__init__(self, ExchGwApiTemplate(), db_clients)
 
     @classmethod
     def get_exchange_name(cls):
@@ -245,6 +245,6 @@ if __name__ == '__main__':
     instmt = Instrument(exchange_name, instmt_name, instmt_code)
     db_client = SqlClientTemplate()
     Logger.init_log()
-    exch = ExchGwTemplate(db_client)
+    exch = ExchGwTemplate([db_client])
     td = exch.start(instmt)
 

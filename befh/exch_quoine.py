@@ -191,12 +191,12 @@ class ExchGwQuoine(ExchangeGateway):
     """
     Exchange gateway
     """
-    def __init__(self, db_client):
+    def __init__(self, db_clients):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwApiQuoine(), db_client)
+        ExchangeGateway.__init__(self, ExchGwApiQuoine(), db_clients)
 
     @classmethod
     def get_exchange_name(cls):
@@ -293,7 +293,7 @@ if __name__ == '__main__':
     instmt_code = '1'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)    
     db_client = SqlClientTemplate()
-    exch = ExchGwQuoine(db_client)
+    exch = ExchGwQuoine([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
     instmt.set_order_book_table_name(exch.get_order_book_table_name(instmt.get_exchange_name(),

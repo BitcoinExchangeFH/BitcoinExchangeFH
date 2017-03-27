@@ -74,18 +74,24 @@ You can open a TCP or inter-process traffic.
 For example, if you decide the data feed is subscribed at localhost at port 6001.
 
 ```
-bitcoinexchangefh -zmq -zmqdest "tcp://localhost:6001"
+bitcoinexchangefh -zmq -zmqdest "tcp://localhost:6001" -instmts subscription.ini
 ```
 
 If the data feed is subscribed via inter-process shared memory with address "bitcoin".
 
 ```
-bitcoinexchangefh -zmq -zmqdest "ipc://bitcoin"
+bitcoinexchangefh -zmq -zmqdest "ipc://bitcoin" -instmts subscription.ini
 ```
 
 #### Sqlite
 
-No further setup is required.
+No further setup is required. Just define the output sqlite file.
+
+For example, to record the data to default sqlite file "bitcoinexchange.raw", run the command
+
+```
+bitcoinexchangefh -sqlite -sqlpath bitcoinexchangefh.sqlite -instmts subscription.ini
+```
 
 #### Kdb+
 
@@ -96,6 +102,12 @@ q -p 5000
 ```
 
 Then connect to the database with dedicated port (for example 5000 in the example).
+
+For example connecting to localhost at port 5000, run the command
+
+```
+bitcoinexchangefh -kdb -kdbdest "localhost:5000" -instmts subscription.ini
+```
 
 #### MySQL
 
@@ -108,30 +120,30 @@ INSERT
 SELECT
 ```
 
-### Process startup
-
-For testing, you can quick start with Sqlite as follows. It uses the default subscription list and records the data to default sqlite file "bitcoinexchange.raw"
+For example connecting to localhost with user "bitcoin", password "bitcoin" and schema "bcex", run the command
 
 ```
-bitcoinexchangefh -sqlite -sqlpath bitcoinexchangefh.sqlite
+bitcoinexchangefh -mysql -mysqldest "bitcoin:bitcoin@localhost:3306" -mysqlschema bcex -instmts subscription.ini
 ```
 
-To record the data to Kdb+ database, for example connecting to localhost at port 5000, you can run the following command
+#### CSV
+
+No further setup is required. Just define the output folder path.
+
+For example to a folder named "data", you can run the following command.
 
 ```
-bitcoinexchangefh -kdb -kdbdest "localhost:5000"
+bitcoinexchangefh -csv -csvpath data/ -instmts subscription.ini
 ```
 
-To record the data to MySQL database, for example connecting to localhost with user "bitcoin" and schema "bcex", you can run the following command.
+### Multiple destination.
+
+Bitcoinexchangefh supports multiple destinations. 
+
+For example, if you store the market data into the database and, at the same time, publish the data through ZeroMQ publisher, you can run the command
 
 ```
-bitcoinexchangefh -mysql -mysqldest "bitcoin:bitcoin@localhost:3306" -mysqlschema bcex
-```
-
-To record the data to csv files, for example to a folder named "data", you can run the following command.
-
-```
-bitcoinexchangefh -csv -csvpath data/
+bitcoinexchangefh -zmq -zmqdest "tcp://localhost:6001" -kdb -kdbdest "localhost:5000" -instmts subscription.ini
 ```
 
 ### Arguments

@@ -87,19 +87,19 @@
         <mark key="^" line="270" column="49" />
         <mark key="." line="270" column="13" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" timestamp="1490573923771">
-        <mark key="'" line="4" column="47" />
-        <mark key="[" line="6" column="0" />
-        <mark key="]" line="6" column="29" />
-        <mark key="." line="6" column="0" />
-        <mark key="^" line="244" column="36" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" timestamp="1490619933017">
+        <mark key="'" line="152" column="15" />
+        <mark key="[" line="247" column="36" />
+        <mark key="]" line="247" column="36" />
+        <mark key="." line="247" column="36" />
+        <mark key="^" line="247" column="36" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490573532314">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490619893437">
         <mark key="'" line="155" column="31" />
         <mark key="[" line="5" column="5" />
-        <mark key="]" line="5" column="19" />
-        <mark key="." line="5" column="19" />
-        <mark key="^" line="5" column="19" />
+        <mark key="]" line="5" column="13" />
+        <mark key="." line="5" column="13" />
+        <mark key="^" line="5" column="13" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/database_client.py" timestamp="1483021561031">
         <mark key="'" line="23" column="18" />
@@ -255,7 +255,7 @@
         <mark key="." line="230" column="32" />
         <mark key="^" line="230" column="32" />
       </file>
-      <file name="/Dummy.txt" timestamp="1490568461687">
+      <file name="/Dummy.txt" timestamp="1490619783694">
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="22" />
         <mark key="." line="0" column="22" />
@@ -331,11 +331,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="131" column="48" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
-      <jump line="75" column="22" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
-      <jump line="77" column="46" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
-      <jump line="82" column="29" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
-      <jump line="86" column="34" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="110" column="34" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="6" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
       <jump line="68" column="66" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
@@ -431,10 +426,15 @@
       <jump line="51" column="11" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/ws_api_socket.py" />
       <jump line="4" column="47" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" />
       <jump line="59" column="81" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/ws_api_socket.py" />
+      <jump line="9" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" />
+      <jump line="154" column="69" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" />
+      <jump line="247" column="36" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" />
+      <jump line="149" column="23" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" />
+      <jump line="152" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" />
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>)</text>
+        <text>multiprocessing</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1648,10 +1648,10 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>)</text>
+        <text>multiprocessing</text>
       </register>
       <register name="/" type="4">
-        <text>on_close</text>
+        <text>db_client</text>
       </register>
       <register name="0" type="8">
         <text>partial(</text>
@@ -1688,9 +1688,9 @@
       </register>
     </registers>
     <search>
-      <last-search>on_close</last-search>
+      <last-search>db_client</last-search>
       <last-offset />
-      <last-pattern>on_close</last-pattern>
+      <last-pattern>db_client</last-pattern>
       <last-replace>db_clients</last-replace>
       <last-substitute>db_client</last-substitute>
       <last-dir>1</last-dir>
@@ -1709,7 +1709,6 @@
         <entry encoding="base64">XDxvcmRlcl9ib29rX2lkXD4=</entry>
         <entry>mode</entry>
         <entry encoding="base64">XDxvdXRwdXRcPg==</entry>
-        <entry>db_client</entry>
         <entry encoding="base64">XDxjb252ZXJ0X3R5cGVcPg==</entry>
         <entry encoding="base64">XDxLZGJQbHVzQ2xpZW50XD4=</entry>
         <entry>Process</entry>
@@ -1718,6 +1717,7 @@
         <entry>Lock</entry>
         <entry>__on_close</entry>
         <entry>on_close</entry>
+        <entry>db_client</entry>
       </history-search>
       <history-cmd>
         <entry>%s/enabled = 0/enable = 1/g</entry>

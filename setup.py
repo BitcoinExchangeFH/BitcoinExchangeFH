@@ -16,7 +16,6 @@ setup(
             'pymysql',
             'websocket',
             'websocket-client',
-            'socketIO_client==0.5.6',
             'numpy',
             'qpython',
             'pyzmq'

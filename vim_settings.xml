@@ -68,12 +68,6 @@
         <mark key="^" line="153" column="29" />
         <mark key="." line="157" column="0" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/ws_api_socket.py" timestamp="1490573982864">
-        <mark key="'" line="59" column="81" />
-        <mark key="[" line="59" column="73" />
-        <mark key="]" line="59" column="73" />
-        <mark key="." line="59" column="73" />
-      </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/market_data.py" timestamp="1490486485705">
         <mark key="[" line="256" column="33" />
         <mark key="]" line="256" column="33" />
@@ -101,6 +95,7 @@
         <mark key="." line="5" column="13" />
         <mark key="^" line="5" column="13" />
       </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/socketio_api_socket.py" timestamp="1490882700939" />
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/database_client.py" timestamp="1483021561031">
         <mark key="'" line="23" column="18" />
         <mark key="[" line="53" column="0" />
@@ -108,10 +103,11 @@
         <mark key="." line="53" column="0" />
         <mark key="^" line="48" column="43" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" timestamp="1490566760928">
-        <mark key="[" line="0" column="0" />
-        <mark key="]" line="0" column="0" />
-        <mark key="." line="0" column="0" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" timestamp="1490882811169">
+        <mark key="'" line="9" column="19" />
+        <mark key="[" line="54" column="0" />
+        <mark key="]" line="54" column="0" />
+        <mark key="." line="54" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/market_data.py" timestamp="1482965916910">
         <mark key="'" line="33" column="12" />
@@ -140,6 +136,11 @@
         <mark key="]" line="5" column="36" />
         <mark key="." line="5" column="36" />
         <mark key="^" line="5" column="36" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/setup.py" timestamp="1490882782863">
+        <mark key="[" line="18" column="0" />
+        <mark key="]" line="18" column="0" />
+        <mark key="." line="18" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_gatecoin.py" timestamp="1490493333246">
         <mark key="'" line="272" column="38" />
@@ -255,7 +256,7 @@
         <mark key="." line="230" column="32" />
         <mark key="^" line="230" column="32" />
       </file>
-      <file name="/Dummy.txt" timestamp="1490623382464">
+      <file name="/Dummy.txt" timestamp="1490882845740">
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="22" />
         <mark key="." line="0" column="22" />
@@ -331,7 +332,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="110" column="34" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="6" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
       <jump line="68" column="66" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="264" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
@@ -431,10 +431,11 @@
       <jump line="247" column="36" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" />
       <jump line="149" column="23" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" />
       <jump line="152" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" />
+      <jump line="9" column="19" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" />
     </jumps>
     <registers>
-      <register name="&quot;" type="4">
-        <text>multiprocessing</text>
+      <register name="&quot;" type="2">
+        <text encoding="base64">W0h1b2JpLVhCVFVTRC1SZXN0ZnVsXQpleGNoYW5nZSA9IEh1b2JpCmluc3RtdF9uYW1lID0gQlRDQ05ZCmluc3RtdF9jb2RlID0gYnRjY255CmVuYWJsZWQgPSAxCgo=</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1651,46 +1652,46 @@
         <text>multiprocessing</text>
       </register>
       <register name="/" type="4">
-        <text>db_client</text>
+        <text>Huo</text>
       </register>
       <register name="0" type="8">
         <text>partial(</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ZnJvbSBmdW5jdG9vbHMgaW1wb3J0IHBhcnRpYWwK</text>
+        <text encoding="base64">W0h1b2JpLVhCVFVTRC1SZXN0ZnVsXQpleGNoYW5nZSA9IEh1b2JpCmluc3RtdF9uYW1lID0gQlRDQ05ZCmluc3RtdF9jb2RlID0gYnRjY255CmVuYWJsZWQgPSAxCgo=</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgb25fY2xvc2U9cGFydGlhbChzZWxmLl9fb25fY2xvc2UpLAo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgJ3NvY2tldElPX2NsaWVudD09MC41LjYnLAo=</text>
       </register>
       <register name="3" type="2">
         <text encoding="base64">ZnJvbSBmdW5jdG9vbHMgaW1wb3J0IHBhcnRpYWwK</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICB0MS5zdGFydCgpCg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgb25fY2xvc2U9cGFydGlhbChzZWxmLl9fb25fY2xvc2UpLAo=</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">aW1wb3J0IHRpbWUK</text>
+        <text encoding="base64">ZnJvbSBmdW5jdG9vbHMgaW1wb3J0IHBhcnRpYWwK</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">aW1wb3J0IHRocmVhZGluZwo=</text>
+        <text encoding="base64">ICAgICAgICB0MS5zdGFydCgpCg==</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgc2VsZi53c3QgPSBQcm9jZXNzKHRhcmdldD1zZWxmLl9fc3RhcnQsIGFyZ3M9KCkK</text>
+        <text encoding="base64">aW1wb3J0IHRpbWUK</text>
       </register>
-      <register name="8" type="8">
-        <text>self.__start</text>
-      </register>
-      <register name="9" type="2">
+      <register name="8" type="2">
         <text encoding="base64">aW1wb3J0IHRocmVhZGluZwo=</text>
       </register>
+      <register name="9" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgc2VsZi53c3QgPSBQcm9jZXNzKHRhcmdldD1zZWxmLl9fc3RhcnQsIGFyZ3M9KCkK</text>
+      </register>
       <register name=":" type="4">
-        <text>w</text>
+        <text>wq!</text>
       </register>
     </registers>
     <search>
-      <last-search>db_client</last-search>
+      <last-search>Huo</last-search>
       <last-offset />
-      <last-pattern>db_client</last-pattern>
+      <last-pattern>Huo</last-pattern>
       <last-replace>db_clients</last-replace>
       <last-substitute>db_client</last-substitute>
       <last-dir>1</last-dir>
@@ -1698,7 +1699,6 @@
     </search>
     <history>
       <history-search>
-        <entry>get_trades</entry>
         <entry>get_trades_init</entry>
         <entry>get_instmt_</entry>
         <entry>get_instmt_snapshot</entry>
@@ -1718,9 +1718,9 @@
         <entry>__on_close</entry>
         <entry>on_close</entry>
         <entry>db_client</entry>
+        <entry>Huo</entry>
       </history-search>
       <history-cmd>
-        <entry>%s/enabled = 0/enable = 1/g</entry>
         <entry>%s/enabled = 0/enabled = 1/g</entry>
         <entry encoding="base64">JzwsJz4lcy8gPS9fcmUgPS9n</entry>
         <entry encoding="base64">JzwsJz4lcy90b3RhbF8oLiopX3JlLiovdG90YWxcMSA9IDAuMC8=</entry>
@@ -1740,6 +1740,7 @@
         <entry>w!</entry>
         <entry encoding="base64">JzwsJz5zL2RiX2NsaWVudC9kYl9jbGllbnRzL2c=</entry>
         <entry>w</entry>
+        <entry>wq!</entry>
       </history-cmd>
       <history-expr />
       <history-input />

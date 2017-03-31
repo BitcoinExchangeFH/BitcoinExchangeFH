@@ -9,7 +9,6 @@ from befh.exch_btcc import ExchGwBtccSpot, ExchGwBtccFuture
 from befh.exch_bitfinex import ExchGwBitfinex
 from befh.exch_okcoin import ExchGwOkCoin
 from befh.exch_kraken import ExchGwKraken
-from befh.exch_huobi import ExchGwHuobi
 from befh.exch_gdax import ExchGwGdax
 from befh.exch_bitstamp import ExchGwBitstamp
 from befh.exch_gatecoin import ExchGwGatecoin
@@ -113,7 +112,6 @@ def main():
     exch_gws.append(ExchGwBitfinex(db_clients))
     exch_gws.append(ExchGwOkCoin(db_clients))
     exch_gws.append(ExchGwKraken(db_clients))
-    exch_gws.append(ExchGwHuobi(db_clients))
     exch_gws.append(ExchGwGdax(db_clients))
     exch_gws.append(ExchGwBitstamp(db_clients))
     exch_gws.append(ExchGwGatecoin(db_clients))

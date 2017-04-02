@@ -30,7 +30,7 @@ class ExchGwKrakenRestfulApi(RESTfulApiSocket):
         
     @classmethod
     def get_trades_link(cls, instmt):
-        if instmt.get_exch_trade_id() != '':
+        if instmt.get_exch_trade_id() != '' and instmt.get_exch_trade_id() != '0':
             return 'https://api.kraken.com/0/public/Trades?pair=%s&since=%s' % \
                 (instmt.get_instmt_code(), instmt.get_exch_trade_id())
         else:

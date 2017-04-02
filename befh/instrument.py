@@ -19,7 +19,7 @@ class Instrument(object):
         self.trade_id = 0
         self.exch_trade_id = '0'
         self.subscribed = False
-        self.recovered = True
+        self.recovered = False
         self.l2_depth = None
         self.prev_l2_depth = None
         self.last_trade = None

@@ -10,7 +10,7 @@
         <mark key="." line="418" column="36" />
         <mark key="^" line="418" column="36" />
       </file>
-      <file name="/a.dummy" timestamp="1490573556994">
+      <file name="/a.dummy" timestamp="1491174868522">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/GSpiderWeb/web_driver.py" timestamp="1482356430832">
@@ -88,7 +88,7 @@
         <mark key="." line="247" column="36" />
         <mark key="^" line="247" column="36" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1490619893437">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" timestamp="1491175242618">
         <mark key="'" line="155" column="31" />
         <mark key="[" line="5" column="5" />
         <mark key="]" line="5" column="13" />
@@ -178,10 +178,10 @@
         <mark key="." line="93" column="35" />
         <mark key="^" line="93" column="35" />
       </file>
-      <file name="/Python Console" timestamp="1490573994524">
+      <file name="/Python Console" timestamp="1491175204329">
         <mark key="[" line="0" column="0" />
       </file>
-      <file name="/fragment.py" timestamp="1490485951487">
+      <file name="/fragment.py" timestamp="1491175232188">
         <mark key="'" line="0" column="23" />
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="0" />
@@ -244,11 +244,12 @@
         <mark key="^" line="113" column="26" />
         <mark key="." line="113" column="26" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" timestamp="1490566802113">
-        <mark key="'" line="17" column="13" />
-        <mark key="]" line="0" column="0" />
-        <mark key="^" line="0" column="0" />
-        <mark key="." line="0" column="0" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" timestamp="1491175596945">
+        <mark key="'" line="104" column="29" />
+        <mark key="[" line="21" column="25" />
+        <mark key="]" line="21" column="29" />
+        <mark key="^" line="21" column="29" />
+        <mark key="." line="21" column="29" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/market_data.py" timestamp="1483489364702">
         <mark key="'" line="213" column="43" />
@@ -257,7 +258,7 @@
         <mark key="." line="230" column="32" />
         <mark key="^" line="230" column="32" />
       </file>
-      <file name="/Dummy.txt" timestamp="1491173412462">
+      <file name="/Dummy.txt" timestamp="1491175750898">
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="22" />
         <mark key="." line="0" column="22" />
@@ -274,6 +275,12 @@
         <mark key="]" line="174" column="74" />
         <mark key="." line="218" column="0" />
         <mark key="^" line="217" column="58" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_kraken.py" timestamp="1491174831112">
+        <mark key="[" line="32" column="44" />
+        <mark key="]" line="32" column="81" />
+        <mark key="^" line="32" column="81" />
+        <mark key="." line="32" column="81" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/test/test_file_client.py" timestamp="1481153644877">
         <mark key="'" line="111" column="0" />
@@ -308,7 +315,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="6" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
       <jump line="68" column="66" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="264" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
       <jump line="34" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
@@ -408,11 +414,11 @@
       <jump line="149" column="23" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" />
       <jump line="152" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" />
       <jump line="9" column="19" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" />
+      <jump line="104" column="29" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="8">
-        <text>H
-H</text>
+      <register name="&quot;" type="4">
+        <text>True</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1626,10 +1632,10 @@ H</text>
         </keys>
       </register>
       <register name="-" type="4">
-        <text>multiprocessing</text>
+        <text>True</text>
       </register>
       <register name="/" type="4">
-        <text>Huo</text>
+        <text encoding="base64">XDxleGNoX3RyYWRlX2lkXD4=</text>
       </register>
       <register name="0" type="8">
         <text>partial(</text>
@@ -1663,13 +1669,13 @@ H</text>
         <text encoding="base64">aW1wb3J0IHRocmVhZGluZwo=</text>
       </register>
       <register name=":" type="4">
-        <text>wq!</text>
+        <text>w</text>
       </register>
     </registers>
     <search>
-      <last-search>Huo</last-search>
+      <last-search encoding="base64">XDxleGNoX3RyYWRlX2lkXD4=</last-search>
       <last-offset />
-      <last-pattern>Huo</last-pattern>
+      <last-pattern encoding="base64">XDxleGNoX3RyYWRlX2lkXD4=</last-pattern>
       <last-replace>db_clients</last-replace>
       <last-substitute>db_client</last-substitute>
       <last-dir>1</last-dir>
@@ -1677,7 +1683,6 @@ H</text>
     </search>
     <history>
       <history-search>
-        <entry>get_trades_init</entry>
         <entry>get_instmt_</entry>
         <entry>get_instmt_snapshot</entry>
         <entry encoding="base64">XDxnZXRfc25hcHNob3RfdGFibGVfbmFtZVw+</entry>
@@ -1697,6 +1702,7 @@ H</text>
         <entry>on_close</entry>
         <entry>db_client</entry>
         <entry>Huo</entry>
+        <entry encoding="base64">XDxleGNoX3RyYWRlX2lkXD4=</entry>
       </history-search>
       <history-cmd>
         <entry>%s/enabled = 0/enabled = 1/g</entry>
@@ -1717,8 +1723,8 @@ H</text>
         <entry>wq</entry>
         <entry>w!</entry>
         <entry encoding="base64">JzwsJz5zL2RiX2NsaWVudC9kYl9jbGllbnRzL2c=</entry>
-        <entry>w</entry>
         <entry>wq!</entry>
+        <entry>w</entry>
       </history-cmd>
       <history-expr />
       <history-input />

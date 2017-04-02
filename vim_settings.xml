@@ -103,11 +103,12 @@
         <mark key="." line="53" column="0" />
         <mark key="^" line="48" column="43" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" timestamp="1490882811169">
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" timestamp="1491118310871">
         <mark key="'" line="9" column="19" />
-        <mark key="[" line="54" column="0" />
-        <mark key="]" line="54" column="0" />
-        <mark key="." line="54" column="0" />
+        <mark key="[" line="20" column="17" />
+        <mark key="]" line="20" column="17" />
+        <mark key="." line="20" column="17" />
+        <mark key="^" line="20" column="17" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/market_data.py" timestamp="1482965916910">
         <mark key="'" line="33" column="12" />
@@ -274,24 +275,6 @@
         <mark key="." line="218" column="0" />
         <mark key="^" line="217" column="58" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_kraken.py" timestamp="1484092831117">
-        <mark key="'" line="0" column="0" />
-        <mark key="[" line="215" column="0" />
-        <mark key="]" line="215" column="0" />
-        <mark key="." line="215" column="0" />
-      </file>
-      <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/backtest_machine.py" timestamp="1485989622697">
-        <mark key="'" line="86" column="8" />
-        <mark key="[" line="96" column="0" />
-        <mark key="]" line="96" column="0" />
-        <mark key="." line="96" column="0" />
-      </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_quoine.py" timestamp="1485907948250">
-        <mark key="'" line="270" column="73" />
-        <mark key="[" line="270" column="57" />
-        <mark key="]" line="270" column="69" />
-        <mark key="." line="270" column="57" />
-      </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/test/test_file_client.py" timestamp="1481153644877">
         <mark key="'" line="111" column="0" />
         <mark key="[" line="110" column="8" />
@@ -427,8 +410,9 @@
       <jump line="9" column="19" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">W0h1b2JpLVhCVFVTRC1SZXN0ZnVsXQpleGNoYW5nZSA9IEh1b2JpCmluc3RtdF9uYW1lID0gQlRDQ05ZCmluc3RtdF9jb2RlID0gYnRjY255CmVuYWJsZWQgPSAxCgo=</text>
+      <register name="&quot;" type="8">
+        <text>H
+H</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1650,32 +1634,33 @@
       <register name="0" type="8">
         <text>partial(</text>
       </register>
-      <register name="1" type="2">
-        <text encoding="base64">W0h1b2JpLVhCVFVTRC1SZXN0ZnVsXQpleGNoYW5nZSA9IEh1b2JpCmluc3RtdF9uYW1lID0gQlRDQ05ZCmluc3RtdF9jb2RlID0gYnRjY255CmVuYWJsZWQgPSAxCgo=</text>
+      <register name="1" type="8">
+        <text>H
+H</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgJ3NvY2tldElPX2NsaWVudD09MC41LjYnLAo=</text>
+        <text encoding="base64">W0h1b2JpLVhCVFVTRC1SZXN0ZnVsXQpleGNoYW5nZSA9IEh1b2JpCmluc3RtdF9uYW1lID0gQlRDQ05ZCmluc3RtdF9jb2RlID0gYnRjY255CmVuYWJsZWQgPSAxCgo=</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ZnJvbSBmdW5jdG9vbHMgaW1wb3J0IHBhcnRpYWwK</text>
+        <text encoding="base64">ICAgICAgICAgICAgJ3NvY2tldElPX2NsaWVudD09MC41LjYnLAo=</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgb25fY2xvc2U9cGFydGlhbChzZWxmLl9fb25fY2xvc2UpLAo=</text>
-      </register>
-      <register name="5" type="2">
         <text encoding="base64">ZnJvbSBmdW5jdG9vbHMgaW1wb3J0IHBhcnRpYWwK</text>
       </register>
+      <register name="5" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgb25fY2xvc2U9cGFydGlhbChzZWxmLl9fb25fY2xvc2UpLAo=</text>
+      </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICB0MS5zdGFydCgpCg==</text>
+        <text encoding="base64">ZnJvbSBmdW5jdG9vbHMgaW1wb3J0IHBhcnRpYWwK</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">aW1wb3J0IHRpbWUK</text>
+        <text encoding="base64">ICAgICAgICB0MS5zdGFydCgpCg==</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">aW1wb3J0IHRocmVhZGluZwo=</text>
+        <text encoding="base64">aW1wb3J0IHRpbWUK</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgc2VsZi53c3QgPSBQcm9jZXNzKHRhcmdldD1zZWxmLl9fc3RhcnQsIGFyZ3M9KCkK</text>
+        <text encoding="base64">aW1wb3J0IHRocmVhZGluZwo=</text>
       </register>
       <register name=":" type="4">
         <text>wq!</text>

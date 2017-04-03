@@ -175,6 +175,8 @@ class ExchGwKraken(ExchangeGateway):
         Get order book worker thread
         :param instmt: Instrument name
         """
+        instmt.set_recovered(False)
+
         while True:
             try:
                 ret = self.api_socket.get_trades(instmt)

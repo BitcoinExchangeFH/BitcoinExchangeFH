@@ -6,8 +6,9 @@ from befh.instrument import Instrument
 from befh.sql_client_template import SqlClientTemplate
 import time
 import threading
+import random
 from functools import partial
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class ExchGwApiQuoine(RESTfulApiSocket):
@@ -184,10 +185,9 @@ class ExchGwApiQuoine(RESTfulApiSocket):
 
 class ExchGwQuoine(ExchangeGateway):
     # static variable to control to request rate
-    num_of_connections = 0
-    num_of_connections_lock = threading.Lock()
-    extra_waiting_sec = 0.5
-    
+    last_query_time_lock = threading.Lock()
+    last_query_time = datetime.now()
+
     """
     Exchange gateway
     """
@@ -211,61 +211,60 @@ class ExchGwQuoine(ExchangeGateway):
         Get order book worker
         :param instmt: Instrument
         """
-        ExchGwQuoine.num_of_connections_lock.acquire()
-        ExchGwQuoine.num_of_connections += 1
-        Logger.info(self.__class__.__name__, "Current number of connections = %d" % ExchGwQuoine.num_of_connections)
-        ExchGwQuoine.num_of_connections_lock.release()
-
         while True:
-            try:
-                l2_depth = self.api_socket.get_order_book(instmt)
-                if l2_depth is not None and l2_depth.is_diff(instmt.get_l2_depth()):
-                    instmt.set_prev_l2_depth(instmt.get_l2_depth())
-                    instmt.set_l2_depth(l2_depth)
-                    instmt.incr_order_book_id()
-                    self.insert_order_book(instmt)
-            except Exception as e:
-                Logger.error(self.__class__.__name__, "Error in order book: %s" % e)
-            ExchGwQuoine.num_of_connections_lock.acquire()
-            time.sleep(ExchGwQuoine.num_of_connections + ExchGwQuoine.extra_waiting_sec)
-            ExchGwQuoine.num_of_connections_lock.release()
+            ExchGwQuoine.last_query_time_lock.acquire()
+            if datetime.now() - ExchGwQuoine.last_query_time < timedelta(seconds=1):
+                ExchGwQuoine.last_query_time_lock.release()
+                time.sleep(random.uniform(0, 1))
+            else:
+                ExchGwQuoine.last_query_time = datetime.now()
+                try:
+                    l2_depth = self.api_socket.get_order_book(instmt)
+                    if l2_depth is not None and l2_depth.is_diff(instmt.get_l2_depth()):
+                        instmt.set_prev_l2_depth(instmt.get_l2_depth())
+                        instmt.set_l2_depth(l2_depth)
+                        instmt.incr_order_book_id()
+                        self.insert_order_book(instmt)
+                except Exception as e:
+                    Logger.error(self.__class__.__name__, "Error in order book: %s" % e)
+                ExchGwQuoine.last_query_time_lock.release()
 
     def get_trades_worker(self, instmt):
         """
         Get order book worker thread
         :param instmt: Instrument name
         """
-        ExchGwQuoine.num_of_connections_lock.acquire()
-        ExchGwQuoine.num_of_connections += 1
-        Logger.info(self.__class__.__name__, "Current number of connections = %d" % ExchGwQuoine.num_of_connections)
-        ExchGwQuoine.num_of_connections_lock.release()        
-
         while True:
-            try:
-                ret = self.api_socket.get_trades(instmt)
-                if ret is None or len(ret) == 0:
-                    time.sleep(1)
-                    continue
-            except Exception as e:
-                Logger.error(self.__class__.__name__, "Error in trades: %s" % e)                
-                
-            for trade in ret:
-                assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
-                assert isinstance(instmt.get_exch_trade_id(), str), \
-                       "instmt.get_exch_trade_id()(%s) = %s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id())
-                if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
-                    instmt.set_exch_trade_id(trade.trade_id)
-                    instmt.incr_trade_id()
-                    self.insert_trade(instmt, trade)
-            
-            # After the first time of getting the trade, indicate the instrument
-            # is recovered
-            if not instmt.get_recovered():
-                instmt.set_recovered(True)
+            ExchGwQuoine.last_query_time_lock.acquire()
+            if datetime.now() - ExchGwQuoine.last_query_time < timedelta(seconds=1):
+                ExchGwQuoine.last_query_time_lock.release()
+                time.sleep(random.uniform(0, 1))
+            else:
+                ExchGwQuoine.last_query_time = datetime.now()
+                try:
+                    ret = self.api_socket.get_trades(instmt)
+                    if ret is None or len(ret) == 0:
+                        time.sleep(1)
+                        continue
 
-            ExchGwQuoine.num_of_connections_lock.acquire()
-            time.sleep(ExchGwQuoine.num_of_connections + ExchGwQuoine.extra_waiting_sec)
-            ExchGwQuoine.num_of_connections_lock.release()
+                    for trade in ret:
+                        assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
+                        assert isinstance(instmt.get_exch_trade_id(), str), \
+                            "instmt.get_exch_trade_id()(%s) = %s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id())
+                        if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
+                            instmt.set_exch_trade_id(trade.trade_id)
+                            instmt.incr_trade_id()
+                            self.insert_trade(instmt, trade)
+
+                    # After the first time of getting the trade, indicate the instrument
+                    # is recovered
+                    if not instmt.get_recovered():
+                        instmt.set_recovered(True)
+
+                except Exception as e:
+                    Logger.error(self.__class__.__name__, "Error in trades: %s" % e)
+
+                ExchGwQuoine.last_query_time_lock.release()
 
     def start(self, instmt):
         """

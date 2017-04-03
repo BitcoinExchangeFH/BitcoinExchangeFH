@@ -230,12 +230,11 @@
         <mark key="." line="150" column="24" />
         <mark key="^" line="150" column="24" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" timestamp="1491258388009">
-        <mark key="'" line="296" column="34" />
-        <mark key="[" line="237" column="0" />
-        <mark key="]" line="237" column="0" />
-        <mark key="." line="237" column="0" />
-        <mark key="^" line="295" column="34" />
+      <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" timestamp="1491260742233">
+        <mark key="[" line="266" column="0" />
+        <mark key="]" line="266" column="0" />
+        <mark key="^" line="262" column="23" />
+        <mark key="." line="266" column="0" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/instrument.py" timestamp="1484091582420">
         <mark key="'" line="95" column="44" />
@@ -258,7 +257,7 @@
         <mark key="." line="230" column="32" />
         <mark key="^" line="230" column="32" />
       </file>
-      <file name="/Dummy.txt" timestamp="1491258393158">
+      <file name="/Dummy.txt" timestamp="1491261223310">
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="22" />
         <mark key="." line="0" column="22" />
@@ -315,8 +314,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="68" column="66" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
-      <jump line="264" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
       <jump line="34" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
       <jump line="84" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="122" column="45" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
@@ -415,10 +412,12 @@
       <jump line="152" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_ws_template.py" />
       <jump line="9" column="19" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/subscriptions.ini" />
       <jump line="104" column="29" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" />
+      <jump line="190" column="4" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
+      <jump line="191" column="4" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
     </jumps>
     <registers>
       <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICBFeGNoR3dRdW9pbmUubnVtX29mX2Nvbm5lY3Rpb25zX2xvY2suYWNxdWlyZSgpCiAgICAgICAgRXhjaEd3UXVvaW5lLm51bV9vZl9jb25uZWN0aW9ucyArPSAxCiAgICAgICAgTG9nZ2VyLmluZm8oc2VsZi5fX2NsYXNzX18uX19uYW1lX18sICJDdXJyZW50IG51bWJlciBvZiBjb25uZWN0aW9ucyA9ICVkIiAlIEV4Y2hHd1F1b2luZS5udW1fb2ZfY29ubmVjdGlvbnMpCiAgICAgICAgRXhjaEd3UXVvaW5lLm51bV9vZl9jb25uZWN0aW9uc19sb2NrLnJlbGVhc2UoKSAgICAgICAgCgo=</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1632,50 +1631,49 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>True</text>
+        <text>acquire()</text>
       </register>
       <register name="/" type="4">
-        <text encoding="base64">XDxleGNoX3RyYWRlX2lkXD4=</text>
+        <text encoding="base64">XDxudW1fb2ZfY29ubmVjdGlvbnNfbG9ja1w+</text>
       </register>
       <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICBpbnN0bXQuc2V0X3JlY292ZXJlZChUcnVlKQo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIEV4Y2hHd1F1b2luZS5sYXN0X3F1ZXJ5X3RpbWVfbG9jay5yZWxlYXNlKCkK</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICBFeGNoR3dRdW9pbmUubnVtX29mX2Nvbm5lY3Rpb25zX2xvY2suYWNxdWlyZSgpCiAgICAgICAgRXhjaEd3UXVvaW5lLm51bV9vZl9jb25uZWN0aW9ucyArPSAxCiAgICAgICAgTG9nZ2VyLmluZm8oc2VsZi5fX2NsYXNzX18uX19uYW1lX18sICJDdXJyZW50IG51bWJlciBvZiBjb25uZWN0aW9ucyA9ICVkIiAlIEV4Y2hHd1F1b2luZS5udW1fb2ZfY29ubmVjdGlvbnMpCiAgICAgICAgRXhjaEd3UXVvaW5lLm51bV9vZl9jb25uZWN0aW9uc19sb2NrLnJlbGVhc2UoKSAgICAgICAgCgo=</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgRXhjaEd3UXVvaW5lLm51bV9vZl9jb25uZWN0aW9uc19sb2NrLmFjcXVpcmUoKQogICAgICAgICAgICB0aW1lLnNsZWVwKEV4Y2hHd1F1b2luZS5udW1fb2ZfY29ubmVjdGlvbnMgKyBFeGNoR3dRdW9pbmUuZXh0cmFfd2FpdGluZ19zZWMpCiAgICAgICAgICAgIEV4Y2hHd1F1b2luZS5udW1fb2ZfY29ubmVjdGlvbnNfbG9jay5yZWxlYXNlKCkK</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIGZvciB0cmFkZSBpbiByZXQ6CiAgICAgICAgICAgICAgICAgICAgYXNzZXJ0IGlzaW5zdGFuY2UodHJhZGUudHJhZGVfaWQsIHN0ciksICJ0cmFkZS50cmFkZV9pZCglcykgPSAlcyIgJSAodHlwZSh0cmFkZS50cmFkZV9pZCksIHRyYWRlLnRyYWRlX2lkKQogICAgICAgICAgICAgICAgICAgIGFzc2VydCBpc2luc3RhbmNlKGluc3RtdC5nZXRfZXhjaF90cmFkZV9pZCgpLCBzdHIpLCBcCiAgICAgICAgICAgICAgICAgICAgICAgICAgICJpbnN0bXQuZ2V0X2V4Y2hfdHJhZGVfaWQoKSglcykgPSAlcyIgJSAodHlwZShpbnN0bXQuZ2V0X2V4Y2hfdHJhZGVfaWQoKSksIGluc3RtdC5nZXRfZXhjaF90cmFkZV9pZCgpKQogICAgICAgICAgICAgICAgICAgIGlmIGludCh0cmFkZS50cmFkZV9pZCkgPiBpbnQoaW5zdG10LmdldF9leGNoX3RyYWRlX2lkKCkpOgogICAgICAgICAgICAgICAgICAgICAgICBpbnN0bXQuc2V0X2V4Y2hfdHJhZGVfaWQodHJhZGUudHJhZGVfaWQpCiAgICAgICAgICAgICAgICAgICAgICAgIGluc3RtdC5pbmNyX3RyYWRlX2lkKCkKICAgICAgICAgICAgICAgICAgICAgICAgc2VsZi5pbnNlcnRfdHJhZGUoaW5zdG10LCB0cmFkZSkKCiAgICAgICAgICAgICAgICAjIEFmdGVyIHRoZSBmaXJzdCB0aW1lIG9mIGdldHRpbmcgdGhlIHRyYWRlLCBpbmRpY2F0ZSB0aGUgaW5zdHJ1bWVudAogICAgICAgICAgICAgICAgIyBpcyByZWNvdmVyZWQKICAgICAgICAgICAgICAgIGlmIG5vdCBpbnN0bXQuZ2V0X3JlY292ZXJlZCgpOgogICAgICAgICAgICAgICAgICAgIGluc3RtdC5zZXRfcmVjb3ZlcmVkKFRydWUpCg==</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICBFeGNoR3dRdW9pbmUubnVtX29mX2Nvbm5lY3Rpb25zX2xvY2suYWNxdWlyZSgpCiAgICAgICAgRXhjaEd3UXVvaW5lLm51bV9vZl9jb25uZWN0aW9ucyArPSAxCiAgICAgICAgTG9nZ2VyLmluZm8oc2VsZi5fX2NsYXNzX18uX19uYW1lX18sICJDdXJyZW50IG51bWJlciBvZiBjb25uZWN0aW9ucyA9ICVkIiAlIEV4Y2hHd1F1b2luZS5udW1fb2ZfY29ubmVjdGlvbnMpCiAgICAgICAgRXhjaEd3UXVvaW5lLm51bV9vZl9jb25uZWN0aW9uc19sb2NrLnJlbGVhc2UoKQoK</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIEV4Y2hHd1F1b2luZS5sYXN0X3F1ZXJ5X3RpbWVfbG9jay5yZWxlYXNlKCkK</text>
       </register>
-      <register name="4" type="8">
-        <text>H
-H</text>
+      <register name="4" type="2">
+        <text encoding="base64">ICAgICAgICAgICAgICAgIEV4Y2hHd1F1b2luZS5sYXN0X3F1ZXJ5X3RpbWVfbG9jay5yZWxlYXNlKCkK</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">W0h1b2JpLVhCVFVTRC1SZXN0ZnVsXQpleGNoYW5nZSA9IEh1b2JpCmluc3RtdF9uYW1lID0gQlRDQ05ZCmluc3RtdF9jb2RlID0gYnRjY255CmVuYWJsZWQgPSAxCgo=</text>
+        <text encoding="base64">ICAgIG51bV9vZl9jb25uZWN0aW9ucyA9IDAKICAgIG51bV9vZl9jb25uZWN0aW9uc19sb2NrID0gdGhyZWFkaW5nLkxvY2soKQogICAgZXh0cmFfd2FpdGluZ19zZWMgPSAwLjUKICAgIAo=</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgJ3NvY2tldElPX2NsaWVudD09MC41LjYnLAo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgRXhjaEd3UXVvaW5lLm51bV9vZl9jb25uZWN0aW9uc19sb2NrLmFjcXVpcmUoKQogICAgICAgICAgICB0aW1lLnNsZWVwKEV4Y2hHd1F1b2luZS5udW1fb2ZfY29ubmVjdGlvbnMgKyBFeGNoR3dRdW9pbmUuZXh0cmFfd2FpdGluZ19zZWMpCiAgICAgICAgICAgIEV4Y2hHd1F1b2luZS5udW1fb2ZfY29ubmVjdGlvbnNfbG9jay5yZWxlYXNlKCkKCg==</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">ZnJvbSBmdW5jdG9vbHMgaW1wb3J0IHBhcnRpYWwK</text>
+        <text encoding="base64">ICAgICAgICBFeGNoR3dRdW9pbmUubnVtX29mX2Nvbm5lY3Rpb25zX2xvY2suYWNxdWlyZSgpCiAgICAgICAgRXhjaEd3UXVvaW5lLm51bV9vZl9jb25uZWN0aW9ucyArPSAxCiAgICAgICAgTG9nZ2VyLmluZm8oc2VsZi5fX2NsYXNzX18uX19uYW1lX18sICJDdXJyZW50IG51bWJlciBvZiBjb25uZWN0aW9ucyA9ICVkIiAlIEV4Y2hHd1F1b2luZS5udW1fb2ZfY29ubmVjdGlvbnMpCiAgICAgICAgRXhjaEd3UXVvaW5lLm51bV9vZl9jb25uZWN0aW9uc19sb2NrLnJlbGVhc2UoKQoK</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgb25fY2xvc2U9cGFydGlhbChzZWxmLl9fb25fY2xvc2UpLAo=</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgIAo=</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">ZnJvbSBmdW5jdG9vbHMgaW1wb3J0IHBhcnRpYWwK</text>
+        <text encoding="base64">ICAgICAgICAgICAgCg==</text>
       </register>
       <register name=":" type="4">
         <text>w</text>
       </register>
     </registers>
     <search>
-      <last-search encoding="base64">XDxleGNoX3RyYWRlX2lkXD4=</last-search>
+      <last-search encoding="base64">XDxudW1fb2ZfY29ubmVjdGlvbnNfbG9ja1w+</last-search>
       <last-offset />
-      <last-pattern encoding="base64">XDxleGNoX3RyYWRlX2lkXD4=</last-pattern>
+      <last-pattern encoding="base64">XDxudW1fb2ZfY29ubmVjdGlvbnNfbG9ja1w+</last-pattern>
       <last-replace>db_clients</last-replace>
       <last-substitute>db_client</last-substitute>
       <last-dir>1</last-dir>
@@ -1683,8 +1681,6 @@ H</text>
     </search>
     <history>
       <history-search>
-        <entry>get_instmt_</entry>
-        <entry>get_instmt_snapshot</entry>
         <entry encoding="base64">XDxnZXRfc25hcHNob3RfdGFibGVfbmFtZVw+</entry>
         <entry>get_order_book</entry>
         <entry>START_TIME</entry>
@@ -1703,6 +1699,8 @@ H</text>
         <entry>db_client</entry>
         <entry>Huo</entry>
         <entry encoding="base64">XDxleGNoX3RyYWRlX2lkXD4=</entry>
+        <entry encoding="base64">XDxudW1fb2ZfY29ubmVjdGlvbnNcPg==</entry>
+        <entry encoding="base64">XDxudW1fb2ZfY29ubmVjdGlvbnNfbG9ja1w+</entry>
       </history-search>
       <history-cmd>
         <entry>%s/enabled = 0/enabled = 1/g</entry>

@@ -187,6 +187,7 @@ class ExchGwQuoine(ExchangeGateway):
     # static variable to control to request rate
     last_query_time_lock = threading.Lock()
     last_query_time = datetime.now()
+    waiting_seconds = 1
 
     """
     Exchange gateway
@@ -213,7 +214,7 @@ class ExchGwQuoine(ExchangeGateway):
         """
         while True:
             ExchGwQuoine.last_query_time_lock.acquire()
-            if datetime.now() - ExchGwQuoine.last_query_time < timedelta(seconds=1):
+            if datetime.now() - ExchGwQuoine.last_query_time < timedelta(seconds=ExchGwQuoine.waiting_seconds):
                 ExchGwQuoine.last_query_time_lock.release()
                 time.sleep(random.uniform(0, 1))
             else:
@@ -236,7 +237,7 @@ class ExchGwQuoine(ExchangeGateway):
         """
         while True:
             ExchGwQuoine.last_query_time_lock.acquire()
-            if datetime.now() - ExchGwQuoine.last_query_time < timedelta(seconds=1):
+            if datetime.now() - ExchGwQuoine.last_query_time < timedelta(seconds=ExchGwQuoine.waiting_seconds):
                 ExchGwQuoine.last_query_time_lock.release()
                 time.sleep(random.uniform(0, 1))
             else:
@@ -244,7 +245,7 @@ class ExchGwQuoine(ExchangeGateway):
                 try:
                     ret = self.api_socket.get_trades(instmt)
                     if ret is None or len(ret) == 0:
-                        time.sleep(1)
+                        ExchGwQuoine.last_query_time_lock.release()
                         continue
 
                     for trade in ret:

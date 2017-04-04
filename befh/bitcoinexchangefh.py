@@ -56,11 +56,13 @@ def main():
     Logger.init_log(args.output)
 
     db_clients = []
+    is_database_defined = False
     if args.sqlite:
         db_client = SqliteClient()
         db_client.connect(path=args.sqlitepath)
         db_clients.append(db_client)
-    elif args.mysql:
+        is_database_defined = True
+    if args.mysql:
         db_client = MysqlClient()
         mysqldest = args.mysqldest
         logon_credential = mysqldest.split('@')[0]
@@ -71,21 +73,26 @@ def main():
                           pwd=logon_credential.split(':')[1],
                           schema=args.mysqlschema)
         db_clients.append(db_client)
-    elif args.csv:
+        is_database_defined = True
+    if args.csv:
         if args.csvpath != '':
             db_client = FileClient(dir=args.csvpath)
         else:
             db_client = FileClient()
         db_clients.append(db_client)
-    elif args.kdb:
+        is_database_defined = True
+    if args.kdb:
         db_client = KdbPlusClient()
         db_client.connect(host=args.kdbdest.split(':')[0], port=int(args.kdbdest.split(':')[1]))
         db_clients.append(db_client)
-    elif args.zmq:
+        is_database_defined = True
+    if args.zmq:
         db_client = ZmqClient()
         db_client.connect(addr=args.zmqdest)
         db_clients.append(db_client)
-    else:
+        is_database_defined = True
+
+    if not is_database_defined:
         print('Error: Please define which database is used.')
         parser.print_help()
         sys.exit(1)

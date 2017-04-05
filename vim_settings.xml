@@ -110,12 +110,7 @@
         <mark key="." line="20" column="17" />
         <mark key="^" line="20" column="17" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/test/test_redis_client.py" timestamp="1491432983021">
-        <mark key="[" line="15" column="0" />
-        <mark key="]" line="15" column="0" />
-        <mark key="." line="15" column="0" />
-        <mark key="^" line="7" column="59" />
-      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/test/test_redis_client.py" timestamp="1491433565287" />
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/market_data.py" timestamp="1482965916910">
         <mark key="'" line="33" column="12" />
         <mark key="[" line="235" column="77" />
@@ -190,7 +185,7 @@
         <mark key="." line="93" column="35" />
         <mark key="^" line="93" column="35" />
       </file>
-      <file name="/Python Console" timestamp="1491432113528">
+      <file name="/Python Console" timestamp="1491433340850">
         <mark key="[" line="0" column="0" />
       </file>
       <file name="/fragment.py" timestamp="1491432123326">
@@ -434,8 +429,8 @@
       <jump line="191" column="4" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="2">
-        <text encoding="base64">ICAgICAgICAjIHNlbGYuYXNzZXJ0VHJ1ZShjbGllbnQuaW5zZXJ0KCdrZXkyJywgMikpCg==</text>
+      <register name="&quot;" type="4">
+        <text>mock_strictredis</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1649,7 +1644,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>=</text>
+        <text>t</text>
       </register>
       <register name="/" type="4">
         <text encoding="base64">XDxudW1fb2ZfY29ubmVjdGlvbnNfbG9ja1w+</text>

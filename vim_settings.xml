@@ -54,6 +54,12 @@
         <mark key="." line="25" column="68" />
         <mark key="^" line="25" column="68" />
       </file>
+      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/single_market_making.py" timestamp="1491436634402">
+        <mark key="[" line="187" column="86" />
+        <mark key="]" line="187" column="88" />
+        <mark key="." line="187" column="88" />
+        <mark key="^" line="187" column="88" />
+      </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" timestamp="1485989452425">
         <mark key="'" line="97" column="39" />
         <mark key="[" line="167" column="52" />
@@ -110,11 +116,11 @@
         <mark key="." line="20" column="17" />
         <mark key="^" line="20" column="17" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/test/test_redis_client.py" timestamp="1491433711447">
-        <mark key="[" line="15" column="24" />
-        <mark key="]" line="15" column="27" />
-        <mark key="." line="15" column="27" />
-        <mark key="^" line="15" column="27" />
+      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/test/test_redis_client.py" timestamp="1491436182892">
+        <mark key="[" line="14" column="48" />
+        <mark key="]" line="14" column="48" />
+        <mark key="." line="14" column="48" />
+        <mark key="^" line="14" column="48" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/market_data.py" timestamp="1482965916910">
         <mark key="'" line="33" column="12" />
@@ -193,11 +199,11 @@
       <file name="/Python Console" timestamp="1491435313223">
         <mark key="[" line="0" column="0" />
       </file>
-      <file name="/fragment.py" timestamp="1491435352018">
+      <file name="/fragment.py" timestamp="1491435382338">
         <mark key="'" line="0" column="23" />
-        <mark key="[" line="0" column="0" />
-        <mark key="]" line="0" column="0" />
-        <mark key="." line="0" column="0" />
+        <mark key="[" line="0" column="16" />
+        <mark key="]" line="0" column="16" />
+        <mark key="." line="0" column="16" />
         <mark key="^" line="0" column="8" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/strategy.py" timestamp="1485990970141">
@@ -332,7 +338,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="34" column="15" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitfinex.py" />
       <jump line="84" column="30" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="122" column="45" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
       <jump line="164" column="45" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exchange.py" />
@@ -432,10 +437,11 @@
       <jump line="104" column="29" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/instrument.py" />
       <jump line="190" column="4" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
       <jump line="191" column="4" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
+      <jump line="21" column="4" filename="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/single_market_making.py" />
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>mock_strictredis</text>
+        <text>5</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1649,49 +1655,49 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>mock_strictredis</text>
+        <text>5</text>
       </register>
       <register name="/" type="4">
-        <text encoding="base64">XDxudW1fb2ZfY29ubmVjdGlvbnNfbG9ja1w+</text>
+        <text encoding="base64">XDxqc29uX3NlcmlhbFw+</text>
       </register>
-      <register name="0" type="4">
-        <text>mock_strictredis</text>
+      <register name="0" type="8">
+        <text>client.db_client.set</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICAK</text>
+        <text encoding="base64">ICAgICAgICAgICAgICAgICMgc2VsZi5sb2dnZXIuaW5mbyhzZWxmLl9fY2xhc3NfXy5fX25hbWVfXywgIkZCaWQgPSAlLjZmLCBGQXNrID0gJS42ZiIgJSBcCiAgICAgICAgICAgICAgICAjICAgICAgICAgICAgICAgICAgICAgKGZhaXJfYmlkX3ByaWNlLCBmYWlyX2Fza19wcmljZSkpCgo=</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICAjIHNlbGYuYXNzZXJ0VHJ1ZShjbGllbnQuaW5zZXJ0KCdrZXkyJywgMikpCg==</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICBtb2NrX3N0cmljdHJlZGlzLnJldHVybl92YWx1ZSA9IE1hZ2ljTW9jayhob3N0PSdsb2NhbGhvc3QnLCBwb3J0PTk5OTksIGRiPTMpCg==</text>
+        <text encoding="base64">aW1wb3J0IGpzb24K</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ZnJvbSB1bml0dGVzdC5tb2NrIGltcG9ydCBwYXRjaAo=</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">aW1wb3J0IG1vY2sK</text>
+        <text encoding="base64">ZGVmIGpzb25fc2VyaWFsKG9iaik6CiAgICAiIiJKU09OIHNlcmlhbGl6ZXIgZm9yIG9iamVjdHMgbm90IHNlcmlhbGl6YWJsZSBieSBkZWZhdWx0IGpzb24gY29kZSIiIgogICAgaWYgaXNpbnN0YW5jZShvYmosIGRhdGV0aW1lKToKICAgICAgICBzZXJpYWwgPSBvYmouaXNvZm9ybWF0KCkKICAgICAgICByZXR1cm4gc2VyaWFsCiAgICByYWlzZSBUeXBlRXJyb3IgKCJUeXBlIG5vdCBzZXJpYWxpemFibGUiKQoK</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgIEBtb2NrLnBhdGNoLm9iamVjdChyZWRpcy5TdHJpY3RSZWRpcywgJ3NldCcsIGF1dG9zcGVjPVRydWUpCg==</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">aW1wb3J0IHJlZGlzCg==</text>
+        <text encoding="base64">ICAgIEBwYXRjaCgnYml0ei5yZWRpc19kYXRhYmFzZV9jbGllbnQucmVkaXMuU3RyaWN0UmVkaXMuc2V0JykK</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">ICAgIAo=</text>
+        <text encoding="base64">ICAgICAgICAK</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICAgICAgICAgdGltZS5zbGVlcCgxKQo=</text>
+        <text encoding="base64">ICAgICAgICAjIHNlbGYuYXNzZXJ0VHJ1ZShjbGllbnQuaW5zZXJ0KCdrZXkyJywgMikpCg==</text>
       </register>
       <register name=":" type="4">
         <text>w</text>
       </register>
     </registers>
     <search>
-      <last-search encoding="base64">XDxudW1fb2ZfY29ubmVjdGlvbnNfbG9ja1w+</last-search>
+      <last-search encoding="base64">XDxqc29uX3NlcmlhbFw+</last-search>
       <last-offset />
-      <last-pattern encoding="base64">XDxudW1fb2ZfY29ubmVjdGlvbnNfbG9ja1w+</last-pattern>
+      <last-pattern encoding="base64">XDxqc29uX3NlcmlhbFw+</last-pattern>
       <last-replace>db_clients</last-replace>
       <last-substitute>db_client</last-substitute>
       <last-dir>1</last-dir>
@@ -1699,7 +1705,6 @@
     </search>
     <history>
       <history-search>
-        <entry encoding="base64">XDxnZXRfc25hcHNob3RfdGFibGVfbmFtZVw+</entry>
         <entry>get_order_book</entry>
         <entry>START_TIME</entry>
         <entry>id</entry>
@@ -1719,6 +1724,7 @@
         <entry encoding="base64">XDxleGNoX3RyYWRlX2lkXD4=</entry>
         <entry encoding="base64">XDxudW1fb2ZfY29ubmVjdGlvbnNcPg==</entry>
         <entry encoding="base64">XDxudW1fb2ZfY29ubmVjdGlvbnNfbG9ja1w+</entry>
+        <entry encoding="base64">XDxqc29uX3NlcmlhbFw+</entry>
       </history-search>
       <history-cmd>
         <entry>%s/enabled = 0/enabled = 1/g</entry>

@@ -4,10 +4,10 @@ from befh.market_data import L2Depth, Trade
 from befh.util import Logger
 from befh.instrument import Instrument
 from befh.sql_client_template import SqlClientTemplate
-import time
-import threading
 from functools import partial
 from datetime import datetime
+from multiprocessing import Process
+import time
 
 
 class ExchGwApiTemplate(RESTfulApiSocket):
@@ -180,12 +180,12 @@ class ExchGwTemplate(ExchangeGateway):
     """
     Exchange gateway
     """
-    def __init__(self, db_client):
+    def __init__(self, db_clients):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwApiTemplate(), db_client)
+        ExchangeGateway.__init__(self, ExchGwApiTemplate(), db_clients)
 
     @classmethod
     def get_exchange_name(cls):
@@ -200,8 +200,6 @@ class ExchGwTemplate(ExchangeGateway):
         Get order book worker
         :param instmt: Instrument
         """
-        instmt.set_order_book_id(self.get_order_book_init(instmt))
-
         while True:
             try:
                 l2_depth = self.api_socket.get_order_book(instmt)
@@ -219,10 +217,6 @@ class ExchGwTemplate(ExchangeGateway):
         Get order book worker thread
         :param instmt: Instrument name
         """
-        trade_id, exch_trade_id = self.get_trades_init(instmt)
-        instmt.set_trade_id(trade_id)
-        instmt.set_exch_trade_id(exch_trade_id)
-
         while True:
             try:
                 ret = self.api_socket.get_trades(instmt)
@@ -256,14 +250,13 @@ class ExchGwTemplate(ExchangeGateway):
         """
         instmt.set_l2_depth(L2Depth(5))
         instmt.set_prev_l2_depth(L2Depth(5))
-        instmt.set_order_book_table_name(self.get_order_book_table_name(instmt.get_exchange_name(),
-                                                                        instmt.get_instmt_name()))
-        instmt.set_trades_table_name(self.get_trades_table_name(instmt.get_exchange_name(),
-                                                                instmt.get_instmt_name()))
+        instmt.set_instmt_snapshot_table_name(self.get_instmt_snapshot_table_name(instmt.get_exchange_name(),
+                                                                                  instmt.get_instmt_name()))
+        self.init_instmt_snapshot_table(instmt)
         instmt.set_recovered(False)
-        t1 = threading.Thread(target=partial(self.get_order_book_worker, instmt))
+        t1 = Process(target=partial(self.get_order_book_worker, instmt))
+        t2 = Process(target=partial(self.get_trades_worker, instmt))
         t1.start()
-        t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))
         t2.start()
         return [t1, t2]
         
@@ -275,7 +268,7 @@ if __name__ == '__main__':
     instmt_code = 'btccny'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)    
     db_client = SqlClientTemplate()
-    exch = ExchGwTemplate(db_client)
+    exch = ExchGwTemplate([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
     instmt.set_order_book_table_name(exch.get_order_book_table_name(instmt.get_exchange_name(),

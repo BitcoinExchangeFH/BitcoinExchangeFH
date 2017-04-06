@@ -6,8 +6,9 @@ from befh.instrument import Instrument
 from befh.sql_client_template import SqlClientTemplate
 import time
 import threading
+import random
 from functools import partial
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class ExchGwApiQuoine(RESTfulApiSocket):
@@ -184,19 +185,19 @@ class ExchGwApiQuoine(RESTfulApiSocket):
 
 class ExchGwQuoine(ExchangeGateway):
     # static variable to control to request rate
-    num_of_connections = 0
-    num_of_connections_lock = threading.Lock()
-    extra_waiting_sec = 0.5
-    
+    last_query_time_lock = threading.Lock()
+    last_query_time = datetime.now()
+    waiting_seconds = 1
+
     """
     Exchange gateway
     """
-    def __init__(self, db_client):
+    def __init__(self, db_clients):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwApiQuoine(), db_client)
+        ExchangeGateway.__init__(self, ExchGwApiQuoine(), db_clients)
 
     @classmethod
     def get_exchange_name(cls):
@@ -211,65 +212,60 @@ class ExchGwQuoine(ExchangeGateway):
         Get order book worker
         :param instmt: Instrument
         """
-        ExchGwQuoine.num_of_connections_lock.acquire()
-        ExchGwQuoine.num_of_connections += 1
-        Logger.info(self.__class__.__name__, "Current number of connections = %d" % ExchGwQuoine.num_of_connections)
-        ExchGwQuoine.num_of_connections_lock.release()
-        instmt.set_order_book_id(self.get_order_book_init(instmt))
-
         while True:
-            try:
-                l2_depth = self.api_socket.get_order_book(instmt)
-                if l2_depth is not None and l2_depth.is_diff(instmt.get_l2_depth()):
-                    instmt.set_prev_l2_depth(instmt.get_l2_depth())
-                    instmt.set_l2_depth(l2_depth)
-                    instmt.incr_order_book_id()
-                    self.insert_order_book(instmt)
-            except Exception as e:
-                Logger.error(self.__class__.__name__, "Error in order book: %s" % e)
-            ExchGwQuoine.num_of_connections_lock.acquire()
-            time.sleep(ExchGwQuoine.num_of_connections + ExchGwQuoine.extra_waiting_sec)
-            ExchGwQuoine.num_of_connections_lock.release()
+            ExchGwQuoine.last_query_time_lock.acquire()
+            if datetime.now() - ExchGwQuoine.last_query_time < timedelta(seconds=ExchGwQuoine.waiting_seconds):
+                ExchGwQuoine.last_query_time_lock.release()
+                time.sleep(random.uniform(0, 1))
+            else:
+                ExchGwQuoine.last_query_time = datetime.now()
+                try:
+                    l2_depth = self.api_socket.get_order_book(instmt)
+                    if l2_depth is not None and l2_depth.is_diff(instmt.get_l2_depth()):
+                        instmt.set_prev_l2_depth(instmt.get_l2_depth())
+                        instmt.set_l2_depth(l2_depth)
+                        instmt.incr_order_book_id()
+                        self.insert_order_book(instmt)
+                except Exception as e:
+                    Logger.error(self.__class__.__name__, "Error in order book: %s" % e)
+                ExchGwQuoine.last_query_time_lock.release()
 
     def get_trades_worker(self, instmt):
         """
         Get order book worker thread
         :param instmt: Instrument name
         """
-        ExchGwQuoine.num_of_connections_lock.acquire()
-        ExchGwQuoine.num_of_connections += 1
-        Logger.info(self.__class__.__name__, "Current number of connections = %d" % ExchGwQuoine.num_of_connections)
-        ExchGwQuoine.num_of_connections_lock.release()        
-        trade_id, exch_trade_id = self.get_trades_init(instmt)
-        instmt.set_trade_id(trade_id)
-        instmt.set_exch_trade_id(exch_trade_id)
-
         while True:
-            try:
-                ret = self.api_socket.get_trades(instmt)
-                if ret is None or len(ret) == 0:
-                    time.sleep(1)
-                    continue
-            except Exception as e:
-                Logger.error(self.__class__.__name__, "Error in trades: %s" % e)                
-                
-            for trade in ret:
-                assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
-                assert isinstance(instmt.get_exch_trade_id(), str), \
-                       "instmt.get_exch_trade_id()(%s) = %s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id())
-                if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
-                    instmt.set_exch_trade_id(trade.trade_id)
-                    instmt.incr_trade_id()
-                    self.insert_trade(instmt, trade)
-            
-            # After the first time of getting the trade, indicate the instrument
-            # is recovered
-            if not instmt.get_recovered():
-                instmt.set_recovered(True)
+            ExchGwQuoine.last_query_time_lock.acquire()
+            if datetime.now() - ExchGwQuoine.last_query_time < timedelta(seconds=ExchGwQuoine.waiting_seconds):
+                ExchGwQuoine.last_query_time_lock.release()
+                time.sleep(random.uniform(0, 1))
+            else:
+                ExchGwQuoine.last_query_time = datetime.now()
+                try:
+                    ret = self.api_socket.get_trades(instmt)
+                    if ret is None or len(ret) == 0:
+                        ExchGwQuoine.last_query_time_lock.release()
+                        continue
 
-            ExchGwQuoine.num_of_connections_lock.acquire()
-            time.sleep(ExchGwQuoine.num_of_connections + ExchGwQuoine.extra_waiting_sec)
-            ExchGwQuoine.num_of_connections_lock.release()
+                    for trade in ret:
+                        assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
+                        assert isinstance(instmt.get_exch_trade_id(), str), \
+                            "instmt.get_exch_trade_id()(%s) = %s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id())
+                        if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
+                            instmt.set_exch_trade_id(trade.trade_id)
+                            instmt.incr_trade_id()
+                            self.insert_trade(instmt, trade)
+
+                    # After the first time of getting the trade, indicate the instrument
+                    # is recovered
+                    if not instmt.get_recovered():
+                        instmt.set_recovered(True)
+
+                except Exception as e:
+                    Logger.error(self.__class__.__name__, "Error in trades: %s" % e)
+
+                ExchGwQuoine.last_query_time_lock.release()
 
     def start(self, instmt):
         """
@@ -279,10 +275,9 @@ class ExchGwQuoine(ExchangeGateway):
         """
         instmt.set_l2_depth(L2Depth(5))
         instmt.set_prev_l2_depth(L2Depth(5))
-        instmt.set_order_book_table_name(self.get_order_book_table_name(instmt.get_exchange_name(),
-                                                                        instmt.get_instmt_name()))
-        instmt.set_trades_table_name(self.get_trades_table_name(instmt.get_exchange_name(),
-                                                                instmt.get_instmt_name()))
+        instmt.set_instmt_snapshot_table_name(self.get_instmt_snapshot_table_name(instmt.get_exchange_name(),
+                                                                                  instmt.get_instmt_name()))
+        self.init_instmt_snapshot_table(instmt)
         instmt.set_recovered(False)
         t1 = threading.Thread(target=partial(self.get_order_book_worker, instmt))
         t1.start()
@@ -298,7 +293,7 @@ if __name__ == '__main__':
     instmt_code = '1'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)    
     db_client = SqlClientTemplate()
-    exch = ExchGwQuoine(db_client)
+    exch = ExchGwQuoine([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
     instmt.set_order_book_table_name(exch.get_order_book_table_name(instmt.get_exchange_name(),

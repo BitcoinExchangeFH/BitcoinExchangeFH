@@ -54,13 +54,6 @@
         <mark key="." line="25" column="68" />
         <mark key="^" line="25" column="68" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/single_market_making.py" timestamp="1491437678437">
-        <mark key="'" line="94" column="38" />
-        <mark key="[" line="236" column="23" />
-        <mark key="]" line="236" column="29" />
-        <mark key="." line="236" column="23" />
-        <mark key="^" line="233" column="28" />
-      </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" timestamp="1485989452425">
         <mark key="'" line="97" column="39" />
         <mark key="[" line="167" column="52" />
@@ -170,11 +163,11 @@
         <mark key="." line="76" column="0" />
         <mark key="^" line="71" column="43" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/bcfh_market_data_feed.py" timestamp="1491432400166">
-        <mark key="[" line="102" column="18" />
-        <mark key="]" line="102" column="26" />
-        <mark key="." line="102" column="26" />
-        <mark key="^" line="102" column="26" />
+      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/bcfh_market_data_feed.py" timestamp="1491523782117">
+        <mark key="[" line="102" column="32" />
+        <mark key="]" line="102" column="37" />
+        <mark key="." line="102" column="37" />
+        <mark key="^" line="102" column="37" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_gdax.py" timestamp="1482964331253">
         <mark key="'" line="0" column="0" />
@@ -442,7 +435,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>referenced</text>
+        <text>://</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1656,7 +1649,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>referenced</text>
+        <text>://</text>
       </register>
       <register name="/" type="4">
         <text encoding="base64">XDxjYWxfaW5zdG10c1w+</text>

@@ -293,6 +293,12 @@
         <mark key="^" line="177" column="33" />
         <mark key="." line="177" column="33" />
       </file>
+      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/file_market_data_feed.py" timestamp="1491525254476">
+        <mark key="[" line="51" column="42" />
+        <mark key="]" line="51" column="68" />
+        <mark key="." line="51" column="68" />
+        <mark key="^" line="51" column="68" />
+      </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/test/test_file_client.py" timestamp="1481153644877">
         <mark key="'" line="111" column="0" />
         <mark key="[" line="110" column="8" />
@@ -434,8 +440,8 @@
       <jump line="94" column="38" filename="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/single_market_making.py" />
     </jumps>
     <registers>
-      <register name="&quot;" type="4">
-        <text>://</text>
+      <register name="&quot;" type="2">
+        <text encoding="base64">ZnJvbSBiaXR6LmxvZ2dlciBpbXBvcnQgQ29uc29sZUxvZ2dlcgo=</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1649,7 +1655,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>://</text>
+        <text>fhandler</text>
       </register>
       <register name="/" type="4">
         <text encoding="base64">XDxjYWxfaW5zdG10c1w+</text>
@@ -1658,31 +1664,31 @@
         <text>instmt</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICByZWZzID0gaW5zdG10c1s6XQo=</text>
+        <text encoding="base64">ZnJvbSBiaXR6LmxvZ2dlciBpbXBvcnQgQ29uc29sZUxvZ2dlcgo=</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgcmVmZXJlbmNlZCA9IGluc3RtdHNbaV0K</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgZWxzZToK</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgaWYgaSAhPSBsZW4oaW5zdG10cykgLSAxOgo=</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="5" type="2">
-        <text encoding="base64">ICAgICAgICBwYXNzCg==</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgICMgc2VsZi5sb2dnZXIuaW5mbyhzZWxmLl9fY2xhc3NfXy5fX25hbWVfXywgIkZCaWQgPSAlLjZmLCBGQXNrID0gJS42ZiIgJSBcCiAgICAgICAgICAgICAgICAjICAgICAgICAgICAgICAgICAgICAgKGZhaXJfYmlkX3ByaWNlLCBmYWlyX2Fza19wcmljZSkpCgo=</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="7" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgcGFzcwo=</text>
       </register>
       <register name="8" type="2">
-        <text encoding="base64">aW1wb3J0IGpzb24K</text>
+        <text encoding="base64">ICAgICAgICByZWZzID0gaW5zdG10c1s6XQo=</text>
       </register>
       <register name="9" type="2">
-        <text encoding="base64">Cg==</text>
+        <text encoding="base64">ICAgICAgICAgICAgcmVmZXJlbmNlZCA9IGluc3RtdHNbaV0K</text>
       </register>
       <register name=":" type="4">
         <text>w</text>

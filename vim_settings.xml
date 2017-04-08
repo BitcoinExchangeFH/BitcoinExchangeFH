@@ -3,12 +3,24 @@
     <state version="4" enabled="true" />
     <globalmarks />
     <filemarks>
+      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/run/config.ini" timestamp="1491621317688">
+        <mark key="[" line="2" column="75" />
+        <mark key="]" line="2" column="75" />
+        <mark key="." line="2" column="75" />
+        <mark key="^" line="2" column="75" />
+      </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_btcc.py" timestamp="1490493321340">
         <mark key="'" line="249" column="0" />
         <mark key="[" line="418" column="36" />
         <mark key="]" line="418" column="36" />
         <mark key="." line="418" column="36" />
         <mark key="^" line="418" column="36" />
+      </file>
+      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/market_data_feed.py" timestamp="1491619801096">
+        <mark key="[" line="36" column="0" />
+        <mark key="]" line="37" column="0" />
+        <mark key="^" line="36" column="7" />
+        <mark key="." line="36" column="0" />
       </file>
       <file name="/a.dummy" timestamp="1491174868522">
         <mark key="[" line="0" column="0" />
@@ -54,7 +66,13 @@
         <mark key="." line="25" column="68" />
         <mark key="^" line="25" column="68" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/single_market_making.py" timestamp="1491606118164" />
+      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/single_market_making.py" timestamp="1491621728118">
+        <mark key="'" line="6" column="39" />
+        <mark key="[" line="292" column="91" />
+        <mark key="]" line="292" column="108" />
+        <mark key="." line="292" column="108" />
+        <mark key="^" line="292" column="108" />
+      </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/debug/config.ini" timestamp="1485989452425">
         <mark key="'" line="97" column="39" />
         <mark key="[" line="167" column="52" />
@@ -164,11 +182,11 @@
         <mark key="." line="76" column="0" />
         <mark key="^" line="71" column="43" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/bcfh_market_data_feed.py" timestamp="1491606210054">
-        <mark key="[" line="98" column="0" />
-        <mark key="]" line="98" column="0" />
-        <mark key="." line="98" column="0" />
-        <mark key="^" line="97" column="42" />
+      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/bcfh_market_data_feed.py" timestamp="1491619820739">
+        <mark key="[" line="104" column="15" />
+        <mark key="]" line="104" column="31" />
+        <mark key="." line="104" column="31" />
+        <mark key="^" line="104" column="31" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/exch_gdax.py" timestamp="1482964331253">
         <mark key="'" line="0" column="0" />
@@ -191,10 +209,10 @@
         <mark key="." line="93" column="35" />
         <mark key="^" line="93" column="35" />
       </file>
-      <file name="/Python Console" timestamp="1491525447665">
+      <file name="/Python Console" timestamp="1491621321727">
         <mark key="[" line="0" column="0" />
       </file>
-      <file name="/fragment.py" timestamp="1491525715588">
+      <file name="/fragment.py" timestamp="1491620936360">
         <mark key="'" line="0" column="23" />
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="16" />
@@ -268,6 +286,12 @@
         <mark key="^" line="21" column="28" />
         <mark key="." line="21" column="28" />
       </file>
+      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/order_server.py" timestamp="1491621761981">
+        <mark key="[" line="28" column="17" />
+        <mark key="]" line="28" column="17" />
+        <mark key="." line="28" column="17" />
+        <mark key="^" line="28" column="17" />
+      </file>
       <file name="$USER_HOME$/Documents/Source Codes/TickTickBacktest/python/market_data.py" timestamp="1483489364702">
         <mark key="'" line="213" column="43" />
         <mark key="[" line="229" column="19" />
@@ -275,7 +299,7 @@
         <mark key="." line="230" column="32" />
         <mark key="^" line="230" column="32" />
       </file>
-      <file name="/Dummy.txt" timestamp="1491437700099">
+      <file name="/Dummy.txt" timestamp="1491619866164">
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="16" />
         <mark key="." line="0" column="16" />
@@ -299,12 +323,12 @@
         <mark key="^" line="177" column="33" />
         <mark key="." line="177" column="33" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/file_market_data_feed.py" timestamp="1491617748896">
-        <mark key="'" line="121" column="111" />
-        <mark key="[" line="70" column="55" />
-        <mark key="]" line="70" column="59" />
-        <mark key="^" line="70" column="59" />
-        <mark key="." line="70" column="59" />
+      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/file_market_data_feed.py" timestamp="1491619809683">
+        <mark key="'" line="120" column="111" />
+        <mark key="[" line="192" column="0" />
+        <mark key="]" line="198" column="24" />
+        <mark key="." line="198" column="24" />
+        <mark key="^" line="198" column="24" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/python/test/test_file_client.py" timestamp="1481153644877">
         <mark key="'" line="111" column="0" />
@@ -345,9 +369,6 @@
       </file>
     </filemarks>
     <jumps>
-      <jump line="286" column="50" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
-      <jump line="299" column="34" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_quoine.py" />
-      <jump line="255" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_btcc.py" />
       <jump line="277" column="38" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_gatecoin.py" />
       <jump line="235" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_kraken.py" />
       <jump line="153" column="0" filename="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_kraken.py" />
@@ -445,10 +466,13 @@
       <jump line="1" column="32" filename="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/test/exch_empty.csv" />
       <jump line="81" column="19" filename="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/file_market_data_feed.py" />
       <jump line="114" column="111" filename="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/file_market_data_feed.py" />
+      <jump line="13" column="9" filename="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/single_market_making.py" />
+      <jump line="264" column="7" filename="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/single_market_making.py" />
+      <jump line="6" column="39" filename="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/single_market_making.py" />
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>0</text>
+        <text>]</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1662,40 +1686,40 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>0</text>
+        <text>]</text>
       </register>
       <register name="/" type="4">
         <text>)</text>
       </register>
-      <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgIHJldHVybiBTbmFwc2hvdC5VcGRhdGVUeXBlLk5PTkUK</text>
+      <register name="0" type="4">
+        <text>MarketFeed</text>
       </register>
       <register name="1" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgcmV0dXJuIE5vbmUK</text>
+        <text encoding="base64">Cg==</text>
       </register>
       <register name="2" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgcmV0dXJuIHNuYXBzaG90Cg==</text>
-      </register>
-      <register name="3" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgICAgIHJldHVybiBOb25lCg==</text>
-      </register>
-      <register name="4" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgcHJpbnQoZGF0YSkK</text>
-      </register>
-      <register name="5" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgc2VsZi5fX25vdyA9IG5leHRfdXBkYXRlX3RpbWUK</text>
-      </register>
-      <register name="6" type="2">
-        <text encoding="base64">ICAgICAgICAgICAgc2VsZi5fX25vdyA9IG5leHRfdXBkYXRlX3RpbWUK</text>
-      </register>
-      <register name="7" type="2">
-        <text encoding="base64">Cg==</text>
-      </register>
-      <register name="8" type="2">
         <text encoding="base64">ICAgICAgICBwYXNzCg==</text>
       </register>
-      <register name="9" type="2">
+      <register name="3" type="2">
+        <text encoding="base64">ICAgICAgICBwYXNzCg==</text>
+      </register>
+      <register name="4" type="2">
+        <text encoding="base64">ICAgIG1hcmtldF9kYXRhX2ZlZWQgPSBCY2ZoTWFya2V0RGF0YUZlZWQoQ29uc29sZUxvZ2dlci5zdGF0aWNfbG9nZ2VyKQogICAgbWFya2V0X2RhdGFfZmVlZC5jb25uZWN0KGFkZHI9Y29uZmlnLmdldCgnTWFya2V0RmVlZCcsICdIb3N0JykpCg==</text>
+      </register>
+      <register name="5" type="2">
+        <text encoding="base64">ICAgIHNtbS5yZWdpc3Rlcl9tYXJrZXRfZGF0YV9mZWVkKG1hcmtldF9kYXRhX2ZlZWQpCg==</text>
+      </register>
+      <register name="6" type="2">
         <text encoding="base64">Cg==</text>
+      </register>
+      <register name="7" type="2">
+        <text encoding="base64">aW1wb3J0IGpzb24K</text>
+      </register>
+      <register name="8" type="2">
+        <text encoding="base64">ICAgIG1hcmtldF9kYXRhX2ZlZWQgPSBCY2ZoTWFya2V0RGF0YUZlZWQoQ29uc29sZUxvZ2dlci5zdGF0aWNfbG9nZ2VyKQogICAgbWFya2V0X2RhdGFfZmVlZC5jb25uZWN0KGFkZHI9Y29uZmlnLmdldCgnTWFya2V0RmVlZCcsICdIb3N0JykpCiAgICBzbW0ucmVnaXN0ZXJfbWFya2V0X2RhdGFfZmVlZChtYXJrZXRfZGF0YV9mZWVkKQo=</text>
+      </register>
+      <register name="9" type="2">
+        <text encoding="base64">SG9zdD10Y3A6Ly8xMjcuMC4wLjE6NjAwMQo=</text>
       </register>
       <register name=":" type="4">
         <text>w</text>
@@ -1751,8 +1775,8 @@
         <entry>w!</entry>
         <entry encoding="base64">JzwsJz5zL2RiX2NsaWVudC9kYl9jbGllbnRzL2c=</entry>
         <entry>wq!</entry>
-        <entry>wq</entry>
         <entry encoding="base64">JzwsJz5zL2N1cnIvbmV4dC9n</entry>
+        <entry>wq</entry>
         <entry>w</entry>
       </history-cmd>
       <history-expr />

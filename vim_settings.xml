@@ -45,11 +45,11 @@
         <mark key="." line="296" column="32" />
         <mark key="^" line="296" column="32" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/test/test_file_market_data_feed.py" timestamp="1491631510569">
-        <mark key="[" line="81" column="25" />
-        <mark key="]" line="79" column="30" />
-        <mark key="." line="79" column="30" />
-        <mark key="^" line="79" column="30" />
+      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/test/test_file_market_data_feed.py" timestamp="1491632359650">
+        <mark key="[" line="82" column="25" />
+        <mark key="]" line="82" column="25" />
+        <mark key="." line="82" column="25" />
+        <mark key="^" line="82" column="25" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" timestamp="1490493297132">
         <mark key="'" line="134" column="67" />
@@ -314,7 +314,7 @@
         <mark key="." line="230" column="32" />
         <mark key="^" line="230" column="32" />
       </file>
-      <file name="/Dummy.txt" timestamp="1491619866164">
+      <file name="/Dummy.txt" timestamp="1491632411950">
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="16" />
         <mark key="." line="0" column="16" />
@@ -487,7 +487,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>9</text>
+        <text>4</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1701,7 +1701,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>9</text>
+        <text>4</text>
       </register>
       <register name="/" type="4">
         <text>)</text>

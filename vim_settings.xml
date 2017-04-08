@@ -45,11 +45,11 @@
         <mark key="." line="296" column="32" />
         <mark key="^" line="296" column="32" />
       </file>
-      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/test/test_file_market_data_feed.py" timestamp="1491630489812">
-        <mark key="[" line="27" column="28" />
-        <mark key="]" line="27" column="28" />
-        <mark key="." line="27" column="28" />
-        <mark key="^" line="27" column="28" />
+      <file name="$USER_HOME$/Documents/Source Codes/Bitzkrieg/bitz/test/test_file_market_data_feed.py" timestamp="1491631510569">
+        <mark key="[" line="81" column="25" />
+        <mark key="]" line="79" column="30" />
+        <mark key="." line="79" column="30" />
+        <mark key="^" line="79" column="30" />
       </file>
       <file name="$USER_HOME$/Documents/Source Codes/BitcoinExchangeFH/befh/exch_bitstamp.py" timestamp="1490493297132">
         <mark key="'" line="134" column="67" />
@@ -487,7 +487,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>d</text>
+        <text>9</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1701,13 +1701,13 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>d</text>
+        <text>9</text>
       </register>
       <register name="/" type="4">
         <text>)</text>
       </register>
       <register name="0" type="2">
-        <text encoding="base64">ICAgICAgICAjIEdldCBzbmFwc2hvdCBmb3IgYSB2ZXJ5IHNob3J0IHRpbWVvdXQgcGVyaW9kCiAgICAgICAgcmV0ID0gZGF0YV9mZWVkLmdldF9zbmFwc2hvdCh0aW1lb3V0PTEpCiAgICAgICAgc2VsZi5hc3NlcnRJc0luc3RhbmNlKHJldCwgaW50KQogICAgICAgIHNlbGYuYXNzZXJ0RXF1YWwocmV0LCAwKQogICAgICAgIHNlbGYuYXNzZXJ0RXF1YWwoZGF0ZXRpbWUoMjAxNywgNCwgNywgMCwgMCwgMzgsIDMwMTg2OSksIGRhdGFfZmVlZC5ub3coKSkKCiAgICAgICAgIyBHZXQgc25hcHNob3Qgd2l0aCB0aW1lb3V0ID0gMzAgbWlucwogICAgICAgIHJldCA9IGRhdGFfZmVlZC5nZXRfc25hcHNob3QodGltZW91dD0xMDAwMDAwICogNjAgKiAzMCkKICAgICAgICBzZWxmLmFzc2VydElzSW5zdGFuY2UocmV0LCBTbmFwc2hvdCkKICAgICAgICBzZWxmLmFzc2VydEVxdWFsKCdxdW9pbmUnLCByZXQuZXhjaGFuZ2UpCiAgICAgICAgc2VsZi5hc3NlcnRFcXVhbCgnYnRkdXNkJywgcmV0Lmluc3RtdCkKICAgICAgICBzZWxmLmFzc2VydEVxdWFsKDExOTAuNywgcmV0Lm9yZGVyX2Jvb2suYjEpCiAgICAgICAgc2VsZi5hc3NlcnRFcXVhbCgxMTkyLjMsIHJldC5vcmRlcl9ib29rLmExKQogICAgICAgIHNlbGYuYXNzZXJ0RXF1YWwoMS45OSwgcmV0Lm9yZGVyX2Jvb2suYnExKQogICAgICAgIHNlbGYuYXNzZXJ0RXF1YWwoNi42NCwgcmV0Lm9yZGVyX2Jvb2suYXExKQogICAgICAgIHNlbGYuYXNzZXJ0RXF1YWwoMCwgcmV0Lmxhc3RfdHJhZGUudHJhZGVfcHJpY2UpCiAgICAgICAgc2VsZi5hc3NlcnRFcXVhbCgwLCByZXQubGFzdF90cmFkZS50cmFkZV92b2x1bWUpCiAgICAgICAgc2VsZi5hc3NlcnRFcXVhbChkYXRldGltZSgyMDE3LCA0LCA3LCAwLCAwLCA0OCwgNzcwMjc3KSwgZGF0YV9mZWVkLm5vdygpKQo=</text>
+        <text encoding="base64">CiAgICAgICAgIyBHZXQgc25hcHNob3Qgd2l0aCB0aW1lb3V0ID0gMzAgbWlucwogICAgICAgIHJldCA9IGRhdGFfZmVlZC5nZXRfc25hcHNob3QodGltZW91dD0xMDAwMDAwICogNjAgKiAzMCkKICAgICAgICBzZWxmLmFzc2VydElzSW5zdGFuY2UocmV0LCBTbmFwc2hvdCkKICAgICAgICBzZWxmLmFzc2VydEVxdWFsKCdxdW9pbmUnLCByZXQuZXhjaGFuZ2UpCiAgICAgICAgc2VsZi5hc3NlcnRFcXVhbCgnYnRjdXNkJywgcmV0Lmluc3RtdCkKICAgICAgICBzZWxmLmFzc2VydEVxdWFsKDExOTAuNywgcmV0Lm9yZGVyX2Jvb2suYjEpCiAgICAgICAgc2VsZi5hc3NlcnRFcXVhbCgxMTkyLjMsIHJldC5vcmRlcl9ib29rLmExKQogICAgICAgIHNlbGYuYXNzZXJ0RXF1YWwoMS45OSwgcmV0Lm9yZGVyX2Jvb2suYnExKQogICAgICAgIHNlbGYuYXNzZXJ0RXF1YWwoNi42NCwgcmV0Lm9yZGVyX2Jvb2suYXExKQogICAgICAgIHNlbGYuYXNzZXJ0RXF1YWwoMCwgcmV0Lmxhc3RfdHJhZGUudHJhZGVfcHJpY2UpCiAgICAgICAgc2VsZi5hc3NlcnRFcXVhbCgwLCByZXQubGFzdF90cmFkZS50cmFkZV92b2x1bWUpCiAgICAgICAgc2VsZi5hc3NlcnRFcXVhbChkYXRldGltZSgyMDE3LCA0LCA3LCAwLCAwLCA0OCwgNzcwMjc3KSwgZGF0YV9mZWVkLm5vdygpKQo=</text>
       </register>
       <register name="1" type="8">
         <text>6.64

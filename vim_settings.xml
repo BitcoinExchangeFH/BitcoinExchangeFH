@@ -333,7 +333,7 @@
         <mark key="." line="230" column="32" />
         <mark key="^" line="230" column="32" />
       </file>
-      <file name="/Dummy.txt" timestamp="1491725199236">
+      <file name="/Dummy.txt" timestamp="1491725352479">
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="0" />
         <mark key="." line="0" column="0" />
@@ -509,7 +509,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>Added disconnection and to parse update type in market data feed</text>
+        <text encoding="base64">QWRkZWQgYmFja3Rlc3RpbmcgZXhjaGFuZ2Ug</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1723,7 +1723,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>Added disconnection and to parse update type in market data feed</text>
+        <text encoding="base64">QWRkZWQgYmFja3Rlc3RpbmcgZXhjaGFuZ2Ug</text>
       </register>
       <register name="/" type="4">
         <text>SecondaryOrderID</text>

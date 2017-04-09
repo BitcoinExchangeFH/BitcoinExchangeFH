@@ -321,7 +321,7 @@
         <mark key="." line="230" column="32" />
         <mark key="^" line="230" column="32" />
       </file>
-      <file name="/Dummy.txt" timestamp="1491632428013">
+      <file name="/Dummy.txt" timestamp="1491702269100">
         <mark key="[" line="0" column="0" />
         <mark key="]" line="0" column="0" />
         <mark key="." line="0" column="0" />
@@ -494,7 +494,7 @@
     </jumps>
     <registers>
       <register name="&quot;" type="4">
-        <text>0</text>
+        <text>Convert file market data feed value to float #6</text>
       </register>
       <register name="j" type="4">
         <keys>
@@ -1708,7 +1708,7 @@
         </keys>
       </register>
       <register name="-" type="4">
-        <text>0</text>
+        <text>Convert file market data feed value to float #6</text>
       </register>
       <register name="/" type="4">
         <text>ExecType</text>

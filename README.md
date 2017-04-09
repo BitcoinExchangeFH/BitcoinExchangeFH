@@ -181,8 +181,7 @@ All the instrument subscription are mentioned in the configuration file [subscri
 All market data are stored in the dedicated database. For each instrument, there are two tables, order book and trades. The order book is the price depth at top five levels. They are recorded under the table names of
 
 ```
-exch_<exchange name>_<instrument name>_book
-exch_<exchange name>_<instrument name>_trades
+exch_<exchange name>_<instrument name>_snapshot
 ```
 
 ## Inquiries

@@ -13,8 +13,16 @@ Users can
 3. Recording market data to a in-memory database and other applications can quickly access to it.
 4. Customize the project for trading use.
 
+### MySQL
+
 <p align="center">
   <img src="doc/sample.jpg">
+</p>
+
+### Kdb+
+
+<p align="center">
+  <img src="doc/sample2.jpg">
 </p>
 
 ## Supported exchanges
@@ -25,7 +33,6 @@ Users can
 - BTCC (RESTful)
 - Gatecoin (RESTful)
 - GDAX (Websocket)
-- Huobi (SocketIO)
 - Kraken (RESTful)
 - OkCoin (Websocket)
 - Quoine (RESTful)

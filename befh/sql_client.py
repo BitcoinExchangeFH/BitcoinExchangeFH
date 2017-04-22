@@ -1,6 +1,6 @@
-from database_client import DatabaseClient
+from befh.database_client import DatabaseClient
+from befh.util import Logger
 import threading
-from util import Logger
 
 class SqlClient(DatabaseClient):
     """

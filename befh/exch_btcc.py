@@ -1,13 +1,13 @@
+from befh.restful_api_socket import RESTfulApiSocket
+from befh.exchange import ExchangeGateway
+from befh.market_data import L2Depth, Trade
+from befh.util import Logger
+from befh.instrument import Instrument
+from befh.sql_client_template import SqlClientTemplate
 import time
 import threading
 from functools import partial
 from datetime import datetime
-from restful_api_socket import RESTfulApiSocket
-from exchange import ExchangeGateway
-from market_data import L2Depth, Trade
-from util import Logger
-from instrument import Instrument
-from sql_client_template import SqlClientTemplate
 
 
 class ExchGwBtccRestfulApi(RESTfulApiSocket):
@@ -82,14 +82,14 @@ class ExchGwBtccRestfulApi(RESTfulApiSocket):
             # Bids
             bids = raw[cls.get_bids_field_name()]
             bids = sorted(bids, key=lambda x: x[0], reverse=True)
-            for i in range(0, 5):
+            for i in range(0, min(5, len(bids))):
                 l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
                 l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
                 
             # Asks
             asks = raw[cls.get_asks_field_name()]
             asks = sorted(asks, key=lambda x: x[0])
-            for i in range(0, 5):
+            for i in range(0, min(5, len(asks))):
                 l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
                 l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]            
         else:
@@ -175,12 +175,12 @@ class ExchGwBtcc(ExchangeGateway):
     """
     Exchange gateway BTCC
     """
-    def __init__(self, db_client):
+    def __init__(self, db_clients):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwBtccRestfulApi(), db_client)
+        ExchangeGateway.__init__(self, ExchGwBtccRestfulApi(), db_clients)
 
     @classmethod
     def get_exchange_name(cls):
@@ -195,8 +195,6 @@ class ExchGwBtcc(ExchangeGateway):
         Get order book worker
         :param instmt: Instrument
         """
-        instmt.set_order_book_id(self.get_order_book_init(instmt))
-
         while True:
             try:
                 l2_depth = self.api_socket.get_order_book(instmt)
@@ -214,10 +212,6 @@ class ExchGwBtcc(ExchangeGateway):
         Get order book worker thread
         :param instmt: Instrument name
         """
-        trade_id, exch_trade_id = self.get_trades_init(instmt)
-        instmt.set_trade_id(trade_id)
-        instmt.set_exch_trade_id(exch_trade_id)
-
         while True:
             try:
                 ret = self.api_socket.get_trades(instmt)
@@ -251,10 +245,9 @@ class ExchGwBtcc(ExchangeGateway):
         """
         instmt.set_l2_depth(L2Depth(5))
         instmt.set_prev_l2_depth(L2Depth(5))
-        instmt.set_order_book_table_name(self.get_order_book_table_name(instmt.get_exchange_name(),
-                                                                        instmt.get_instmt_name()))
-        instmt.set_trades_table_name(self.get_trades_table_name(instmt.get_exchange_name(),
-                                                                instmt.get_instmt_name()))
+        instmt.set_instmt_snapshot_table_name(self.get_instmt_snapshot_table_name(instmt.get_exchange_name(),
+                                                                                  instmt.get_instmt_name()))
+        self.init_instmt_snapshot_table(instmt)
         instmt.set_recovered(False)
         t1 = threading.Thread(target=partial(self.get_order_book_worker, instmt))
         t1.start()
@@ -380,12 +373,12 @@ class ExchGwBtccSpot(ExchGwBtcc):
     """
     Exchange gateway BTCC-Spot
     """
-    def __init__(self, db_client):
+    def __init__(self, db_clients):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwBtccSpotRestfulApi(), db_client)
+        ExchangeGateway.__init__(self, ExchGwBtccSpotRestfulApi(), db_clients)
 
     @classmethod
     def get_exchange_name(cls):
@@ -400,12 +393,12 @@ class ExchGwBtccFuture(ExchGwBtcc):
     """
     Exchange gateway BTCC-Future
     """
-    def __init__(self, db_client):
+    def __init__(self, db_clients):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwBtccFutureRestfulApi(), db_client)
+        ExchangeGateway.__init__(self, ExchGwBtccFutureRestfulApi(), db_clients)
 
     @classmethod
     def get_exchange_name(cls):
@@ -423,7 +416,7 @@ if __name__ == '__main__':
     instmt_code = 'btccny'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)    
     db_client = SqlClientTemplate()
-    exch = ExchGwBtccSpot(db_client)
+    exch = ExchGwBtccSpot([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
     instmt.set_order_book_table_name(exch.get_order_book_table_name(instmt.get_exchange_name(),

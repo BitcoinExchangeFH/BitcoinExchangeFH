@@ -1,12 +1,16 @@
 #!/bin/python
 
-from sql_client import SqlClient
-from util import Logger
+from befh.sql_client import SqlClient
+import sqlite3
 
-class SqlClientTemplate(SqlClient):
+class SqliteClient(SqlClient):
     """
-    Sql client template
+    Sqlite client
     """
+    @classmethod
+    def replace_keyword(cls):
+        return 'insert or replace into'
+
     def __init__(self):
         """
         Constructor
@@ -16,33 +20,37 @@ class SqlClientTemplate(SqlClient):
     def connect(self, **kwargs):
         """
         Connect
+        :param path: sqlite file to connect
         """
-        return True
+        path = kwargs['path']
+        self.conn = sqlite3.connect(path, check_same_thread=False)
+        self.cursor = self.conn.cursor()
+        return self.conn is not None and self.cursor is not None
         
     def execute(self, sql):
         """
         Execute the sql command
         :param sql: SQL command
         """
-        Logger.info(self.__class__.__name__, "Execute command = %s" % sql)
+        self.cursor.execute(sql)
         
     def commit(self):
         """
         Commit
         """    
-        pass
+        self.conn.commit()
         
     def fetchone(self):
         """
         Fetch one record
         :return Record
         """        
-        return []
+        return self.cursor.fetchone()     
 
     def fetchall(self):
         """
         Fetch all records
         :return Record
         """        
-        return []
+        return self.cursor.fetchall()
 

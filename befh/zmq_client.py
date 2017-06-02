@@ -81,7 +81,7 @@ class ZmqClient(DatabaseClient):
         ret = dict(zip(columns, values))
         ret['table'] = table
         self.lock.acquire()
-        self.conn.send_pyobj(ret)
+        self.conn.send_json(ret)
         self.lock.release()
         return True
 

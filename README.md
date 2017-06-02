@@ -13,8 +13,16 @@ Users can
 3. Recording market data to a in-memory database and other applications can quickly access to it.
 4. Customize the project for trading use.
 
+### MySQL
+
 <p align="center">
   <img src="doc/sample.jpg">
+</p>
+
+### Kdb+
+
+<p align="center">
+  <img src="doc/sample2.jpg">
 </p>
 
 ## Supported exchanges
@@ -25,7 +33,6 @@ Users can
 - BTCC (RESTful)
 - Gatecoin (RESTful)
 - GDAX (Websocket)
-- Huobi (SocketIO)
 - Kraken (RESTful)
 - OkCoin (Websocket)
 - Quoine (RESTful)
@@ -181,8 +188,7 @@ All the instrument subscription are mentioned in the configuration file [subscri
 All market data are stored in the dedicated database. For each instrument, there are two tables, order book and trades. The order book is the price depth at top five levels. They are recorded under the table names of
 
 ```
-exch_<exchange name>_<instrument name>_book
-exch_<exchange name>_<instrument name>_trades
+exch_<exchange name>_<instrument name>_snapshot
 ```
 
 ## Inquiries

@@ -1,13 +1,13 @@
+from befh.ws_api_socket import WebSocketApiClient
+from befh.market_data import L2Depth, Trade
+from befh.exchange import ExchangeGateway
+from befh.instrument import Instrument
+from befh.util import Logger
 import time
 import threading
 import json
 from functools import partial
 from datetime import datetime
-from ws_api_socket import WebSocketApiClient
-from market_data import L2Depth, Trade
-from exchange import ExchangeGateway
-from instrument import Instrument
-from util import Logger
 
 
 class ExchGwOkCoinWs(WebSocketApiClient):
@@ -107,12 +107,12 @@ class ExchGwOkCoin(ExchangeGateway):
     """
     Exchange gateway
     """
-    def __init__(self, db_client):
+    def __init__(self, db_clients):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwOkCoinWs(), db_client)
+        ExchangeGateway.__init__(self, ExchGwOkCoinWs(), db_clients)
 
     @classmethod
     def get_exchange_name(cls):
@@ -203,14 +203,9 @@ class ExchGwOkCoin(ExchangeGateway):
         """
         instmt.set_prev_l2_depth(L2Depth(20))
         instmt.set_l2_depth(L2Depth(20))
-        instmt.set_order_book_table_name(self.get_order_book_table_name(instmt.get_exchange_name(),
-                                                                       instmt.get_instmt_name()))
-        instmt.set_trades_table_name(self.get_trades_table_name(instmt.get_exchange_name(),
-                                                               instmt.get_instmt_name()))
-        instmt.set_order_book_id(self.get_order_book_init(instmt))
-        trade_id, last_exch_trade_id = self.get_trades_init(instmt)
-        instmt.set_trade_id(trade_id)
-        instmt.set_exch_trade_id(last_exch_trade_id)
+        instmt.set_instmt_snapshot_table_name(self.get_instmt_snapshot_table_name(instmt.get_exchange_name(),
+                                                                                  instmt.get_instmt_name()))
+        self.init_instmt_snapshot_table(instmt)
         return [self.api_socket.connect(self.api_socket.get_link(),
                                         on_message_handler=partial(self.on_message_handler, instmt),
                                         on_open_handler=partial(self.on_open_handler, instmt),

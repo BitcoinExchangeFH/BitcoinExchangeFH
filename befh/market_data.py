@@ -64,7 +64,7 @@ class L2Depth(MarketDataBase):
         :param depth: Number of depth
         """
         MarketDataBase.__init__(self)
-        self.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
+        self.date_time = datetime(2000, 1, 1, 0, 0, 0).strftime("%Y%m%d %H:%M:%S.%f")
         self.depth = depth
         self.bids = [MarketDataBase.Depth() for i in range(0, self.depth)]
         self.asks = [MarketDataBase.Depth() for i in range(0, self.depth)]
@@ -161,7 +161,7 @@ class Trade(MarketDataBase):
         :param default_format: Default date time format
         """
         MarketDataBase.__init__(self)
-        self.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
+        self.date_time = datetime(2000, 1, 1, 0, 0, 0).strftime("%Y%m%d %H:%M:%S.%f")
         self.trade_id = ''
         self.trade_price = 0.0
         self.trade_volume = 0.0
@@ -210,38 +210,55 @@ class Snapshot(MarketDataBase):
         MarketDataBase.__init__(self)
 
     @staticmethod        
-    def columns():
+    def columns(is_name=True):
         """
         Return static columns names
         """
-        return ['exchange', 'instmt',
-                'trade_px', 'trade_volume',
-                'b1', 'b2', 'b3', 'b4', 'b5',
-                'a1', 'a2', 'a3', 'a4', 'a5',
-                'bq1', 'bq2', 'bq3', 'bq4', 'bq5',
-                'aq1', 'aq2', 'aq3', 'aq4', 'aq5',
-                'order_date_time', 'trades_date_time', 'update_type']
-            
+        if is_name:
+            return ['exchange', 'instmt',
+                    'trade_px', 'trade_volume',
+                    'b1', 'b2', 'b3', 'b4', 'b5',
+                    'a1', 'a2', 'a3', 'a4', 'a5',
+                    'bq1', 'bq2', 'bq3', 'bq4', 'bq5',
+                    'aq1', 'aq2', 'aq3', 'aq4', 'aq5',
+                    'order_date_time', 'trades_date_time', 'update_type']
+        else:
+            return ['trade_px', 'trade_volume',
+                    'b1', 'b2', 'b3', 'b4', 'b5',
+                    'a1', 'a2', 'a3', 'a4', 'a5',
+                    'bq1', 'bq2', 'bq3', 'bq4', 'bq5',
+                    'aq1', 'aq2', 'aq3', 'aq4', 'aq5',
+                    'order_date_time', 'trades_date_time', 'update_type']
+
     @staticmethod
-    def types():
+    def types(is_name=True):
         """
         Return static column types
         """
-        return ['varchar(20)', 'varchar(20)', 'decimal(10,5)', 'decimal(20,8)'] + \
-               ['decimal(10,5)'] * 10 + \
-               ['decimal(20,8)'] * 10 + \
-               ['varchar(25)', 'varchar(25)', 'int']
+        if is_name:
+            return ['varchar(20)', 'varchar(20)', 'decimal(10,5)', 'decimal(20,8)'] + \
+                   ['decimal(10,5)'] * 10 + \
+                   ['decimal(20,8)'] * 10 + \
+                   ['varchar(25)', 'varchar(25)', 'int']
+        else:
+            return ['decimal(10,5)', 'decimal(20,8)'] + \
+                   ['decimal(10,5)'] * 10 + \
+                   ['decimal(20,8)'] * 10 + \
+                   ['varchar(25)', 'varchar(25)', 'int']
+
                 
     @staticmethod
-    def values(exchange_name, instmt_name, l2_depth, last_trade, update_type=UpdateType.NONE):
+    def values(exchange_name='', instmt_name='', l2_depth=None, last_trade=None, update_type=UpdateType.NONE):
         """
         Return values in a list
-        """        
-        return [exchange_name, instmt_name] + \
-        [last_trade.trade_price, last_trade.trade_volume] + \
-        [b.price for b in l2_depth.bids[0:5]] + \
-        [a.price for a in l2_depth.asks[0:5]] + \
-        [b.volume for b in l2_depth.bids[0:5]] + \
-        [a.volume for a in l2_depth.asks[0:5]] + \
-        [l2_depth.date_time, last_trade.date_time, update_type]
+        """
+        assert l2_depth is not None and last_trade is not None, "L2 depth and last trade must not be none."
+        return ([exchange_name] if exchange_name else []) + \
+               ([instmt_name] if instmt_name else []) + \
+               [last_trade.trade_price, last_trade.trade_volume] + \
+               [b.price for b in l2_depth.bids[0:5]] + \
+               [a.price for a in l2_depth.asks[0:5]] + \
+               [b.volume for b in l2_depth.bids[0:5]] + \
+               [a.volume for a in l2_depth.asks[0:5]] + \
+               [l2_depth.date_time, last_trade.date_time, update_type]
         

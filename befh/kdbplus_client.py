@@ -1,8 +1,8 @@
+from befh.database_client import DatabaseClient
+from befh.util import Logger
 import threading
 import re
 import numpy
-from database_client import DatabaseClient
-from util import Logger
 from qpython import qconnection
 from qpython.qcollection import QTable, QKeyedTable, QList
 
@@ -44,7 +44,7 @@ class KdbPlusClient(DatabaseClient):
             return str
         elif type == 'float' or type == 'double' or type.find('decimal') > -1:
             return float
-        elif type == 'int':
+        elif type == 'int' or type == 'long' or type == 'bigint':
             return int
         else:
             raise Exception("Failed to convert type (%s)" % type)
@@ -149,7 +149,7 @@ class KdbPlusClient(DatabaseClient):
             elif t is float:
                 c[i] += ":`float$()"
             elif t is int:
-                c[i] += ":`int$()"
+                c[i] += ":`long$()"
         
         keys = []
         for i in primary_key_index:

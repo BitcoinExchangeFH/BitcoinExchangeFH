@@ -1,5 +1,3 @@
-import json
-
 class Instrument(object):
     def __init__(self,
                  exchange_name,
@@ -16,8 +14,7 @@ class Instrument(object):
         self.exchange_name = exchange_name
         self.instmt_name = instmt_name
         self.instmt_code = instmt_code
-        self.order_book_table_name = ''
-        self.trades_table_name = ''
+        self.instmt_snapshot_table_name = ''
         self.order_book_id = 0
         self.trade_id = 0
         self.exch_trade_id = '0'
@@ -36,8 +33,7 @@ class Instrument(object):
         self.exchange_name = obj.exchange_name
         self.instmt_name = obj.instmt_name
         self.instmt_code = obj.instmt_code
-        self.order_book_table_name = obj.order_book_table_name
-        self.trades_table_name = obj.trades_table_name
+        self.instmt_snapshot_table_name = obj.instmt_snapshot_table_name
         self.order_book_id = obj.order_book_id
         self.trade_id = obj.trade_id
         self.exch_trade_id = obj.exch_trade_id
@@ -58,11 +54,8 @@ class Instrument(object):
     def get_instmt_code(self):
         return self.instmt_code
 
-    def get_order_book_table_name(self):
-        return self.order_book_table_name
-
-    def get_trades_table_name(self):
-        return self.trades_table_name
+    def get_instmt_snapshot_table_name(self):
+        return self.instmt_snapshot_table_name
 
     def get_order_book_id(self):
         return self.order_book_id
@@ -97,11 +90,8 @@ class Instrument(object):
     def set_trade_id(self, trade_id):
         self.trade_id = trade_id
         
-    def set_order_book_table_name(self, order_book_table_name):
-        self.order_book_table_name = order_book_table_name
-        
-    def set_trades_table_name(self, trades_table_name):
-        self.trades_table_name = trades_table_name
+    def set_instmt_snapshot_table_name(self, instmt_snapshot_table_name):
+        self.instmt_snapshot_table_name = instmt_snapshot_table_name
         
     def set_trades_channel_id(self, trades_channel_id):
         self.trades_channel_id = trades_channel_id

@@ -10,7 +10,7 @@ from multiprocessing import Process
 import time
 
 
-class ExchGwApiTemplate(RESTfulApiSocket):
+class ExchGwApiPoloniex(RESTfulApiSocket):
     """
     Exchange gateway RESTfulApi
     """
@@ -18,16 +18,12 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         RESTfulApiSocket.__init__(self)
         
     @classmethod
-    def get_timestamp_offset(cls):
-        return 1
-        
-    @classmethod
-    def get_order_book_timestamp_field_name(cls):
-        return 'date'
-        
-    @classmethod
     def get_trades_timestamp_field_name(cls):
         return 'date'
+        
+    @classmethod
+    def get_trades_timestamp_format(cls):
+        return '%Y-%m-%d %H:%M:%S'
     
     @classmethod
     def get_bids_field_name(cls):
@@ -43,11 +39,11 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         
     @classmethod
     def get_trade_id_field_name(cls):
-        return 'tid'
+        return 'tradeID'
         
     @classmethod
     def get_trade_price_field_name(cls):
-        return 'price'        
+        return 'rate'        
         
     @classmethod
     def get_trade_volume_field_name(cls):
@@ -55,15 +51,15 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         
     @classmethod
     def get_order_book_link(cls, instmt):
-        return "https://data.btcchina.com/data/orderbook?limit=5&market=%s" % instmt.get_instmt_code()
+        return "https://poloniex.com/public?command=returnOrderBook&currencyPair=%s&depth=5" % instmt.get_instmt_code()
 
     @classmethod
     def get_trades_link(cls, instmt):
-        if int(instmt.get_exch_trade_id()) > 0:
-            return "https://data.btcchina.com/data/historydata?market=%s&since=%s" % \
-                (instmt.get_instmt_code(), instmt.get_exch_trade_id())
+        if instmt.get_last_trade() is not None:
+            return "https://poloniex.com/public?command=returnTradeHistory&currencyPair=%s&start=%d" % \
+                (instmt.get_instmt_code(), int(instmt.get_last_trade().update_date_time.strftime("%s")))
         else:
-            return "https://data.btcchina.com/data/historydata?limit=100&market=%s" % \
+            return "https://poloniex.com/public?command=returnTradeHistory&currencyPair=%s" % \
                 (instmt.get_instmt_code())         
                 
     @classmethod
@@ -75,14 +71,11 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         """
         l2_depth = L2Depth()
         keys = list(raw.keys())
-        if cls.get_order_book_timestamp_field_name() in keys and \
-           cls.get_bids_field_name() in keys and \
+        if cls.get_bids_field_name() in keys and \
            cls.get_asks_field_name() in keys:
             
             # Date time
-            date_time = float(raw[cls.get_order_book_timestamp_field_name()])
-            date_time = date_time / cls.get_timestamp_offset()
-            l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
+            l2_depth.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
             
             # Bids
             bids = raw[cls.get_bids_field_name()]
@@ -120,12 +113,12 @@ class ExchGwApiTemplate(RESTfulApiSocket):
            cls.get_trade_volume_field_name() in keys:
         
             # Date time
-            date_time = float(raw[cls.get_trades_timestamp_field_name()])
-            date_time = date_time / cls.get_timestamp_offset()
-            trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")      
+            date_time = raw[cls.get_trades_timestamp_field_name()]
+            date_time = datetime.strptime(date_time, cls.get_trades_timestamp_format())
+            trade.date_time = date_time.strftime("%Y%m%d %H:%M:%S.%f")      
             
             # Trade side
-            trade.trade_side = 1
+            trade.trade_side = 1 if raw[cls.get_trade_side_field_name()] == 'buy' else 2
                 
             # Trade id
             trade.trade_id = str(raw[cls.get_trade_id_field_name()])
@@ -168,24 +161,24 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         res = cls.request(link)
         trades = []
         if len(res) > 0:
-            for t in res:
+            for i in range(len(res)-1, -1, -1):
                 trade = cls.parse_trade(instmt=instmt,
-                                         raw=t)
+                                         raw=res[i])
                 trades.append(trade)
 
         return trades
 
 
-class ExchGwTemplate(ExchangeGateway):
+class ExchGwPoloniex(ExchangeGateway):
     """
-    Exchange gateway
+    Exchange gateway Poloniex
     """
     def __init__(self, db_clients):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwApiTemplate(), db_clients)
+        ExchangeGateway.__init__(self, ExchGwApiPoloniex(), db_clients)
 
     @classmethod
     def get_exchange_name(cls):
@@ -193,7 +186,7 @@ class ExchGwTemplate(ExchangeGateway):
         Get exchange name
         :return: Exchange name string
         """
-        return 'Template'
+        return 'Poloniex'
 
     def get_order_book_worker(self, instmt):
         """
@@ -263,14 +256,14 @@ class ExchGwTemplate(ExchangeGateway):
         
 if __name__ == '__main__':
     Logger.init_log()
-    exchange_name = 'Template'
-    instmt_name = 'BTCCNY'
-    instmt_code = 'btccny'
+    exchange_name = 'Poloniex'
+    instmt_name = 'BTCETH'
+    instmt_code = 'BTC_ETH'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)    
     db_client = SqlClientTemplate()
-    exch = ExchGwTemplate([db_client])
+    exch = ExchGwPoloniex([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
     instmt.set_recovered(False)    
-    exch.get_order_book_worker(instmt)
+    # exch.get_order_book_worker(instmt)
     exch.get_trades_worker(instmt)

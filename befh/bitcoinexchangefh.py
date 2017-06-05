@@ -113,7 +113,7 @@ def main():
     ExchangeGateway.init_snapshot_table(db_clients)
 
     Logger.info('[main]', 'Subscription file = %s' % args.instmts)
-    log_str = 'Exchange/Instrument/InstrumentCode/enabled:\n'
+    log_str = 'Exchange/Instrument/InstrumentCode:\n'
     for instmt in subscription_instmts:
         log_str += '%s/%s/%s\n' % (instmt.exchange_name, instmt.instmt_name, instmt.instmt_code)
     Logger.info('[main]', log_str)

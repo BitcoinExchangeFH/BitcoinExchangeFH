@@ -6,7 +6,7 @@ from befh.instrument import Instrument
 from befh.sql_client_template import SqlClientTemplate
 from functools import partial
 from datetime import datetime
-from multiprocessing import Process
+import threading
 import time
 
 
@@ -57,7 +57,7 @@ class ExchGwApiPoloniex(RESTfulApiSocket):
     def get_trades_link(cls, instmt):
         if instmt.get_last_trade() is not None:
             return "https://poloniex.com/public?command=returnTradeHistory&currencyPair=%s&start=%d" % \
-                (instmt.get_instmt_code(), int(instmt.get_last_trade().update_date_time.strftime("%s")) - 1)
+                (instmt.get_instmt_code(), int(instmt.get_last_trade().update_date_time.timestamp()) - 1)
         else:
             return "https://poloniex.com/public?command=returnTradeHistory&currencyPair=%s" % \
                 (instmt.get_instmt_code())         
@@ -247,8 +247,8 @@ class ExchGwPoloniex(ExchangeGateway):
                                                                                   instmt.get_instmt_name()))
         self.init_instmt_snapshot_table(instmt)
         instmt.set_recovered(False)
-        t1 = Process(target=partial(self.get_order_book_worker, instmt))
-        t2 = Process(target=partial(self.get_trades_worker, instmt))
+        t1 = threading.Thread(target=partial(self.get_order_book_worker, instmt))
+        t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))
         t1.start()
         t2.start()
         return [t1, t2]

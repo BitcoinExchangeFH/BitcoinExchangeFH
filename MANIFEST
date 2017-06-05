@@ -7,6 +7,7 @@ befh/database_client.py
 befh/exch_bitfinex.py
 befh/exch_bitmex.py
 befh/exch_bitstamp.py
+befh/exch_bittrex.py
 befh/exch_btcc.py
 befh/exch_gatecoin.py
 befh/exch_gdax.py

@@ -57,7 +57,7 @@ class ExchGwApiPoloniex(RESTfulApiSocket):
     def get_trades_link(cls, instmt):
         if instmt.get_last_trade() is not None:
             return "https://poloniex.com/public?command=returnTradeHistory&currencyPair=%s&start=%d" % \
-                (instmt.get_instmt_code(), int(instmt.get_last_trade().update_date_time.strftime("%s")))
+                (instmt.get_instmt_code(), int(instmt.get_last_trade().update_date_time.strftime("%s")) - 1)
         else:
             return "https://poloniex.com/public?command=returnTradeHistory&currencyPair=%s" % \
                 (instmt.get_instmt_code())         

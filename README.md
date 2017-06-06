@@ -36,12 +36,13 @@ Users can
 - Kraken (RESTful)
 - OkCoin (Websocket)
 - Quoine (RESTful)
+- Poloniex (RESTful)
+- Bittrex (RESTful)
 
 Currently the support of other exchanges is still under development.
 
 Scheduled exchange supported soon:
 - xBTCe
-- Poloniex
 - DABTC
 - FX rate (USDCNY, EURUSD)
 

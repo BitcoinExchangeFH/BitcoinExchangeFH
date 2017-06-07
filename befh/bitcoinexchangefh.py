@@ -13,6 +13,8 @@ from befh.exch_gdax import ExchGwGdax
 from befh.exch_bitstamp import ExchGwBitstamp
 from befh.exch_gatecoin import ExchGwGatecoin
 from befh.exch_quoine import ExchGwQuoine
+from befh.exch_poloniex import ExchGwPoloniex
+from befh.exch_bittrex import ExchGwBittrex
 from befh.kdbplus_client import KdbPlusClient
 from befh.mysql_client import MysqlClient
 from befh.sqlite_client import SqliteClient
@@ -111,6 +113,10 @@ def main():
     ExchangeGateway.init_snapshot_table(db_clients)
 
     Logger.info('[main]', 'Subscription file = %s' % args.instmts)
+    log_str = 'Exchange/Instrument/InstrumentCode:\n'
+    for instmt in subscription_instmts:
+        log_str += '%s/%s/%s\n' % (instmt.exchange_name, instmt.instmt_name, instmt.instmt_code)
+    Logger.info('[main]', log_str)
     
     exch_gws = []
     exch_gws.append(ExchGwBtccSpot(db_clients))
@@ -123,6 +129,8 @@ def main():
     exch_gws.append(ExchGwBitstamp(db_clients))
     exch_gws.append(ExchGwGatecoin(db_clients))
     exch_gws.append(ExchGwQuoine(db_clients))
+    exch_gws.append(ExchGwPoloniex(db_clients))
+    exch_gws.append(ExchGwBittrex(db_clients))
     threads = []
     for exch in exch_gws:
         for instmt in subscription_instmts:

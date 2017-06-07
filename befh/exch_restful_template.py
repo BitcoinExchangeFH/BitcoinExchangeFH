@@ -271,10 +271,6 @@ if __name__ == '__main__':
     exch = ExchGwTemplate([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
-    instmt.set_order_book_table_name(exch.get_order_book_table_name(instmt.get_exchange_name(),
-                                                                    instmt.get_instmt_name()))
-    instmt.set_trades_table_name(exch.get_trades_table_name(instmt.get_exchange_name(),
-                                                            instmt.get_instmt_name()))
     instmt.set_recovered(False)    
     exch.get_order_book_worker(instmt)
     exch.get_trades_worker(instmt)

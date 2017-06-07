@@ -4,3 +4,6 @@ data/*
 dist/*
 *.pyc
 bitcoinexchangefh.tar.gz
+_windows/*
+*.xml
+inspection/*

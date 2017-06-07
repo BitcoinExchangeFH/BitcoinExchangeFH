@@ -8,6 +8,8 @@ from befh.exch_bitmex import ExchGwBitmex
 from befh.exch_btcc import ExchGwBtccSpot, ExchGwBtccFuture
 from befh.exch_bitfinex import ExchGwBitfinex
 from befh.exch_okcoin import ExchGwOkCoin
+from befh.exch_okcoin_cn import ExchGwOkCoinCN
+from befh.exch_jubi import ExchGwJubiSpot
 from befh.exch_kraken import ExchGwKraken
 from befh.exch_gdax import ExchGwGdax
 from befh.exch_bitstamp import ExchGwBitstamp
@@ -15,7 +17,7 @@ from befh.exch_gatecoin import ExchGwGatecoin
 from befh.exch_quoine import ExchGwQuoine
 from befh.exch_poloniex import ExchGwPoloniex
 from befh.exch_bittrex import ExchGwBittrex
-from befh.kdbplus_client import KdbPlusClient
+#from befh.kdbplus_client import KdbPlusClient
 from befh.mysql_client import MysqlClient
 from befh.sqlite_client import SqliteClient
 from befh.file_client import FileClient
@@ -124,6 +126,8 @@ def main():
     exch_gws.append(ExchGwBitmex(db_clients))
     exch_gws.append(ExchGwBitfinex(db_clients))
     exch_gws.append(ExchGwOkCoin(db_clients))
+    exch_gws.append(ExchGwOkCoinCN(db_clients))
+    exch_gws.append(ExchGwJubiSpot(db_clients))
     exch_gws.append(ExchGwKraken(db_clients))
     exch_gws.append(ExchGwGdax(db_clients))
     exch_gws.append(ExchGwBitstamp(db_clients))

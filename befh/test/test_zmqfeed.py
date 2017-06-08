@@ -52,6 +52,7 @@ while True:
             itchat.send("warning: " + "XRP:" + str(exchanges_snapshot["JUBI_Spot_SPOT_XRPCNY"]["a1"]) + " BTC:" + str(
                 exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
                         toUserName="filehelper")
+            itchatsendtime[timekey] = time.time()
         elif time.time() - itchatsendtime[timekey] > 300:
             itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
@@ -124,4 +125,4 @@ while True:
             itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
 
-    #print(mjson)
+    print(mjson)

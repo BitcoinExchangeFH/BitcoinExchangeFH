@@ -256,7 +256,7 @@ class ExchGwJubi(ExchangeGateway):
                     self.insert_order_book(instmt)
             except Exception as e:
                 Logger.error(self.__class__.__name__, "Error in order book: %s" % e)
-            time.sleep(1)
+            time.sleep(10)
 
     def get_trades_worker(self, instmt):
         """

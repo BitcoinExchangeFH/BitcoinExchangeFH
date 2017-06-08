@@ -38,7 +38,15 @@ class ExchGwJubiRestfulApi(RESTfulApiSocket):
         return ''
 
     @classmethod
+    def get_buy_field_name(cls):
+        return ''
+
+    @classmethod
     def get_asks_field_name(cls):
+        return ''
+
+    @classmethod
+    def get_sell_field_name(cls):
         return ''
 
     @classmethod
@@ -64,6 +72,41 @@ class ExchGwJubiRestfulApi(RESTfulApiSocket):
     @classmethod
     def get_trades_link(cls, instmt, trade_id=''):
         return ""
+
+    @classmethod
+    def parse_ticker(cls, instmt, raw):
+        """
+        Parse raw data to L2 depth
+        :param instmt: Instrument
+        :param raw: Raw data in JSON
+        """
+        l2_depth = L2Depth()
+        keys = list(raw.keys())
+        if cls.get_buy_field_name() in keys and \
+                        cls.get_sell_field_name() in keys:
+
+            # Date time
+            if cls.get_order_book_timestamp_field_name() in keys:
+                date_time = float(raw[cls.get_order_book_timestamp_field_name()])
+                date_time = date_time / cls.get_timestamp_offset()
+                l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
+            else:
+                l2_depth.date_time = datetime.utcfromtimestamp(time.time()).strftime("%Y%m%d %H:%M:%S.%f")
+
+            # Bids
+            bids = raw[cls.get_buy_field_name()]
+            l2_depth.bids[0].price = float(bids) if type(bids) != float else bids
+            l2_depth.bids[0].volume = float(bids) if type(bids) != float else bids
+            # Asks
+            asks = raw[cls.get_sell_field_name()]
+            l2_depth.asks[0].price = float(asks) if type(asks) != float else asks
+            l2_depth.asks[0].volume = float(asks) if type(asks) != float else asks
+        else:
+            raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
+                            (instmt.get_exchange_name(), instmt.get_instmt_name(), \
+                             raw))
+
+        return l2_depth
 
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
@@ -153,8 +196,8 @@ class ExchGwJubiRestfulApi(RESTfulApiSocket):
         link = cls.get_order_book_link(instmt)
         res = requests.post(link, data={'coin': instmt.get_instmt_code()}).json()
         if len(res) > 0:
-            return cls.parse_l2_depth(instmt=instmt,
-                                      raw=res)
+            return cls.parse_ticker(instmt=instmt,
+                                    raw=res)
         else:
             return None
 
@@ -213,7 +256,7 @@ class ExchGwJubi(ExchangeGateway):
                     self.insert_order_book(instmt)
             except Exception as e:
                 Logger.error(self.__class__.__name__, "Error in order book: %s" % e)
-            time.sleep(30)
+            time.sleep(1)
 
     def get_trades_worker(self, instmt):
         """
@@ -231,10 +274,10 @@ class ExchGwJubi(ExchangeGateway):
 
             for trade in ret:
                 assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (
-                type(trade.trade_id), trade.trade_id)
+                    type(trade.trade_id), trade.trade_id)
                 assert isinstance(instmt.get_exch_trade_id(), str), \
                     "instmt.get_exch_trade_id()(%s) = %s" % (
-                    type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id())
+                        type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id())
                 if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
                     instmt.set_exch_trade_id(trade.trade_id)
                     instmt.incr_trade_id()
@@ -245,7 +288,7 @@ class ExchGwJubi(ExchangeGateway):
             if not instmt.get_recovered():
                 instmt.set_recovered(True)
 
-            time.sleep(60)
+            time.sleep(300)
 
     def start(self, instmt):
         """
@@ -291,8 +334,16 @@ class ExchGwJubiSpotRestfulApi(ExchGwJubiRestfulApi):
         return 'bids'
 
     @classmethod
+    def get_buy_field_name(cls):
+        return 'buy'
+
+    @classmethod
     def get_asks_field_name(cls):
         return 'asks'
+
+    @classmethod
+    def get_sell_field_name(cls):
+        return 'sell'
 
     @classmethod
     def get_trade_side_field_name(cls):
@@ -312,7 +363,7 @@ class ExchGwJubiSpotRestfulApi(ExchGwJubiRestfulApi):
 
     @classmethod
     def get_order_book_link(cls, instmt):
-        return "https://www.jubi.com/api/v1/depth/"
+        return "https://www.jubi.com/api/v1/ticker/"
 
     @classmethod
     def get_trades_link(cls, instmt):

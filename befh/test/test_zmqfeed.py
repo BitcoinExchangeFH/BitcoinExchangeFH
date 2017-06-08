@@ -88,6 +88,37 @@ while True:
             itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
 
+    if "Bitfinex_SPOT_ETHBTC" in keys and \
+                    "OkCoinCN_SPOT_ETHCNY" in keys and \
+                    "OkCoinCN_SPOT_BTCCNY" in keys:
+        ratio = 1 / exchanges_snapshot["Bitfinex_SPOT_ETHBTC"]["a1"] * exchanges_snapshot["OkCoinCN_SPOT_ETHCNY"][
+            "b1"] / exchanges_snapshot["OkCoinCN_SPOT_BTCCNY"]["a1"] - 0.005 - 0.001 - 1
+        timekey = "OkCoinCN.CNY_BTC(buy)->Bitfinex.BTC_ETH(buy)->OkCoinCN.ETH_CNY(sell)"
+        if timekey not in itchatsendtime.keys():
+            itchatsendtime[timekey] = 0
+        if time.time() - itchatsendtime[timekey] > 60 and ratio > 0.01:
+            itchat.send("warning: " + "BTC:" + str(exchanges_snapshot["OkCoinCN_SPOT_BTCCNY"]["a1"]) + " ETH:" + str(
+                exchanges_snapshot["OkCoinCN_SPOT_ETHCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
+                        toUserName="filehelper")
+            itchatsendtime[timekey] = time.time()
+        elif time.time() - itchatsendtime[timekey] > 3600:
+            itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
+            itchatsendtime[timekey] = time.time()
+
+        ratio = exchanges_snapshot["Bitfinex_SPOT_ETHBTC"]["b1"] * exchanges_snapshot["OkCoinCN_SPOT_BTCCNY"]["b1"] / \
+                exchanges_snapshot["OkCoinCN_SPOT_ETHCNY"]["a1"] - 0.005 - 0.001 - 1
+        timekey = "OkCoinCN.CNY_ETH(buy)->Bitfinex.ETH_BTC(sell)->OkCoinCN.BTC_CNY(sell)"
+        if timekey not in itchatsendtime.keys():
+            itchatsendtime[timekey] = 0
+        if time.time() - itchatsendtime[timekey] > 60 and ratio > 0.01:
+            itchat.send("warning: " + "ETH:" + str(exchanges_snapshot["OkCoinCN_SPOT_ETHCNY"]["a1"]) + " BTC:" + str(
+                exchanges_snapshot["OkCoinCN_SPOT_BTCCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
+                        toUserName="filehelper")
+            itchatsendtime[timekey] = time.time()
+        elif time.time() - itchatsendtime[timekey] > 3600:
+            itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
+            itchatsendtime[timekey] = time.time()
+
     if "Bitfinex_SPOT_ETCBTC" in keys and \
                     "JUBI_Spot_SPOT_ETCCNY" in keys and \
                     "JUBI_Spot_SPOT_BTCCNY" in keys:
@@ -125,4 +156,4 @@ while True:
             itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
 
-    print(mjson)
+    #print(mjson)

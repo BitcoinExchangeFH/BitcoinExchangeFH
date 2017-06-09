@@ -35,9 +35,11 @@ while True:
         if timekey not in itchatsendtime.keys():
             itchatsendtime[timekey] = 0
         if time.time() - itchatsendtime[timekey] > 60 and ratio > 0.01:
-            itchat.send("warning: " + "BTC:" + str(exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["a1"]) + " XRP:" + str(
-                exchanges_snapshot["JUBI_Spot_SPOT_XRPCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
-                        toUserName="filehelper")
+            itchat.send(
+                "warning: " + "BTC:" + str(exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["a1"]) + " XRPBTC:" + str(
+                    exchanges_snapshot["Bitfinex_SPOT_XRPBTC"]["a1"]) + " XRP:" + str(
+                    exchanges_snapshot["JUBI_Spot_SPOT_XRPCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
+                toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
         elif time.time() - itchatsendtime[timekey] > 600:
             itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
@@ -49,9 +51,11 @@ while True:
         if timekey not in itchatsendtime.keys():
             itchatsendtime[timekey] = 0
         if time.time() - itchatsendtime[timekey] > 60 and ratio > 0.01:
-            itchat.send("warning: " + "XRP:" + str(exchanges_snapshot["JUBI_Spot_SPOT_XRPCNY"]["a1"]) + " BTC:" + str(
-                exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
-                        toUserName="filehelper")
+            itchat.send(
+                "warning: " + "XRP:" + str(exchanges_snapshot["JUBI_Spot_SPOT_XRPCNY"]["a1"]) + " XRPBTC:" + str(
+                    exchanges_snapshot["Bitfinex_SPOT_XRPBTC"]["b1"]) + " BTC:" + str(
+                    exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
+                toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
         elif time.time() - itchatsendtime[timekey] > 600:
             itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
@@ -66,9 +70,11 @@ while True:
         if timekey not in itchatsendtime.keys():
             itchatsendtime[timekey] = 0
         if time.time() - itchatsendtime[timekey] > 60 and ratio > 0.01:
-            itchat.send("warning: " + "BTC:" + str(exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["a1"]) + " ETH:" + str(
-                exchanges_snapshot["JUBI_Spot_SPOT_ETHCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
-                        toUserName="filehelper")
+            itchat.send(
+                "warning: " + "BTC:" + str(exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["a1"]) + " ETHBTC:" + str(
+                    exchanges_snapshot["Bitfinex_SPOT_ETHBTC"]["a1"]) + " ETH:" + str(
+                    exchanges_snapshot["JUBI_Spot_SPOT_ETHCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
+                toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
         elif time.time() - itchatsendtime[timekey] > 600:
             itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
@@ -80,9 +86,11 @@ while True:
         if timekey not in itchatsendtime.keys():
             itchatsendtime[timekey] = 0
         if time.time() - itchatsendtime[timekey] > 60 and ratio > 0.01:
-            itchat.send("warning: " + "ETH:" + str(exchanges_snapshot["JUBI_Spot_SPOT_ETHCNY"]["a1"]) + " BTC:" + str(
-                exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
-                        toUserName="filehelper")
+            itchat.send(
+                "warning: " + "ETH:" + str(exchanges_snapshot["JUBI_Spot_SPOT_ETHCNY"]["a1"]) + " ETHBTC:" + str(
+                    exchanges_snapshot["Bitfinex_SPOT_ETHBTC"]["b1"]) + " BTC:" + str(
+                    exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
+                toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
         elif time.time() - itchatsendtime[timekey] > 600:
             itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
@@ -97,7 +105,8 @@ while True:
         if timekey not in itchatsendtime.keys():
             itchatsendtime[timekey] = 0
         if time.time() - itchatsendtime[timekey] > 60 and ratio > 0.01:
-            itchat.send("warning: " + "BTC:" + str(exchanges_snapshot["OkCoinCN_SPOT_BTCCNY"]["a1"]) + " ETH:" + str(
+            itchat.send("warning: " + "BTC:" + str(exchanges_snapshot["OkCoinCN_SPOT_BTCCNY"]["a1"]) + " ETHBTC:" + str(
+                exchanges_snapshot["Bitfinex_SPOT_ETHBTC"]["a1"]) + " ETH:" + str(
                 exchanges_snapshot["OkCoinCN_SPOT_ETHCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
                         toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
@@ -111,7 +120,8 @@ while True:
         if timekey not in itchatsendtime.keys():
             itchatsendtime[timekey] = 0
         if time.time() - itchatsendtime[timekey] > 60 and ratio > 0.01:
-            itchat.send("warning: " + "ETH:" + str(exchanges_snapshot["OkCoinCN_SPOT_ETHCNY"]["a1"]) + " BTC:" + str(
+            itchat.send("warning: " + "ETH:" + str(exchanges_snapshot["OkCoinCN_SPOT_ETHCNY"]["a1"]) + " ETHBTC:" + str(
+                exchanges_snapshot["Bitfinex_SPOT_ETHBTC"]["b1"]) + " BTC:" + str(
                 exchanges_snapshot["OkCoinCN_SPOT_BTCCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
                         toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
@@ -130,7 +140,8 @@ while True:
             itchatsendtime[timekey] = 0
         if time.time() - itchatsendtime[timekey] > 60 and ratio > 0.01:
             itchat.send(
-                "warning: " + "BTC:" + str(exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["a1"]) + " ETC:" + str(
+                "warning: " + "BTC:" + str(exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["a1"]) + " ETCBTC:" + str(
+                    exchanges_snapshot["Bitfinex_SPOT_ETCBTC"]["a1"]) + " ETC:" + str(
                     exchanges_snapshot["JUBI_Spot_SPOT_ETCCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(
                     ratio),
                 toUserName="filehelper")
@@ -147,7 +158,8 @@ while True:
             itchatsendtime[timekey] = 0
         if time.time() - itchatsendtime[timekey] > 60 and ratio > 0.01:
             itchat.send(
-                "warning: " + "ETC:" + str(exchanges_snapshot["JUBI_Spot_SPOT_ETCCNY"]["a1"]) + " BTC:" + str(
+                "warning: " + "ETC:" + str(exchanges_snapshot["JUBI_Spot_SPOT_ETCCNY"]["a1"]) + " ETCBTC:" + str(
+                    exchanges_snapshot["Bitfinex_SPOT_ETCBTC"]["b1"]) + " BTC:" + str(
                     exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(
                     ratio),
                 toUserName="filehelper")
@@ -156,4 +168,4 @@ while True:
             itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
 
-    #print(mjson)
+            # print(mjson)

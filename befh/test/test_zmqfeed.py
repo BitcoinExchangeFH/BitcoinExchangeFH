@@ -39,7 +39,7 @@ while True:
                 exchanges_snapshot["JUBI_Spot_SPOT_XRPCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
                         toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
-        elif time.time() - itchatsendtime[timekey] > 3600:
+        elif time.time() - itchatsendtime[timekey] > 600:
             itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
 
@@ -53,7 +53,7 @@ while True:
                 exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
                         toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
-        elif time.time() - itchatsendtime[timekey] > 3600:
+        elif time.time() - itchatsendtime[timekey] > 600:
             itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
 
@@ -70,7 +70,7 @@ while True:
                 exchanges_snapshot["JUBI_Spot_SPOT_ETHCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
                         toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
-        elif time.time() - itchatsendtime[timekey] > 3600:
+        elif time.time() - itchatsendtime[timekey] > 600:
             itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
 
@@ -84,7 +84,7 @@ while True:
                 exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
                         toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
-        elif time.time() - itchatsendtime[timekey] > 3600:
+        elif time.time() - itchatsendtime[timekey] > 600:
             itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
 
@@ -101,7 +101,7 @@ while True:
                 exchanges_snapshot["OkCoinCN_SPOT_ETHCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
                         toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
-        elif time.time() - itchatsendtime[timekey] > 3600:
+        elif time.time() - itchatsendtime[timekey] > 600:
             itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
 
@@ -115,7 +115,7 @@ while True:
                 exchanges_snapshot["OkCoinCN_SPOT_BTCCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
                         toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
-        elif time.time() - itchatsendtime[timekey] > 3600:
+        elif time.time() - itchatsendtime[timekey] > 600:
             itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
 
@@ -135,7 +135,7 @@ while True:
                     ratio),
                 toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
-        elif time.time() - itchatsendtime[timekey] > 3600:
+        elif time.time() - itchatsendtime[timekey] > 600:
             itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
 
@@ -152,7 +152,7 @@ while True:
                     ratio),
                 toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
-        elif time.time() - itchatsendtime[timekey] > 3600:
+        elif time.time() - itchatsendtime[timekey] > 600:
             itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
             itchatsendtime[timekey] = time.time()
 

@@ -8,16 +8,27 @@ import base64
 import hmac
 import hashlib
 import time
+import os
 
 __all__ = ['ticker', 'today', 'orderbook', 'lendbook', 'stats', 'trades', 'lends', 'symbols', 'place_order', 'delete_order', 'delete_all_order', 'status_order', 'active_orders', 'active_positions', 'place_offer', 'cancel_offer', 'status_offer', 'active_offers', 'past_trades', 'balances', 'claim_position', 'close_position', 'withdraw']
 
 URL = "https://api.bitfinex.com/v1"
 
-fp = open("../keys.txt")
+# 载入json文件
+# 初始化apikey，secretkey
+fileName = 'Bitfinex.json'
+path = os.path.abspath(os.path.dirname(__file__))
+fileName = os.path.join(path, fileName)
+# 解析json文件
+with open(fileName) as data_file:
+	setting = json.load(data_file)
+API_KEY = str(setting['apiKey'])
+API_SECRET = str(setting['secretKey'])
 
-API_KEY = fp.readline().rstrip() # put your API public key here.
-API_SECRET = fp.readline().rstrip() # put your API private key here.
-print ("Your pub: " + str(API_KEY))
+#fp = open("../keys.txt")
+#API_KEY = fp.readline().rstrip() # put your API public key here.
+#API_SECRET = fp.readline().rstrip() # put your API private key here.
+#print ("Your pub: " + str(API_KEY))
 #print "Your priv: " + str(API_SECRET)
 
 # unauthenticated

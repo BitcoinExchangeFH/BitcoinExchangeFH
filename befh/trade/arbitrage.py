@@ -1,7 +1,34 @@
+# encoding: UTF-8
 import zmq
 import itchat
 import time
+import os
+import json
+from befh.subscription_manager import SubscriptionManager
 
+# import os, sys
+# parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# sys.path.insert(0, parentdir)
+# import sys
+# sys.path.append("..")
+# import OkcoinAPI
+#from befh.OkcoinAPI import *
+from befh.OkcoinAPI.OkcoinMarket import OkcoinMarket
+from befh.FinexAPI.BitfinexMarket import BitfinexMarket
+
+# client字典
+TradeClients = {}
+client = BitfinexMarket()
+TradeClients[client.exchange] = client
+client = OkcoinMarket()
+TradeClients[client.exchange] = client
+
+
+# 载入订阅交易品种信息
+fileName = "subscription.ini"
+path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+fileName = os.path.join(path, fileName)
+subscription_instmts = SubscriptionManager(fileName).get_subscriptions()
 
 market_feed_name = "marketfeed"
 context = zmq.Context()

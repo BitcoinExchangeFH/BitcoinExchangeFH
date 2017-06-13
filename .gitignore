@@ -8,3 +8,6 @@ _windows/*
 *.xml
 inspection/*
 befh/test/itchat.pkl
+befh/trade/key.json
+befh/OkcoinAPI/Okcoin.json
+befh/FinexAPI/Bitfinex.json

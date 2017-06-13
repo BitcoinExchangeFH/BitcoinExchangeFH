@@ -1,0 +1,6 @@
+Python 使用说明
+1、支持SNI
+   此版本Python Demo 支持SNI，SNI（Server Name Indication)，是一项用于改善SSL/TLS的技术，在SSLv3/TLSv1中被启用。
+   它允许客户端在发起SSL握手请求时（具体说来，是客户端发出SSL请求中的ClientHello阶段），就提交请求的Host信息，
+   使得服务器能够切换到正确的域并返回相应的证书。 
+   注意：python 只要3.4 版本之后支持SNI 所以运行此Demo需要升级Python。

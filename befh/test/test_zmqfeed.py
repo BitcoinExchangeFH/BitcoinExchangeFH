@@ -101,7 +101,10 @@ while True:
                     "OkCoinCN_SPOT_BTCCNY" in keys:
         ratio = 1 / exchanges_snapshot["Bitfinex_SPOT_ETHBTC"]["a1"] * exchanges_snapshot["OkCoinCN_SPOT_ETHCNY"][
             "b1"] / exchanges_snapshot["OkCoinCN_SPOT_BTCCNY"]["a1"] - 0.005 - 0.001 - 1
-        timekey = "OkCoinCN.CNY_BTC(buy)->Bitfinex.BTC_ETH(buy)->OkCoinCN.ETH_CNY(sell)"
+        timekey = "OkCoinCN.CNY_BTC(buy" + "{:.4}".format(50000 / exchanges_snapshot["OkCoinCN_SPOT_BTCCNY"][
+            "a1"]) + ")->Bitfinex.BTC_ETH(buy)->OkCoinCN.ETH_CNY(sell" + "{:.4}".format(
+            50000 / exchanges_snapshot["OkCoinCN_SPOT_ETHCNY"][
+                "b1"]) + ")"
         if timekey not in itchatsendtime.keys():
             itchatsendtime[timekey] = 0
         if time.time() - itchatsendtime[timekey] > 60 and ratio > 0.01:
@@ -116,7 +119,10 @@ while True:
 
         ratio = exchanges_snapshot["Bitfinex_SPOT_ETHBTC"]["b1"] * exchanges_snapshot["OkCoinCN_SPOT_BTCCNY"]["b1"] / \
                 exchanges_snapshot["OkCoinCN_SPOT_ETHCNY"]["a1"] - 0.005 - 0.001 - 1
-        timekey = "OkCoinCN.CNY_ETH(buy)->Bitfinex.ETH_BTC(sell)->OkCoinCN.BTC_CNY(sell)"
+        timekey = "OkCoinCN.CNY_ETH(buy" + "{:.4}".format(50000 / exchanges_snapshot["OkCoinCN_SPOT_ETHCNY"][
+            "a1"]) + ")->Bitfinex.ETH_BTC(sell)->OkCoinCN.BTC_CNY(sell" + "{:.4}".format(
+            50000 / exchanges_snapshot["OkCoinCN_SPOT_BTCCNY"][
+                "b1"]) + ")"
         if timekey not in itchatsendtime.keys():
             itchatsendtime[timekey] = 0
         if time.time() - itchatsendtime[timekey] > 60 and ratio > 0.01:

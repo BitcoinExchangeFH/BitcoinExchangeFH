@@ -56,11 +56,20 @@ class OkcoinMarket(Market):
         response = self.okcoinSpot.userinfo()
         response = json.loads(response)
         if response["result"]:
-            self.total_balance = float(response["info"]["funds"]["asset"]["total"])
-            self.eth_balance = float(response["info"]["funds"]["free"]["eth"])
-            self.btc_balance = float(response["info"]["funds"]["free"]["btc"])
-            self.ltc_balance = float(response["info"]["funds"]["free"]["ltc"])
-            self.cny_balance = float(response["info"]["funds"]["free"]["cny"])
+            self.total_amount = float(response["info"]["funds"]["asset"]["total"])
+            self.total_available = float(response["info"]["funds"]["asset"]["net"])
+            self.eth_amount = float(response["info"]["funds"]["free"]["eth"]) + float(
+                response["info"]["funds"]["freezed"]["eth"])
+            self.eth_available = float(response["info"]["funds"]["free"]["eth"])
+            self.btc_amount = float(response["info"]["funds"]["free"]["btc"]) + float(
+                response["info"]["funds"]["freezed"]["btc"])
+            self.btc_available = float(response["info"]["funds"]["free"]["btc"])
+            self.ltc_amount = float(response["info"]["funds"]["free"]["ltc"]) + float(
+                response["info"]["funds"]["freezed"]["ltc"])
+            self.ltc_available = float(response["info"]["funds"]["free"]["ltc"])
+            self.cny_amount = float(response["info"]["funds"]["free"]["cny"]) + float(
+                response["info"]["funds"]["freezed"]["cny"])
+            self.cny_available = float(response["info"]["funds"]["free"]["cny"])
 
 # 初始化apikey，secretkey,url
 # apikey = 'XXXX'

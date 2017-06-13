@@ -49,10 +49,22 @@ class BitfinexMarket(Market):
     def get_info(self):
         """Get balance"""
         response = balances()
-        response = json.loads(response)
-        if response["result"]:
-            self.total_balance = float(response["info"]["funds"]["asset"]["total"])
-            self.eth_balance = float(response["info"]["funds"]["free"]["eth"])
-            self.btc_balance = float(response["info"]["funds"]["free"]["btc"])
-            self.ltc_balance = float(response["info"]["funds"]["free"]["ltc"])
-            self.cny_balance = float(response["info"]["funds"]["free"]["cny"])
+        for res in response:
+            if res['currency']=='usd':
+                self.usd_amount=float(res['amount'])
+                self.usd_available=float(res['available'])
+            elif res['currency']=='btc':
+                self.btc_amount = float(res['amount'])
+                self.btc_available = float(res['available'])
+            elif res['currency']=='eth':
+                self.eth_amount = float(res['amount'])
+                self.eth_available = float(res['available'])
+            elif res['currency']=='etc':
+                self.etc_amount = float(res['amount'])
+                self.etc_available = float(res['available'])
+            elif res['currency']=='ltc':
+                self.ltc_amount = float(res['amount'])
+                self.ltc_available = float(res['available'])
+            elif res['currency']=='xrp':
+                self.xrp_amount = float(res['amount'])
+                self.xrp_available = float(res['available'])

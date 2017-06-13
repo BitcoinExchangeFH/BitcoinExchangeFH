@@ -107,14 +107,15 @@ def symbols(): # get a list of valid symbol IDs.
 # authenticated
 
 def genNonce(): # generates a nonce, used for authentication.
-	return str(long(time.time() * 1000000))
+
+	return str(time.time() * 1000000)
 
 def payloadPacker(payload): # packs and signs the payload of the request.
 
 	j = json.dumps(payload)
-	data = base64.standard_b64encode(j)
+	data = base64.standard_b64encode(j.encode())
 
-	h = hmac.new(API_SECRET, data, hashlib.sha384)
+	h = hmac.new(bytes(API_SECRET.encode('ascii')), data, hashlib.sha384)
 	signature = h.hexdigest()
 
 	return {

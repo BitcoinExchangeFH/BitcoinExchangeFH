@@ -8,57 +8,62 @@ class TradeException(Exception):
     pass
 
 
+class Order:
+    def __init__(self, id):
+        self.id = id
+        self.original_amount = 0.0
+        self.remaining_amount = 0.0
+        self.executed_amount = 0.0
+        self.avg_execution_price = 0.0
+        self.price = 0.0
+        self.is_cancelled = False
+        self.side = ""
+        self.symbol = ""
+        self.tradesymbol = ""
+        self.timestamp = ""
+
+
 class Market:
     def __init__(self):
         self.name = self.__class__.__name__
-        self.total_amount = 0.
-        self.total_available = 0.
-        self.eur_amount = 0.
-        self.eur_available = 0.
-        self.usd_amount = 0.
-        self.usd_available = 0.
-        self.cny_amount = 0.
-        self.cny_available = 0.
-        self.btc_amount = 0.
-        self.btc_available = 0.
-        self.eth_amount = 0.
-        self.eth_available = 0.
-        self.etc_amount = 0.
-        self.etc_available = 0.
-        self.xrp_amount = 0.
-        self.xrp_available = 0.
-        self.ltc_amount = 0.
-        self.ltc_available = 0.
-        self.bts_amount = 0.
-        self.bts_available = 0.
+        self.amount = {}
+        self.available = {}
         self.fc = FiatConverter()
         self.subscription_dict = {}
         self.instmt_snapshot = {}
+        self.orderids = []
+        self.orders = {}
 
     def __str__(self):
         return "%s: %s" % (self.name, str({"btc_balance": self.btc_balance,
                                            "cny_balance": self.cny_balance,
                                            "usd_balance": self.usd_balance}))
 
-    def buy(self, amount, price):
-        """Orders are always priced in USD"""
-        local_currency_price = self.fc.convert(price, "CNY", self.currency)
-        logging.info("Buy %f BTC at %f %s (%f CNY) @%s" % (amount,
-                                                           local_currency_price, self.currency, price, self.name))
-        self._buy(amount, local_currency_price)
+    # def buy(self, amount, price):
+    #     """Orders are always priced in USD"""
+    #     local_currency_price = self.fc.convert(price, "CNY", self.currency)
+    #     logging.info("Buy %f BTC at %f %s (%f CNY) @%s" % (amount,
+    #                                                        local_currency_price, self.currency, price, self.name))
+    #     self._buy(amount, local_currency_price)
 
-    def sell(self, amount, price):
-        """Orders are always priced in USD"""
-        local_currency_price = self.fc.convert(price, "CNY", self.currency)
-        logging.info("Sell %f BTC at %f %s (%f CNY) @%s" % (amount,
-                                                            local_currency_price, self.currency, price, self.name))
-        self._sell(amount, local_currency_price)
+    # def sell(self, amount, price):
+    #     """Orders are always priced in USD"""
+    #     local_currency_price = self.fc.convert(price, "CNY", self.currency)
+    #     logging.info("Sell %f BTC at %f %s (%f CNY) @%s" % (amount,
+    #                                                         local_currency_price, self.currency, price, self.name))
+    #     self._sell(amount, local_currency_price)
 
-    def _buy(self, amount, price):
+    def buy(self, instmt, amount, price):
         raise NotImplementedError("%s.sell(self, amount, price)" % self.name)
 
-    def _sell(self, amount, price):
+    def sell(self, instmt, amount, price):
         raise NotImplementedError("%s.sell(self, amount, price)" % self.name)
+
+    def orderstatus(self, instmt, orderid):
+        raise NotImplementedError("%s.orderstatus(self, instmt, orderid)" % self.name)
+
+    def cancelorder(self, instmt, orderid):
+        raise NotImplementedError("%s.cancelorder(self, instmt, orderid)" % self.name)
 
     def deposit(self):
         raise NotImplementedError("%s.sell(self, amount, price)" % self.name)

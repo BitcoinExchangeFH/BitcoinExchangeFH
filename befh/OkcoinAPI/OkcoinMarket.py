@@ -5,14 +5,14 @@
 
 from .OkcoinSpotAPI import OKCoinSpot
 from .OkcoinFutureAPI import OKCoinFuture
-from befh.trade.market import Market, TradeException
+from befh.trade.market import Market, TradeException, Order
 import json
 import os
 
 
 class OkcoinMarket(Market):
     def __init__(self):
-        super().__init__()
+        super(OkcoinMarket, self).__init__()
         # 连接Okcoin
         self.connect()
         # 用户现货账户信息
@@ -37,39 +37,83 @@ class OkcoinMarket(Market):
         self.okcoinRESTURL = 'www.okcoin.cn'
         self.okcoinSpot = OKCoinSpot(self.okcoinRESTURL, self.apikey, self.secretkey)
 
-    def _buy(self, amount, price):
+    def buy(self, instmt, amount, price):
         """Create a buy limit order"""
-        params = {"amount": amount, "price": price}
-        response = self._send_request(self.buy_url, params)
-        if "error" in response:
-            raise TradeException(response["error"])
+        response = self.okcoinSpot.trade(self.subscription_dict['_'.join([self.exchange, instmt])].order_code, 'buy',
+                                         price, amount)
+        response = json.loads(response)
+        if response["result"]:
+            self.orderids.append(response["order_id"])
+            order = Order(response["order_id"])
+            order.original_amount = amount
+            order.remaining_amount = amount
+            order.side = "buy"
+            order.symbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_name
+            order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].order_code
+            self.orders[order.id] = order
+        return response["order_id"]
 
-    def _sell(self, amount, price):
+    def sell(self, instmt, amount, price):
         """Create a sell limit order"""
-        params = {"amount": amount, "price": price}
-        response = self._send_request(self.sell_url, params)
-        if "error" in response:
-            raise TradeException(response["error"])
+        response = self.okcoinSpot.trade(self.subscription_dict['_'.join([self.exchange, instmt])].order_code, 'sell',
+                                         price, amount)
+        response = json.loads(response)
+        if response["result"]:
+            self.orderids.append(response["order_id"])
+            order = Order(response["order_id"])
+            order.original_amount = amount
+            order.remaining_amount = amount
+            order.side = "sell"
+            order.symbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_name
+            order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].order_code
+            self.orders[order.id] = order
+        return response["order_id"]
+
+    def orderstatus(self, instmt, id):
+        response = self.okcoinSpot.orderinfo(self.subscription_dict['_'.join([self.exchange, instmt])].order_code, id)
+        response = json.loads(response)
+        order = self.orders[id]
+        if response["result"]:
+            order.remaining_amount = response["orders"][0]["amount"] - response["orders"][0]["deal_amount"]
+            order.executed_amount = response["orders"][0]["deal_amount"]
+            order.avg_execution_price = response["orders"][0]["avg_price"]
+            order.price = response["orders"][0]["price"]
+            if response["orders"][0]["status"] == -1:
+                order.is_cancelled = True
+            if order.remaining_amount == 0:
+                self.orderids.remove(id)
+                self.orders.pop(id)
+                return True, order
+        return False, order
+
+    def cancelorder(self, instmt, id):
+        response = self.okcoinSpot.cancelOrder(self.subscription_dict['_'.join([self.exchange, instmt])].order_code, id)
+        response = json.loads(response)
+        if response["result"]:
+            self.orderids.remove(id)
+            self.orders.pop(id)
+            return True
+        return False
 
     def get_info(self):
         """Get balance"""
         response = self.okcoinSpot.userinfo()
         response = json.loads(response)
         if response["result"]:
-            self.total_amount = float(response["info"]["funds"]["asset"]["total"])
-            self.total_available = float(response["info"]["funds"]["asset"]["net"])
-            self.eth_amount = float(response["info"]["funds"]["free"]["eth"]) + float(
+            self.amount["total"] = float(response["info"]["funds"]["asset"]["total"])
+            self.available["total"] = float(response["info"]["funds"]["asset"]["net"])
+            self.amount["SPOT_ETHCNY"] = float(response["info"]["funds"]["free"]["eth"]) + float(
                 response["info"]["funds"]["freezed"]["eth"])
-            self.eth_available = float(response["info"]["funds"]["free"]["eth"])
-            self.btc_amount = float(response["info"]["funds"]["free"]["btc"]) + float(
+            self.available["SPOT_ETHCNY"] = float(response["info"]["funds"]["free"]["eth"])
+            self.amount["SPOT_BTCCNY"] = float(response["info"]["funds"]["free"]["btc"]) + float(
                 response["info"]["funds"]["freezed"]["btc"])
-            self.btc_available = float(response["info"]["funds"]["free"]["btc"])
-            self.ltc_amount = float(response["info"]["funds"]["free"]["ltc"]) + float(
+            self.available["SPOT_BTCCNY"] = float(response["info"]["funds"]["free"]["btc"])
+            self.amount["SPOT_LTCCNY"] = float(response["info"]["funds"]["free"]["ltc"]) + float(
                 response["info"]["funds"]["freezed"]["ltc"])
-            self.ltc_available = float(response["info"]["funds"]["free"]["ltc"])
-            self.cny_amount = float(response["info"]["funds"]["free"]["cny"]) + float(
+            self.available["SPOT_LTCCNY"] = float(response["info"]["funds"]["free"]["ltc"])
+            self.amount[self.currency] = float(response["info"]["funds"]["free"]["cny"]) + float(
                 response["info"]["funds"]["freezed"]["cny"])
-            self.cny_available = float(response["info"]["funds"]["free"]["cny"])
+            self.available[self.currency] = float(response["info"]["funds"]["free"]["cny"])
 
 # 初始化apikey，secretkey,url
 # apikey = 'XXXX'

@@ -5,36 +5,76 @@ import time
 import os
 import json
 from befh.subscription_manager import SubscriptionManager
-
-# import os, sys
-# parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# sys.path.insert(0, parentdir)
-# import sys
-# sys.path.append("..")
-# import OkcoinAPI
-# from befh.OkcoinAPI import *
 from befh.OkcoinAPI.OkcoinMarket import OkcoinMarket
 from befh.FinexAPI.BitfinexMarket import BitfinexMarket
-def Exchange3Arbitrage(mjson,exchanges_snapshot,TradeClients,ex1,ex2,ins1,ins2,ins3):
-    keys=exchanges_snapshot.keys()
-    key1='_'.join([ex1, ins1])
-    key2='_'.join([ex2, ins2])
-    key3='_'.join([ex1, ins3])
-    ratio = 1 / exchanges_snapshot[key2]["a1"] * exchanges_snapshot[key3][
-        "b1"] / exchanges_snapshot[key1]["a1"] - 0.005 - 0.001 - 1
-    if mjson["exchange"] in [ex1,ex2] and \
-            mjson["instmt"] in [ins1,ins2,ins3] and \
-                    '_'.join([ex1, ins1]) in keys and \
-                    '_'.join([ex2, ins2]) in keys and \
-                    '_'.join([ex1, ins3]) in keys:
-        ratio = 1 / exchanges_snapshot[key2]["a1"] * exchanges_snapshot[key3][
-                "b1"] / exchanges_snapshot[key1]["a1"] - 0.005 - 0.001 - 1
-        if ratio>1:
-            amount=min(exchanges_snapshot[key2]["a1"]*exchanges_snapshot[key2]["aq1"],exchanges_snapshot[key1]["aq1"],exchanges_snapshot[key3][
-                "bq1"]*exchanges_snapshot[key2]["a1"])
-            TradeClients[ex1].buy(ins1,amount,exchanges_snapshot[key1]["a1"])
-            TradeClients[ex2].buy(ins2,amount/exchanges_snapshot[key2]["a1"],exchanges_snapshot[key2]["a1"])
-            TradeClients[ex1].sell(ins3,amount/exchanges_snapshot[key2]["a1"],exchanges_snapshot[key3]["b1"])
+
+
+def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, ins2):
+    keys = exchanges_snapshot.keys()
+    client1 = TradeClients[ex1]
+    client2 = TradeClients[ex2]
+    instmt1 = '_'.join(["SPOT", ins1]) + client1.currency
+    instmt2 = '_'.join(["SPOT", ins2]) + ins1
+    instmt3 = '_'.join(["SPOT", ins2]) + client1.currency
+    snapshot1 = '_'.join([ex1, instmt1])
+    snapshot2 = '_'.join([ex2, instmt2])
+    snapshot3 = '_'.join([ex1, instmt3])
+    if mjson["exchange"] in [ex1, ex2] and \
+                    mjson["instmt"] in [instmt1, instmt2, instmt3] and \
+                    snapshot1 in keys and \
+                    snapshot2 in keys and \
+                    snapshot3 in keys:
+
+        # 记录套利完成情况
+        if ex1 + ex2 + ins1 + ins2 in arbitrage_record.keys():
+            record = arbitrage_record[ex1 + ex2 + ins1 + ins2]
+        else:
+            record = {"isready": True, "detail": {}}
+            record["detail"][snapshot1] = {"iscompleted": True, "originalamount": 0.0, "remainamount": 0.0}
+            record["detail"][snapshot2] = {"iscompleted": True, "originalamount": 0.0, "remainamount": 0.0}
+            record["detail"][snapshot3] = {"iscompleted": True, "originalamount": 0.0, "remainamount": 0.0}
+            arbitrage_record[ex1 + ex2 + ins1 + ins2] = record
+        if record["isready"] == True:
+            # 计算是否有盈利空间
+            ratio = 1 / exchanges_snapshot[snapshot2]["a1"] * exchanges_snapshot[snapshot3][
+                "b1"] / exchanges_snapshot[snapshot1]["a1"] - 0.005 - 0.001 - 1
+            if ratio > -5:
+                amount = min(exchanges_snapshot[snapshot2]["a1"] * exchanges_snapshot[snapshot2]["aq1"],
+                             exchanges_snapshot[snapshot1]["aq1"], exchanges_snapshot[snapshot3][
+                                 "bq1"] * exchanges_snapshot[snapshot2]["a1"],
+                             client1.available[instmt3] * exchanges_snapshot[snapshot2]["a1"],
+                             client2.available['_'.join(["SPOT", ins1]) + client2.currency])
+                if amount >= 0.01:
+                    orderid2 = client2.buy(instmt2, amount / exchanges_snapshot[snapshot2]["a1"],
+                                           exchanges_snapshot[snapshot2]["a1"])
+                    orderid3 = client1.sell(instmt3, amount / exchanges_snapshot[snapshot2]["a1"],
+                                            exchanges_snapshot[snapshot3]["b1"])
+                    status3, order3 = client1.orderstatus(instmt3, orderid3)
+                    record["detail"][snapshot3] = {"iscompleted": status3, "originalamount": amount,
+                                                   "remainamount": 0.0}
+                    amount1 = min(
+                        (client1.available[client1.currency] + order3.executed_amount * order3.avg_execution_price) /
+                        exchanges_snapshot[snapshot1]["a1"], amount)
+                    if amount1 > 0.01:
+                        orderid1 = client1.buy(instmt1, amount1, exchanges_snapshot[snapshot1]["a1"])
+                        status1, order1 = client1.orderstatus(instmt1, orderid1)
+                        record["detail"][snapshot1] = {"iscompleted": (status1 and (amount - amount1 == 0)),
+                                                       "originalamount": amount, "remainamount": amount - amount1}
+                    status2, order2 = client2.orderstatus(instmt2, orderid2)
+                    record["detail"][snapshot2] = {"iscompleted": status3, "originalamount": amount,
+                                                   "remainamount": 0.0}
+                    if record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2]["iscompleted"] and \
+                            record["detail"][snapshot3]["iscompleted"]:
+                        record["isready"] = True
+                        record["detail"][snapshot1]["originalamount"] = 0.0
+                        record["detail"][snapshot2]["originalamount"] = 0.0
+                        record["detail"][snapshot2]["remainamount"] = 0.0
+                        record["detail"][snapshot3]["originalamount"] = 0.0
+                        arbitrage_record[ex1 + ex2 + ins1 + ins2] = record
+                    else:
+                        record["isready"] = False
+                        arbitrage_record[ex1 + ex2 + ins1 + ins2] = record
+                        # else:
 
 
 if __name__ == '__main__':
@@ -63,10 +103,11 @@ if __name__ == '__main__':
 
     # in-memory database
     exchanges_snapshot = {}
+    arbitrage_record = {}
     itchatsendtime = {}
 
     # itchat
-    itchat.auto_login(hotReload=True)
+    # itchat.auto_login(hotReload=True)
     # itchat.send("test", toUserName="filehelper")
 
     print("Started...")
@@ -80,6 +121,8 @@ if __name__ == '__main__':
         if mjson["exchange"] in TradeClients.keys():
             TradeClients[mjson["exchange"]].instmt_snapshot[mjson["instmt"]] = mjson
 
+        Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "ETH")
+        continue
 
         if "Bitfinex_SPOT_XRPBTC" in keys and \
                         "JUBI_Spot_SPOT_XRPCNY" in keys and \
@@ -93,14 +136,16 @@ if __name__ == '__main__':
                 itchat.send(
                     "warning: " + "BTC:" + str(exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["a1"]) + " XRPBTC:" + str(
                         exchanges_snapshot["Bitfinex_SPOT_XRPBTC"]["a1"]) + " XRP:" + str(
-                        exchanges_snapshot["JUBI_Spot_SPOT_XRPCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
+                        exchanges_snapshot["JUBI_Spot_SPOT_XRPCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(
+                        ratio),
                     toUserName="filehelper")
                 itchatsendtime[timekey] = time.time()
             elif time.time() - itchatsendtime[timekey] > 600:
                 itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
                 itchatsendtime[timekey] = time.time()
 
-            ratio = exchanges_snapshot["Bitfinex_SPOT_XRPBTC"]["b1"] * exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["b1"] / \
+            ratio = exchanges_snapshot["Bitfinex_SPOT_XRPBTC"]["b1"] * exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"][
+                "b1"] / \
                     exchanges_snapshot["JUBI_Spot_SPOT_XRPCNY"]["a1"] - 0.005 - 0.01 - 1
             timekey = "JUBI.CNY_XRP(buy)->Bitfinex.XRP_BTC(sell)->JUBI.BTC_CNY(sell)"
             if timekey not in itchatsendtime.keys():
@@ -109,7 +154,8 @@ if __name__ == '__main__':
                 itchat.send(
                     "warning: " + "XRP:" + str(exchanges_snapshot["JUBI_Spot_SPOT_XRPCNY"]["a1"]) + " XRPBTC:" + str(
                         exchanges_snapshot["Bitfinex_SPOT_XRPBTC"]["b1"]) + " BTC:" + str(
-                        exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
+                        exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(
+                        ratio),
                     toUserName="filehelper")
                 itchatsendtime[timekey] = time.time()
             elif time.time() - itchatsendtime[timekey] > 600:
@@ -128,14 +174,16 @@ if __name__ == '__main__':
                 itchat.send(
                     "warning: " + "BTC:" + str(exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["a1"]) + " ETHBTC:" + str(
                         exchanges_snapshot["Bitfinex_SPOT_ETHBTC"]["a1"]) + " ETH:" + str(
-                        exchanges_snapshot["JUBI_Spot_SPOT_ETHCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
+                        exchanges_snapshot["JUBI_Spot_SPOT_ETHCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(
+                        ratio),
                     toUserName="filehelper")
                 itchatsendtime[timekey] = time.time()
             elif time.time() - itchatsendtime[timekey] > 600:
                 itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
                 itchatsendtime[timekey] = time.time()
 
-            ratio = exchanges_snapshot["Bitfinex_SPOT_ETHBTC"]["b1"] * exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["b1"] / \
+            ratio = exchanges_snapshot["Bitfinex_SPOT_ETHBTC"]["b1"] * exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"][
+                "b1"] / \
                     exchanges_snapshot["JUBI_Spot_SPOT_ETHCNY"]["a1"] - 0.005 - 0.001 - 1
             timekey = "JUBI.CNY_ETH(buy)->Bitfinex.ETH_BTC(sell)->JUBI.BTC_CNY(sell)"
             if timekey not in itchatsendtime.keys():
@@ -144,7 +192,8 @@ if __name__ == '__main__':
                 itchat.send(
                     "warning: " + "ETH:" + str(exchanges_snapshot["JUBI_Spot_SPOT_ETHCNY"]["a1"]) + " ETHBTC:" + str(
                         exchanges_snapshot["Bitfinex_SPOT_ETHBTC"]["b1"]) + " BTC:" + str(
-                        exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
+                        exchanges_snapshot["JUBI_Spot_SPOT_BTCCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(
+                        ratio),
                     toUserName="filehelper")
                 itchatsendtime[timekey] = time.time()
             elif time.time() - itchatsendtime[timekey] > 600:
@@ -160,25 +209,30 @@ if __name__ == '__main__':
             if timekey not in itchatsendtime.keys():
                 itchatsendtime[timekey] = 0
             if time.time() - itchatsendtime[timekey] > 60 and ratio > 0.01:
-                itchat.send("warning: " + "BTC:" + str(exchanges_snapshot["OkCoinCN_SPOT_BTCCNY"]["a1"]) + " ETHBTC:" + str(
-                    exchanges_snapshot["Bitfinex_SPOT_ETHBTC"]["a1"]) + " ETH:" + str(
-                    exchanges_snapshot["OkCoinCN_SPOT_ETHCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
-                            toUserName="filehelper")
+                itchat.send(
+                    "warning: " + "BTC:" + str(exchanges_snapshot["OkCoinCN_SPOT_BTCCNY"]["a1"]) + " ETHBTC:" + str(
+                        exchanges_snapshot["Bitfinex_SPOT_ETHBTC"]["a1"]) + " ETH:" + str(
+                        exchanges_snapshot["OkCoinCN_SPOT_ETHCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(
+                        ratio),
+                    toUserName="filehelper")
                 itchatsendtime[timekey] = time.time()
             elif time.time() - itchatsendtime[timekey] > 600:
                 itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")
                 itchatsendtime[timekey] = time.time()
 
-            ratio = exchanges_snapshot["Bitfinex_SPOT_ETHBTC"]["b1"] * exchanges_snapshot["OkCoinCN_SPOT_BTCCNY"]["b1"] / \
+            ratio = exchanges_snapshot["Bitfinex_SPOT_ETHBTC"]["b1"] * exchanges_snapshot["OkCoinCN_SPOT_BTCCNY"][
+                "b1"] / \
                     exchanges_snapshot["OkCoinCN_SPOT_ETHCNY"]["a1"] - 0.005 - 0.001 - 1
             timekey = "OkCoinCN.CNY_ETH(buy)->Bitfinex.ETH_BTC(sell)->OkCoinCN.BTC_CNY(sell)"
             if timekey not in itchatsendtime.keys():
                 itchatsendtime[timekey] = 0
             if time.time() - itchatsendtime[timekey] > 60 and ratio > 0.01:
-                itchat.send("warning: " + "ETH:" + str(exchanges_snapshot["OkCoinCN_SPOT_ETHCNY"]["a1"]) + " ETHBTC:" + str(
-                    exchanges_snapshot["Bitfinex_SPOT_ETHBTC"]["b1"]) + " BTC:" + str(
-                    exchanges_snapshot["OkCoinCN_SPOT_BTCCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(ratio),
-                            toUserName="filehelper")
+                itchat.send(
+                    "warning: " + "ETH:" + str(exchanges_snapshot["OkCoinCN_SPOT_ETHCNY"]["a1"]) + " ETHBTC:" + str(
+                        exchanges_snapshot["Bitfinex_SPOT_ETHBTC"]["b1"]) + " BTC:" + str(
+                        exchanges_snapshot["OkCoinCN_SPOT_BTCCNY"]["b1"]) + " " + timekey + ": " + "{:.2%}".format(
+                        ratio),
+                    toUserName="filehelper")
                 itchatsendtime[timekey] = time.time()
             elif time.time() - itchatsendtime[timekey] > 600:
                 itchat.send(timekey + ": " + "{:.2%}".format(ratio), toUserName="filehelper")

@@ -88,25 +88,31 @@ class OkcoinMarket(Market):
     def orderstatus(self, instmt, id):
         response = self.okcoinSpot.orderinfo(self.subscription_dict['_'.join([self.exchange, instmt])].order_code, id)
         response = json.loads(response)
-        order = self.orders[id]
         if response["result"]:
+            order = Order(response["orders"][0]["order_id"])
+            order.original_amount = response["orders"][0]["amount"]
             order.remaining_amount = response["orders"][0]["amount"] - response["orders"][0]["deal_amount"]
             order.executed_amount = response["orders"][0]["deal_amount"]
+            order.side = response["orders"][0]["type"]
             order.avg_execution_price = response["orders"][0]["avg_price"]
             order.price = response["orders"][0]["price"]
+            order.symbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_name
+            order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].order_code
             if response["orders"][0]["status"] == -1:
                 order.is_cancelled = True
-            if order.remaining_amount == 0:
+            if order.remaining_amount == 0 and id in self.orderids:
                 self.orderids.remove(id)
                 self.orders.pop(id)
-                return True, order
-        return False, order
+            return True, order
+        return False, ""
 
     def cancelorder(self, instmt, id):
         response = self.okcoinSpot.cancelOrder(self.subscription_dict['_'.join([self.exchange, instmt])].order_code, id)
         response = json.loads(response)
         status, order = self.orderstatus(instmt, id)
-        if response["result"]:
+        if response["result"] and id in self.orderids:
+            if order == "":
+                order = self.orders[id]
             self.orderids.remove(id)
             self.orders.pop(id)
             return True, order

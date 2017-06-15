@@ -130,7 +130,7 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
                 record["detail"][snapshot1]["iscompleted"] = status1
                 record["detail"][snapshot1]["remainamount"] = 0.0
             else:
-                status1, order1 = client1.cancelorder[instmt1, record["detail"][snapshot1]["orderid"]]
+                status1, order1 = client1.cancelorder(instmt1, record["detail"][snapshot1]["orderid"])
                 if record["detail"][snapshot1]["originalamount"] - order1.executed_amount > ins1thresh:
                     orderid1 = client1.buy(instmt1,
                                            record["detail"][snapshot1]["originalamount"] - order1.executed_amount,
@@ -140,14 +140,14 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
                 else:
                     record["detail"][snapshot1]["iscompleted"] = True
             if not record["detail"][snapshot3]["iscompleted"]:
-                status3, order3 = client1.cancelorder[instmt3, record["detail"][snapshot3]["orderid"]]
+                status3, order3 = client1.cancelorder(instmt3, record["detail"][snapshot3]["orderid"])
                 if order3.remaining_amount > ins2thresh:
                     orderid3 = client1.sell(instmt3, order3.remaining_amount, exchanges_snapshot[snapshot3]["b1"])
                     record["detail"][snapshot3]["orderid"] = orderid3
                 else:
                     record["detail"][snapshot3]["iscompleted"] = True
             if not record["detail"][snapshot2]["iscompleted"]:
-                status2, order2 = client2.cancelorder[instmt2, record["detail"][snapshot2]["orderid"]]
+                status2, order2 = client2.cancelorder(instmt2, record["detail"][snapshot2]["orderid"])
                 if order2.remaining_amount > 0:
                     orderid2 = client2.buy(instmt2, order2.remaining_amount,
                                            exchanges_snapshot[snapshot2]["a1"])
@@ -226,7 +226,7 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
                 record["detail"][snapshot3]["iscompleted"] = status3
                 record["detail"][snapshot3]["remainamount"] = 0.0
             else:
-                status3, order3 = client1.cancelorder[instmt3, record["detail"][snapshot3]["orderid"]]
+                status3, order3 = client1.cancelorder(instmt3, record["detail"][snapshot3]["orderid"])
                 if record["detail"][snapshot3]["originalamount"] - order3.executed_amount > ins2thresh:
                     orderid3 = client1.buy(instmt3,
                                            record["detail"][snapshot3]["originalamount"] - order3.executed_amount,
@@ -236,14 +236,14 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
                 else:
                     record["detail"][snapshot3]["iscompleted"] = True
             if not record["detail"][snapshot1]["iscompleted"]:
-                status1, order1 = client1.cancelorder[instmt1, record["detail"][snapshot1]["orderid"]]
+                status1, order1 = client1.cancelorder(instmt1, record["detail"][snapshot1]["orderid"])
                 if order1.remaining_amount > ins1thresh:
                     orderid1 = client1.sell(instmt1, order1.remaining_amount, exchanges_snapshot[snapshot1]["b1"])
                     record["detail"][snapshot1]["orderid"] = orderid1
                 else:
                     record["detail"][snapshot1]["iscompleted"] = True
             if not record["detail"][snapshot2]["iscompleted"]:
-                status2, order2 = client2.cancelorder[instmt2, record["detail"][snapshot2]["orderid"]]
+                status2, order2 = client2.cancelorder(instmt2, record["detail"][snapshot2]["orderid"])
                 if order2.remaining_amount > 0:
                     orderid2 = client2.sell(instmt2, order2.remaining_amount,
                                             exchanges_snapshot[snapshot2]["b1"])

@@ -80,9 +80,16 @@ class BitfinexMarket(Market):
 
     def cancelorder(self, instmt, id):
         response = delete_order(id)
+        order = self.orders[id]
+        order.remaining_amount = float(response["remaining_amount"])
+        order.executed_amount = float(response["executed_amount"])
+        order.avg_execution_price = float(response["avg_execution_price"])
+        order.price = float(response["price"])
+        order.is_cancelled = True
+        order.timestamp = response["timestamp"]
         self.orderids.remove(id)
         self.orders.pop(id)
-        return True
+        return True, order
 
     def get_info(self):
         """Get balance"""

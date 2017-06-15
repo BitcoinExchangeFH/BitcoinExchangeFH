@@ -89,11 +89,12 @@ class OkcoinMarket(Market):
     def cancelorder(self, instmt, id):
         response = self.okcoinSpot.cancelOrder(self.subscription_dict['_'.join([self.exchange, instmt])].order_code, id)
         response = json.loads(response)
+        status, order = self.orderstatus(instmt, id)
         if response["result"]:
             self.orderids.remove(id)
             self.orders.pop(id)
-            return True
-        return False
+            return True, order
+        return False, order
 
     def get_info(self):
         """Get balance"""

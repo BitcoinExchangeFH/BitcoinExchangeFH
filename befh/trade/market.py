@@ -34,6 +34,7 @@ class Market:
         self.orderids = []
         self.orders = {}
         self.address = {}
+        self.logging = logging
 
     def __str__(self):
         return "%s: %s" % (self.name, str({"btc_balance": self.btc_balance,

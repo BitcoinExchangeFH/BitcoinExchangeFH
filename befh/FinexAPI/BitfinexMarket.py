@@ -33,6 +33,9 @@ class BitfinexMarket(Market):
         # self.secretkey = str(setting['secretKey'])
         self.currency = str(setting['currency'])
         self.trace = setting['trace']
+        self.address["BTC"] = setting['Bitfinex_BTC']
+        self.address["ETH"] = setting['Bitfinex_ETH']
+        self.address["LTC"] = setting['Bitfinex_LTC']
 
     def buy(self, instmt, amount, price):
         """Create a buy limit order"""
@@ -90,6 +93,22 @@ class BitfinexMarket(Market):
         self.orderids.remove(id)
         self.orders.pop(id)
         return True, order
+
+    def withdrawcoin(self, coin, amount, address, payment_id):
+        withdraw_type = ""
+        if coin == "BTC":
+            withdraw_type = "bitcoin"
+        elif coin == "ETH":
+            withdraw_type = "ethereum"
+        elif coin == "ETC":
+            withdraw_type = "ethereumc"
+        elif coin == "LTC":
+            withdraw_type = "litecoin"
+        response = withdraw(withdraw_type, "exchange", str(amount), address, payment_id)
+        if response["status"] == "success":
+            return True, response["withdrawal_id"]
+        else:
+            return False, response["message"]
 
     def get_info(self):
         """Get balance"""

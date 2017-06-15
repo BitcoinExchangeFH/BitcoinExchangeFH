@@ -373,7 +373,7 @@ def balances(): # see your balances.
 
 	return rep
 
-def withdraw(withdraw_type, walletselected, amount, address):
+def withdraw(withdraw_type, walletselected, amount, address,payment_id):
 
 	payload = {
 
@@ -382,8 +382,8 @@ def withdraw(withdraw_type, walletselected, amount, address):
 		"withdraw_type":withdraw_type,
 		"walletselected":walletselected,
 		"amount":amount,
-		"address":address
-
+		"address":address,
+		"payment_id":payment_id
 	}
 
 	signed_payload = payloadPacker(payload)

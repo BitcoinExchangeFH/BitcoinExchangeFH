@@ -33,6 +33,7 @@ class Market:
         self.instmt_snapshot = {}
         self.orderids = []
         self.orders = {}
+        self.address = {}
 
     def __str__(self):
         return "%s: %s" % (self.name, str({"btc_balance": self.btc_balance,
@@ -65,10 +66,10 @@ class Market:
     def cancelorder(self, instmt, orderid):
         raise NotImplementedError("%s.cancelorder(self, instmt, orderid)" % self.name)
 
-    def deposit(self):
+    def depositcoin(self):
         raise NotImplementedError("%s.sell(self, amount, price)" % self.name)
 
-    def withdraw(self, amount, address):
+    def withdrawcoin(self, amount, address):
         raise NotImplementedError("%s.sell(self, amount, price)" % self.name)
 
     def get_info(self):

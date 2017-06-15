@@ -33,14 +33,24 @@ class OkcoinMarket(Market):
         self.secretkey = str(setting['secretKey'])
         self.currency = str(setting['currency'])
         self.trace = setting['trace']
+        self.tradepassword = setting['tradepassword']
+        self.address["BTC"] = setting['OkCoinCN_BTC']
+        self.address["ETH"] = setting['OkCoinCN_ETH']
+        self.address["LTC"] = setting['OkCoinCN_LTC']
 
         self.okcoinRESTURL = 'www.okcoin.cn'
         self.okcoinSpot = OKCoinSpot(self.okcoinRESTURL, self.apikey, self.secretkey)
 
     def buy(self, instmt, amount, price):
         """Create a buy limit order"""
-        response = self.okcoinSpot.trade(self.subscription_dict['_'.join([self.exchange, instmt])].order_code, 'buy',
-                                         price, amount)
+        ordersymbol = self.subscription_dict['_'.join([self.exchange, instmt])].order_code
+        if ordersymbol == "btc_cny" and amount < 0.01:
+            return -1
+        if ordersymbol == "ltc_cny" and amount < 0.1:
+            return -1
+        if ordersymbol == "eth_cny" and amount < 0.01:
+            return -1
+        response = self.okcoinSpot.trade(ordersymbol, 'buy', price, amount)
         response = json.loads(response)
         if response["result"]:
             self.orderids.append(response["order_id"])
@@ -55,8 +65,14 @@ class OkcoinMarket(Market):
 
     def sell(self, instmt, amount, price):
         """Create a sell limit order"""
-        response = self.okcoinSpot.trade(self.subscription_dict['_'.join([self.exchange, instmt])].order_code, 'sell',
-                                         price, amount)
+        ordersymbol = self.subscription_dict['_'.join([self.exchange, instmt])].order_code
+        if ordersymbol == "btc_cny" and amount < 0.01:
+            return -1
+        if ordersymbol == "ltc_cny" and amount < 0.1:
+            return -1
+        if ordersymbol == "eth_cny" and amount < 0.01:
+            return -1
+        response = self.okcoinSpot.trade(ordersymbol, 'sell', price, amount)
         response = json.loads(response)
         if response["result"]:
             self.orderids.append(response["order_id"])
@@ -115,6 +131,30 @@ class OkcoinMarket(Market):
             self.amount[self.currency] = float(response["info"]["funds"]["free"]["cny"]) + float(
                 response["info"]["funds"]["freezed"]["cny"])
             self.available[self.currency] = float(response["info"]["funds"]["free"]["cny"])
+
+    def withdrawcoin(self, instmt, amount, address, target):
+        symbol = self.subscription_dict['_'.join([self.exchange, instmt])].order_code
+        chargefee = 0
+        if target == "okcn":
+            return False, "okcn->okcn"
+        elif target == "okcom":
+            chargefee = 0
+        elif target == "address":
+            if symbol == "btc_cny":
+                chargefee = 0.002
+            elif symbol == "eth_cny":
+                chargefee = 0.01
+            elif symbol == "ltc_cny":
+                chargefee = 0.001
+        if symbol == "btc_cny" and amount < 0.01:
+            return False, "amount less than 0.01"
+        elif symbol == "eth_cny" and amount < 0.01:
+            return False, "amount less than 0.01"
+        elif symbol == "ltc_cny" and amount < 0.1:
+            return False, "amount less than 0.1"
+        response = self.okcoinSpot.withdraw(symbol, chargefee, self.tradepassword, address, amount, target)
+        response = json.loads(response)
+        return response["result"], response["withdraw_id"]
 
 # 初始化apikey，secretkey,url
 # apikey = 'XXXX'

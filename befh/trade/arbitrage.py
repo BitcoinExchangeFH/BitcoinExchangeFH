@@ -129,7 +129,7 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
                 status1, order1 = client1.orderstatus(instmt1, record["detail"][snapshot1]["orderid"])
                 record["detail"][snapshot1]["iscompleted"] = status1
                 record["detail"][snapshot1]["remainamount"] = 0.0
-            else:
+            elif not record["detail"][snapshot1]["iscompleted"]:
                 status1, order1 = client1.cancelorder(instmt1, record["detail"][snapshot1]["orderid"])
                 if record["detail"][snapshot1]["originalamount"] - order1.executed_amount > ins1thresh:
                     orderid1 = client1.buy(instmt1,

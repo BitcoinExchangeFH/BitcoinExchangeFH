@@ -59,6 +59,7 @@ class OkcoinMarket(Market):
             order.original_amount = amount
             order.remaining_amount = amount
             order.side = "buy"
+            order.price = price
             order.symbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_name
             order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].order_code
             self.orders[order.id] = order
@@ -84,6 +85,7 @@ class OkcoinMarket(Market):
             order.original_amount = amount
             order.remaining_amount = amount
             order.side = "sell"
+            order.price = price
             order.symbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_name
             order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].order_code
             self.orders[order.id] = order

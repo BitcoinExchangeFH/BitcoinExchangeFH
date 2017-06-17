@@ -48,6 +48,7 @@ class BitfinexMarket(Market):
             order.original_amount = float(response["original_amount"])
             order.remaining_amount = float(response["remaining_amount"])
             order.side = response["side"]
+            order.price = price
             order.symbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_name
             order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_code
             self.orders[order.id] = order
@@ -66,6 +67,7 @@ class BitfinexMarket(Market):
             order.original_amount = float(response["original_amount"])
             order.remaining_amount = float(response["remaining_amount"])
             order.side = response["side"]
+            order.price = price
             order.symbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_name
             order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_code
             order.timestamp = response["timestamp"]

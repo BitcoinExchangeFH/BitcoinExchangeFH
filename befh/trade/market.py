@@ -34,7 +34,9 @@ class Market:
         self.orderids = []
         self.orders = {}
         self.address = {}
-        self.logging = logging
+        # config the logging
+        logging.basicConfig(level=logging.INFO,
+                                 format='%(asctime)s %(filename)s LINE %(lineno)d: %(levelname)s %(message)s')
 
     def __str__(self):
         return "%s: %s" % (self.name, str({"btc_balance": self.btc_balance,

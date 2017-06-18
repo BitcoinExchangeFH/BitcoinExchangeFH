@@ -7,13 +7,14 @@ import json
 from befh.subscription_manager import SubscriptionManager
 from befh.OkcoinAPI.OkcoinMarket import OkcoinMarket
 from befh.FinexAPI.BitfinexMarket import BitfinexMarket
+import logging
 
 
 def LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record):
     if arbitragecode in arbitrage_record.keys():
         record = arbitrage_record[arbitragecode]
     else:
-        record = {"isready": True, "detail": {}}
+        record = {"isready": True, "detail": {}, "time": time.time()}
         record["detail"][snapshot1] = {"iscompleted": True, "originalamount": 0.0, "remainamount": 0.0,
                                        "orderid": 0}
         record["detail"][snapshot2] = {"iscompleted": True, "originalamount": 0.0, "remainamount": 0.0,
@@ -24,7 +25,7 @@ def LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
     return record
 
 
-def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, threshhold=100000):
+def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold):
     client1 = TradeClients[ex1]
     client2 = TradeClients[ex2]
     instmt1 = '_'.join(["SPOT", ins1]) + client1.currency
@@ -34,23 +35,57 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, threshhold=100000)
     snapshot2 = '_'.join([ex2, instmt2])
     snapshot3 = '_'.join([ex1, instmt3])
 
+    profit = 0
+    if not record["isready"]:
+        if ex1 + ex2 + ins1 + ins2 == arbitragecode:
+            profit = 1 / (record["detail"][snapshot2]["executedamount"] / record["detail"][snapshot2][
+                "executedvolume"]) * (
+                         record["detail"][snapshot3]["executedamount"] / record["detail"][snapshot3][
+                             "executedvolume"]) / (
+                         record["detail"][snapshot1]["executedamount"] / record["detail"][snapshot1][
+                             "executedvolume"]) - 1
+        else:
+            profit = (record["detail"][snapshot2]["executedamount"] / record["detail"][snapshot2][
+                "executedvolume"]) * (
+                         record["detail"][snapshot1]["executedamount"] / record["detail"][snapshot1][
+                             "executedvolume"]) / (
+                         record["detail"][snapshot3]["executedamount"] / record["detail"][snapshot3][
+                             "executedvolume"]) - 1
+
     record["isready"] = True
+    record["time"] = time.time()
     record["detail"][snapshot1]["iscompleted"] = True
     record["detail"][snapshot1]["originalamount"] = 0.0
     record["detail"][snapshot1]["orderid"] = 0
     record["detail"][snapshot1]["remainamount"] = 0.0
+    record["detail"][snapshot1]["executedamount"] = 0.0
+    record["detail"][snapshot1]["executedvolume"] = 0.0
     record["detail"][snapshot2]["iscompleted"] = True
     record["detail"][snapshot2]["originalamount"] = 0.0
     record["detail"][snapshot2]["orderid"] = 0
     record["detail"][snapshot2]["remainamount"] = 0.0
+    record["detail"][snapshot2]["executedamount"] = 0.0
+    record["detail"][snapshot2]["executedvolume"] = 0.0
     record["detail"][snapshot3]["iscompleted"] = True
     record["detail"][snapshot3]["originalamount"] = 0.0
     record["detail"][snapshot3]["orderid"] = 0
     record["detail"][snapshot3]["remainamount"] = 0.0
+    record["detail"][snapshot3]["executedamount"] = 0.0
+    record["detail"][snapshot3]["executedvolume"] = 0.0
+
+    # update arbitrage_record
+    arbitrage_record[arbitragecode] = record
 
     # refresh account
     client1.get_info()
     client2.get_info()
+
+    logging.info(ex1 + " " + ex2 + " amount: " + str(
+        client1.available["total"] + client2.available['_'.join(["SPOT", ins2]) + client2.currency] *
+        exchanges_snapshot[snapshot3][
+            "a1"] + client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
+            "a1"]) + " profit:" + "{:.2%}".format(profit))
+
     # rebalance accounts
     if client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] > threshhold:
         client1.withdrawcoin(instmt1, threshhold / 2 / exchanges_snapshot[snapshot1]["a1"], client2.address[ins1],
@@ -61,9 +96,9 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, threshhold=100000)
     if client2.available['_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
         "a1"] > threshhold:
         client2.withdrawcoin(ins2, threshhold / 2 / exchanges_snapshot[snapshot3]["b1"], client1.address[ins2], "")
-    if client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
-        "a1"] > threshhold:
-        client2.withdrawcoin(ins1, threshhold / 2 / exchanges_snapshot[snapshot1]["b1"], client1.address[ins1], "")
+    # if client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
+    #     "a1"] > threshhold:
+    #     client2.withdrawcoin(ins1, threshhold / 2 / exchanges_snapshot[snapshot1]["b1"], client1.address[ins1], "")
     return record
 
 
@@ -85,7 +120,23 @@ def ReplaceOrder(instmt, insthresh, record, snapshot, client):
                 record["detail"][snapshot]["orderid"] = orderid
             else:
                 record["detail"][snapshot]["iscompleted"] = True
+            record["detail"][snapshot]["executedamount"] = record["detail"][snapshot][
+                                                               "executedamount"] + order.avg_execution_price * order.executed_amount
+            record["detail"][snapshot]["executedvolume"] = record["detail"][snapshot][
+                                                               "executedvolume"] + order.executed_amount
     return record
+
+
+def UpdateRecord(client, record, instmt, orderid, snapshot, amount):
+    status, order = client.orderstatus(instmt, orderid)
+    executedamount = 0
+    executedvolume = 0
+    if status:
+        executedamount = order.avg_execution_price * order.executed_amount
+        executedvolume = order.executed_amount
+    record["detail"][snapshot] = {"iscompleted": status, "originalamount": amount, "remainamount": 0.0,
+                                  "orderid": orderid, "executedamount": executedamount,
+                                  "executedvolume": executedvolume}
 
 
 def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, ins2, ins1thresh, ins2thresh,
@@ -110,10 +161,12 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
         arbitragecode = ex1 + ex2 + ins1 + ins2
         if arbitragecode not in arbitrage_record.keys():
             record = LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
-            RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, threshhold)
+            RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold)
         else:
             record = LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
-        if record["isready"] == True:
+        if record["isready"]:
+            if time.time() - record["time"] > 60:
+                RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold)
             # 计算是否有盈利空间
             ratio = 1 / exchanges_snapshot[snapshot2]["a1"] * exchanges_snapshot[snapshot3][
                 "b1"] / exchanges_snapshot[snapshot1]["a1"] - 0.005 - 0.001 - 1
@@ -123,17 +176,15 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
                              exchanges_snapshot[snapshot1]["aq1"], exchanges_snapshot[snapshot3][
                                  "bq1"] * exchanges_snapshot[snapshot3]["b1"] / exchanges_snapshot[snapshot1]["a1"],
                              client1.available[instmt3] * exchanges_snapshot[snapshot3]["b1"] /
-                             exchanges_snapshot[snapshot1]["a1"],
-                             client2.available['_'.join(["SPOT", ins1]) + client2.currency])
+                             exchanges_snapshot[snapshot1]["a1"] - ins1thresh,
+                             client2.available['_'.join(["SPOT", ins1]) + client2.currency] - ins1thresh)
                 if client1.available[client1.currency] / exchanges_snapshot[snapshot1]["a1"] < amount + ins1thresh:
                     orderid3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
                                             exchanges_snapshot[snapshot3]["b1"],
                                             exchanges_snapshot[snapshot3]["b1"])
-                    status3, order3 = client1.orderstatus(instmt3, orderid3)
-                    record["detail"][snapshot3] = {"iscompleted": status3,
-                                                   "originalamount": amount * exchanges_snapshot[snapshot1]["a1"] /
-                                                                     exchanges_snapshot[snapshot3]["b1"],
-                                                   "remainamount": 0.0, "orderid": orderid3}
+                    UpdateRecord(client1, record, instmt3, orderid3, snapshot3,
+                                 amount * exchanges_snapshot[snapshot1]["a1"] /
+                                 exchanges_snapshot[snapshot3]["b1"])
                     record["detail"][snapshot1]["iscompleted"] = True
                     record["detail"][snapshot2]["iscompleted"] = True
                     executed = True
@@ -145,38 +196,29 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
                     orderid1 = client1.buy(instmt1, amount, exchanges_snapshot[snapshot1]["a1"])
                     orderid2 = client2.buy(instmt2, amount / exchanges_snapshot[snapshot2]["a1"],
                                            exchanges_snapshot[snapshot2]["a1"])
-                    status3, order3 = client1.orderstatus(instmt3, orderid3)
-                    record["detail"][snapshot3] = {"iscompleted": status3,
-                                                   "originalamount": amount * exchanges_snapshot[snapshot1]["a1"] /
-                                                                     exchanges_snapshot[snapshot3]["b1"],
-                                                   "remainamount": 0.0, "orderid": orderid3}
-                    status1, order1 = client1.orderstatus(instmt1, orderid1)
-                    record["detail"][snapshot1] = {"iscompleted": status1,
-                                                   "originalamount": amount,
-                                                   "remainamount": 0.0, "orderid": orderid1}
-                    status2, order2 = client2.orderstatus(instmt2, orderid2)
-                    record["detail"][snapshot2] = {"iscompleted": status2,
-                                                   "originalamount": amount / exchanges_snapshot[snapshot2]["a1"],
-                                                   "remainamount": 0.0, "orderid": orderid2}
+                    UpdateRecord(client1, record, instmt3, orderid3, snapshot3,
+                                 amount * exchanges_snapshot[snapshot1]["a1"] /
+                                 exchanges_snapshot[snapshot3]["b1"])
+                    UpdateRecord(client1, record, instmt1, orderid1, snapshot1, amount)
+                    UpdateRecord(client2, record, instmt2, orderid2, snapshot2,
+                                 amount / exchanges_snapshot[snapshot2]["a1"])
                     executed = True
                 if executed:
+                    record["isready"] = False
                     if record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2]["iscompleted"] and \
                             record["detail"][snapshot3]["iscompleted"]:
-                        record = RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, threshhold)
-                        arbitrage_record[arbitragecode] = record
+                        RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode,
+                                      threshhold)
                     else:
-                        record["isready"] = False
                         arbitrage_record[arbitragecode] = record
         else:
             record = ReplaceOrder(instmt1, ins1thresh, record, snapshot1, client1)
-            record = ReplaceOrder(instmt2, 0, record, snapshot2, client2)
+            record = ReplaceOrder(instmt2, ins2thresh, record, snapshot2, client2)
             record = ReplaceOrder(instmt3, ins2thresh, record, snapshot3, client1)
             if record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2]["iscompleted"] and \
                     record["detail"][snapshot3]["iscompleted"]:
-                record = RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, threshhold)
-                arbitrage_record[arbitragecode] = record
+                RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold)
             else:
-                record["isready"] = False
                 arbitrage_record[arbitragecode] = record
 
         """ETH->BTC套利"""
@@ -184,10 +226,13 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
         arbitragecode = ex1 + ex2 + ins2 + ins1
         if arbitragecode not in arbitrage_record.keys():
             record = LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
-            RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, threshhold)
+            RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold)
         else:
             record = LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
-        if record["isready"] == True:
+        if record["isready"]:
+            # if time.time() - record["time"] > 60:
+            #     RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold)
+            #     arbitrage_record[arbitragecode] = record
             # 计算是否有盈利空间
             ratio = exchanges_snapshot[snapshot2]["b1"] * exchanges_snapshot[snapshot1][
                 "b1"] / exchanges_snapshot[snapshot3]["a1"] - 0.005 - 0.001 - 1
@@ -197,17 +242,15 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
                              exchanges_snapshot[snapshot3]["aq1"], exchanges_snapshot[snapshot1][
                                  "bq1"] * exchanges_snapshot[snapshot1]["b1"] / exchanges_snapshot[snapshot3]["a1"],
                              client1.available[instmt1] * exchanges_snapshot[snapshot1]["b1"] /
-                             exchanges_snapshot[snapshot3]["a1"],
-                             client2.available['_'.join(["SPOT", ins2]) + client2.currency])
+                             exchanges_snapshot[snapshot3]["a1"] - ins2thresh,
+                             client2.available['_'.join(["SPOT", ins2]) + client2.currency] - ins2thresh)
                 if client1.available[client1.currency] / exchanges_snapshot[snapshot3]["a1"] < amount + ins2thresh:
                     orderid1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
                                             exchanges_snapshot[snapshot1]["b1"],
                                             exchanges_snapshot[snapshot1]["b1"])
-                    status1, order1 = client1.orderstatus(instmt1, orderid1)
-                    record["detail"][snapshot1] = {"iscompleted": status1,
-                                                   "originalamount": amount * exchanges_snapshot[snapshot3]["a1"] /
-                                                                     exchanges_snapshot[snapshot1]["b1"],
-                                                   "remainamount": 0.0, "orderid": orderid1}
+                    UpdateRecord(client1, record, instmt1, orderid1, snapshot1,
+                                 amount * exchanges_snapshot[snapshot3]["a1"] /
+                                 exchanges_snapshot[snapshot1]["b1"])
                     record["detail"][snapshot2]["iscompleted"] = True
                     record["detail"][snapshot3]["iscompleted"] = True
                     executed = True
@@ -218,27 +261,19 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
                                             exchanges_snapshot[snapshot1]["b1"])
                     orderid3 = client1.buy(instmt3, amount, exchanges_snapshot[snapshot3]["a1"])
                     orderid2 = client2.sell(instmt2, amount, exchanges_snapshot[snapshot2]["b1"])
-                    status1, order1 = client1.orderstatus(instmt1, orderid1)
-                    record["detail"][snapshot1] = {"iscompleted": status1,
-                                                   "originalamount": amount * exchanges_snapshot[snapshot3]["a1"] /
-                                                                     exchanges_snapshot[snapshot1]["b1"],
-                                                   "remainamount": 0.0, "orderid": orderid1}
-                    status3, order3 = client1.orderstatus(instmt3, orderid3)
-                    record["detail"][snapshot3] = {"iscompleted": status3,
-                                                   "originalamount": amount,
-                                                   "remainamount": 0.0, "orderid": orderid3}
-                    status2, order2 = client2.orderstatus(instmt2, orderid2)
-                    record["detail"][snapshot2] = {"iscompleted": status2,
-                                                   "originalamount": amount,
-                                                   "remainamount": 0.0, "orderid": orderid2}
+                    UpdateRecord(client1, record, instmt1, orderid1, snapshot1,
+                                 amount * exchanges_snapshot[snapshot3]["a1"] /
+                                 exchanges_snapshot[snapshot1]["b1"])
+                    UpdateRecord(client1, record, instmt3, orderid3, snapshot3, amount)
+                    UpdateRecord(client2, record, instmt2, orderid2, snapshot2, amount)
                     executed = True
                 if executed:
+                    record["isready"] = False
                     if record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2]["iscompleted"] and \
                             record["detail"][snapshot3]["iscompleted"]:
-                        record = RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, threshhold)
-                        arbitrage_record[arbitragecode] = record
+                        RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode,
+                                      threshhold)
                     else:
-                        record["isready"] = False
                         arbitrage_record[arbitragecode] = record
         else:
             record = ReplaceOrder(instmt1, ins1thresh, record, snapshot1, client1)
@@ -246,10 +281,8 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
             record = ReplaceOrder(instmt3, ins2thresh, record, snapshot3, client1)
             if record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2]["iscompleted"] and \
                     record["detail"][snapshot3]["iscompleted"]:
-                record = RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, threshhold)
-                arbitrage_record[arbitragecode] = record
+                RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold)
             else:
-                record["isready"] = False
                 arbitrage_record[arbitragecode] = record
 
 
@@ -283,9 +316,9 @@ if __name__ == '__main__':
     itchatsendtime = {}
     threshhold = 90000
 
-    itchat
-    itchat.auto_login(hotReload=True)
-    # itchat.send("test", toUserName="filehelper")
+    # itchat
+    # itchat.auto_login(hotReload=True)
+    # # itchat.send("test", toUserName="filehelper")
 
     print("Started...")
     while True:
@@ -300,6 +333,8 @@ if __name__ == '__main__':
 
         Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "ETH", 0.01, 0.01,
                            0.005)
+
+        continue
 
         if "Bitfinex_SPOT_XRPBTC" in keys and \
                         "JUBI_Spot_SPOT_XRPCNY" in keys and \

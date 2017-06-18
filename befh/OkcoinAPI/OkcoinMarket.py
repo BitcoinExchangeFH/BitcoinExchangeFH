@@ -8,6 +8,7 @@ from .OkcoinFutureAPI import OKCoinFuture
 from befh.trade.market import Market, TradeException, Order
 import json
 import os
+import logging
 
 
 class OkcoinMarket(Market):
@@ -52,7 +53,7 @@ class OkcoinMarket(Market):
             return -1
         response = self.okcoinSpot.trade(ordersymbol, 'buy', price, amount)
         response = json.loads(response)
-        self.logging.info(json.dumps(response))
+        logging.info(json.dumps(response))
         if response["result"]:
             self.orderids.append(response["order_id"])
             order = Order(response["order_id"])
@@ -78,7 +79,7 @@ class OkcoinMarket(Market):
             return -1
         response = self.okcoinSpot.trade(ordersymbol, 'sell', price, amount)
         response = json.loads(response)
-        self.logging.info(json.dumps(response))
+        logging.info(json.dumps(response))
         if response["result"]:
             self.orderids.append(response["order_id"])
             order = Order(response["order_id"])
@@ -116,12 +117,14 @@ class OkcoinMarket(Market):
                 return True, order
             if id in self.orderids:
                 self.orders[id] = order
-        return False, order
+            return False, order
+        else:
+            return False, order
 
     def cancelorder(self, instmt, id):
         response = self.okcoinSpot.cancelOrder(self.subscription_dict['_'.join([self.exchange, instmt])].order_code, id)
         response = json.loads(response)
-        self.logging.info(json.dumps(response))
+        logging.info(json.dumps(response))
         status, order = self.orderstatus(instmt, id)
         if response["result"] and id in self.orderids:
             self.orderids.remove(id)
@@ -132,7 +135,7 @@ class OkcoinMarket(Market):
         """Get balance"""
         response = self.okcoinSpot.userinfo()
         response = json.loads(response)
-        self.logging.info(json.dumps(response))
+        logging.info(json.dumps(response))
         if response["result"]:
             self.amount["total"] = float(response["info"]["funds"]["asset"]["total"])
             self.available["total"] = float(response["info"]["funds"]["asset"]["net"])
@@ -171,7 +174,7 @@ class OkcoinMarket(Market):
             return False, "amount less than 0.1"
         response = self.okcoinSpot.withdraw(symbol, chargefee, self.tradepassword, address, amount, target)
         response = json.loads(response)
-        self.logging.info(json.dumps(response))
+        logging.info(json.dumps(response))
         return response["result"], response["withdraw_id"]
 
 # 初始化apikey，secretkey,url

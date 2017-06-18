@@ -8,6 +8,7 @@ import json
 import os
 from .FinexAPI import *
 from decimal import Decimal
+import logging
 
 
 class BitfinexMarket(Market):
@@ -41,7 +42,7 @@ class BitfinexMarket(Market):
         """Create a buy limit order"""
         response = place_order(str(amount), str(price), "buy", "exchange limit",
                                self.subscription_dict['_'.join([self.exchange, instmt])].instmt_code)
-        self.logging.info(json.dumps(response))
+        logging.info(json.dumps(response))
         if isinstance(response, dict):
             self.orderids.append(response["id"])
             order = Order(response["id"])
@@ -60,7 +61,7 @@ class BitfinexMarket(Market):
         """Create a sell limit order"""
         response = place_order(str(amount), str(price), "sell", "exchange limit",
                                self.subscription_dict['_'.join([self.exchange, instmt])].instmt_code)
-        self.logging.info(json.dumps(response))
+        logg.info(json.dumps(response))
         if isinstance(response, dict):
             self.orderids.append(response["id"])
             order = Order(response["id"])
@@ -78,46 +79,56 @@ class BitfinexMarket(Market):
 
     def orderstatus(self, instmt, id):
         response = status_order(id)
-        order = Order(response["id"])
-        order.original_amount = float(response["original_amount"])
-        order.remaining_amount = float(response["remaining_amount"])
-        order.side = response["side"]
-        order.executed_amount = float(response["executed_amount"])
-        order.avg_execution_price = float(response["avg_execution_price"])
-        order.price = float(response["price"])
-        order.is_cancelled = response["is_cancelled"]
-        order.symbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_name
-        order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_code
-        order.timestamp = response["timestamp"]
-        if order.remaining_amount == 0:
+        if isinstance(response,dict):
+            order = Order(response["id"])
+            order.original_amount = float(response["original_amount"])
+            order.remaining_amount = float(response["remaining_amount"])
+            order.side = response["side"]
+            order.executed_amount = float(response["executed_amount"])
+            order.avg_execution_price = float(response["avg_execution_price"])
+            order.price = float(response["price"])
+            order.is_cancelled = response["is_cancelled"]
+            order.symbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_name
+            order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_code
+            order.timestamp = response["timestamp"]
+            if order.remaining_amount == 0:
+                if id in self.orderids:
+                    self.orderids.remove(id)
+                    self.orders.pop(id)
+                return True, order
+            if id in self.orderids:
+                self.orders[id] = order
+            return False, order
+        else:
+            pass
+
+    def cancelorder(self, instmt, id):
+        response = delete_order(id)
+        logging.info(json.dumps(response))
+        if not isinstance(response, dict):
+            status, order = self.orderstatus(instmt, id)
             if id in self.orderids:
                 self.orderids.remove(id)
                 self.orders.pop(id)
             return True, order
-        if id in self.orderids:
-            self.orders[id] = order
-        return False, order
-
-    def cancelorder(self, instmt, id):
-        response = delete_order(id)
-        self.logging.info(json.dumps(response))
-        if id in self.orderids:
-            order = self.orders[id]
-            self.orderids.remove(id)
-            self.orders.pop(id)
         else:
-            order = Order(response["id"])
-            order.original_amount = float(response["original_amount"])
-            order.side = response["side"]
-            order.symbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_name
-            order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_code
-        order.remaining_amount = float(response["remaining_amount"])
-        order.executed_amount = float(response["executed_amount"])
-        order.avg_execution_price = float(response["avg_execution_price"])
-        order.price = float(response["price"])
-        order.is_cancelled = True
-        order.timestamp = response["timestamp"]
-        return True, order
+            if id in self.orderids:
+                order = self.orders[id]
+                self.orderids.remove(id)
+                self.orders.pop(id)
+            else:
+                order = Order(response["id"])
+                order.original_amount = float(response["original_amount"])
+                order.side = response["side"]
+                order.symbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_name
+                order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_code
+            order.remaining_amount = float(response["remaining_amount"])
+            order.executed_amount = float(response["executed_amount"])
+            order.avg_execution_price = float(response["avg_execution_price"])
+            order.price = float(response["price"])
+            order.is_cancelled = True
+            order.timestamp = response["timestamp"]
+            return True, order
 
     def withdrawcoin(self, coin, amount, address, payment_id):
         withdraw_type = ""
@@ -130,16 +141,17 @@ class BitfinexMarket(Market):
         elif coin == "LTC":
             withdraw_type = "litecoin"
         response = withdraw(withdraw_type, "exchange", str(amount), address, payment_id)
-        self.logging.info(json.dumps(response))
-        if response["status"] == "success":
-            return True, response["withdrawal_id"]
-        else:
-            return False, response["message"]
+        logging.info(json.dumps(response))
+        if isinstance(response,list):
+            if response[0]["status"] == "success":
+                return True, response[0]["withdrawal_id"]
+            else:
+                return False, response[0]["message"]
 
     def get_info(self):
         """Get balance"""
         response = balances()
-        self.logging.info(json.dumps(response))
+        logging.info(json.dumps(response))
         for res in response:
             if res["type"] == "exchange":
                 if res['currency'] == 'usd':

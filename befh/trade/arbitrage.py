@@ -87,18 +87,20 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
             "a1"]) + " profit:" + "{:.2%}".format(profit))
 
     # rebalance accounts
-    if client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] > threshhold:
+    if client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] > threshhold and client2.available[
+                '_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1]["a1"] < threshhold / 2:
         client1.withdrawcoin(instmt1, threshhold / 2 / exchanges_snapshot[snapshot1]["a1"], client2.address[ins1],
                              "address")
-    if client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"] > threshhold:
+    if client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"] > threshhold and client2.available[
+                '_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3]["a1"] < threshhold / 2:
         client1.withdrawcoin(instmt3, threshhold / 2 / exchanges_snapshot[snapshot3]["a1"], client2.address[ins2],
                              "address")
     if client2.available['_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
-        "a1"] > threshhold:
+        "a1"] > threshhold and client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"] < threshhold / 2:
         client2.withdrawcoin(ins2, threshhold / 2 / exchanges_snapshot[snapshot3]["b1"], client1.address[ins2], "")
-    # if client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
-    #     "a1"] > threshhold:
-    #     client2.withdrawcoin(ins1, threshhold / 2 / exchanges_snapshot[snapshot1]["b1"], client1.address[ins1], "")
+    if client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
+        "a1"] > threshhold and client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] < threshhold / 2:
+        client2.withdrawcoin(ins1, threshhold / 2 / exchanges_snapshot[snapshot1]["b1"], client1.address[ins1], "")
     return record
 
 

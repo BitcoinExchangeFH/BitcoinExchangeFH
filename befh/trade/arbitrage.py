@@ -36,7 +36,9 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
     snapshot3 = '_'.join([ex1, instmt3])
 
     profit = 0
-    if not record["isready"]:
+    if not record["isready"] and record["detail"][snapshot1]["executedvolume"] != 0 \
+            and record["detail"][snapshot2]["executedvolume"] != 0 \
+            and record["detail"][snapshot3]["executedvolume"] != 0:
         if ex1 + ex2 + ins1 + ins2 == arbitragecode:
             profit = 1 / (record["detail"][snapshot2]["executedamount"] / record["detail"][snapshot2][
                 "executedvolume"]) * (
@@ -152,11 +154,8 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
     snapshot1 = '_'.join([ex1, instmt1])
     snapshot2 = '_'.join([ex2, instmt2])
     snapshot3 = '_'.join([ex1, instmt3])
-    if mjson["exchange"] in [ex1, ex2] and \
-                    mjson["instmt"] in [instmt1, instmt2, instmt3] and \
-                    snapshot1 in keys and \
-                    snapshot2 in keys and \
-                    snapshot3 in keys:
+    if (mjson["exchange"] in [ex1, ex2]) and (mjson["instmt"] in [instmt1, instmt2, instmt3]) and (
+                snapshot1 in keys) and (snapshot2 in keys) and (snapshot3 in keys):
 
         """BTC->ETH套利"""
         # 记录套利完成情况
@@ -195,9 +194,12 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
                     orderid3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
                                             exchanges_snapshot[snapshot3]["b1"],
                                             exchanges_snapshot[snapshot3]["b1"])
+                    assert isinstance(orderid3, int), "orderid(%s) = %s" % (type(orderid3), orderid3)
                     orderid1 = client1.buy(instmt1, amount, exchanges_snapshot[snapshot1]["a1"])
+                    assert isinstance(orderid1, int), "orderid(%s) = %s" % (type(orderid1), orderid1)
                     orderid2 = client2.buy(instmt2, amount / exchanges_snapshot[snapshot2]["a1"],
                                            exchanges_snapshot[snapshot2]["a1"])
+                    assert isinstance(orderid2, int), "orderid(%s) = %s" % (type(orderid2), orderid2)
                     UpdateRecord(client1, record, instmt3, orderid3, snapshot3,
                                  amount * exchanges_snapshot[snapshot1]["a1"] /
                                  exchanges_snapshot[snapshot3]["b1"])
@@ -319,7 +321,7 @@ if __name__ == '__main__':
     exchanges_snapshot = {}
     arbitrage_record = {}
     itchatsendtime = {}
-    threshhold = 90000
+    threshhold = 100000
 
     # itchat
     # itchat.auto_login(hotReload=True)
@@ -341,7 +343,7 @@ if __name__ == '__main__':
             Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "LTC", 0.01, 0.1,
                                0.012)
         except Exception as e:
-            logging.warning(e)
+            logging.exception(e)
 
         continue
 

@@ -332,9 +332,11 @@ if __name__ == '__main__':
         keys = exchanges_snapshot.keys()
         if mjson["exchange"] in TradeClients.keys():
             TradeClients[mjson["exchange"]].instmt_snapshot[mjson["instmt"]] = mjson
-
-        Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "ETH", 0.01, 0.01,
+        try:
+            Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "ETH", 0.01, 0.01,
                            0.005)
+        except e:
+            logging.warning(e)
 
         continue
 

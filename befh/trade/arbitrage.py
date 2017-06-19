@@ -171,7 +171,7 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
                 RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold)
             # 计算是否有盈利空间
             ratio = 1 / exchanges_snapshot[snapshot2]["a1"] * exchanges_snapshot[snapshot3][
-                "b1"] / exchanges_snapshot[snapshot1]["a1"] - 0.005 - 0.001 - 1
+                "b1"] / exchanges_snapshot[snapshot1]["a1"] - 1
             if ratio > ratiothreshhold:
                 executed = False
                 amount = min(exchanges_snapshot[snapshot2]["a1"] * exchanges_snapshot[snapshot2]["aq1"],
@@ -237,7 +237,7 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
             #     arbitrage_record[arbitragecode] = record
             # 计算是否有盈利空间
             ratio = exchanges_snapshot[snapshot2]["b1"] * exchanges_snapshot[snapshot1][
-                "b1"] / exchanges_snapshot[snapshot3]["a1"] - 0.005 - 0.001 - 1
+                "b1"] / exchanges_snapshot[snapshot3]["a1"] - 1
             if ratio > ratiothreshhold:
                 executed = False
                 amount = min(exchanges_snapshot[snapshot2]["bq1"],
@@ -333,10 +333,10 @@ if __name__ == '__main__':
         if mjson["exchange"] in TradeClients.keys():
             TradeClients[mjson["exchange"]].instmt_snapshot[mjson["instmt"]] = mjson
         try:
-            Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "ETH", 0.01,
-                               0.01, 0.005)
+            # Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "ETH", 0.01,
+            #                    0.01, 0.011)
             Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "LTC", 0.01, 0.1,
-                               0.005)
+                               0.012)
         except Exception as e:
             logging.warning(e)
 

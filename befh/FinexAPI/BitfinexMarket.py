@@ -61,7 +61,7 @@ class BitfinexMarket(Market):
         """Create a sell limit order"""
         response = place_order(str(amount), str(price), "sell", "exchange limit",
                                self.subscription_dict['_'.join([self.exchange, instmt])].instmt_code)
-        logg.info(json.dumps(response))
+        logging.info(json.dumps(response))
         if isinstance(response, dict):
             self.orderids.append(response["id"])
             order = Order(response["id"])
@@ -172,3 +172,6 @@ class BitfinexMarket(Market):
                 elif res['currency'] == 'xrp':
                     self.amount["SPOT_XRP" + self.currency] = float(res['amount'])
                     self.available["SPOT_XRP" + self.currency] = float(res['available'])
+                elif res['currency'] == 'ltc':
+                    self.amount["SPOT_LTC" + self.currency] = float(res['amount'])
+                    self.available["SPOT_LTC" + self.currency] = float(res['available'])

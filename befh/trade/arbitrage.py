@@ -261,8 +261,11 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
                     orderid1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
                                             exchanges_snapshot[snapshot1]["b1"],
                                             exchanges_snapshot[snapshot1]["b1"])
+                    assert isinstance(orderid1, int), "orderid(%s) = %s" % (type(orderid1), orderid1)
                     orderid3 = client1.buy(instmt3, amount, exchanges_snapshot[snapshot3]["a1"])
+                    assert isinstance(orderid3, int), "orderid(%s) = %s" % (type(orderid3), orderid3)
                     orderid2 = client2.sell(instmt2, amount, exchanges_snapshot[snapshot2]["b1"])
+                    assert isinstance(orderid2, int), "orderid(%s) = %s" % (type(orderid2), orderid2)
                     UpdateRecord(client1, record, instmt1, orderid1, snapshot1,
                                  amount * exchanges_snapshot[snapshot3]["a1"] /
                                  exchanges_snapshot[snapshot1]["b1"])
@@ -333,8 +336,8 @@ if __name__ == '__main__':
         if mjson["exchange"] in TradeClients.keys():
             TradeClients[mjson["exchange"]].instmt_snapshot[mjson["instmt"]] = mjson
         try:
-            # Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "ETH", 0.01,
-            #                    0.01, 0.011)
+            Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "ETH", 0.01,
+                               0.01, 0.011)
             Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "LTC", 0.01, 0.1,
                                0.012)
         except Exception as e:

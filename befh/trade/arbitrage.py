@@ -56,7 +56,7 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
                              "executedvolume"]) - 1
 
     updateaccount = False
-    if record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2]["iscompleted"] and \
+    if not record["isready"] and record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2]["iscompleted"] and \
             record["detail"][snapshot3]["iscompleted"]:
         record["isready"] = True
         record["time"] = time.time()
@@ -82,6 +82,7 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
         updateaccount = True
     elif time.time() - record["time"] > 60:
         updateaccount = True
+        record["time"] = time.time()
 
     # update arbitrage_record
     arbitrage_record[arbitragecode] = record

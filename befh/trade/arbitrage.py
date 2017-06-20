@@ -114,7 +114,8 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
         client1.get_info()
         client2.get_info()
         logging.warning(
-            ex1 + " " + ex2 + str(calcaccountsamount(TradeClients, [ex1, ex2])) + " profit:" + "{:.2%}".format(profit))
+            ex1 + " " + ex2 + " " + "{:.8}".format(
+                calcaccountsamount(TradeClients, [ex1, ex2])) + " profit:" + "{:.2%}".format(profit))
         # rebalance accounts
         if arbitrage_direction == 1:
             if client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] > threshhold / 2 and client2.available[

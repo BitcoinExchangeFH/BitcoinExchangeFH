@@ -25,7 +25,7 @@ def LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
     return record
 
 
-def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold,
+def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, globalvar,
                   arbitrage_direction):
     client1 = TradeClients[ex1]
     client2 = TradeClients[ex2]
@@ -35,6 +35,7 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
     snapshot1 = '_'.join([ex1, instmt1])
     snapshot2 = '_'.join([ex2, instmt2])
     snapshot3 = '_'.join([ex1, instmt3])
+    threshhold = globalvar["threshhold"]
 
     profit = 0
     if not record["isready"] and record["detail"][snapshot1]["executedvolume"] != 0 \
@@ -56,7 +57,8 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
                              "executedvolume"]) - 1
 
     updateaccount = False
-    if not record["isready"] and record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2]["iscompleted"] and \
+    if not record["isready"] and record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2][
+        "iscompleted"] and \
             record["detail"][snapshot3]["iscompleted"]:
         record["isready"] = True
         record["time"] = time.time()
@@ -79,10 +81,11 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
         record["detail"][snapshot3]["executedamount"] = 0.0
         record["detail"][snapshot3]["executedvolume"] = 0.0
 
+        globalvar["updateaccounttime"] = time.time()
         updateaccount = True
-    elif time.time() - record["time"] > 60:
+    elif time.time() - globalvar["updateaccounttime"] > 60:
+        globalvar["updateaccounttime"] = time.time()
         updateaccount = True
-        record["time"] = time.time()
 
     # update arbitrage_record
     arbitrage_record[arbitragecode] = record
@@ -187,7 +190,7 @@ def UpdateRecord(client, record, instmt, orderid, snapshot, amount):
                                   "executedvolume": executedvolume}
 
 
-def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, ins2, ins1thresh, ins2thresh,
+def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, ins2, ins1thresh, ins2thresh,
                        ratiothreshhold=0.01):
     keys = exchanges_snapshot.keys()
     client1 = TradeClients[ex1]
@@ -207,7 +210,7 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
         arbitragecode = ex1 + ex2 + ins1 + ins2
         if arbitragecode not in arbitrage_record.keys():
             record = LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
-            RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold,
+            RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, globalvar,
                           arbitrage_direction)
         else:
             record = LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
@@ -282,7 +285,7 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
             record = ReplaceOrder(instmt1, ins1thresh, record, snapshot1, client1)
             record = ReplaceOrder(instmt2, ins2thresh, record, snapshot2, client2)
             record = ReplaceOrder(instmt3, ins2thresh, record, snapshot3, client1)
-        RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold,
+        RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, globalvar,
                       arbitrage_direction)
 
         """ETH->BTC套利"""
@@ -290,7 +293,7 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
         arbitragecode = ex1 + ex2 + ins2 + ins1
         if arbitragecode not in arbitrage_record.keys():
             record = LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
-            RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold,
+            RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, globalvar,
                           arbitrage_direction)
         else:
             record = LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
@@ -360,7 +363,7 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
             record = ReplaceOrder(instmt1, ins1thresh, record, snapshot1, client1)
             record = ReplaceOrder(instmt2, 0, record, snapshot2, client2)
             record = ReplaceOrder(instmt3, ins2thresh, record, snapshot3, client1)
-        RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold,
+        RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, globalvar,
                       arbitrage_direction)
 
 
@@ -392,7 +395,7 @@ if __name__ == '__main__':
     exchanges_snapshot = {}
     arbitrage_record = {}
     itchatsendtime = {}
-    threshhold = 100000
+    globalvar = {"threshhold": 100000, "updateaccounttime": 0}
 
     # itchat
     # itchat.auto_login(hotReload=True)
@@ -409,9 +412,11 @@ if __name__ == '__main__':
         if mjson["exchange"] in TradeClients.keys():
             TradeClients[mjson["exchange"]].instmt_snapshot[mjson["instmt"]] = mjson
         try:
-            Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "ETH", 0.01,
+            Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "ETH",
+                               0.01,
                                0.01, 0.011)
-            Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "LTC", 0.01, 0.1,
+            Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "LTC",
+                               0.01, 0.1,
                                0.012)
         except Exception as e:
             logging.exception(e)

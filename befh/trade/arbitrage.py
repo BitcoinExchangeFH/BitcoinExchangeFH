@@ -8,6 +8,27 @@ from befh.subscription_manager import SubscriptionManager
 from befh.OkcoinAPI.OkcoinMarket import OkcoinMarket
 from befh.FinexAPI.BitfinexMarket import BitfinexMarket
 import logging
+import re
+
+
+def calcaccountsamount(TradeClients, exs):
+    AccountsAmount = 0
+    BaseEx = "OkCoinCN"
+    for ex in exs:
+        if ex == BaseEx and ex in TradeClients.keys():
+            AccountsAmount = AccountsAmount + TradeClients[ex].amount['total']
+        elif ex != BaseEx and BaseEx in TradeClients.keys() and ex in TradeClients.keys():
+            client = TradeClients[ex]
+            for symbol in client.amount:
+                if "SPOT" in symbol:
+                    ins = re.match(r"[a-zA-Z]+_([a-zA-Z]{3})[a-zA-Z]+$", symbol).group(1)
+                    instmt = '_'.join(["SPOT", ins]) + TradeClients[BaseEx].currency
+                    snapshot = '_'.join([BaseEx, instmt])
+                    if snapshot in exchanges_snapshot.keys():
+                        AccountsAmount = AccountsAmount + exchanges_snapshot[snapshot]["a1"] * client.amount[symbol]
+                elif "USD" == symbol:
+                    AccountsAmount = AccountsAmount + client.fc.convert(client.amount[symbol], symbol, "CNY")
+    return AccountsAmount
 
 
 def LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record):
@@ -38,28 +59,27 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
     threshhold = globalvar["threshhold"]
 
     profit = 0
-    if not record["isready"] and record["detail"][snapshot1]["executedvolume"] != 0 \
-            and record["detail"][snapshot2]["executedvolume"] != 0 \
-            and record["detail"][snapshot3]["executedvolume"] != 0:
-        if ex1 + ex2 + ins1 + ins2 == arbitragecode:
-            profit = 1 / (record["detail"][snapshot2]["executedamount"] / record["detail"][snapshot2][
-                "executedvolume"]) * (
-                         record["detail"][snapshot3]["executedamount"] / record["detail"][snapshot3][
-                             "executedvolume"]) / (
-                         record["detail"][snapshot1]["executedamount"] / record["detail"][snapshot1][
-                             "executedvolume"]) - 1
-        else:
-            profit = (record["detail"][snapshot2]["executedamount"] / record["detail"][snapshot2][
-                "executedvolume"]) * (
-                         record["detail"][snapshot1]["executedamount"] / record["detail"][snapshot1][
-                             "executedvolume"]) / (
-                         record["detail"][snapshot3]["executedamount"] / record["detail"][snapshot3][
-                             "executedvolume"]) - 1
-
     updateaccount = False
     if not record["isready"] and record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2][
-        "iscompleted"] and \
-            record["detail"][snapshot3]["iscompleted"]:
+        "iscompleted"] and record["detail"][snapshot3]["iscompleted"]:
+        if record["detail"][snapshot1]["executedvolume"] != 0 \
+                and record["detail"][snapshot2]["executedvolume"] != 0 \
+                and record["detail"][snapshot3]["executedvolume"] != 0:
+            if ex1 + ex2 + ins1 + ins2 == arbitragecode:
+                profit = 1 / (record["detail"][snapshot2]["executedamount"] / record["detail"][snapshot2][
+                    "executedvolume"]) * (
+                             record["detail"][snapshot3]["executedamount"] / record["detail"][snapshot3][
+                                 "executedvolume"]) / (
+                             record["detail"][snapshot1]["executedamount"] / record["detail"][snapshot1][
+                                 "executedvolume"]) - 1
+            else:
+                profit = (record["detail"][snapshot2]["executedamount"] / record["detail"][snapshot2][
+                    "executedvolume"]) * (
+                             record["detail"][snapshot1]["executedamount"] / record["detail"][snapshot1][
+                                 "executedvolume"]) / (
+                             record["detail"][snapshot3]["executedamount"] / record["detail"][snapshot3][
+                                 "executedvolume"]) - 1
+
         record["isready"] = True
         record["time"] = time.time()
         record["detail"][snapshot1]["iscompleted"] = True
@@ -90,15 +110,11 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
     # update arbitrage_record
     arbitrage_record[arbitragecode] = record
 
-    if profit != 0:
-        logging.warning(ex1 + " " + ex2 + " amount: " + str(
-            client1.available["total"] + client2.available['_'.join(["SPOT", ins2]) + client2.currency] *
-            exchanges_snapshot[snapshot3][
-                "a1"] + client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
-                "a1"]) + " profit:" + "{:.2%}".format(profit))
     if updateaccount:
         client1.get_info()
         client2.get_info()
+        logging.warning(
+            ex1 + " " + ex2 + str(calcaccountsamount(TradeClients, [ex1, ex2])) + " profit:" + "{:.2%}".format(profit))
         # rebalance accounts
         if arbitrage_direction == 1:
             if client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] > threshhold / 2 and client2.available[
@@ -260,7 +276,7 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                     executed = True
                 else:
                     if time.time() - globalvar["updateaccounttime"] > 60:
-                        logging.warning("There is arbitrage space but no amount!")
+                        logging.warning(arbitragecode + "There is arbitrage space but no amount!")
                 # record["detail"][snapshot1]["iscompleted"] = True
                 #     record["detail"][snapshot2]["iscompleted"] = True
                 #     record["detail"][snapshot3]["iscompleted"] = True
@@ -342,7 +358,7 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                     executed = True
                 else:
                     if time.time() - globalvar["updateaccounttime"] > 60:
-                        logging.warning("There is arbitrage space but no amount!")
+                        logging.warning(arbitragecode + "There is arbitrage space but no amount!")
                 # record["detail"][snapshot1]["iscompleted"] = True
                 #     record["detail"][snapshot2]["iscompleted"] = True
                 #     record["detail"][snapshot3]["iscompleted"] = True
@@ -399,7 +415,7 @@ if __name__ == '__main__':
     exchanges_snapshot = {}
     arbitrage_record = {}
     itchatsendtime = {}
-    globalvar = {"threshhold": 100000, "updateaccounttime": 0}
+    globalvar = {"threshhold": 100000, "updateaccounttime": 0, "AccountsAmount": 0}
 
     # itchat
     # itchat.auto_login(hotReload=True)

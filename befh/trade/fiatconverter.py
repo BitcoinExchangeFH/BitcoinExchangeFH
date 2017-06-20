@@ -47,10 +47,11 @@ class FiatConverter:
         if code_to == "USD":
             return
         code_from = "USD"
-        try:
-            rate = self.get_currency_pair(code_from, code_to)
-        except urllib.error.HTTPError:
-            rate = self.get_currency_pair_yahoo(code_from, code_to)
+        # try:
+        #     rate = self.get_currency_pair(code_from, code_to)
+        # except urllib.error.HTTPError:
+        #     rate = self.get_currency_pair_yahoo(code_from, code_to)
+        rate = self.get_currency_pair_yahoo(code_from, code_to)
         if rate:
             self.rates[code_to] = rate
 

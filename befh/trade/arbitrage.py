@@ -119,8 +119,11 @@ def ReplaceOrder(instmt, insthresh, record, snapshot, client):
             if order.remaining_amount > insthresh:
                 if order.side == "sell":
                     orderid = client.sell(instmt, order.remaining_amount, exchanges_snapshot[snapshot]["b1"])
+                    assert isinstance(orderid, int), "orderid(%s) = %s" % (type(orderid), orderid)
+
                 elif order.side == "buy":
                     orderid = client.buy(instmt, order.remaining_amount, exchanges_snapshot[snapshot]["a1"])
+                    assert isinstance(orderid, int), "orderid(%s) = %s" % (type(orderid), orderid)
                 record["detail"][snapshot]["orderid"] = orderid
             else:
                 record["detail"][snapshot]["iscompleted"] = True
@@ -183,6 +186,7 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
                     orderid3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
                                             exchanges_snapshot[snapshot3]["b1"],
                                             exchanges_snapshot[snapshot3]["b1"])
+                    assert isinstance(orderid3, int), "orderid(%s) = %s" % (type(orderid3), orderid3)
                     UpdateRecord(client1, record, instmt3, orderid3, snapshot3,
                                  amount * exchanges_snapshot[snapshot1]["a1"] /
                                  exchanges_snapshot[snapshot3]["b1"])
@@ -252,6 +256,7 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
                     orderid1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
                                             exchanges_snapshot[snapshot1]["b1"],
                                             exchanges_snapshot[snapshot1]["b1"])
+                    assert isinstance(orderid1, int), "orderid(%s) = %s" % (type(orderid1), orderid1)
                     UpdateRecord(client1, record, instmt1, orderid1, snapshot1,
                                  amount * exchanges_snapshot[snapshot3]["a1"] /
                                  exchanges_snapshot[snapshot1]["b1"])

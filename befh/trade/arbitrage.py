@@ -258,8 +258,10 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                     UpdateRecord(client2, record, instmt2, orderid2, snapshot2,
                                  amount / exchanges_snapshot[snapshot2]["a1"])
                     executed = True
-                # else:
-                #     record["detail"][snapshot1]["iscompleted"] = True
+                else:
+                    if time.time() - globalvar["updateaccounttime"] > 60:
+                        logging.warning("There is arbitrage space but no amount!")
+                # record["detail"][snapshot1]["iscompleted"] = True
                 #     record["detail"][snapshot2]["iscompleted"] = True
                 #     record["detail"][snapshot3]["iscompleted"] = True
                 #     if amount3 * exchanges_snapshot[snapshot1]["a1"] / exchanges_snapshot[snapshot3][
@@ -338,8 +340,10 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                     UpdateRecord(client1, record, instmt3, orderid3, snapshot3, amount)
                     UpdateRecord(client2, record, instmt2, orderid2, snapshot2, amount)
                     executed = True
-                # else:
-                #     record["detail"][snapshot1]["iscompleted"] = True
+                else:
+                    if time.time() - globalvar["updateaccounttime"] > 60:
+                        logging.warning("There is arbitrage space but no amount!")
+                # record["detail"][snapshot1]["iscompleted"] = True
                 #     record["detail"][snapshot2]["iscompleted"] = True
                 #     record["detail"][snapshot3]["iscompleted"] = True
                 #     if amount1 * exchanges_snapshot[snapshot3]["a1"] / exchanges_snapshot[snapshot1][

@@ -42,7 +42,7 @@ class BitfinexMarket(Market):
         """Create a buy limit order"""
         response = place_order(str(amount), str(price), "buy", "exchange limit",
                                self.subscription_dict['_'.join([self.exchange, instmt])].instmt_code)
-        logging.info(json.dumps(response))
+        logging.warning(json.dumps(response))
         if isinstance(response, dict):
             self.orderids.append(response["id"])
             order = Order(response["id"])
@@ -61,7 +61,7 @@ class BitfinexMarket(Market):
         """Create a sell limit order"""
         response = place_order(str(amount), str(price), "sell", "exchange limit",
                                self.subscription_dict['_'.join([self.exchange, instmt])].instmt_code)
-        logging.info(json.dumps(response))
+        logging.warning(json.dumps(response))
         if isinstance(response, dict):
             self.orderids.append(response["id"])
             order = Order(response["id"])
@@ -79,6 +79,7 @@ class BitfinexMarket(Market):
 
     def orderstatus(self, instmt, id):
         response = status_order(id)
+        logging.info(json.dumps(response))
         if isinstance(response,dict):
             order = Order(response["id"])
             order.original_amount = float(response["original_amount"])
@@ -100,11 +101,12 @@ class BitfinexMarket(Market):
                 self.orders[id] = order
             return False, order
         else:
+            logging.error(json.dumps(response))
             pass
 
     def cancelorder(self, instmt, id):
         response = delete_order(id)
-        logging.info(json.dumps(response))
+        logging.warning(json.dumps(response))
         if not isinstance(response, dict):
             status, order = self.orderstatus(instmt, id)
             if id in self.orderids:
@@ -141,7 +143,7 @@ class BitfinexMarket(Market):
         elif coin == "LTC":
             withdraw_type = "litecoin"
         response = withdraw(withdraw_type, "exchange", str(amount), address, payment_id)
-        logging.info(json.dumps(response))
+        logging.warning(json.dumps(response))
         if isinstance(response,list):
             if response[0]["status"] == "success":
                 return True, response[0]["withdrawal_id"]
@@ -151,7 +153,7 @@ class BitfinexMarket(Market):
     def get_info(self):
         """Get balance"""
         response = balances()
-        logging.info(json.dumps(response))
+        logging.warning(json.dumps(response))
         for res in response:
             if res["type"] == "exchange":
                 if res['currency'] == 'usd':

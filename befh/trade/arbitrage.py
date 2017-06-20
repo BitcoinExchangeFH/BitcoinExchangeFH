@@ -91,7 +91,7 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
     arbitrage_record[arbitragecode] = record
 
     if profit != 0:
-        logging.info(ex1 + " " + ex2 + " amount: " + str(
+        logging.warning(ex1 + " " + ex2 + " amount: " + str(
             client1.available["total"] + client2.available['_'.join(["SPOT", ins2]) + client2.currency] *
             exchanges_snapshot[snapshot3][
                 "a1"] + client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][

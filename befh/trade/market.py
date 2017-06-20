@@ -35,7 +35,7 @@ class Market:
         self.orders = {}
         self.address = {}
         # config the logging
-        logging.basicConfig(level=logging.INFO,
+        logging.basicConfig(level=logging.WARNING,
                                  format='%(asctime)s %(filename)s LINE %(lineno)d: %(levelname)s %(message)s')
 
     def __str__(self):

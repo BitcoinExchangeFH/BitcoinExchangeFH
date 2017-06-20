@@ -25,7 +25,8 @@ def LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
     return record
 
 
-def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold):
+def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold,
+                  arbitrage_direction):
     client1 = TradeClients[ex1]
     client2 = TradeClients[ex2]
     instmt1 = '_'.join(["SPOT", ins1]) + client1.currency
@@ -89,20 +90,39 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
             "a1"]) + " profit:" + "{:.2%}".format(profit))
 
     # rebalance accounts
-    if client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] > threshhold and client2.available[
-                '_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1]["a1"] < threshhold / 2:
-        client1.withdrawcoin(instmt1, threshhold / 2 / exchanges_snapshot[snapshot1]["a1"], client2.address[ins1],
-                             "address")
-    if client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"] > threshhold and client2.available[
-                '_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3]["a1"] < threshhold / 2:
-        client1.withdrawcoin(instmt3, threshhold / 2 / exchanges_snapshot[snapshot3]["a1"], client2.address[ins2],
-                             "address")
-    if client2.available['_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
-        "a1"] > threshhold and client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"] < threshhold / 2:
-        client2.withdrawcoin(ins2, threshhold / 2 / exchanges_snapshot[snapshot3]["b1"], client1.address[ins2], "")
-    if client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
-        "a1"] > threshhold and client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] < threshhold / 2:
-        client2.withdrawcoin(ins1, threshhold / 2 / exchanges_snapshot[snapshot1]["b1"], client1.address[ins1], "")
+    if arbitrage_direction == 1:
+        if client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] > threshhold / 2 and client2.available[
+                    '_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1]["a1"] < threshhold / 2:
+            client1.withdrawcoin(instmt1, threshhold / 2 / exchanges_snapshot[snapshot1]["a1"], client2.address[ins1],
+                                 "address")
+        if client2.available['_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
+            "a1"] > threshhold / 2 and client1.available[instmt3] * exchanges_snapshot[snapshot3][
+            "a1"] < threshhold / 2:
+            client2.withdrawcoin(ins2, threshhold / 2 / exchanges_snapshot[snapshot3]["b1"], client1.address[ins2], "")
+    elif arbitrage_direction == -1:
+        if client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"] > threshhold / 2 and client2.available[
+                    '_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3]["a1"] < threshhold / 2:
+            client1.withdrawcoin(instmt3, threshhold / 2 / exchanges_snapshot[snapshot3]["a1"], client2.address[ins2],
+                                 "address")
+        if client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
+            "a1"] > threshhold / 2 and client1.available[instmt1] * exchanges_snapshot[snapshot1][
+            "a1"] < threshhold / 2:
+            client2.withdrawcoin(ins1, threshhold / 2 / exchanges_snapshot[snapshot1]["b1"], client1.address[ins1], "")
+    else:
+        if client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] > threshhold and client2.available[
+                    '_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1]["a1"] < threshhold / 2:
+            client1.withdrawcoin(instmt1, threshhold / 2 / exchanges_snapshot[snapshot1]["a1"], client2.address[ins1],
+                                 "address")
+        if client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"] > threshhold and client2.available[
+                    '_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3]["a1"] < threshhold / 2:
+            client1.withdrawcoin(instmt3, threshhold / 2 / exchanges_snapshot[snapshot3]["a1"], client2.address[ins2],
+                                 "address")
+        if client2.available['_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
+            "a1"] > threshhold and client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"] < threshhold / 2:
+            client2.withdrawcoin(ins2, threshhold / 2 / exchanges_snapshot[snapshot3]["b1"], client1.address[ins2], "")
+        if client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
+            "a1"] > threshhold and client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] < threshhold / 2:
+            client2.withdrawcoin(ins1, threshhold / 2 / exchanges_snapshot[snapshot1]["b1"], client1.address[ins1], "")
     return record
 
 
@@ -157,6 +177,7 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
     snapshot1 = '_'.join([ex1, instmt1])
     snapshot2 = '_'.join([ex2, instmt2])
     snapshot3 = '_'.join([ex1, instmt3])
+    arbitrage_direction = 0
     if (mjson["exchange"] in [ex1, ex2]) and (mjson["instmt"] in [instmt1, instmt2, instmt3]) and (
                 snapshot1 in keys) and (snapshot2 in keys) and (snapshot3 in keys):
 
@@ -165,23 +186,28 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
         arbitragecode = ex1 + ex2 + ins1 + ins2
         if arbitragecode not in arbitrage_record.keys():
             record = LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
-            RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold)
+            RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold,
+                          arbitrage_direction)
         else:
             record = LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
         if record["isready"]:
             if time.time() - record["time"] > 60:
-                RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold)
+                RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold,
+                              arbitrage_direction)
             # 计算是否有盈利空间
             ratio = 1 / exchanges_snapshot[snapshot2]["a1"] * exchanges_snapshot[snapshot3][
                 "b1"] / exchanges_snapshot[snapshot1]["a1"] - 1
             if ratio > ratiothreshhold:
+                arbitrage_direction = 1
                 executed = False
-                amount = min(exchanges_snapshot[snapshot2]["a1"] * exchanges_snapshot[snapshot2]["aq1"],
-                             exchanges_snapshot[snapshot1]["aq1"], exchanges_snapshot[snapshot3][
-                                 "bq1"] * exchanges_snapshot[snapshot3]["b1"] / exchanges_snapshot[snapshot1]["a1"],
-                             client1.available[instmt3] * exchanges_snapshot[snapshot3]["b1"] /
-                             exchanges_snapshot[snapshot1]["a1"] - ins1thresh,
-                             client2.available['_'.join(["SPOT", ins1]) + client2.currency] - ins1thresh)
+                amountbasic = min(exchanges_snapshot[snapshot2]["a1"] * exchanges_snapshot[snapshot2]["aq1"],
+                                  exchanges_snapshot[snapshot1]["aq1"], exchanges_snapshot[snapshot3][
+                                      "bq1"] * exchanges_snapshot[snapshot3]["b1"] / exchanges_snapshot[snapshot1][
+                                      "a1"])
+                amount3 = min(amountbasic, client1.available[instmt3] * exchanges_snapshot[snapshot3]["b1"] /
+                              exchanges_snapshot[snapshot1]["a1"] - ins1thresh)
+                amount2 = min(amountbasic, client2.available['_'.join(["SPOT", ins1]) + client2.currency] - ins1thresh)
+                amount = min(amountbasic, amount3, amount2)
                 if client1.available[client1.currency] / exchanges_snapshot[snapshot1]["a1"] < amount + ins1thresh:
                     orderid3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
                                             exchanges_snapshot[snapshot3]["b1"],
@@ -211,12 +237,33 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
                     UpdateRecord(client2, record, instmt2, orderid2, snapshot2,
                                  amount / exchanges_snapshot[snapshot2]["a1"])
                     executed = True
+                else:
+                    record["detail"][snapshot1]["iscompleted"] = True
+                    record["detail"][snapshot2]["iscompleted"] = True
+                    record["detail"][snapshot3]["iscompleted"] = True
+                    if amount3 * exchanges_snapshot[snapshot1]["a1"] / exchanges_snapshot[snapshot3][
+                        "b1"] >= ins2thresh:
+                        orderid3 = client1.sell(instmt3, amount3 * exchanges_snapshot[snapshot1]["a1"] /
+                                                exchanges_snapshot[snapshot3]["b1"],
+                                                exchanges_snapshot[snapshot3]["b1"])
+                        assert isinstance(orderid3, int), "orderid(%s) = %s" % (type(orderid3), orderid3)
+                        UpdateRecord(client1, record, instmt3, orderid3, snapshot3,
+                                     amount3 * exchanges_snapshot[snapshot1]["a1"] /
+                                     exchanges_snapshot[snapshot3]["b1"])
+                        executed = True
+                    if amount2 >= ins1thresh:
+                        orderid2 = client2.buy(instmt2, amount2 / exchanges_snapshot[snapshot2]["a1"],
+                                               exchanges_snapshot[snapshot2]["a1"])
+                        assert isinstance(orderid2, int), "orderid(%s) = %s" % (type(orderid2), orderid2)
+                        UpdateRecord(client2, record, instmt2, orderid2, snapshot2,
+                                     amount2 / exchanges_snapshot[snapshot2]["a1"])
+                        executed = True
                 if executed:
                     record["isready"] = False
                     if record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2]["iscompleted"] and \
                             record["detail"][snapshot3]["iscompleted"]:
                         RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode,
-                                      threshhold)
+                                      threshhold, arbitrage_direction)
                     else:
                         arbitrage_record[arbitragecode] = record
         else:
@@ -225,7 +272,8 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
             record = ReplaceOrder(instmt3, ins2thresh, record, snapshot3, client1)
             if record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2]["iscompleted"] and \
                     record["detail"][snapshot3]["iscompleted"]:
-                RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold)
+                RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold,
+                              arbitrage_direction)
             else:
                 arbitrage_record[arbitragecode] = record
 
@@ -234,24 +282,27 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
         arbitragecode = ex1 + ex2 + ins2 + ins1
         if arbitragecode not in arbitrage_record.keys():
             record = LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
-            RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold)
+            RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold,
+                          arbitrage_direction)
         else:
             record = LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
         if record["isready"]:
             # if time.time() - record["time"] > 60:
-            #     RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold)
+            #     RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold,arbitrage_direction)
             #     arbitrage_record[arbitragecode] = record
             # 计算是否有盈利空间
             ratio = exchanges_snapshot[snapshot2]["b1"] * exchanges_snapshot[snapshot1][
                 "b1"] / exchanges_snapshot[snapshot3]["a1"] - 1
             if ratio > ratiothreshhold:
+                arbitrage_direction = -1
                 executed = False
-                amount = min(exchanges_snapshot[snapshot2]["bq1"],
-                             exchanges_snapshot[snapshot3]["aq1"], exchanges_snapshot[snapshot1][
-                                 "bq1"] * exchanges_snapshot[snapshot1]["b1"] / exchanges_snapshot[snapshot3]["a1"],
-                             client1.available[instmt1] * exchanges_snapshot[snapshot1]["b1"] /
-                             exchanges_snapshot[snapshot3]["a1"] - ins2thresh,
-                             client2.available['_'.join(["SPOT", ins2]) + client2.currency] - ins2thresh)
+                amountbasic = min(exchanges_snapshot[snapshot2]["bq1"], exchanges_snapshot[snapshot3]["aq1"],
+                                  exchanges_snapshot[snapshot1]["bq1"] * exchanges_snapshot[snapshot1]["b1"] /
+                                  exchanges_snapshot[snapshot3]["a1"])
+                amount1 = min(amountbasic, client1.available[instmt1] * exchanges_snapshot[snapshot1]["b1"] /
+                              exchanges_snapshot[snapshot3]["a1"] - ins2thresh)
+                amount2 = min(amountbasic, client2.available['_'.join(["SPOT", ins2]) + client2.currency] - ins2thresh)
+                amount = min(amountbasic, amount1, amount2)
                 if client1.available[client1.currency] / exchanges_snapshot[snapshot3]["a1"] < amount + ins2thresh:
                     orderid1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
                                             exchanges_snapshot[snapshot1]["b1"],
@@ -279,12 +330,31 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
                     UpdateRecord(client1, record, instmt3, orderid3, snapshot3, amount)
                     UpdateRecord(client2, record, instmt2, orderid2, snapshot2, amount)
                     executed = True
+                else:
+                    record["detail"][snapshot1]["iscompleted"] = True
+                    record["detail"][snapshot2]["iscompleted"] = True
+                    record["detail"][snapshot3]["iscompleted"] = True
+                    if amount1 * exchanges_snapshot[snapshot3]["a1"] / exchanges_snapshot[snapshot1][
+                        "b1"] >= ins1thresh:
+                        orderid1 = client1.sell(instmt1, amount1 * exchanges_snapshot[snapshot3]["a1"] /
+                                                exchanges_snapshot[snapshot1]["b1"],
+                                                exchanges_snapshot[snapshot1]["b1"])
+                        assert isinstance(orderid1, int), "orderid(%s) = %s" % (type(orderid1), orderid1)
+                        UpdateRecord(client1, record, instmt1, orderid1, snapshot1,
+                                     amount1 * exchanges_snapshot[snapshot3]["a1"] /
+                                     exchanges_snapshot[snapshot1]["b1"])
+                        executed = True
+                    if amount2 >= ins2thresh:
+                        orderid2 = client2.sell(instmt2, amount2, exchanges_snapshot[snapshot2]["b1"])
+                        assert isinstance(orderid2, int), "orderid(%s) = %s" % (type(orderid2), orderid2)
+                        UpdateRecord(client2, record, instmt2, orderid2, snapshot2, amount2)
+                        executed = True
                 if executed:
                     record["isready"] = False
                     if record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2]["iscompleted"] and \
                             record["detail"][snapshot3]["iscompleted"]:
                         RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode,
-                                      threshhold)
+                                      threshhold, arbitrage_direction)
                     else:
                         arbitrage_record[arbitragecode] = record
         else:
@@ -293,7 +363,8 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
             record = ReplaceOrder(instmt3, ins2thresh, record, snapshot3, client1)
             if record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2]["iscompleted"] and \
                     record["detail"][snapshot3]["iscompleted"]:
-                RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold)
+                RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold,
+                              arbitrage_direction)
             else:
                 arbitrage_record[arbitragecode] = record
 

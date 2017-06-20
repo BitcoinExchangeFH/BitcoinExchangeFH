@@ -55,74 +55,94 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
                          record["detail"][snapshot3]["executedamount"] / record["detail"][snapshot3][
                              "executedvolume"]) - 1
 
-    record["isready"] = True
-    record["time"] = time.time()
-    record["detail"][snapshot1]["iscompleted"] = True
-    record["detail"][snapshot1]["originalamount"] = 0.0
-    record["detail"][snapshot1]["orderid"] = 0
-    record["detail"][snapshot1]["remainamount"] = 0.0
-    record["detail"][snapshot1]["executedamount"] = 0.0
-    record["detail"][snapshot1]["executedvolume"] = 0.0
-    record["detail"][snapshot2]["iscompleted"] = True
-    record["detail"][snapshot2]["originalamount"] = 0.0
-    record["detail"][snapshot2]["orderid"] = 0
-    record["detail"][snapshot2]["remainamount"] = 0.0
-    record["detail"][snapshot2]["executedamount"] = 0.0
-    record["detail"][snapshot2]["executedvolume"] = 0.0
-    record["detail"][snapshot3]["iscompleted"] = True
-    record["detail"][snapshot3]["originalamount"] = 0.0
-    record["detail"][snapshot3]["orderid"] = 0
-    record["detail"][snapshot3]["remainamount"] = 0.0
-    record["detail"][snapshot3]["executedamount"] = 0.0
-    record["detail"][snapshot3]["executedvolume"] = 0.0
+    updateaccount = False
+    if record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2]["iscompleted"] and \
+            record["detail"][snapshot3]["iscompleted"]:
+        record["isready"] = True
+        record["time"] = time.time()
+        record["detail"][snapshot1]["iscompleted"] = True
+        record["detail"][snapshot1]["originalamount"] = 0.0
+        record["detail"][snapshot1]["orderid"] = 0
+        record["detail"][snapshot1]["remainamount"] = 0.0
+        record["detail"][snapshot1]["executedamount"] = 0.0
+        record["detail"][snapshot1]["executedvolume"] = 0.0
+        record["detail"][snapshot2]["iscompleted"] = True
+        record["detail"][snapshot2]["originalamount"] = 0.0
+        record["detail"][snapshot2]["orderid"] = 0
+        record["detail"][snapshot2]["remainamount"] = 0.0
+        record["detail"][snapshot2]["executedamount"] = 0.0
+        record["detail"][snapshot2]["executedvolume"] = 0.0
+        record["detail"][snapshot3]["iscompleted"] = True
+        record["detail"][snapshot3]["originalamount"] = 0.0
+        record["detail"][snapshot3]["orderid"] = 0
+        record["detail"][snapshot3]["remainamount"] = 0.0
+        record["detail"][snapshot3]["executedamount"] = 0.0
+        record["detail"][snapshot3]["executedvolume"] = 0.0
+
+        updateaccount = True
+    elif time.time() - record["time"] > 60:
+        updateaccount = True
 
     # update arbitrage_record
     arbitrage_record[arbitragecode] = record
 
-    # refresh account
-    client1.get_info()
-    client2.get_info()
-
-    logging.info(ex1 + " " + ex2 + " amount: " + str(
-        client1.available["total"] + client2.available['_'.join(["SPOT", ins2]) + client2.currency] *
-        exchanges_snapshot[snapshot3][
-            "a1"] + client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
-            "a1"]) + " profit:" + "{:.2%}".format(profit))
-
-    # rebalance accounts
-    if arbitrage_direction == 1:
-        if client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] > threshhold / 2 and client2.available[
-                    '_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1]["a1"] < threshhold / 2:
-            client1.withdrawcoin(instmt1, threshhold / 2 / exchanges_snapshot[snapshot1]["a1"], client2.address[ins1],
-                                 "address")
-        if client2.available['_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
-            "a1"] > threshhold / 2 and client1.available[instmt3] * exchanges_snapshot[snapshot3][
-            "a1"] < threshhold / 2:
-            client2.withdrawcoin(ins2, threshhold / 2 / exchanges_snapshot[snapshot3]["b1"], client1.address[ins2], "")
-    elif arbitrage_direction == -1:
-        if client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"] > threshhold / 2 and client2.available[
-                    '_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3]["a1"] < threshhold / 2:
-            client1.withdrawcoin(instmt3, threshhold / 2 / exchanges_snapshot[snapshot3]["a1"], client2.address[ins2],
-                                 "address")
-        if client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
-            "a1"] > threshhold / 2 and client1.available[instmt1] * exchanges_snapshot[snapshot1][
-            "a1"] < threshhold / 2:
-            client2.withdrawcoin(ins1, threshhold / 2 / exchanges_snapshot[snapshot1]["b1"], client1.address[ins1], "")
-    else:
-        if client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] > threshhold and client2.available[
-                    '_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1]["a1"] < threshhold / 2:
-            client1.withdrawcoin(instmt1, threshhold / 2 / exchanges_snapshot[snapshot1]["a1"], client2.address[ins1],
-                                 "address")
-        if client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"] > threshhold and client2.available[
-                    '_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3]["a1"] < threshhold / 2:
-            client1.withdrawcoin(instmt3, threshhold / 2 / exchanges_snapshot[snapshot3]["a1"], client2.address[ins2],
-                                 "address")
-        if client2.available['_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
-            "a1"] > threshhold and client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"] < threshhold / 2:
-            client2.withdrawcoin(ins2, threshhold / 2 / exchanges_snapshot[snapshot3]["b1"], client1.address[ins2], "")
-        if client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
-            "a1"] > threshhold and client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] < threshhold / 2:
-            client2.withdrawcoin(ins1, threshhold / 2 / exchanges_snapshot[snapshot1]["b1"], client1.address[ins1], "")
+    if profit != 0:
+        logging.info(ex1 + " " + ex2 + " amount: " + str(
+            client1.available["total"] + client2.available['_'.join(["SPOT", ins2]) + client2.currency] *
+            exchanges_snapshot[snapshot3][
+                "a1"] + client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
+                "a1"]) + " profit:" + "{:.2%}".format(profit))
+    if updateaccount:
+        client1.get_info()
+        client2.get_info()
+        # rebalance accounts
+        if arbitrage_direction == 1:
+            if client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] > threshhold / 2 and client2.available[
+                        '_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
+                "a1"] < threshhold / 2:
+                client1.withdrawcoin(instmt1, threshhold / 2 / exchanges_snapshot[snapshot1]["a1"],
+                                     client2.address[ins1],
+                                     "address")
+            if client2.available['_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
+                "a1"] > threshhold / 2 and client1.available[instmt3] * exchanges_snapshot[snapshot3][
+                "a1"] < threshhold / 2:
+                client2.withdrawcoin(ins2, threshhold / 2 / exchanges_snapshot[snapshot3]["b1"], client1.address[ins2],
+                                     "")
+        elif arbitrage_direction == -1:
+            if client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"] > threshhold / 2 and client2.available[
+                        '_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
+                "a1"] < threshhold / 2:
+                client1.withdrawcoin(instmt3, threshhold / 2 / exchanges_snapshot[snapshot3]["a1"],
+                                     client2.address[ins2],
+                                     "address")
+            if client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
+                "a1"] > threshhold / 2 and client1.available[instmt1] * exchanges_snapshot[snapshot1][
+                "a1"] < threshhold / 2:
+                client2.withdrawcoin(ins1, threshhold / 2 / exchanges_snapshot[snapshot1]["b1"], client1.address[ins1],
+                                     "")
+        else:
+            if client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] > threshhold and client2.available[
+                        '_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
+                "a1"] < threshhold / 2:
+                client1.withdrawcoin(instmt1, threshhold / 2 / exchanges_snapshot[snapshot1]["a1"],
+                                     client2.address[ins1],
+                                     "address")
+            if client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"] > threshhold and client2.available[
+                        '_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
+                "a1"] < threshhold / 2:
+                client1.withdrawcoin(instmt3, threshhold / 2 / exchanges_snapshot[snapshot3]["a1"],
+                                     client2.address[ins2],
+                                     "address")
+            if client2.available['_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
+                "a1"] > threshhold and client1.available[instmt3] * exchanges_snapshot[snapshot3][
+                "a1"] < threshhold / 2:
+                client2.withdrawcoin(ins2, threshhold / 2 / exchanges_snapshot[snapshot3]["b1"], client1.address[ins2],
+                                     "")
+            if client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
+                "a1"] > threshhold and client1.available[instmt1] * exchanges_snapshot[snapshot1][
+                "a1"] < threshhold / 2:
+                client2.withdrawcoin(ins1, threshhold / 2 / exchanges_snapshot[snapshot1]["b1"], client1.address[ins1],
+                                     "")
     return record
 
 
@@ -191,9 +211,6 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
         else:
             record = LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
         if record["isready"]:
-            if time.time() - record["time"] > 60:
-                RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold,
-                              arbitrage_direction)
             # 计算是否有盈利空间
             ratio = 1 / exchanges_snapshot[snapshot2]["a1"] * exchanges_snapshot[snapshot3][
                 "b1"] / exchanges_snapshot[snapshot1]["a1"] - 1
@@ -260,22 +277,12 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
                 #         executed = True
                 if executed:
                     record["isready"] = False
-                    if record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2]["iscompleted"] and \
-                            record["detail"][snapshot3]["iscompleted"]:
-                        RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode,
-                                      threshhold, arbitrage_direction)
-                    else:
-                        arbitrage_record[arbitragecode] = record
         else:
             record = ReplaceOrder(instmt1, ins1thresh, record, snapshot1, client1)
             record = ReplaceOrder(instmt2, ins2thresh, record, snapshot2, client2)
             record = ReplaceOrder(instmt3, ins2thresh, record, snapshot3, client1)
-            if record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2]["iscompleted"] and \
-                    record["detail"][snapshot3]["iscompleted"]:
-                RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold,
-                              arbitrage_direction)
-            else:
-                arbitrage_record[arbitragecode] = record
+        RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold,
+                      arbitrage_direction)
 
         """ETH->BTC套利"""
         # 记录套利完成情况
@@ -287,9 +294,6 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
         else:
             record = LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
         if record["isready"]:
-            # if time.time() - record["time"] > 60:
-            #     RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold,arbitrage_direction)
-            #     arbitrage_record[arbitragecode] = record
             # 计算是否有盈利空间
             ratio = exchanges_snapshot[snapshot2]["b1"] * exchanges_snapshot[snapshot1][
                 "b1"] / exchanges_snapshot[snapshot3]["a1"] - 1
@@ -351,22 +355,12 @@ def Exchange3Arbitrage(mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, 
                 #         executed = True
                 if executed:
                     record["isready"] = False
-                    if record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2]["iscompleted"] and \
-                            record["detail"][snapshot3]["iscompleted"]:
-                        RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode,
-                                      threshhold, arbitrage_direction)
-                    else:
-                        arbitrage_record[arbitragecode] = record
         else:
             record = ReplaceOrder(instmt1, ins1thresh, record, snapshot1, client1)
             record = ReplaceOrder(instmt2, 0, record, snapshot2, client2)
             record = ReplaceOrder(instmt3, ins2thresh, record, snapshot3, client1)
-            if record["detail"][snapshot1]["iscompleted"] and record["detail"][snapshot2]["iscompleted"] and \
-                    record["detail"][snapshot3]["iscompleted"]:
-                RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold,
-                              arbitrage_direction)
-            else:
-                arbitrage_record[arbitragecode] = record
+        RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, threshhold,
+                      arbitrage_direction)
 
 
 if __name__ == '__main__':

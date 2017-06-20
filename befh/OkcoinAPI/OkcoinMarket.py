@@ -137,7 +137,7 @@ class OkcoinMarket(Market):
         """Get balance"""
         response = self.okcoinSpot.userinfo()
         response = json.loads(response)
-        logging.warning(json.dumps(response))
+        logging.info(json.dumps(response))
         if response["result"]:
             self.amount["total"] = float(response["info"]["funds"]["asset"]["total"])
             self.available["total"] = float(response["info"]["funds"]["asset"]["net"])

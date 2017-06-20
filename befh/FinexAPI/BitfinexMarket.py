@@ -153,7 +153,7 @@ class BitfinexMarket(Market):
     def get_info(self):
         """Get balance"""
         response = balances()
-        logging.warning(json.dumps(response))
+        logging.info(json.dumps(response))
         for res in response:
             if res["type"] == "exchange":
                 if res['currency'] == 'usd':

@@ -1,6 +1,7 @@
 import zmq
 import itchat
 import time
+import logging
 
 market_feed_name = "marketfeed"
 context = zmq.Context()
@@ -181,5 +182,5 @@ while True:
 
                 # print(mjson)
     except Exception as e:
-        print(Exception)
+        logging.exception(e)
         pass

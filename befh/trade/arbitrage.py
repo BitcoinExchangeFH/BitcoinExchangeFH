@@ -277,7 +277,7 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                 else:
                     if time.time() - globalvar["updateaccounttime"] > 60:
                         logging.warning(
-                            arbitragecode + " The arbitrage space is " + "{.2%}".format(ratio) + " but no amount!")
+                            arbitragecode + " The arbitrage space is " + "{:.2%}".format(ratio) + " but no amount!")
                 # record["detail"][snapshot1]["iscompleted"] = True
                 #     record["detail"][snapshot2]["iscompleted"] = True
                 #     record["detail"][snapshot3]["iscompleted"] = True
@@ -359,7 +359,7 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                     executed = True
                 else:
                     if time.time() - globalvar["updateaccounttime"] > 60:
-                        logging.warning(arbitragecode + " The arbitrage space is "+"{.2%}".format(ratio)+" but no amount!")
+                        logging.warning(arbitragecode + " The arbitrage space is "+"{:.2%}".format(ratio)+" but no amount!")
                 # record["detail"][snapshot1]["iscompleted"] = True
                 #     record["detail"][snapshot2]["iscompleted"] = True
                 #     record["detail"][snapshot3]["iscompleted"] = True

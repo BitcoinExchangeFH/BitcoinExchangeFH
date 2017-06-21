@@ -9,6 +9,7 @@ from befh.OkcoinAPI.OkcoinMarket import OkcoinMarket
 from befh.FinexAPI.BitfinexMarket import BitfinexMarket
 import logging
 import re
+import random
 
 
 def calcaccountsamount(TradeClients, exs):
@@ -114,55 +115,61 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
         client1.get_info()
         client2.get_info()
         logging.warning(arbitragecode + " " + "{:.4f}".format(
-                calcaccountsamount(TradeClients, [ex1, ex2])) + " profit:" + "{:.2%}".format(profit))
+            calcaccountsamount(TradeClients, [ex1, ex2])) + " profit:" + "{:.2%}".format(profit))
         # rebalance accounts
         if arbitrage_direction == 1:
             if client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] > threshhold / 2 and client2.available[
                         '_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
                 "a1"] < threshhold / 2:
-                client1.withdrawcoin(instmt1, threshhold / 2 / exchanges_snapshot[snapshot1]["a1"],
+                client1.withdrawcoin(instmt1,
+                                     threshhold / 2 / exchanges_snapshot[snapshot1]["a1"] * (1 - random.random() / 10),
                                      client2.address[ins1],
                                      "address")
             if client2.available['_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
                 "a1"] > threshhold / 2 and client1.available[instmt3] * exchanges_snapshot[snapshot3][
                 "a1"] < threshhold / 2:
-                client2.withdrawcoin(ins2, threshhold / 2 / exchanges_snapshot[snapshot3]["b1"], client1.address[ins2],
+                client2.withdrawcoin(ins2,
+                                     threshhold / 2 / exchanges_snapshot[snapshot3]["b1"] * (1 - random.random() / 10),
+                                     client1.address[ins2],
                                      "")
         elif arbitrage_direction == -1:
             if client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"] > threshhold / 2 and client2.available[
                         '_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
                 "a1"] < threshhold / 2:
-                client1.withdrawcoin(instmt3, threshhold / 2 / exchanges_snapshot[snapshot3]["a1"],
+                client1.withdrawcoin(instmt3,
+                                     threshhold / 2 / exchanges_snapshot[snapshot3]["a1"] * (1 - random.random() / 10),
                                      client2.address[ins2],
                                      "address")
             if client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
                 "a1"] > threshhold / 2 and client1.available[instmt1] * exchanges_snapshot[snapshot1][
                 "a1"] < threshhold / 2:
-                client2.withdrawcoin(ins1, threshhold / 2 / exchanges_snapshot[snapshot1]["b1"], client1.address[ins1],
+                client2.withdrawcoin(ins1,
+                                     threshhold / 2 / exchanges_snapshot[snapshot1]["b1"] * (1 - random.random() / 10),
+                                     client1.address[ins1],
                                      "")
-        # else:
-        #     if client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] > threshhold and client2.available[
-        #                 '_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
-        #         "a1"] < threshhold / 2:
-        #         client1.withdrawcoin(instmt1, threshhold / 2 / exchanges_snapshot[snapshot1]["a1"],
-        #                              client2.address[ins1],
-        #                              "address")
-        #     if client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"] > threshhold and client2.available[
-        #                 '_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
-        #         "a1"] < threshhold / 2:
-        #         client1.withdrawcoin(instmt3, threshhold / 2 / exchanges_snapshot[snapshot3]["a1"],
-        #                              client2.address[ins2],
-        #                              "address")
-        #     if client2.available['_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
-        #         "a1"] > threshhold and client1.available[instmt3] * exchanges_snapshot[snapshot3][
-        #         "a1"] < threshhold / 2:
-        #         client2.withdrawcoin(ins2, threshhold / 2 / exchanges_snapshot[snapshot3]["b1"], client1.address[ins2],
-        #                              "")
-        #     if client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
-        #         "a1"] > threshhold and client1.available[instmt1] * exchanges_snapshot[snapshot1][
-        #         "a1"] < threshhold / 2:
-        #         client2.withdrawcoin(ins1, threshhold / 2 / exchanges_snapshot[snapshot1]["b1"], client1.address[ins1],
-        #                              "")
+                # else:
+                #     if client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] > threshhold and client2.available[
+                #                 '_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
+                #         "a1"] < threshhold / 2:
+                #         client1.withdrawcoin(instmt1, threshhold / 2 / exchanges_snapshot[snapshot1]["a1"]*(1-random.random()/10),
+                #                              client2.address[ins1],
+                #                              "address")
+                #     if client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"] > threshhold and client2.available[
+                #                 '_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
+                #         "a1"] < threshhold / 2:
+                #         client1.withdrawcoin(instmt3, threshhold / 2 / exchanges_snapshot[snapshot3]["a1"]*(1-random.random()/10),
+                #                              client2.address[ins2],
+                #                              "address")
+                #     if client2.available['_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
+                #         "a1"] > threshhold and client1.available[instmt3] * exchanges_snapshot[snapshot3][
+                #         "a1"] < threshhold / 2:
+                #         client2.withdrawcoin(ins2, threshhold / 2 / exchanges_snapshot[snapshot3]["b1"]*(1-random.random()/10), client1.address[ins2],
+                #                              "")
+                #     if client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
+                #         "a1"] > threshhold and client1.available[instmt1] * exchanges_snapshot[snapshot1][
+                #         "a1"] < threshhold / 2:
+                #         client2.withdrawcoin(ins1, threshhold / 2 / exchanges_snapshot[snapshot1]["b1"]*(1-random.random()/10), client1.address[ins1],
+                #                              "")
     return record
 
 
@@ -359,7 +366,8 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                     executed = True
                 else:
                     if time.time() - globalvar["updateaccounttime"] > 60:
-                        logging.warning(arbitragecode + " The arbitrage space is "+"{:.2%}".format(ratio)+" but no amount!")
+                        logging.warning(
+                            arbitragecode + " The arbitrage space is " + "{:.2%}".format(ratio) + " but no amount!")
                 # record["detail"][snapshot1]["iscompleted"] = True
                 #     record["detail"][snapshot2]["iscompleted"] = True
                 #     record["detail"][snapshot3]["iscompleted"] = True
@@ -441,4 +449,3 @@ if __name__ == '__main__':
                                0.012)
         except Exception as e:
             logging.exception(e)
-

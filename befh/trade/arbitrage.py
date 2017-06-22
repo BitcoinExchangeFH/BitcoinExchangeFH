@@ -176,10 +176,10 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
 def ReplaceOrder(instmt, insthresh, record, snapshot, client):
     if not record["detail"][snapshot]["iscompleted"]:
         if record["detail"][snapshot]["orderid"] in client.orderids and ((client.orders[record["detail"][snapshot][
-            "orderid"]].side == "buy" and client.orders[record["detail"][snapshot]["orderid"]].price >=
+            "orderid"]].side == "buy" and client.orders[record["detail"][snapshot]["orderid"]].price ==
             exchanges_snapshot[snapshot]["a1"]) or (
                         client.orders[record["detail"][snapshot]["orderid"]].side == "sell" and client.orders[
-                    record["detail"][snapshot]["orderid"]].price <= exchanges_snapshot[snapshot]["b1"])):
+                    record["detail"][snapshot]["orderid"]].price == exchanges_snapshot[snapshot]["b1"])):
             pass
         else:
             status, order = client.cancelorder(instmt, record["detail"][snapshot]["orderid"])
@@ -424,7 +424,7 @@ if __name__ == '__main__':
     exchanges_snapshot = {}
     arbitrage_record = {}
     itchatsendtime = {}
-    globalvar = {"threshhold": 150000, "updateaccounttime": 0}
+    globalvar = {"threshhold": 140000, "updateaccounttime": 0}
 
     # itchat
     # itchat.auto_login(hotReload=True)

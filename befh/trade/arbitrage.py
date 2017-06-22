@@ -38,11 +38,11 @@ def LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
     else:
         record = {"isready": True, "detail": {}, "time": time.time()}
         record["detail"][snapshot1] = {"iscompleted": True, "originalamount": 0.0, "remainamount": 0.0,
-                                       "orderid": 0}
+                                       "orderid": 0, "executedamount": 0.0, "executedvolume": 0.0}
         record["detail"][snapshot2] = {"iscompleted": True, "originalamount": 0.0, "remainamount": 0.0,
-                                       "orderid": 0}
+                                       "orderid": 0, "executedamount": 0.0, "executedvolume": 0.0}
         record["detail"][snapshot3] = {"iscompleted": True, "originalamount": 0.0, "remainamount": 0.0,
-                                       "orderid": 0}
+                                       "orderid": 0, "executedamount": 0.0, "executedvolume": 0.0}
         arbitrage_record[arbitragecode] = record
     return record
 
@@ -424,7 +424,7 @@ if __name__ == '__main__':
     exchanges_snapshot = {}
     arbitrage_record = {}
     itchatsendtime = {}
-    globalvar = {"threshhold": 100000, "updateaccounttime": 0}
+    globalvar = {"threshhold": 150000, "updateaccounttime": 0}
 
     # itchat
     # itchat.auto_login(hotReload=True)

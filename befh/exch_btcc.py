@@ -386,7 +386,7 @@ class ExchGwBtccSpot(ExchGwBtcc):
         Get exchange name
         :return: Exchange name string
         """
-        return 'BTCC_Spot'
+        return 'BTCC'
         
         
 class ExchGwBtccFuture(ExchGwBtcc):
@@ -411,7 +411,7 @@ class ExchGwBtccFuture(ExchGwBtcc):
         
 if __name__ == '__main__':
     Logger.init_log()
-    exchange_name = 'BTCC_Spot'
+    exchange_name = 'BTCC'
     instmt_name = 'BTCCNY'
     instmt_code = 'btccny'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)    

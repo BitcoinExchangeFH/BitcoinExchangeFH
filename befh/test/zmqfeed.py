@@ -83,7 +83,6 @@ while True:
         arbitragesapcedetect(keys, "JUBI", "Poloniex", "BTC", "ETH", "CNY")
         arbitragesapcedetect(keys, "JUBI", "Poloniex", "BTC", "XRP", "CNY")
 
-
     except Exception as e:
         logging.exception(e)
         pass

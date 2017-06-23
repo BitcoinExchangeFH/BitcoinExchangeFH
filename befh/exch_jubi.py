@@ -388,12 +388,12 @@ class ExchGwJubiSpot(ExchGwJubi):
         Get exchange name
         :return: Exchange name string
         """
-        return 'JUBI_Spot'
+        return 'JUBI'
 
 
 if __name__ == '__main__':
     Logger.init_log()
-    exchange_name = 'JUBI_Spot'
+    exchange_name = 'JUBI'
     instmt_name = 'BTCCNY'
     instmt_code = 'btc'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)

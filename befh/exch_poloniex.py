@@ -259,7 +259,8 @@ if __name__ == '__main__':
     exchange_name = 'Poloniex'
     instmt_name = 'BTCETH'
     instmt_code = 'BTC_ETH'
-    instmt = Instrument(exchange_name, instmt_name, instmt_code)    
+    order_code = 'BTC_ETH'
+    instmt = Instrument(exchange_name, instmt_name, instmt_code,order_code)
     db_client = SqlClientTemplate()
     exch = ExchGwPoloniex([db_client])
     instmt.set_l2_depth(L2Depth(5))

@@ -177,7 +177,10 @@ class OkcoinMarket(Market):
         response = self.okcoinSpot.withdraw(symbol, chargefee, self.tradepassword, address, amount, target)
         response = json.loads(response)
         logging.warning(json.dumps(response))
-        return response["result"], response["withdraw_id"]
+        if "error_code" in response.keys():
+            return response["result"], response["error_code"]
+        else:
+            return response["result"], response["withdraw_id"]
 
 # 初始化apikey，secretkey,url
 # apikey = 'XXXX'

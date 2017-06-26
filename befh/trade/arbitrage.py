@@ -390,7 +390,7 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                     record["isready"] = False
         else:
             record = ReplaceOrder(instmt1, ins1thresh, record, snapshot1, client1)
-            record = ReplaceOrder(instmt2, 0, record, snapshot2, client2)
+            record = ReplaceOrder(instmt2, ins2thresh, record, snapshot2, client2)
             record = ReplaceOrder(instmt3, ins2thresh, record, snapshot3, client1)
         RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, arbitragecode, globalvar,
                       arbitrage_direction)

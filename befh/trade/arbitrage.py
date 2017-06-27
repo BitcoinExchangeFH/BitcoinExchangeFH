@@ -115,7 +115,7 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
         logging.warning(arbitragecode + " " + "{:.4f}".format(
             calcaccountsamount(TradeClients, [ex1, ex2])) + " profit:" + "{:.2%}".format(profit))
 
-    transcode = "_".join([ex1, ex2, ins1, ins2])
+    transcode = "_".join([ex1, ex2])
     if transcode not in globalvar.keys():
         globalvar[transcode] = 0
     if record["isready"] and time.time() - globalvar[transcode] > 60:

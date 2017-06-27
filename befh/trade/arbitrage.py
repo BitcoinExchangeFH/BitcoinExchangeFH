@@ -10,6 +10,7 @@ from befh.FinexAPI.BitfinexMarket import BitfinexMarket
 import logging
 import re
 import random
+import numpy as np
 
 
 def calcaccountsamount(TradeClients, exs):
@@ -102,49 +103,65 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
         record["detail"][snapshot3]["executedamount"] = 0.0
         record["detail"][snapshot3]["executedvolume"] = 0.0
 
-        globalvar["updateaccounttime"] = time.time()
-        updateaccount = True
-    elif time.time() - globalvar["updateaccounttime"] > 60:
-        globalvar["updateaccounttime"] = time.time()
         updateaccount = True
 
     # update arbitrage_record
     arbitrage_record[arbitragecode] = record
+
+    if client1.exchange not in globalvar.keys():
+        globalvar[client1.exchange] = 0
+    if client2.exchange not in globalvar.keys():
+        globalvar[client2.exchange] = 0
 
     if updateaccount:
         client1.get_info()
         client2.get_info()
         logging.warning(arbitragecode + " " + "{:.4f}".format(
             calcaccountsamount(TradeClients, [ex1, ex2])) + " profit:" + "{:.2%}".format(profit))
+
+    if record["isready"] and (time.time() - globalvar[client1.exchange] > 60 * 10 or time.time() - globalvar[
+        client2.exchange] > 60 * 10):
+        if not updateaccount:
+            client1.get_info()
+            client2.get_info()
+        globalvar[client1.exchange] = time.time()
+        globalvar[client2.exchange] = time.time()
+
         # rebalance accounts
         if arbitrage_direction == 1:
-            if client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] > threshhold / 2 and client2.available[
-                        '_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
-                "a1"] < threshhold / 2:
+            availablemoney = client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"]
+            if availablemoney > threshhold and client2.available['_'.join(["SPOT", ins1]) + client2.currency] * \
+                    exchanges_snapshot[snapshot1]["a1"] < threshhold:
                 client1.withdrawcoin(instmt1,
-                                     threshhold / 2 / exchanges_snapshot[snapshot1]["a1"] * (1 - random.random() / 10),
+                                     np.floor(availablemoney / threshhold) * threshhold / exchanges_snapshot[snapshot1][
+                                         "a1"] * (1 - random.random() / 100),
                                      client2.address[ins1],
                                      "address")
-            if client2.available['_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
-                "a1"] > threshhold / 2 and client1.available[instmt3] * exchanges_snapshot[snapshot3][
-                "a1"] < threshhold / 2:
+            availablemoney = client2.available['_'.join(["SPOT", ins2]) + client2.currency] * \
+                             exchanges_snapshot[snapshot3]["a1"]
+            if availablemoney > threshhold and client1.available[instmt3] * exchanges_snapshot[snapshot3][
+                "a1"] < threshhold:
                 client2.withdrawcoin(ins2,
-                                     threshhold / 2 / exchanges_snapshot[snapshot3]["b1"] * (1 - random.random() / 10),
+                                     np.floor(availablemoney / threshhold) * threshhold / exchanges_snapshot[snapshot3][
+                                         "b1"] * (1 - random.random() / 100),
                                      client1.address[ins2],
                                      "")
         elif arbitrage_direction == -1:
-            if client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"] > threshhold / 2 and client2.available[
-                        '_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
-                "a1"] < threshhold / 2:
+            availablemoney = client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"]
+            if availablemoney > threshhold and client2.available['_'.join(["SPOT", ins2]) + client2.currency] * \
+                    exchanges_snapshot[snapshot3]["a1"] < threshhold:
                 client1.withdrawcoin(instmt3,
-                                     threshhold / 2 / exchanges_snapshot[snapshot3]["a1"] * (1 - random.random() / 10),
+                                     np.floor(availablemoney / threshhold) * threshhold / exchanges_snapshot[snapshot3][
+                                         "a1"] * (1 - random.random() / 100),
                                      client2.address[ins2],
                                      "address")
-            if client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
-                "a1"] > threshhold / 2 and client1.available[instmt1] * exchanges_snapshot[snapshot1][
-                "a1"] < threshhold / 2:
+            availablemoney = client2.available['_'.join(["SPOT", ins1]) + client2.currency] * \
+                             exchanges_snapshot[snapshot1]["a1"]
+            if availablemoney > threshhold and client1.available[instmt1] * exchanges_snapshot[snapshot1][
+                "a1"] < threshhold:
                 client2.withdrawcoin(ins1,
-                                     threshhold / 2 / exchanges_snapshot[snapshot1]["b1"] * (1 - random.random() / 10),
+                                     np.floor(availablemoney / threshhold) * threshhold / exchanges_snapshot[snapshot1][
+                                         "b1"] * (1 - random.random() / 100),
                                      client1.address[ins1],
                                      "")
                 # else:
@@ -269,15 +286,15 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                                             exchanges_snapshot[snapshot3]["b1"],
                                             exchanges_snapshot[snapshot3]["b1"])
                     assert isinstance(orderid3, int), "orderid(%s) = %s" % (type(orderid3), orderid3)
-                    orderid1 = client1.buy(instmt1, amount, exchanges_snapshot[snapshot1]["a1"])
-                    assert isinstance(orderid1, int), "orderid(%s) = %s" % (type(orderid1), orderid1)
-                    orderid2 = client2.buy(instmt2, amount / exchanges_snapshot[snapshot2]["a1"],
-                                           exchanges_snapshot[snapshot2]["a1"])
-                    assert isinstance(orderid2, int), "orderid(%s) = %s" % (type(orderid2), orderid2)
                     UpdateRecord(client1, record, instmt3, orderid3, snapshot3,
                                  amount * exchanges_snapshot[snapshot1]["a1"] /
                                  exchanges_snapshot[snapshot3]["b1"])
+                    orderid1 = client1.buy(instmt1, amount, exchanges_snapshot[snapshot1]["a1"])
+                    assert isinstance(orderid1, int), "orderid(%s) = %s" % (type(orderid1), orderid1)
                     UpdateRecord(client1, record, instmt1, orderid1, snapshot1, amount)
+                    orderid2 = client2.buy(instmt2, amount / exchanges_snapshot[snapshot2]["a1"],
+                                           exchanges_snapshot[snapshot2]["a1"])
+                    assert isinstance(orderid2, int), "orderid(%s) = %s" % (type(orderid2), orderid2)
                     UpdateRecord(client2, record, instmt2, orderid2, snapshot2,
                                  amount / exchanges_snapshot[snapshot2]["a1"])
                     executed = True
@@ -354,14 +371,14 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                                             exchanges_snapshot[snapshot1]["b1"],
                                             exchanges_snapshot[snapshot1]["b1"])
                     assert isinstance(orderid1, int), "orderid(%s) = %s" % (type(orderid1), orderid1)
-                    orderid3 = client1.buy(instmt3, amount, exchanges_snapshot[snapshot3]["a1"])
-                    assert isinstance(orderid3, int), "orderid(%s) = %s" % (type(orderid3), orderid3)
-                    orderid2 = client2.sell(instmt2, amount, exchanges_snapshot[snapshot2]["b1"])
-                    assert isinstance(orderid2, int), "orderid(%s) = %s" % (type(orderid2), orderid2)
                     UpdateRecord(client1, record, instmt1, orderid1, snapshot1,
                                  amount * exchanges_snapshot[snapshot3]["a1"] /
                                  exchanges_snapshot[snapshot1]["b1"])
+                    orderid3 = client1.buy(instmt3, amount, exchanges_snapshot[snapshot3]["a1"])
+                    assert isinstance(orderid3, int), "orderid(%s) = %s" % (type(orderid3), orderid3)
                     UpdateRecord(client1, record, instmt3, orderid3, snapshot3, amount)
+                    orderid2 = client2.sell(instmt2, amount, exchanges_snapshot[snapshot2]["b1"])
+                    assert isinstance(orderid2, int), "orderid(%s) = %s" % (type(orderid2), orderid2)
                     UpdateRecord(client2, record, instmt2, orderid2, snapshot2, amount)
                     executed = True
                 else:
@@ -424,7 +441,7 @@ if __name__ == '__main__':
     exchanges_snapshot = {}
     arbitrage_record = {}
     itchatsendtime = {}
-    globalvar = {"threshhold": 140000, "updateaccounttime": 0}
+    globalvar = {"threshhold": 70000}
 
     # itchat
     # itchat.auto_login(hotReload=True)

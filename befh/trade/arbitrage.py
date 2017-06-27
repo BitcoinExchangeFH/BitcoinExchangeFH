@@ -108,24 +108,21 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
     # update arbitrage_record
     arbitrage_record[arbitragecode] = record
 
-    if client1.exchange not in globalvar.keys():
-        globalvar[client1.exchange] = 0
-    if client2.exchange not in globalvar.keys():
-        globalvar[client2.exchange] = 0
-
     if updateaccount:
         client1.get_info()
         client2.get_info()
         logging.warning(arbitragecode + " " + "{:.4f}".format(
             calcaccountsamount(TradeClients, [ex1, ex2])) + " profit:" + "{:.2%}".format(profit))
 
-    if record["isready"] and (time.time() - globalvar[client1.exchange] > 60 * 10 or time.time() - globalvar[
-        client2.exchange] > 60 * 10):
+    if arbitragecode not in globalvar.keys():
+        globalvar[arbitragecode] = 0
+
+    if record["isready"] and time.time() - globalvar[arbitragecode] > 60:
+        globalvar[arbitragecode] = time.time()
+
         if not updateaccount:
             client1.get_info()
             client2.get_info()
-        globalvar[client1.exchange] = time.time()
-        globalvar[client2.exchange] = time.time()
 
         # rebalance accounts
         if arbitrage_direction == 1:
@@ -299,10 +296,10 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                                  amount / exchanges_snapshot[snapshot2]["a1"])
                     executed = True
                 else:
-                    if arbitragecode not in globalvar.keys():
-                        globalvar[arbitragecode] = time.time()
-                    if time.time() - globalvar[arbitragecode] > 60:
-                        globalvar[arbitragecode] = time.time()
+                    if arbitragecode + "space" not in globalvar.keys():
+                        globalvar[arbitragecode + "space"] = time.time()
+                    if time.time() - globalvar[arbitragecode + "space"] > 60:
+                        globalvar[arbitragecode + "space"] = time.time()
                         logging.warning(
                             arbitragecode + " The arbitrage space is " + "{:.2%}".format(ratio) + " but no amount!")
                 # record["detail"][snapshot1]["iscompleted"] = True
@@ -385,10 +382,10 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                     UpdateRecord(client2, record, instmt2, orderid2, snapshot2, amount)
                     executed = True
                 else:
-                    if arbitragecode not in globalvar.keys():
-                        globalvar[arbitragecode] = time.time()
-                    if time.time() - globalvar[arbitragecode] > 60:
-                        globalvar[arbitragecode] = time.time()
+                    if arbitragecode + "space" not in globalvar.keys():
+                        globalvar[arbitragecode + "space"] = time.time()
+                    if time.time() - globalvar[arbitragecode + "space"] > 60:
+                        globalvar[arbitragecode + "space"] = time.time()
                         logging.warning(
                             arbitragecode + " The arbitrage space is " + "{:.2%}".format(ratio) + " but no amount!")
                 # record["detail"][snapshot1]["iscompleted"] = True

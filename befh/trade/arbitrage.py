@@ -108,6 +108,7 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
     # update arbitrage_record
     arbitrage_record[arbitragecode] = record
 
+    # update account immediately
     if updateaccount:
         client1.get_info()
         client2.get_info()
@@ -116,74 +117,47 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
 
     if arbitragecode not in globalvar.keys():
         globalvar[arbitragecode] = 0
-
     if record["isready"] and time.time() - globalvar[arbitragecode] > 60:
         globalvar[arbitragecode] = time.time()
-
         if not updateaccount:
             client1.get_info()
             client2.get_info()
+            logging.warning(arbitragecode + " " + "{:.4f}".format(
+                calcaccountsamount(TradeClients, [ex1, ex2])) + " profit:" + "{:.2%}".format(profit))
 
         # rebalance accounts
-        if arbitrage_direction == 1:
-            availablemoney = client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"]
-            if availablemoney > threshhold and client2.available['_'.join(["SPOT", ins1]) + client2.currency] * \
-                    exchanges_snapshot[snapshot1]["a1"] < threshhold:
-                client1.withdrawcoin(instmt1,
-                                     np.floor(availablemoney / threshhold) * threshhold / exchanges_snapshot[snapshot1][
-                                         "a1"] * (1 - random.random() / 100),
-                                     client2.address[ins1],
-                                     "address")
-            availablemoney = client2.available['_'.join(["SPOT", ins2]) + client2.currency] * \
-                             exchanges_snapshot[snapshot3]["a1"]
-            if availablemoney > threshhold and client1.available[instmt3] * exchanges_snapshot[snapshot3][
-                "a1"] < threshhold:
-                client2.withdrawcoin(ins2,
-                                     np.floor(availablemoney / threshhold) * threshhold / exchanges_snapshot[snapshot3][
-                                         "b1"] * (1 - random.random() / 100),
-                                     client1.address[ins2],
-                                     "")
-        elif arbitrage_direction == -1:
-            availablemoney = client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"]
-            if availablemoney > threshhold and client2.available['_'.join(["SPOT", ins2]) + client2.currency] * \
-                    exchanges_snapshot[snapshot3]["a1"] < threshhold:
-                client1.withdrawcoin(instmt3,
-                                     np.floor(availablemoney / threshhold) * threshhold / exchanges_snapshot[snapshot3][
-                                         "a1"] * (1 - random.random() / 100),
-                                     client2.address[ins2],
-                                     "address")
-            availablemoney = client2.available['_'.join(["SPOT", ins1]) + client2.currency] * \
-                             exchanges_snapshot[snapshot1]["a1"]
-            if availablemoney > threshhold and client1.available[instmt1] * exchanges_snapshot[snapshot1][
-                "a1"] < threshhold:
-                client2.withdrawcoin(ins1,
-                                     np.floor(availablemoney / threshhold) * threshhold / exchanges_snapshot[snapshot1][
-                                         "b1"] * (1 - random.random() / 100),
-                                     client1.address[ins1],
-                                     "")
-                # else:
-                #     if client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"] > threshhold and client2.available[
-                #                 '_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
-                #         "a1"] < threshhold / 2:
-                #         client1.withdrawcoin(instmt1, threshhold / 2 / exchanges_snapshot[snapshot1]["a1"]*(1-random.random()/10),
-                #                              client2.address[ins1],
-                #                              "address")
-                #     if client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"] > threshhold and client2.available[
-                #                 '_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
-                #         "a1"] < threshhold / 2:
-                #         client1.withdrawcoin(instmt3, threshhold / 2 / exchanges_snapshot[snapshot3]["a1"]*(1-random.random()/10),
-                #                              client2.address[ins2],
-                #                              "address")
-                #     if client2.available['_'.join(["SPOT", ins2]) + client2.currency] * exchanges_snapshot[snapshot3][
-                #         "a1"] > threshhold and client1.available[instmt3] * exchanges_snapshot[snapshot3][
-                #         "a1"] < threshhold / 2:
-                #         client2.withdrawcoin(ins2, threshhold / 2 / exchanges_snapshot[snapshot3]["b1"]*(1-random.random()/10), client1.address[ins2],
-                #                              "")
-                #     if client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
-                #         "a1"] > threshhold and client1.available[instmt1] * exchanges_snapshot[snapshot1][
-                #         "a1"] < threshhold / 2:
-                #         client2.withdrawcoin(ins1, threshhold / 2 / exchanges_snapshot[snapshot1]["b1"]*(1-random.random()/10), client1.address[ins1],
-                #                              "")
+        availablemoney = client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"]
+        if availablemoney > 1.2 * threshhold and client2.available['_'.join(["SPOT", ins1]) + client2.currency] < 10 * \
+                globalvar[ins1]:
+            client1.withdrawcoin(instmt1,
+                                 np.floor(availablemoney / threshhold) * threshhold / exchanges_snapshot[snapshot1][
+                                     "a1"] * (1 - random.random() / 100),
+                                 client2.address[ins1],
+                                 "address")
+        availablemoney = client2.available['_'.join(["SPOT", ins2]) + client2.currency] * \
+                         exchanges_snapshot[snapshot3]["a1"]
+        if availablemoney > 1.2 * threshhold and client1.available[instmt3] < 10 * globalvar[ins2]:
+            client2.withdrawcoin(ins2,
+                                 np.floor(availablemoney / threshhold) * threshhold / exchanges_snapshot[snapshot3][
+                                     "b1"] * (1 - random.random() / 100),
+                                 client1.address[ins2],
+                                 "")
+        availablemoney = client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"]
+        if availablemoney > 1.2 * threshhold and client2.available['_'.join(["SPOT", ins2]) + client2.currency] < 10 * \
+                globalvar[ins2]:
+            client1.withdrawcoin(instmt3,
+                                 np.floor(availablemoney / threshhold) * threshhold / exchanges_snapshot[snapshot3][
+                                     "a1"] * (1 - random.random() / 100),
+                                 client2.address[ins2],
+                                 "address")
+        availablemoney = client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
+            "a1"]
+        if availablemoney > 1.2 * threshhold and client1.available[instmt1] < 10 * globalvar[ins1]:
+            client2.withdrawcoin(ins1,
+                                 np.floor(availablemoney / threshhold) * threshhold / exchanges_snapshot[snapshot1][
+                                     "b1"] * (1 - random.random() / 100),
+                                 client1.address[ins1],
+                                 "")
     return record
 
 
@@ -444,7 +418,7 @@ if __name__ == '__main__':
     exchanges_snapshot = {}
     arbitrage_record = {}
     itchatsendtime = {}
-    globalvar = {"threshhold": 70000}
+    globalvar = {"threshhold": 50000, "BTC": 0.01, "ETH": 0.01, "LTC": 0.1}
 
     # itchat
     # itchat.auto_login(hotReload=True)

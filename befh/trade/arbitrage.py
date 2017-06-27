@@ -299,7 +299,10 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                                  amount / exchanges_snapshot[snapshot2]["a1"])
                     executed = True
                 else:
-                    if time.time() - globalvar["updateaccounttime"] > 60:
+                    if arbitragecode not in globalvar.keys():
+                        globalvar[arbitragecode] = time.time()
+                    if time.time() - globalvar[arbitragecode] > 60:
+                        globalvar[arbitragecode] = time.time()
                         logging.warning(
                             arbitragecode + " The arbitrage space is " + "{:.2%}".format(ratio) + " but no amount!")
                 # record["detail"][snapshot1]["iscompleted"] = True
@@ -382,7 +385,10 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                     UpdateRecord(client2, record, instmt2, orderid2, snapshot2, amount)
                     executed = True
                 else:
-                    if time.time() - globalvar["updateaccounttime"] > 60:
+                    if arbitragecode not in globalvar.keys():
+                        globalvar[arbitragecode] = time.time()
+                    if time.time() - globalvar[arbitragecode] > 60:
+                        globalvar[arbitragecode] = time.time()
                         logging.warning(
                             arbitragecode + " The arbitrage space is " + "{:.2%}".format(ratio) + " but no amount!")
                 # record["detail"][snapshot1]["iscompleted"] = True
@@ -459,10 +465,8 @@ if __name__ == '__main__':
             TradeClients[mjson["exchange"]].instmt_snapshot[mjson["instmt"]] = mjson
         try:
             Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "ETH",
-                               0.01,
-                               0.01, 0.011)
+                               0.01, 0.01, 0.011)
             Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "LTC",
-                               0.01, 0.1,
-                               0.012)
+                               0.01, 0.1, 0.012)
         except Exception as e:
             logging.exception(e)

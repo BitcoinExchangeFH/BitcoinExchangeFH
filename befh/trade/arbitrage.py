@@ -115,7 +115,7 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
         logging.warning(arbitragecode + " " + "{:.4f}".format(
             calcaccountsamount(TradeClients, [ex1, ex2])) + " profit:" + "{:.2%}".format(profit))
 
-    transcode = "_".join([ex1, ex2])
+    transcode = "_".join([ex1, ex2, ins1, ins2])
     if transcode not in globalvar.keys():
         globalvar[transcode] = 0
     if record["isready"] and time.time() - globalvar[transcode] > 60:
@@ -127,7 +127,7 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
 
         # rebalance accounts
         availablemoney = client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"]
-        if availablemoney > 1.5 * threshhold and client2.available['_'.join(["SPOT", ins1]) + client2.currency] < 10 * \
+        if availablemoney > 1.5 * threshhold and client2.available['_'.join(["SPOT", ins1]) + client2.currency] < 100 * \
                 globalvar[ins1]:
             client1.withdrawcoin(instmt1,
                                  np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold /
@@ -136,14 +136,14 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
                                  "address")
         availablemoney = client2.available['_'.join(["SPOT", ins2]) + client2.currency] * \
                          exchanges_snapshot[snapshot3]["a1"]
-        if availablemoney > 1.5 * threshhold and client1.available[instmt3] < 10 * globalvar[ins2]:
+        if availablemoney > 1.5 * threshhold and client1.available[instmt3] < 100 * globalvar[ins2]:
             client2.withdrawcoin(ins2,
                                  np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold /
                                  exchanges_snapshot[snapshot3]["b1"] * (1 - random.random() / 100),
                                  client1.address[ins2],
                                  "")
         availablemoney = client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"]
-        if availablemoney > 1.5 * threshhold and client2.available['_'.join(["SPOT", ins2]) + client2.currency] < 10 * \
+        if availablemoney > 1.5 * threshhold and client2.available['_'.join(["SPOT", ins2]) + client2.currency] < 100 * \
                 globalvar[ins2]:
             client1.withdrawcoin(instmt3,
                                  np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold /
@@ -152,7 +152,7 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
                                  "address")
         availablemoney = client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
             "a1"]
-        if availablemoney > 1.5 * threshhold and client1.available[instmt1] < 10 * globalvar[ins1]:
+        if availablemoney > 1.5 * threshhold and client1.available[instmt1] < 100 * globalvar[ins1]:
             client2.withdrawcoin(ins1,
                                  np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold /
                                  exchanges_snapshot[snapshot1]["b1"] * (1 - random.random() / 100),

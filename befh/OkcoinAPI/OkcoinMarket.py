@@ -163,7 +163,7 @@ class OkcoinMarket(Market):
             chargefee = 0
         elif target == "address":
             if symbol == "btc_cny":
-                chargefee = 0.001
+                chargefee = 0.002
             elif symbol == "eth_cny":
                 chargefee = 0.01
             elif symbol == "ltc_cny":

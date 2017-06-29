@@ -418,7 +418,7 @@ if __name__ == '__main__':
     exchanges_snapshot = {}
     arbitrage_record = {}
     itchatsendtime = {}
-    globalvar = {"threshhold": 40000, "BTC": 0.01, "ETH": 0.01, "LTC": 0.1}
+    globalvar = {"threshhold": 50000, "BTC": 0.01, "ETH": 0.01, "LTC": 0.1}
 
     # itchat
     # itchat.auto_login(hotReload=True)

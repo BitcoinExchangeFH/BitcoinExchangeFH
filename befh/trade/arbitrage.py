@@ -174,11 +174,11 @@ def ReplaceOrder(instmt, insthresh, record, snapshot, client):
             if order.remaining_amount > insthresh:
                 if order.side == "sell":
                     orderid = client.sell(instmt, order.remaining_amount, exchanges_snapshot[snapshot]["b1"])
-                    assert isinstance(orderid, int), "orderid(%s) = %s" % (type(orderid), orderid)
-
                 elif order.side == "buy":
                     orderid = client.buy(instmt, order.remaining_amount, exchanges_snapshot[snapshot]["a1"])
-                    assert isinstance(orderid, int), "orderid(%s) = %s" % (type(orderid), orderid)
+                if isinstance(orderid, str) and "Invalid order: not enough exchange balance for" in orderid:
+                    record["detail"][snapshot]["iscompleted"] = True
+                assert isinstance(orderid, int), "orderid(%s) = %s" % (type(orderid), orderid)
                 record["detail"][snapshot]["orderid"] = orderid
             else:
                 record["detail"][snapshot]["iscompleted"] = True

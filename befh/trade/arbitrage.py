@@ -13,12 +13,19 @@ import random
 import numpy as np
 
 
-def calcaccountsamount(TradeClients, exs):
+def calcaccountsamount(TradeClients, exs, inss):
     AccountsAmount = 0
     BaseEx = "OkCoinCN"
+    insamount = {}
+    for inscon in inss:
+        insamount[inscon] = 0.0
     for ex in exs:
         if ex == BaseEx and ex in TradeClients.keys():
             AccountsAmount = AccountsAmount + TradeClients[ex].amount['total']
+            for excon in TradeClients[ex].amount.keys():
+                for ins in inss:
+                    if ins in excon:
+                        insamount[ins] = insamount[ins] + TradeClients[ex].amount[excon]
         elif ex != BaseEx and BaseEx in TradeClients.keys() and ex in TradeClients.keys():
             client = TradeClients[ex]
             for symbol in client.amount:
@@ -30,6 +37,15 @@ def calcaccountsamount(TradeClients, exs):
                         AccountsAmount = AccountsAmount + exchanges_snapshot[snapshot]["a1"] * client.amount[symbol]
                 elif "USD" == symbol:
                     AccountsAmount = AccountsAmount + client.fc.convert(client.amount[symbol], symbol, "CNY")
+                for ins in inss:
+                    if ins in symbol:
+                        insamount[ins] = insamount[ins] + client.amount[symbol]
+    for ins in inss:
+        instmt = '_'.join(["SPOT", ins]) + TradeClients[BaseEx].currency
+        snapshot = '_'.join([BaseEx, instmt])
+        if snapshot in exchanges_snapshot.keys():
+            insvalue = exchanges_snapshot[snapshot]["a1"] * insamount[ins]
+            logging.warning(ins + " " + "{:.4f}".format(insvalue))
     return AccountsAmount
 
 
@@ -113,7 +129,7 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
         client1.get_info()
         client2.get_info()
         logging.warning(arbitragecode + " " + "{:.4f}".format(
-            calcaccountsamount(TradeClients, [ex1, ex2])) + " profit:" + "{:.2%}".format(profit))
+            calcaccountsamount(TradeClients, [ex1, ex2], [ins1, ins2])) + " profit:" + "{:.2%}".format(profit))
 
     transcode = "_".join([ex1, ex2, ins1, ins2])
     if transcode not in globalvar.keys():
@@ -123,7 +139,8 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
         if not updateaccount:
             client1.get_info()
             client2.get_info()
-            logging.warning(ex1 + ex2 + " " + "{:.4f}".format(calcaccountsamount(TradeClients, [ex1, ex2])))
+            logging.warning(
+                ex1 + ex2 + " " + "{:.4f}".format(calcaccountsamount(TradeClients, [ex1, ex2], [ins1, ins2])))
 
         # rebalance accounts
         availablemoney = client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"]

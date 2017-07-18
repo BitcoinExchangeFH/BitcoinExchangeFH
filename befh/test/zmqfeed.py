@@ -80,13 +80,13 @@ while True:
 
         arbitragesapcedetect(keys, "OkCoinCN", "Bitfinex", "OkCoinCN", "BTC", "ETH", "CNY")
         arbitragesapcedetect(keys, "OkCoinCN", "Bitfinex", "OkCoinCN", "BTC", "LTC", "CNY")
-        arbitragesapcedetect(keys, "JUBI", "Bitfinex", "JUBI", "BTC", "ETH", "CNY")
-        arbitragesapcedetect(keys, "JUBI", "Bitfinex", "JUBI", "BTC", "ETC", "CNY")
-        arbitragesapcedetect(keys, "JUBI", "Bitfinex", "JUBI", "BTC", "XRP", "CNY")
-        arbitragesapcedetect(keys, "JUBI", "Poloniex", "JUBI", "BTC", "BTS", "CNY")
-        arbitragesapcedetect(keys, "JUBI", "Poloniex", "JUBI", "BTC", "ETH", "CNY")
-        arbitragesapcedetect(keys, "JUBI", "Poloniex", "JUBI", "BTC", "XRP", "CNY")
-        arbitragesapcedetect(keys, "BTCC", "Poloniex", "JUBI", "BTC", "BTS", "CNY")
+        # arbitragesapcedetect(keys, "JUBI", "Bitfinex", "JUBI", "BTC", "ETH", "CNY")
+        # arbitragesapcedetect(keys, "JUBI", "Bitfinex", "JUBI", "BTC", "ETC", "CNY")
+        # arbitragesapcedetect(keys, "JUBI", "Bitfinex", "JUBI", "BTC", "XRP", "CNY")
+        # arbitragesapcedetect(keys, "JUBI", "Poloniex", "JUBI", "BTC", "BTS", "CNY")
+        # arbitragesapcedetect(keys, "JUBI", "Poloniex", "JUBI", "BTC", "ETH", "CNY")
+        # arbitragesapcedetect(keys, "JUBI", "Poloniex", "JUBI", "BTC", "XRP", "CNY")
+        # arbitragesapcedetect(keys, "BTCC", "Poloniex", "JUBI", "BTC", "BTS", "CNY")
 
     except Exception as e:
         logging.exception(e)

@@ -14,7 +14,6 @@ setup(
         },
     install_requires=[
             'pymysql',
-            'websocket',
             'websocket-client',
             'numpy',
             'qpython',

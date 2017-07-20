@@ -270,21 +270,34 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                     executed = True
                 elif amount >= ins1thresh and amount * exchanges_snapshot[snapshot1]["a1"] / \
                         exchanges_snapshot[snapshot3]["b1"] >= ins2thresh:
-                    orderid3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
-                                            exchanges_snapshot[snapshot3]["b1"],
-                                            exchanges_snapshot[snapshot3]["b1"])
-                    orderid1 = client1.buy(instmt1, amount, exchanges_snapshot[snapshot1]["a1"])
-                    orderid2 = client2.buy(instmt2, amount / exchanges_snapshot[snapshot2]["a1"],
-                                           exchanges_snapshot[snapshot2]["a1"])
-                    while not isinstance(orderid3, int):
+                    try:
                         orderid3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
                                                 exchanges_snapshot[snapshot3]["b1"],
                                                 exchanges_snapshot[snapshot3]["b1"])
-                    while not isinstance(orderid1, int):
+                        while not isinstance(orderid3, int):
+                            orderid3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
+                                                    exchanges_snapshot[snapshot3]["b1"],
+                                                    exchanges_snapshot[snapshot3]["b1"])
+                    except Exception as e:
+                        orderid3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
+                                                exchanges_snapshot[snapshot3]["b1"],
+                                                exchanges_snapshot[snapshot3]["b1"])
+                    try:
                         orderid1 = client1.buy(instmt1, amount, exchanges_snapshot[snapshot1]["a1"])
-                    while not isinstance(orderid2, int):
+                        while not isinstance(orderid1, int):
+                            orderid1 = client1.buy(instmt1, amount, exchanges_snapshot[snapshot1]["a1"])
+                    except Exception as e:
+                        orderid1 = client1.buy(instmt1, amount, exchanges_snapshot[snapshot1]["a1"])
+                    try:
                         orderid2 = client2.buy(instmt2, amount / exchanges_snapshot[snapshot2]["a1"],
                                                exchanges_snapshot[snapshot2]["a1"])
+                        while not isinstance(orderid2, int):
+                            orderid2 = client2.buy(instmt2, amount / exchanges_snapshot[snapshot2]["a1"],
+                                                   exchanges_snapshot[snapshot2]["a1"])
+                    except Exception as e:
+                        orderid2 = client2.buy(instmt2, amount / exchanges_snapshot[snapshot2]["a1"],
+                                               exchanges_snapshot[snapshot2]["a1"])
+
                     if isinstance(orderid3, int):
                         UpdateRecord(client1, record, instmt3, orderid3, snapshot3,
                                      amount * exchanges_snapshot[snapshot1]["a1"] /
@@ -367,19 +380,29 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                     executed = True
                 elif amount >= ins2thresh and amount * exchanges_snapshot[snapshot3]["a1"] / \
                         exchanges_snapshot[snapshot1]["b1"] >= ins1thresh:
-                    orderid1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
-                                            exchanges_snapshot[snapshot1]["b1"],
-                                            exchanges_snapshot[snapshot1]["b1"])
-                    orderid3 = client1.buy(instmt3, amount, exchanges_snapshot[snapshot3]["a1"])
-                    orderid2 = client2.sell(instmt2, amount, exchanges_snapshot[snapshot2]["b1"])
-
-                    while not isinstance(orderid1, int):
+                    try:
                         orderid1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
                                                 exchanges_snapshot[snapshot1]["b1"],
                                                 exchanges_snapshot[snapshot1]["b1"])
-                    while not isinstance(orderid3, int):
+                        while not isinstance(orderid1, int):
+                            orderid1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
+                                                    exchanges_snapshot[snapshot1]["b1"],
+                                                    exchanges_snapshot[snapshot1]["b1"])
+                    except Exception as e:
+                        orderid1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
+                                                exchanges_snapshot[snapshot1]["b1"],
+                                                exchanges_snapshot[snapshot1]["b1"])
+                    try:
                         orderid3 = client1.buy(instmt3, amount, exchanges_snapshot[snapshot3]["a1"])
-                    while not isinstance(orderid2, int):
+                        while not isinstance(orderid3, int):
+                            orderid3 = client1.buy(instmt3, amount, exchanges_snapshot[snapshot3]["a1"])
+                    except Exception as e:
+                        orderid3 = client1.buy(instmt3, amount, exchanges_snapshot[snapshot3]["a1"])
+                    try:
+                        orderid2 = client2.sell(instmt2, amount, exchanges_snapshot[snapshot2]["b1"])
+                        while not isinstance(orderid2, int):
+                            orderid2 = client2.sell(instmt2, amount, exchanges_snapshot[snapshot2]["b1"])
+                    except Exception as e:
                         orderid2 = client2.sell(instmt2, amount, exchanges_snapshot[snapshot2]["b1"])
 
                     if isinstance(orderid1, int):

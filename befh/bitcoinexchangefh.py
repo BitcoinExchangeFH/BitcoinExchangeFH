@@ -108,8 +108,16 @@ def main():
     # Use exchange timestamp rather than local timestamp
     if args.exchtime:
         ExchangeGateway.is_local_timestamp = False
-
+    
+    # Initialize subscriptions
     subscription_instmts = SubscriptionManager(args.instmts).get_subscriptions()
+    if len(subscription_instmts) == 0:
+        print('Error: No instrument is found in the subscription file. ' +
+              'Please check the file path and the content of the subscription file.')
+        parser.print_help()
+        sys.exit(1)        
+    
+    # Initialize snapshot destination
     ExchangeGateway.init_snapshot_table(db_clients)
 
     Logger.info('[main]', 'Subscription file = %s' % args.instmts)

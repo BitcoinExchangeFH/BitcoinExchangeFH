@@ -79,11 +79,14 @@ BitcoinExchangeFH acts as a publisher in the
 [Publish/Subscibe](http://learning-0mq-with-pyzmq.readthedocs.io/en/latest/pyzmq/patterns/pubsub.html) model.
 You can open a TCP or inter-process traffic.
 
-For example, if you decide the data feed is subscribed at localhost at port 6001.
+For example, if you decide the data feed is subscribed at 127.0.0.1 at port 6001.
 
 ```
-bitcoinexchangefh -zmq -zmqdest "tcp://localhost:6001" -instmts subscription.ini
+bitcoinexchangefh -zmq -zmqdest "tcp://127.0.0.1:6001" -instmts subscription.ini
 ```
+
+According to [zmq-tcp](http://api.zeromq.org/2-1:zmq-tcp), please provide "127.0.0.1"
+instead of "localhost" as the local machine destination.
 
 If the data feed is subscribed via inter-process shared memory with address "bitcoin".
 
@@ -144,7 +147,7 @@ For example to a folder named "data", you can run the following command.
 bitcoinexchangefh -csv -csvpath data/ -instmts subscription.ini
 ```
 
-### Multiple destination.
+### Multiple destination
 
 Bitcoinexchangefh supports multiple destinations. 
 

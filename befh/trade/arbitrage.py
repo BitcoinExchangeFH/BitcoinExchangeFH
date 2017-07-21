@@ -274,26 +274,32 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                         orderid3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
                                                 exchanges_snapshot[snapshot3]["b1"],
                                                 exchanges_snapshot[snapshot3]["b1"])
-                        while not isinstance(orderid3, int):
+                        io = 0
+                        while not isinstance(orderid3, int) and io < 5:
                             orderid3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
                                                     exchanges_snapshot[snapshot3]["b1"],
                                                     exchanges_snapshot[snapshot3]["b1"])
+                            io = io + 1
                     except Exception as e:
                         orderid3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
                                                 exchanges_snapshot[snapshot3]["b1"],
                                                 exchanges_snapshot[snapshot3]["b1"])
                     try:
                         orderid1 = client1.buy(instmt1, amount, exchanges_snapshot[snapshot1]["a1"])
-                        while not isinstance(orderid1, int):
+                        io = 0
+                        while not isinstance(orderid1, int) and io < 5:
                             orderid1 = client1.buy(instmt1, amount, exchanges_snapshot[snapshot1]["a1"])
+                            io = io + 1
                     except Exception as e:
                         orderid1 = client1.buy(instmt1, amount, exchanges_snapshot[snapshot1]["a1"])
                     try:
                         orderid2 = client2.buy(instmt2, amount / exchanges_snapshot[snapshot2]["a1"],
                                                exchanges_snapshot[snapshot2]["a1"])
-                        while not isinstance(orderid2, int):
+                        io = 0
+                        while not isinstance(orderid2, int) and io < 5:
                             orderid2 = client2.buy(instmt2, amount / exchanges_snapshot[snapshot2]["a1"],
                                                    exchanges_snapshot[snapshot2]["a1"])
+                            io = io + 1
                     except Exception as e:
                         orderid2 = client2.buy(instmt2, amount / exchanges_snapshot[snapshot2]["a1"],
                                                exchanges_snapshot[snapshot2]["a1"])
@@ -384,24 +390,30 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                         orderid1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
                                                 exchanges_snapshot[snapshot1]["b1"],
                                                 exchanges_snapshot[snapshot1]["b1"])
-                        while not isinstance(orderid1, int):
+                        io = 0
+                        while not isinstance(orderid1, int) and io < 5:
                             orderid1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
                                                     exchanges_snapshot[snapshot1]["b1"],
                                                     exchanges_snapshot[snapshot1]["b1"])
+                            io = io + 1
                     except Exception as e:
                         orderid1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
                                                 exchanges_snapshot[snapshot1]["b1"],
                                                 exchanges_snapshot[snapshot1]["b1"])
                     try:
                         orderid3 = client1.buy(instmt3, amount, exchanges_snapshot[snapshot3]["a1"])
-                        while not isinstance(orderid3, int):
+                        io = 0
+                        while not isinstance(orderid3, int) and io < 5:
                             orderid3 = client1.buy(instmt3, amount, exchanges_snapshot[snapshot3]["a1"])
+                            io = io + 1
                     except Exception as e:
                         orderid3 = client1.buy(instmt3, amount, exchanges_snapshot[snapshot3]["a1"])
                     try:
                         orderid2 = client2.sell(instmt2, amount, exchanges_snapshot[snapshot2]["b1"])
-                        while not isinstance(orderid2, int):
+                        io = 0
+                        while not isinstance(orderid2, int) and io < 5:
                             orderid2 = client2.sell(instmt2, amount, exchanges_snapshot[snapshot2]["b1"])
+                            io = io + 1
                     except Exception as e:
                         orderid2 = client2.sell(instmt2, amount, exchanges_snapshot[snapshot2]["b1"])
 

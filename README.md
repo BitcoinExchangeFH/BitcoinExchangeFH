@@ -69,6 +69,16 @@ pip3 for python 3 installation.
 pip3 install bitcoinexchangefh
 ```
 
+
+### Output:
+
+Each record (in any output format e.g. CSV/SQLite/KDB+/etc) indicates either a new trade or a change in the order book. The type of update is indicated in "update_type" where 1 stands for order book update and 2 for a new trade.
+You can also deduce the type of the update by looking at which timestamp changed "order_date_time" or "trade_date_time"
+
+The columns are as follows:
+- trade_px, trade_volume: Last trade price and volume
+- aX, aqX, bX, bqX: top Ask/Bid price and quantity number X (where 1 is the top of the order book). This is basically a five level order book.
+
 ### Destination
 
 #### Applications

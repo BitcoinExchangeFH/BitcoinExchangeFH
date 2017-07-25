@@ -7,3 +7,4 @@ bitcoinexchangefh.tar.gz
 _windows/*
 *.xml
 inspection/*
+virtualenv/*

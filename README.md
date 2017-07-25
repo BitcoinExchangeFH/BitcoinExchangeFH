@@ -38,6 +38,7 @@ Users can
 - Quoine (RESTful)
 - Poloniex (RESTful)
 - Bittrex (RESTful)
+- Yunbi (RESTful)
 
 Currently the support of other exchanges is still under development.
 

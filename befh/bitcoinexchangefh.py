@@ -15,6 +15,7 @@ from befh.exch_gatecoin import ExchGwGatecoin
 from befh.exch_quoine import ExchGwQuoine
 from befh.exch_poloniex import ExchGwPoloniex
 from befh.exch_bittrex import ExchGwBittrex
+from befh.exch_yunbi import ExchGwYunbi
 from befh.kdbplus_client import KdbPlusClient
 from befh.mysql_client import MysqlClient
 from befh.sqlite_client import SqliteClient
@@ -108,8 +109,16 @@ def main():
     # Use exchange timestamp rather than local timestamp
     if args.exchtime:
         ExchangeGateway.is_local_timestamp = False
-
+    
+    # Initialize subscriptions
     subscription_instmts = SubscriptionManager(args.instmts).get_subscriptions()
+    if len(subscription_instmts) == 0:
+        print('Error: No instrument is found in the subscription file. ' +
+              'Please check the file path and the content of the subscription file.')
+        parser.print_help()
+        sys.exit(1)        
+    
+    # Initialize snapshot destination
     ExchangeGateway.init_snapshot_table(db_clients)
 
     Logger.info('[main]', 'Subscription file = %s' % args.instmts)
@@ -131,6 +140,7 @@ def main():
     exch_gws.append(ExchGwQuoine(db_clients))
     exch_gws.append(ExchGwPoloniex(db_clients))
     exch_gws.append(ExchGwBittrex(db_clients))
+    exch_gws.append(ExchGwYunbi(db_clients))
     threads = []
     for exch in exch_gws:
         for instmt in subscription_instmts:

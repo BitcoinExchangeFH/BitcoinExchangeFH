@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='BitcoinExchangeFH',
-    version='0.1.3rc3',
+    version='0.2.0',
     author='Gavin Chan',
     author_email='gavincyi@gmail.com',
     packages=['befh'],
@@ -14,7 +14,6 @@ setup(
         },
     install_requires=[
             'pymysql',
-            'websocket',
             'websocket-client',
             'numpy',
             'qpython',

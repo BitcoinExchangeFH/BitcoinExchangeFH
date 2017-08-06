@@ -253,9 +253,9 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                                   exchanges_snapshot[snapshot1]["aq1"], exchanges_snapshot[snapshot3][
                                       "bq1"] * exchanges_snapshot[snapshot3]["b1"] / exchanges_snapshot[snapshot1][
                                       "a1"])
-                amount3 = min(amountbasic, client1.available[instmt3] * exchanges_snapshot[snapshot3]["b1"] /
-                              exchanges_snapshot[snapshot1]["a1"] - ins1thresh)
-                amount2 = min(amountbasic, client2.available['_'.join(["SPOT", ins1]) + client2.currency] - ins1thresh)
+                amount3 = client1.available[instmt3] * exchanges_snapshot[snapshot3]["b1"] / \
+                          exchanges_snapshot[snapshot1]["a1"] - ins1thresh
+                amount2 = client2.available['_'.join(["SPOT", ins1]) + client2.currency] - ins1thresh
                 amount = min(amountbasic, amount3, amount2)
                 if client1.available[client1.currency] / exchanges_snapshot[snapshot1]["a1"] < amount + ins1thresh:
                     orderid3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
@@ -321,26 +321,6 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                         globalvar[arbitragecode] = time.time()
                         logging.warning(
                             arbitragecode + " The arbitrage space is " + "{:.2%}".format(ratio) + " but no amount!")
-                # record["detail"][snapshot1]["iscompleted"] = True
-                #     record["detail"][snapshot2]["iscompleted"] = True
-                #     record["detail"][snapshot3]["iscompleted"] = True
-                #     if amount3 * exchanges_snapshot[snapshot1]["a1"] / exchanges_snapshot[snapshot3][
-                #         "b1"] >= ins2thresh:
-                #         orderid3 = client1.sell(instmt3, amount3 * exchanges_snapshot[snapshot1]["a1"] /
-                #                                 exchanges_snapshot[snapshot3]["b1"],
-                #                                 exchanges_snapshot[snapshot3]["b1"])
-                #         assert isinstance(orderid3, int), "orderid(%s) = %s" % (type(orderid3), orderid3)
-                #         UpdateRecord(client1, record, instmt3, orderid3, snapshot3,
-                #                      amount3 * exchanges_snapshot[snapshot1]["a1"] /
-                #                      exchanges_snapshot[snapshot3]["b1"])
-                #         executed = True
-                #     if amount2 >= ins1thresh:
-                #         orderid2 = client2.buy(instmt2, amount2 / exchanges_snapshot[snapshot2]["a1"],
-                #                                exchanges_snapshot[snapshot2]["a1"])
-                #         assert isinstance(orderid2, int), "orderid(%s) = %s" % (type(orderid2), orderid2)
-                #         UpdateRecord(client2, record, instmt2, orderid2, snapshot2,
-                #                      amount2 / exchanges_snapshot[snapshot2]["a1"])
-                #         executed = True
                 if executed:
                     record["isready"] = False
         else:
@@ -369,9 +349,9 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                 amountbasic = min(exchanges_snapshot[snapshot2]["bq1"], exchanges_snapshot[snapshot3]["aq1"],
                                   exchanges_snapshot[snapshot1]["bq1"] * exchanges_snapshot[snapshot1]["b1"] /
                                   exchanges_snapshot[snapshot3]["a1"])
-                amount1 = min(amountbasic, client1.available[instmt1] * exchanges_snapshot[snapshot1]["b1"] /
-                              exchanges_snapshot[snapshot3]["a1"] - ins2thresh)
-                amount2 = min(amountbasic, client2.available['_'.join(["SPOT", ins2]) + client2.currency] - ins2thresh)
+                amount1 = client1.available[instmt1] * exchanges_snapshot[snapshot1]["b1"] / \
+                          exchanges_snapshot[snapshot3]["a1"] - ins2thresh
+                amount2 = client2.available['_'.join(["SPOT", ins2]) + client2.currency] - ins2thresh
                 amount = min(amountbasic, amount1, amount2)
                 if client1.available[client1.currency] / exchanges_snapshot[snapshot3]["a1"] < amount + ins2thresh:
                     orderid1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
@@ -433,24 +413,6 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                         globalvar[arbitragecode] = time.time()
                         logging.warning(
                             arbitragecode + " The arbitrage space is " + "{:.2%}".format(ratio) + " but no amount!")
-                # record["detail"][snapshot1]["iscompleted"] = True
-                #     record["detail"][snapshot2]["iscompleted"] = True
-                #     record["detail"][snapshot3]["iscompleted"] = True
-                #     if amount1 * exchanges_snapshot[snapshot3]["a1"] / exchanges_snapshot[snapshot1][
-                #         "b1"] >= ins1thresh:
-                #         orderid1 = client1.sell(instmt1, amount1 * exchanges_snapshot[snapshot3]["a1"] /
-                #                                 exchanges_snapshot[snapshot1]["b1"],
-                #                                 exchanges_snapshot[snapshot1]["b1"])
-                #         assert isinstance(orderid1, int), "orderid(%s) = %s" % (type(orderid1), orderid1)
-                #         UpdateRecord(client1, record, instmt1, orderid1, snapshot1,
-                #                      amount1 * exchanges_snapshot[snapshot3]["a1"] /
-                #                      exchanges_snapshot[snapshot1]["b1"])
-                #         executed = True
-                #     if amount2 >= ins2thresh:
-                #         orderid2 = client2.sell(instmt2, amount2, exchanges_snapshot[snapshot2]["b1"])
-                #         assert isinstance(orderid2, int), "orderid(%s) = %s" % (type(orderid2), orderid2)
-                #         UpdateRecord(client2, record, instmt2, orderid2, snapshot2, amount2)
-                #         executed = True
                 if executed:
                     record["isready"] = False
         else:

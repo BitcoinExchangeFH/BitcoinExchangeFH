@@ -28,7 +28,7 @@ def arbitragesapcedetect(keys, ex1, ex2, ex3, ins1, ins2, currency):
 
     if snapshot1 in keys and snapshot2 in keys and snapshot3 in keys:
         ratio = 1 / exchanges_snapshot[snapshot2]["a1"] * exchanges_snapshot[snapshot3][
-            "b1"] / exchanges_snapshot[snapshot1]["a1"] - 0.005 - 0.001 - 1
+            "b1"] / exchanges_snapshot[snapshot1]["a1"] - 1 #- 0.005 - 0.001
         timekey = ex1 + "." + currency + "_" + ins1 + "(buy)->" + ex2 + "." + ins1 + "_" + ins2 + "(buy)->" + ex3 + "." + ins2 + "_" + currency + "(sell)"
         if timekey not in itchatsendtime.keys():
             itchatsendtime[timekey] = 0
@@ -48,7 +48,7 @@ def arbitragesapcedetect(keys, ex1, ex2, ex3, ins1, ins2, currency):
             itchatsendtime[timekey] = time.time()
 
         ratio = exchanges_snapshot[snapshot2]["b1"] * exchanges_snapshot[snapshot1]["b1"] / \
-                exchanges_snapshot[snapshot3]["a1"] - 0.005 - 0.001 - 1
+                exchanges_snapshot[snapshot3]["a1"] - 1 #- 0.005 - 0.001
         timekey = ex3 + "." + currency + "_" + ins2 + "(buy)->" + ex2 + "." + ins2 + "_" + ins1 + "(sell)->" + ex1 + "." + ins1 + "_" + currency + "(sell)"
         if timekey not in itchatsendtime.keys():
             itchatsendtime[timekey] = 0

@@ -469,8 +469,8 @@ if __name__ == '__main__':
             TradeClients[mjson["exchange"]].instmt_snapshot[mjson["instmt"]] = mjson
         try:
             Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "ETH",
-                               0.01, 0.01, 0.011)
+                               0.01, 0.01, 0.01)
             Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "LTC",
-                               0.01, 0.1, 0.012)
+                               0.01, 0.1, 0.01)
         except Exception as e:
             logging.exception(e)

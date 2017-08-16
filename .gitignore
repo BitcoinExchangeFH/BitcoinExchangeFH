@@ -11,3 +11,4 @@ befh/test/itchat.pkl
 befh/trade/key.json
 befh/OkcoinAPI/Okcoin.json
 befh/FinexAPI/Bitfinex.json
+befh/BittrexAPI/Bittrex.json

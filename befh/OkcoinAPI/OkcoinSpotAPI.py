@@ -26,8 +26,7 @@ class OKCoinSpot:
             params = 'symbol=%(symbol)s' % {'symbol': symbol}
         return httpGet(self.__url, DEPTH_RESOURCE, params)
 
-        # 获取OKCOIN现货历史交易信息
-
+     # 获取OKCOIN现货历史交易信息
     def trades(self, symbol=''):
         TRADES_RESOURCE = "/api/v1/trades.do"
         params = ''

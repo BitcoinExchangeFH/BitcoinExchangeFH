@@ -452,7 +452,7 @@ if __name__ == '__main__':
     exchanges_snapshot = {}
     arbitrage_record = {}
     itchatsendtime = {}
-    globalvar = {"threshhold": 50000, "BTC": 0.01, "ETH": 0.01, "LTC": 0.1}
+    globalvar = {"threshhold": 10000, "BTC": 0.01, "ETH": 0.01, "LTC": 0.1}
 
     # itchat
     # itchat.auto_login(hotReload=True)
@@ -469,9 +469,9 @@ if __name__ == '__main__':
         if mjson["exchange"] in TradeClients.keys():
             TradeClients[mjson["exchange"]].instmt_snapshot[mjson["instmt"]] = mjson
         try:
-            Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "ETH",
+            Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bittrex", "BTC", "ETH",
                                0.01, 0.01, 0.01)
-            Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex", "BTC", "LTC",
+            Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bittrex", "BTC", "LTC",
                                0.01, 0.1, 0.01)
         except Exception as e:
             logging.exception(e)

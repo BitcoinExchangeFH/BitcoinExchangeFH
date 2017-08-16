@@ -77,20 +77,23 @@ class BittrexMarket(Market):
             return response
 
     def orderstatus(self, instmt, id):
-        response = status_order(id)
+        response = self.bittrex.get_order(id)
         logging.info(json.dumps(response))
-        if isinstance(response, dict):
-            order = Order(response["id"])
-            order.original_amount = float(response["original_amount"])
-            order.remaining_amount = float(response["remaining_amount"])
-            order.side = response["side"]
-            order.executed_amount = float(response["executed_amount"])
-            order.avg_execution_price = float(response["avg_execution_price"])
-            order.price = float(response["price"])
-            order.is_cancelled = response["is_cancelled"]
+        if response['success']:
+            order = Order(id)
+            order.original_amount = float(response['result']["Quantity"])
+            order.remaining_amount = float(response['result']["QuantityRemaining"])
+            if "BUY" in response['result']["Type"]:
+                order.side = "buy"
+            elif "SELL" in response['result']["Type"]:
+                order.side = "sell"
+            order.executed_amount = order.original_amount-order.remaining_amount
+            order.avg_execution_price = float(response['result']["PricePerUnit"])
+            order.price = float(response['result']["Limit"])
+            order.is_cancelled = response['result']["CancelInitiated"]
             order.symbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_name
             order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_code
-            order.timestamp = response["timestamp"]
+            order.timestamp = response['result']["Closed"]
             if order.remaining_amount == 0:
                 if id in self.orderids:
                     self.orderids.remove(id)
@@ -106,30 +109,11 @@ class BittrexMarket(Market):
     def cancelorder(self, instmt, id):
         response = self.bittrex.cancel(id)
         logging.warning(json.dumps(response))
-        if not isinstance(response, dict):
-            status, order = self.orderstatus(instmt, id)
-            if id in self.orderids:
-                self.orderids.remove(id)
-                self.orders.pop(id)
-            return True, order
-        else:
-            if id in self.orderids:
-                order = self.orders[id]
-                self.orderids.remove(id)
-                self.orders.pop(id)
-            else:
-                order = Order(response["id"])
-                order.original_amount = float(response["original_amount"])
-                order.side = response["side"]
-                order.symbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_name
-                order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_code
-            order.remaining_amount = float(response["remaining_amount"])
-            order.executed_amount = float(response["executed_amount"])
-            order.avg_execution_price = float(response["avg_execution_price"])
-            order.price = float(response["price"])
-            order.is_cancelled = True
-            order.timestamp = response["timestamp"]
-            return True, order
+        status, order = self.orderstatus(instmt, id)
+        if isinstance(response,dict) and id in self.orderids:
+            self.orderids.remove(id)
+            self.orders.pop(id)
+        return isinstance(response,dict), order
 
     def withdrawcoin(self, coin, amount, address, payment_id):
         response = self.bittrex.withdraw(coin, amount, address)
@@ -160,5 +144,4 @@ if __name__ == '__main__':
     client = BittrexMarket()
     client.subscription_dict = dict([('_'.join([v.exchange_name, v.instmt_name]), v) for v in subscription_instmts])
 
-    res = client.buy("SPOT_ETHBTC", 1, 0.03)
-    client.cancelorder("SPOT_ETHBTC", res)
+

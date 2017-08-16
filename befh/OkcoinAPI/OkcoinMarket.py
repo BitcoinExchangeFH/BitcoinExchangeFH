@@ -29,6 +29,7 @@ class OkcoinMarket(Market):
         # 解析json文件
         with open(fileName) as data_file:
             setting = json.load(data_file)
+            data_file.close()
         self.exchange = str(setting['exchange'])
         self.apikey = str(setting['apiKey'])
         self.secretkey = str(setting['secretKey'])

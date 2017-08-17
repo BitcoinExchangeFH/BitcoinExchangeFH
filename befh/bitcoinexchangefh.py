@@ -17,7 +17,7 @@ from befh.exch_gatecoin import ExchGwGatecoin
 from befh.exch_quoine import ExchGwQuoine
 from befh.exch_poloniex import ExchGwPoloniex
 from befh.exch_bittrex import ExchGwBittrex
-#from befh.kdbplus_client import KdbPlusClient
+# from befh.kdbplus_client import KdbPlusClient
 from befh.mysql_client import MysqlClient
 from befh.sqlite_client import SqliteClient
 from befh.file_client import FileClient
@@ -106,7 +106,7 @@ def main():
         print('Error: Please define the instrument subscription list. You can refer to subscriptions.ini.')
         parser.print_help()
         sys.exit(1)
-        
+
     # Use exchange timestamp rather than local timestamp
     if args.exchtime:
         ExchangeGateway.is_local_timestamp = False
@@ -119,7 +119,7 @@ def main():
     for instmt in subscription_instmts:
         log_str += '%s/%s/%s\n' % (instmt.exchange_name, instmt.instmt_name, instmt.instmt_code)
     Logger.info('[main]', log_str)
-    
+
     exch_gws = []
     exch_gws.append(ExchGwBtccSpot(db_clients))
     exch_gws.append(ExchGwBtccFuture(db_clients))
@@ -140,8 +140,9 @@ def main():
         for instmt in subscription_instmts:
             if instmt.get_exchange_name() == exch.get_exchange_name():
                 Logger.info("[main]", "Starting instrument %s-%s..." % \
-                    (instmt.get_exchange_name(), instmt.get_instmt_name()))
+                            (instmt.get_exchange_name(), instmt.get_instmt_name()))
                 threads += exch.start(instmt)
+
 
 if __name__ == '__main__':
     main()

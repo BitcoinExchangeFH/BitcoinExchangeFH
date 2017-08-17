@@ -3,8 +3,8 @@
 # encoding: utf-8
 # 客户端调用，用于查看API返回结果
 
-from .OkcoinSpotAPI import OKCoinSpot
-from .OkcoinFutureAPI import OKCoinFuture
+from befh.OkcoinAPI.OkcoinSpotAPI import OKCoinSpot
+from befh.OkcoinAPI.OkcoinFutureAPI import OKCoinFuture
 from befh.trade.market import Market, TradeException, Order
 import json
 import os
@@ -39,6 +39,9 @@ class OkcoinMarket(Market):
         self.address["BTC"] = setting['OkCoinCN_BTC']
         self.address["ETH"] = setting['OkCoinCN_ETH']
         self.address["LTC"] = setting['OkCoinCN_LTC']
+        self.txfee["BTC"] = setting['TxFee_BTC']
+        self.txfee["ETH"] = setting['TxFee_ETH']
+        self.txfee["LTC"] = setting['TxFee_LTC']
 
         self.okcoinRESTURL = 'www.okcoin.cn'
         self.okcoinSpot = OKCoinSpot(self.okcoinRESTURL, self.apikey, self.secretkey)
@@ -183,6 +186,13 @@ class OkcoinMarket(Market):
         else:
             return response["result"], response["withdraw_id"]
 
+    def getdeposithistory(self, symbol):
+
+        response = self.okcoinSpot.account_records(symbol, 0, 1, 50)
+        response = json.loads(response)
+        return response['records']
+
+
 # 初始化apikey，secretkey,url
 # apikey = 'XXXX'
 # secretkey = 'XXXXX'
@@ -220,3 +230,7 @@ class OkcoinMarket(Market):
 
 # print (u' 现货历史订单信息查询 ')
 # print (okcoinSpot.orderHistory('ltc_usd','0','1','2'))
+
+if __name__ == '__main__':
+    client = OkcoinMarket()
+    client.accountrecords("btc_cny")

@@ -26,7 +26,8 @@ class OKCoinSpot:
             params = 'symbol=%(symbol)s' % {'symbol': symbol}
         return httpGet(self.__url, DEPTH_RESOURCE, params)
 
-     # 获取OKCOIN现货历史交易信息
+        # 获取OKCOIN现货历史交易信息
+
     def trades(self, symbol=''):
         TRADES_RESOURCE = "/api/v1/trades.do"
         params = ''
@@ -72,6 +73,20 @@ class OKCoinSpot:
         }
         params['sign'] = buildMySign(params, self.__secretkey)
         return httpPost(self.__url, WITHDRAW_RESOURCE, params)
+
+    # 获取用提现 / 充值记录
+    def account_records(self, symbol, type, current_page, page_length):
+        ACCOUNTRECORDS_RESOURCE = "/api/v1/account_records.do"
+        params = {
+            'api_key': self.__apikey,
+            'symbol': symbol,
+            'type': type,
+            'current_page': current_page,
+            'page_length': page_length
+
+        }
+        params['sign'] = buildMySign(params, self.__secretkey)
+        return httpPost(self.__url, ACCOUNTRECORDS_RESOURCE, params)
 
     # 现货批量下单
     def batchTrade(self, symbol, tradeType, orders_data):

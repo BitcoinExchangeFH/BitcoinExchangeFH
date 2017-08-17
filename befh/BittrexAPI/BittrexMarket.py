@@ -87,7 +87,7 @@ class BittrexMarket(Market):
                 order.side = "buy"
             elif "SELL" in response['result']["Type"]:
                 order.side = "sell"
-            order.executed_amount = order.original_amount-order.remaining_amount
+            order.executed_amount = order.original_amount - order.remaining_amount
             order.avg_execution_price = float(response['result']["PricePerUnit"])
             order.price = float(response['result']["Limit"])
             order.is_cancelled = response['result']["CancelInitiated"]
@@ -110,10 +110,10 @@ class BittrexMarket(Market):
         response = self.bittrex.cancel(id)
         logging.warning(json.dumps(response))
         status, order = self.orderstatus(instmt, id)
-        if isinstance(response,dict) and id in self.orderids:
+        if isinstance(response, dict) and id in self.orderids:
             self.orderids.remove(id)
             self.orders.pop(id)
-        return isinstance(response,dict), order
+        return isinstance(response, dict), order
 
     def withdrawcoin(self, coin, amount, address, payment_id):
         response = self.bittrex.withdraw(coin, amount, address)
@@ -126,12 +126,18 @@ class BittrexMarket(Market):
     def get_info(self):
         """Get balance"""
         response = self.bittrex.get_balances()
+        # markets = self.bittrex.get_markets()
+        currencies = self.bittrex.get_currencies()
+
         logging.info(json.dumps(response))
-        if response['success']:
+        if response['success'] and currencies['success']:
             for res in response['result']:
-                self.amount["SPOT_" + res['Currency']] = float(res['Balance'])
-                self.available["SPOT_" + res['Currency']] = float(res['Available'])
+                self.amount["SPOT_" + res['Currency'] + self.currency] = float(res['Balance'])
+                self.available["SPOT_" + res['Currency'] + self.currency] = float(res['Available'])
                 self.address[res['Currency']] = res['CryptoAddress']
+                txfee = list(filter(lambda x: x['Currency'] == res['Currency'], currencies['result']))
+                if len(txfee) > 0:
+                    self.txfee[res['Currency']] = txfee[0]['TxFee']
 
 
 if __name__ == '__main__':
@@ -143,5 +149,3 @@ if __name__ == '__main__':
 
     client = BittrexMarket()
     client.subscription_dict = dict([('_'.join([v.exchange_name, v.instmt_name]), v) for v in subscription_instmts])
-
-

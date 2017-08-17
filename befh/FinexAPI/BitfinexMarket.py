@@ -6,7 +6,7 @@
 from befh.trade.market import Market, TradeException, Order
 import json
 import os
-from .FinexAPI import *
+from befh.FinexAPI.FinexAPI import *
 from decimal import Decimal
 import logging
 
@@ -82,7 +82,7 @@ class BitfinexMarket(Market):
     def orderstatus(self, instmt, id):
         response = status_order(id)
         logging.info(json.dumps(response))
-        if isinstance(response,dict):
+        if isinstance(response, dict):
             order = Order(response["id"])
             order.original_amount = float(response["original_amount"])
             order.remaining_amount = float(response["remaining_amount"])
@@ -146,7 +146,7 @@ class BitfinexMarket(Market):
             withdraw_type = "litecoin"
         response = withdraw(withdraw_type, "exchange", str(amount), address, payment_id)
         logging.warning(json.dumps(response))
-        if isinstance(response,list):
+        if isinstance(response, list):
             if response[0]["status"] == "success":
                 return True, response[0]["withdrawal_id"]
             else:
@@ -155,27 +155,19 @@ class BitfinexMarket(Market):
     def get_info(self):
         """Get balance"""
         response = balances()
+        fees = withdrawals_fees()
         logging.info(json.dumps(response))
         for res in response:
             if res["type"] == "exchange":
                 if res['currency'] == 'usd':
                     self.amount[self.currency] = float(res['amount'])
                     self.available[self.currency] = float(res['available'])
-                elif res['currency'] == 'btc':
-                    self.amount["SPOT_BTC" + self.currency] = float(res['amount'])
-                    self.available["SPOT_BTC" + self.currency] = float(res['available'])
-                elif res['currency'] == 'eth':
-                    self.amount["SPOT_ETH" + self.currency] = float(res['amount'])
-                    self.available["SPOT_ETH" + self.currency] = float(res['available'])
-                elif res['currency'] == 'etc':
-                    self.amount["SPOT_ETC" + self.currency] = float(res['amount'])
-                    self.available["SPOT_ETC" + self.currency] = float(res['available'])
-                elif res['currency'] == 'ltc':
-                    self.amount["SPOT_LTC" + self.currency] = float(res['amount'])
-                    self.available["SPOT_LTC" + self.currency] = float(res['available'])
-                elif res['currency'] == 'xrp':
-                    self.amount["SPOT_XRP" + self.currency] = float(res['amount'])
-                    self.available["SPOT_XRP" + self.currency] = float(res['available'])
-                elif res['currency'] == 'ltc':
-                    self.amount["SPOT_LTC" + self.currency] = float(res['amount'])
-                    self.available["SPOT_LTC" + self.currency] = float(res['available'])
+                else:
+                    self.amount["SPOT_" + res['currency'].upper() + self.currency] = float(res['amount'])
+                    self.available["SPOT_" + res['currency'].upper() + self.currency] = float(res['available'])
+                    if res['currency'].upper() in fees['withdraw']:
+                        self.txfee[res['currency'].upper()] = fees['withdraw'][res['currency'].upper()]
+
+
+if __name__ == '__main__':
+    client = BitfinexMarket()

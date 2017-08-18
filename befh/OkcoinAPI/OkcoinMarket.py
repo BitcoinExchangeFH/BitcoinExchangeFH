@@ -71,9 +71,9 @@ class OkcoinMarket(Market):
             order.symbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_name
             order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].order_code
             self.orders[order.id] = order
-            return response["order_id"]
+            return response["order_id"], True
         else:
-            return response
+            return response, False
 
     def sell(self, instmt, amount, price):
         """Create a sell limit order"""
@@ -97,9 +97,9 @@ class OkcoinMarket(Market):
             order.symbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_name
             order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].order_code
             self.orders[order.id] = order
-            return response["order_id"]
+            return response["order_id"], True
         else:
-            return response
+            return response, False
 
     def orderstatus(self, instmt, id):
         response = self.okcoinSpot.orderinfo(self.subscription_dict['_'.join([self.exchange, instmt])].order_code, id)

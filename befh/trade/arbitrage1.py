@@ -145,7 +145,7 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
 
         # rebalance accounts
         availablemoney = client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"]
-        if availablemoney > 1.5 * threshhold and client2.available['_'.join(["SPOT", ins1]) + client2.currency] < 100 * \
+        if availablemoney > 1.5 * threshhold and client2.available['_'.join(["SPOT", ins1]) + client2.currency] < 10 * \
                 globalvar[ins1]:
             withdrawamount = min(np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold,
                                  globalvar["threshholdceil"]) / exchanges_snapshot[snapshot1]["a1"] * (
@@ -154,14 +154,14 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
 
         availablemoney = client2.available['_'.join(["SPOT", ins2]) + client2.currency] * \
                          exchanges_snapshot[snapshot3]["a1"]
-        if availablemoney > 1.5 * threshhold and client1.available[instmt3] < 100 * globalvar[ins2]:
+        if availablemoney > 1.5 * threshhold and client1.available[instmt3] < 10 * globalvar[ins2]:
             withdrawamount = min(np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold,
                                  globalvar["threshholdceil"]) / exchanges_snapshot[snapshot3]["b1"] * (
                                  1 - random.random() / 100)
             withdrawresult, wid = client2.withdrawcoin(ins2, withdrawamount, client1.address[ins2], "")
 
         availablemoney = client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"]
-        if availablemoney > 1.5 * threshhold and client2.available['_'.join(["SPOT", ins2]) + client2.currency] < 100 * \
+        if availablemoney > 1.5 * threshhold and client2.available['_'.join(["SPOT", ins2]) + client2.currency] < 10 * \
                 globalvar[ins2]:
             withdrawamount = min(np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold,
                                  globalvar["threshholdceil"]) / exchanges_snapshot[snapshot3]["a1"] * (
@@ -170,7 +170,7 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
 
         availablemoney = client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
             "a1"]
-        if availablemoney > 1.5 * threshhold and client1.available[instmt1] < 100 * globalvar[ins1]:
+        if availablemoney > 1.5 * threshhold and client1.available[instmt1] < 10 * globalvar[ins1]:
             withdrawamount = min(np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold,
                                  globalvar["threshholdceil"]) / exchanges_snapshot[snapshot1]["b1"] * (
                                  1 - random.random() / 100)
@@ -191,12 +191,14 @@ def ReplaceOrder(instmt, insthresh, record, snapshot, client):
             status, order = client.cancelorder(instmt, record["detail"][snapshot]["orderid"])
             if order.remaining_amount > insthresh:
                 if order.side == "sell":
-                    orderid = client.sell(instmt, order.remaining_amount, exchanges_snapshot[snapshot]["b1"])
+                    orderid, orderstatus = client.sell(instmt, order.remaining_amount,
+                                                       exchanges_snapshot[snapshot]["b1"])
                 elif order.side == "buy":
-                    orderid = client.buy(instmt, order.remaining_amount, exchanges_snapshot[snapshot]["a1"])
+                    orderid, orderstatus = client.buy(instmt, order.remaining_amount,
+                                                      exchanges_snapshot[snapshot]["a1"])
                 if isinstance(orderid, str) and "Invalid order: not enough exchange balance for" in orderid:
                     record["detail"][snapshot]["iscompleted"] = True
-                assert isinstance(orderid, int), "orderid(%s) = %s" % (type(orderid), orderid)
+                assert orderstatus, "orderid(%s) = %s" % (type(orderid), orderid)
                 record["detail"][snapshot]["orderid"] = orderid
             else:
                 record["detail"][snapshot]["iscompleted"] = True
@@ -267,10 +269,10 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                 amount2 = client2.available['_'.join(["SPOT", ins1]) + client2.currency] * 0.95
                 amount = min(amountbasic, amount3, amount2)
                 if client1.available[client1.currency] / exchanges_snapshot[snapshot1]["a1"] < amount + ins1thresh:
-                    orderid3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
-                                            exchanges_snapshot[snapshot3]["b1"],
-                                            exchanges_snapshot[snapshot3]["b1"])
-                    assert isinstance(orderid3, int), "orderid(%s) = %s" % (type(orderid3), orderid3)
+                    orderid3, orderstutus3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
+                                                          exchanges_snapshot[snapshot3]["b1"],
+                                                          exchanges_snapshot[snapshot3]["b1"])
+                    assert orderstutus3, "orderid(%s) = %s" % (type(orderid3), orderid3)
                     UpdateRecord(client1, record, instmt3, orderid3, snapshot3,
                                  amount * exchanges_snapshot[snapshot1]["a1"] /
                                  exchanges_snapshot[snapshot3]["b1"])
@@ -280,46 +282,47 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                 elif amount >= ins1thresh and amount * exchanges_snapshot[snapshot1]["a1"] / \
                         exchanges_snapshot[snapshot3]["b1"] >= ins2thresh:
                     try:
-                        orderid3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
-                                                exchanges_snapshot[snapshot3]["b1"],
-                                                exchanges_snapshot[snapshot3]["b1"])
+                        orderid3, orderstutus3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
+                                                              exchanges_snapshot[snapshot3]["b1"],
+                                                              exchanges_snapshot[snapshot3]["b1"])
                         io = 0
-                        while not isinstance(orderid3, int) and io < 5:
-                            orderid3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
-                                                    exchanges_snapshot[snapshot3]["b1"],
-                                                    exchanges_snapshot[snapshot3]["b1"])
+                        while not orderstutus3 and io < 5:
+                            orderid3, orderstutus3 = client1.sell(instmt3,
+                                                                  amount * exchanges_snapshot[snapshot1]["a1"] /
+                                                                  exchanges_snapshot[snapshot3]["b1"],
+                                                                  exchanges_snapshot[snapshot3]["b1"])
                             io = io + 1
                     except Exception as e:
-                        orderid3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
-                                                exchanges_snapshot[snapshot3]["b1"],
-                                                exchanges_snapshot[snapshot3]["b1"])
+                        orderid3, orderstutus3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
+                                                              exchanges_snapshot[snapshot3]["b1"],
+                                                              exchanges_snapshot[snapshot3]["b1"])
                     try:
-                        orderid1 = client1.buy(instmt1, amount, exchanges_snapshot[snapshot1]["a1"])
+                        orderid1, orderstutus1 = client1.buy(instmt1, amount, exchanges_snapshot[snapshot1]["a1"])
                         io = 0
-                        while not isinstance(orderid1, int) and io < 5:
-                            orderid1 = client1.buy(instmt1, amount, exchanges_snapshot[snapshot1]["a1"])
+                        while not orderstutus1 and io < 5:
+                            orderid1, orderstutus1 = client1.buy(instmt1, amount, exchanges_snapshot[snapshot1]["a1"])
                             io = io + 1
                     except Exception as e:
-                        orderid1 = client1.buy(instmt1, amount, exchanges_snapshot[snapshot1]["a1"])
+                        orderid1, orderstutus1 = client1.buy(instmt1, amount, exchanges_snapshot[snapshot1]["a1"])
                     try:
-                        orderid2 = client2.buy(instmt2, amount / exchanges_snapshot[snapshot2]["a1"],
-                                               exchanges_snapshot[snapshot2]["a1"])
+                        orderid2, orderstutus2 = client2.buy(instmt2, amount / exchanges_snapshot[snapshot2]["a1"],
+                                                             exchanges_snapshot[snapshot2]["a1"])
                         io = 0
-                        while not isinstance(orderid2, int) and io < 5:
-                            orderid2 = client2.buy(instmt2, amount / exchanges_snapshot[snapshot2]["a1"],
-                                                   exchanges_snapshot[snapshot2]["a1"])
+                        while not orderstutus2 and io < 5:
+                            orderid2, orderstutus2 = client2.buy(instmt2, amount / exchanges_snapshot[snapshot2]["a1"],
+                                                                 exchanges_snapshot[snapshot2]["a1"])
                             io = io + 1
                     except Exception as e:
-                        orderid2 = client2.buy(instmt2, amount / exchanges_snapshot[snapshot2]["a1"],
-                                               exchanges_snapshot[snapshot2]["a1"])
+                        orderid2, orderstutus2 = client2.buy(instmt2, amount / exchanges_snapshot[snapshot2]["a1"],
+                                                             exchanges_snapshot[snapshot2]["a1"])
 
-                    if isinstance(orderid3, int):
+                    if orderstutus3:
                         UpdateRecord(client1, record, instmt3, orderid3, snapshot3,
                                      amount * exchanges_snapshot[snapshot1]["a1"] /
                                      exchanges_snapshot[snapshot3]["b1"])
-                    if isinstance(orderid1, int):
+                    if orderstutus1:
                         UpdateRecord(client1, record, instmt1, orderid1, snapshot1, amount)
-                    if isinstance(orderid2, int):
+                    if orderstutus2:
                         UpdateRecord(client2, record, instmt2, orderid2, snapshot2,
                                      amount / exchanges_snapshot[snapshot2]["a1"])
                     executed = True
@@ -371,10 +374,10 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                 amount2 = client2.available['_'.join(["SPOT", ins2]) + client2.currency] * 0.95
                 amount = min(amountbasic, amount1, amount2)
                 if client1.available[client1.currency] / exchanges_snapshot[snapshot3]["a1"] < amount + ins2thresh:
-                    orderid1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
-                                            exchanges_snapshot[snapshot1]["b1"],
-                                            exchanges_snapshot[snapshot1]["b1"])
-                    assert isinstance(orderid1, int), "orderid(%s) = %s" % (type(orderid1), orderid1)
+                    orderid1, orderstutus1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
+                                                          exchanges_snapshot[snapshot1]["b1"],
+                                                          exchanges_snapshot[snapshot1]["b1"])
+                    assert orderstutus1, "orderid(%s) = %s" % (type(orderid1), orderid1)
                     UpdateRecord(client1, record, instmt1, orderid1, snapshot1,
                                  amount * exchanges_snapshot[snapshot3]["a1"] /
                                  exchanges_snapshot[snapshot1]["b1"])
@@ -384,43 +387,44 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                 elif amount >= ins2thresh and amount * exchanges_snapshot[snapshot3]["a1"] / \
                         exchanges_snapshot[snapshot1]["b1"] >= ins1thresh:
                     try:
-                        orderid1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
-                                                exchanges_snapshot[snapshot1]["b1"],
-                                                exchanges_snapshot[snapshot1]["b1"])
+                        orderid1, orderstutus1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
+                                                              exchanges_snapshot[snapshot1]["b1"],
+                                                              exchanges_snapshot[snapshot1]["b1"])
                         io = 0
-                        while not isinstance(orderid1, int) and io < 5:
-                            orderid1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
-                                                    exchanges_snapshot[snapshot1]["b1"],
-                                                    exchanges_snapshot[snapshot1]["b1"])
+                        while not orderstutus1 and io < 5:
+                            orderid1, orderstatus1 = client1.sell(instmt1,
+                                                                  amount * exchanges_snapshot[snapshot3]["a1"] /
+                                                                  exchanges_snapshot[snapshot1]["b1"],
+                                                                  exchanges_snapshot[snapshot1]["b1"])
                             io = io + 1
                     except Exception as e:
-                        orderid1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
-                                                exchanges_snapshot[snapshot1]["b1"],
-                                                exchanges_snapshot[snapshot1]["b1"])
+                        orderid1, orderstutus1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
+                                                              exchanges_snapshot[snapshot1]["b1"],
+                                                              exchanges_snapshot[snapshot1]["b1"])
                     try:
-                        orderid3 = client1.buy(instmt3, amount, exchanges_snapshot[snapshot3]["a1"])
+                        orderid3, orderstutus3 = client1.buy(instmt3, amount, exchanges_snapshot[snapshot3]["a1"])
                         io = 0
-                        while not isinstance(orderid3, int) and io < 5:
-                            orderid3 = client1.buy(instmt3, amount, exchanges_snapshot[snapshot3]["a1"])
+                        while not orderstutus3 and io < 5:
+                            orderid3, orderstutus3 = client1.buy(instmt3, amount, exchanges_snapshot[snapshot3]["a1"])
                             io = io + 1
                     except Exception as e:
-                        orderid3 = client1.buy(instmt3, amount, exchanges_snapshot[snapshot3]["a1"])
+                        orderid3, orderstutus3 = client1.buy(instmt3, amount, exchanges_snapshot[snapshot3]["a1"])
                     try:
-                        orderid2 = client2.sell(instmt2, amount, exchanges_snapshot[snapshot2]["b1"])
+                        orderid2, orderstutus2 = client2.sell(instmt2, amount, exchanges_snapshot[snapshot2]["b1"])
                         io = 0
-                        while not isinstance(orderid2, int) and io < 5:
-                            orderid2 = client2.sell(instmt2, amount, exchanges_snapshot[snapshot2]["b1"])
+                        while not orderstutus2 and io < 5:
+                            orderid2, orderstutus2 = client2.sell(instmt2, amount, exchanges_snapshot[snapshot2]["b1"])
                             io = io + 1
                     except Exception as e:
-                        orderid2 = client2.sell(instmt2, amount, exchanges_snapshot[snapshot2]["b1"])
+                        orderid2, orderstutus2 = client2.sell(instmt2, amount, exchanges_snapshot[snapshot2]["b1"])
 
-                    if isinstance(orderid1, int):
+                    if orderstutus1:
                         UpdateRecord(client1, record, instmt1, orderid1, snapshot1,
                                      amount * exchanges_snapshot[snapshot3]["a1"] /
                                      exchanges_snapshot[snapshot1]["b1"])
-                    if isinstance(orderid3, int):
+                    if orderstutus3:
                         UpdateRecord(client1, record, instmt3, orderid3, snapshot3, amount)
-                    if isinstance(orderid2, int):
+                    if orderstutus2:
                         UpdateRecord(client2, record, instmt2, orderid2, snapshot2, amount)
                     executed = True
                 else:
@@ -469,7 +473,7 @@ if __name__ == '__main__':
     arbitrage_record = {}
     itchatsendtime = {}
     withdrawrecords = {}
-    globalvar = {"threshholdfloor": 50000, "threshholdceil": 1000000, "BTC": 0.01, "ETH": 0.01, "LTC": 0.1}
+    globalvar = {"threshholdfloor": 20000, "threshholdceil": 1000000, "BTC": 0.01, "ETH": 0.01, "LTC": 0.1}
 
     # itchat
     # itchat.auto_login(hotReload=True)

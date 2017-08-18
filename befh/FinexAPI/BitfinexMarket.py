@@ -55,9 +55,9 @@ class BitfinexMarket(Market):
             order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_code
             order.timestamp = response["timestamp"]
             self.orders[order.id] = order
-            return response["id"]
+            return response["id"], True
         else:
-            return response
+            return response, False
 
     def sell(self, instmt, amount, price):
         """Create a sell limit order"""
@@ -75,9 +75,9 @@ class BitfinexMarket(Market):
             order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_code
             order.timestamp = response["timestamp"]
             self.orders[order.id] = order
-            return response["id"]
+            return response["id"], True
         else:
-            return response
+            return response, False
 
     def orderstatus(self, instmt, id):
         response = status_order(id)

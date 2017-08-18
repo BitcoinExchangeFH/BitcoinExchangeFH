@@ -53,9 +53,9 @@ class BittrexMarket(Market):
             order.symbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_name
             order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_code
             self.orders[order.id] = order
-            return response['result']["uuid"]
+            return response['result']["uuid"], True
         else:
-            return response
+            return response, False
 
     def sell(self, instmt, amount, price):
         """Create a sell limit order"""
@@ -72,9 +72,9 @@ class BittrexMarket(Market):
             order.symbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_name
             order.tradesymbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_code
             self.orders[order.id] = order
-            return response['result']["uuid"]
+            return response['result']["uuid"], True
         else:
-            return response
+            return response, False
 
     def orderstatus(self, instmt, id):
         response = self.bittrex.get_order(id)

@@ -42,6 +42,9 @@ class OkcoinMarket(Market):
         self.txfee["BTC"] = setting['TxFee_BTC']
         self.txfee["ETH"] = setting['TxFee_ETH']
         self.txfee["LTC"] = setting['TxFee_LTC']
+        self.tradefee["BTC"] = setting['TradeFee_BTC']
+        self.tradefee["ETH"] = setting['TradeFee_ETH']
+        self.tradefee["LTC"] = setting['TradeFee_LTC']
 
         self.okcoinRESTURL = 'www.okcoin.cn'
         self.okcoinSpot = OKCoinSpot(self.okcoinRESTURL, self.apikey, self.secretkey)

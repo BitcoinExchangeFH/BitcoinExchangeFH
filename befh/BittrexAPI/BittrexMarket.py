@@ -138,6 +138,7 @@ class BittrexMarket(Market):
                 txfee = list(filter(lambda x: x['Currency'] == res['Currency'], currencies['result']))
                 if len(txfee) > 0:
                     self.txfee[res['Currency']] = txfee[0]['TxFee']
+                self.tradefee[res['Currency']] = 0.0025
 
 
 if __name__ == '__main__':

@@ -144,52 +144,37 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
                 ex1 + ex2 + " " + "{:.4f}".format(calcaccountsamount(TradeClients, [ex1, ex2], [ins1, ins2])))
 
         # rebalance accounts
-        withdrawsymbol='_'.join([ex2, ins1])
         availablemoney = client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"]
         if availablemoney > 1.5 * threshhold and client2.available['_'.join(["SPOT", ins1]) + client2.currency] < 100 * \
                 globalvar[ins1]:
-            if withdrawsymbol in withdrawrecords.keys():
-                # client2.
-                pass
-            else:
-                withdrawamount = min(np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold,
-                                     globalvar["threshholdceil"]) / exchanges_snapshot[snapshot1]["a1"] * (
+            withdrawamount = min(np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold,
+                                 globalvar["threshholdceil"]) / exchanges_snapshot[snapshot1]["a1"] * (
                                  1 - random.random() / 100)
-                withdrawresult, message = client1.withdrawcoin(instmt1, withdrawamount, client2.address[ins1], "address")
-                if withdrawresult:
-                    withdrawrecords[withdrawsymbol] = withdrawamount
+            withdrawresult, wid = client1.withdrawcoin(instmt1, withdrawamount, client2.address[ins1], "address")
 
         availablemoney = client2.available['_'.join(["SPOT", ins2]) + client2.currency] * \
                          exchanges_snapshot[snapshot3]["a1"]
-        if availablemoney > 1.5 * threshhold and client1.available[instmt3] < 100 * globalvar[ins2] and '_'.join(
-                [ex1, ins2]) not in withdrawrecords.keys():
+        if availablemoney > 1.5 * threshhold and client1.available[instmt3] < 100 * globalvar[ins2]:
             withdrawamount = min(np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold,
                                  globalvar["threshholdceil"]) / exchanges_snapshot[snapshot3]["b1"] * (
-                             1 - random.random() / 100)
-            withdrawresult, message = client2.withdrawcoin(ins2, withdrawamount, client1.address[ins2], "")
-            if withdrawresult:
-                withdrawrecords['_'.join([ex1, ins2])] = withdrawamount
+                                 1 - random.random() / 100)
+            withdrawresult, wid = client2.withdrawcoin(ins2, withdrawamount, client1.address[ins2], "")
 
         availablemoney = client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"]
         if availablemoney > 1.5 * threshhold and client2.available['_'.join(["SPOT", ins2]) + client2.currency] < 100 * \
-                globalvar[ins2] and '_'.join([ex2, ins2]) not in withdrawrecords.keys():
+                globalvar[ins2]:
             withdrawamount = min(np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold,
                                  globalvar["threshholdceil"]) / exchanges_snapshot[snapshot3]["a1"] * (
                                  1 - random.random() / 100)
-            withdrawresult, message = client1.withdrawcoin(instmt3, withdrawamount, client2.address[ins2], "address")
-            if withdrawresult:
-                withdrawrecords['_'.join([ex2, ins2])] = withdrawamount
+            withdrawresult, wid = client1.withdrawcoin(instmt3, withdrawamount, client2.address[ins2], "address")
 
         availablemoney = client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
             "a1"]
-        if availablemoney > 1.5 * threshhold and client1.available[instmt1] < 100 * globalvar[ins1] and '_'.join(
-                [ex1, ins1]) not in withdrawrecords.keys():
+        if availablemoney > 1.5 * threshhold and client1.available[instmt1] < 100 * globalvar[ins1]:
             withdrawamount = min(np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold,
                                  globalvar["threshholdceil"]) / exchanges_snapshot[snapshot1]["b1"] * (
                                  1 - random.random() / 100)
-            withdrawresult, message = client2.withdrawcoin(ins1, withdrawamount, client1.address[ins1], "")
-            if withdrawresult:
-                withdrawrecords['_'.join([ex1, ins1])] = withdrawamount
+            withdrawresult, wid = client2.withdrawcoin(ins1, withdrawamount, client1.address[ins1], "")
 
     return record
 
@@ -260,8 +245,16 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
             record = LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
         if record["isready"]:
             # 计算是否有盈利空间
-            ratio = 1 / exchanges_snapshot[snapshot2]["a1"] * exchanges_snapshot[snapshot3][
-                "b1"] / exchanges_snapshot[snapshot1]["a1"] - 1
+            txfee1 = max(0, TradeClients[ex1].txfee[ins1] / (
+                client1.available[instmt1] + client2.available['_'.join(["SPOT", ins1]) + client2.currency] - 0.5 *
+                globalvar["threshholdfloor"] / exchanges_snapshot[snapshot1]["a1"]))
+            txfee2 = max(0, TradeClients[ex2].txfee[ins2] / (
+                client1.available[instmt3] + client2.available['_'.join(["SPOT", ins2]) + client2.currency] - 0.5 *
+                globalvar["threshholdfloor"] / exchanges_snapshot[snapshot3]["b1"]))
+            ratio = 1 / exchanges_snapshot[snapshot2]["a1"] * exchanges_snapshot[snapshot3]["b1"] / \
+                    exchanges_snapshot[snapshot1]["a1"] - 1 - TradeClients[ex1].tradefee[ins1] - \
+                    TradeClients[ex1].tradefee[ins2] - TradeClients[ex2].tradefee[ins2] - txfee1 - txfee2
+
             if ratio > ratiothreshhold:
                 arbitrage_direction = 1
                 executed = False
@@ -270,8 +263,8 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                                       "bq1"] * exchanges_snapshot[snapshot3]["b1"] / exchanges_snapshot[snapshot1][
                                       "a1"])
                 amount3 = client1.available[instmt3] * exchanges_snapshot[snapshot3]["b1"] / \
-                          exchanges_snapshot[snapshot1]["a1"] - ins1thresh
-                amount2 = client2.available['_'.join(["SPOT", ins1]) + client2.currency] - ins1thresh
+                          exchanges_snapshot[snapshot1]["a1"] * 0.95
+                amount2 = client2.available['_'.join(["SPOT", ins1]) + client2.currency] * 0.95
                 amount = min(amountbasic, amount3, amount2)
                 if client1.available[client1.currency] / exchanges_snapshot[snapshot1]["a1"] < amount + ins1thresh:
                     orderid3 = client1.sell(instmt3, amount * exchanges_snapshot[snapshot1]["a1"] /
@@ -357,8 +350,16 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
             record = LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record)
         if record["isready"]:
             # 计算是否有盈利空间
+            txfee1 = max(0, TradeClients[ex1].txfee[ins2] / (
+                client1.available[instmt3] + client2.available['_'.join(["SPOT", ins2]) + client2.currency] - 0.5 *
+                globalvar["threshholdfloor"] / exchanges_snapshot[snapshot3]["a1"]))
+            txfee2 = max(0, TradeClients[ex2].txfee[ins1] / (
+                client1.available[instmt1] + client2.available['_'.join(["SPOT", ins1]) + client2.currency] - 0.5 *
+                globalvar["threshholdfloor"] / exchanges_snapshot[snapshot1]["b1"]))
             ratio = exchanges_snapshot[snapshot2]["b1"] * exchanges_snapshot[snapshot1][
-                "b1"] / exchanges_snapshot[snapshot3]["a1"] - 1
+                "b1"] / exchanges_snapshot[snapshot3]["a1"] - 1 - TradeClients[ex1].tradefee[ins1] - \
+                    TradeClients[ex1].tradefee[ins2] - TradeClients[ex2].tradefee[ins2] - txfee1 - txfee2
+
             if ratio > ratiothreshhold:
                 arbitrage_direction = -1
                 executed = False
@@ -366,8 +367,8 @@ def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, 
                                   exchanges_snapshot[snapshot1]["bq1"] * exchanges_snapshot[snapshot1]["b1"] /
                                   exchanges_snapshot[snapshot3]["a1"])
                 amount1 = client1.available[instmt1] * exchanges_snapshot[snapshot1]["b1"] / \
-                          exchanges_snapshot[snapshot3]["a1"] - ins2thresh
-                amount2 = client2.available['_'.join(["SPOT", ins2]) + client2.currency] - ins2thresh
+                          exchanges_snapshot[snapshot3]["a1"] * 0.95
+                amount2 = client2.available['_'.join(["SPOT", ins2]) + client2.currency] * 0.95
                 amount = min(amountbasic, amount1, amount2)
                 if client1.available[client1.currency] / exchanges_snapshot[snapshot3]["a1"] < amount + ins2thresh:
                     orderid1 = client1.sell(instmt1, amount * exchanges_snapshot[snapshot3]["a1"] /
@@ -468,7 +469,7 @@ if __name__ == '__main__':
     arbitrage_record = {}
     itchatsendtime = {}
     withdrawrecords = {}
-    globalvar = {"threshholdfloor": 10000, "threshholdceil": 20000, "BTC": 0.01, "ETH": 0.01, "LTC": 0.1}
+    globalvar = {"threshholdfloor": 50000, "threshholdceil": 1000000, "BTC": 0.01, "ETH": 0.01, "LTC": 0.1}
 
     # itchat
     # itchat.auto_login(hotReload=True)

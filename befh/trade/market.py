@@ -35,6 +35,7 @@ class Market:
         self.orders = {}
         self.address = {}
         self.txfee = {}
+        self.tradefee={}
         # config the logging
         logging.basicConfig(level=logging.WARNING,
                             format='%(asctime)s %(filename)s LINE %(lineno)d: %(levelname)s %(message)s')

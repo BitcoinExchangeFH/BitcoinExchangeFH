@@ -167,6 +167,7 @@ class BitfinexMarket(Market):
                     self.available["SPOT_" + res['currency'].upper() + self.currency] = float(res['available'])
                     if res['currency'].upper() in fees['withdraw']:
                         self.txfee[res['currency'].upper()] = fees['withdraw'][res['currency'].upper()]
+                    self.tradefee[res['currency'].upper()] = 0.002
 
 
 if __name__ == '__main__':

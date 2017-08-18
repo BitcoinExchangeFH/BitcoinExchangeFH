@@ -88,7 +88,8 @@ class BittrexMarket(Market):
             elif "SELL" in response['result']["Type"]:
                 order.side = "sell"
             order.executed_amount = order.original_amount - order.remaining_amount
-            order.avg_execution_price = float(response['result']["PricePerUnit"])
+            order.avg_execution_price = float(response['result']["PricePerUnit"]) if response['result'][
+                                                                                         "PricePerUnit"] is not None else 0
             order.price = float(response['result']["Limit"])
             order.is_cancelled = response['result']["CancelInitiated"]
             order.symbol = self.subscription_dict['_'.join([self.exchange, instmt])].instmt_name

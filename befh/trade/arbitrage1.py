@@ -493,10 +493,10 @@ if __name__ == '__main__':
             tradesymbol = ['BTC', 'ETH']
             Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bittrex",
                                tradesymbol[0], tradesymbol[1], globalvar[tradesymbol[0]], globalvar[tradesymbol[1]],
-                               0.005)
+                               0.003)
             tradesymbol = ['BTC', 'LTC']
             Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bittrex",
                                tradesymbol[0], tradesymbol[1], globalvar[tradesymbol[0]], globalvar[tradesymbol[1]],
-                               0.005)
+                               0.003)
         except Exception as e:
             logging.exception(e)

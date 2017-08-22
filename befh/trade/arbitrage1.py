@@ -1,6 +1,6 @@
 # encoding: UTF-8
 import zmq
-import itchat
+#import itchat
 import time
 import os
 import json

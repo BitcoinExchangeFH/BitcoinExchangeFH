@@ -454,7 +454,7 @@ if __name__ == '__main__':
 
     # client字典
     TradeClients = {}
-    client = BittrexMarket()
+    client = BitfinexMarket()
     client.subscription_dict = subscription_dict
     TradeClients[client.exchange] = client
     client = OkcoinMarket()
@@ -473,7 +473,7 @@ if __name__ == '__main__':
     arbitrage_record = {}
     itchatsendtime = {}
     withdrawrecords = {}
-    globalvar = {"threshholdfloor": 20000, "threshholdceil": 1000000, "BTC": 0.01, "ETH": 0.01, "LTC": 0.1}
+    globalvar = {"threshholdfloor": 30000, "threshholdceil": 1000000, "BTC": 0.01, "ETH": 0.01, "LTC": 0.1}
 
     # itchat
     # itchat.auto_login(hotReload=True)
@@ -491,11 +491,11 @@ if __name__ == '__main__':
             TradeClients[mjson["exchange"]].instmt_snapshot[mjson["instmt"]] = mjson
         try:
             tradesymbol = ['BTC', 'ETH']
-            Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bittrex",
+            Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex",
                                tradesymbol[0], tradesymbol[1], globalvar[tradesymbol[0]], globalvar[tradesymbol[1]],
                                0.003)
             tradesymbol = ['BTC', 'LTC']
-            Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bittrex",
+            Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex",
                                tradesymbol[0], tradesymbol[1], globalvar[tradesymbol[0]], globalvar[tradesymbol[1]],
                                0.003)
         except Exception as e:

@@ -18,6 +18,7 @@ from befh.exch_bittrex import ExchGwBittrex
 from befh.exch_yunbi import ExchGwYunbi
 from befh.kdbplus_client import KdbPlusClient
 from befh.mysql_client import MysqlClient
+from befh.pg_client import PGClient
 from befh.sqlite_client import SqliteClient
 from befh.file_client import FileClient
 from befh.zmq_client import ZmqClient
@@ -34,12 +35,19 @@ def main():
     parser.add_argument('-sqlite', action='store_true', help='Use SQLite database.')
     parser.add_argument('-mysql', action='store_true', help='Use MySQL.')
     parser.add_argument('-zmq', action='store_true', help='Use zmq publisher.')
+    parser.add_argument('-pg', action='store_true', help='Use PostgreSQL.')
     parser.add_argument('-mysqldest', action='store', dest='mysqldest',
                         help='MySQL destination. Formatted as <name:pwd@host:port>',
                         default='')
     parser.add_argument('-mysqlschema', action='store', dest='mysqlschema',
                         help='MySQL schema.',
                         default='')
+    parser.add_argument('-pgdest', action='store', dest='pgdest',
+                        help='PostgreSQL destination. Formatted as <name:pwd@host:port/database>',
+                        default='')
+    parser.add_argument('-pgschema', action='store', dest='pgschema',
+                        help='PostgreSQL schema (default: public).',
+                        default='public')
     parser.add_argument('-kdbdest', action='store', dest='kdbdest',
                         help='Kdb+ destination. Formatted as <host:port>',
                         default='')
@@ -75,6 +83,11 @@ def main():
                           user=logon_credential.split(':')[0],
                           pwd=logon_credential.split(':')[1],
                           schema=args.mysqlschema)
+        db_clients.append(db_client)
+        is_database_defined = True
+    if args.pg:
+        db_client = PGClient()
+        db_client.connect(connection_string=args.pgdest, schema=args.pgschema)
         db_clients.append(db_client)
         is_database_defined = True
     if args.csv:

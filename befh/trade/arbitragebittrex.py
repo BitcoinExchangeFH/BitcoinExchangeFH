@@ -473,7 +473,7 @@ if __name__ == '__main__':
     arbitrage_record = {}
     itchatsendtime = {}
     withdrawrecords = {}
-    globalvar = {"threshholdfloor": 30000, "threshholdceil": 1000000, "BTC": 0.01, "ETH": 0.01, "LTC": 0.1}
+    globalvar = {"threshholdfloor": 40000, "threshholdceil": 1000000, "BTC": 0.01, "ETH": 0.01, "LTC": 0.1}
 
     # itchat
     # itchat.auto_login(hotReload=True)

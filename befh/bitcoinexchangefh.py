@@ -18,6 +18,7 @@ from befh.exch_bittrex import ExchGwBittrex
 from befh.exch_yunbi import ExchGwYunbi
 from befh.kdbplus_client import KdbPlusClient
 from befh.mysql_client import MysqlClient
+from befh.pg_client import PGClient
 from befh.sqlite_client import SqliteClient
 from befh.file_client import FileClient
 from befh.zmq_client import ZmqClient
@@ -40,6 +41,13 @@ def main():
     parser.add_argument('-mysqlschema', action='store', dest='mysqlschema',
                         help='MySQL schema.',
                         default='')
+    parser.add_argument('-pg', action='store_true', help='Use PostgreSQL.')
+    parser.add_argument('-pgdest', action='store', dest='pgdest',
+                        help='PostgreSQL destination. Formatted as <name:pwd@host:port/database>',
+                        default='')
+    parser.add_argument('-pgschema', action='store', dest='pgschema',
+                        help='PostgreSQL schema (default: public).',
+                        default='public')
     parser.add_argument('-kdbdest', action='store', dest='kdbdest',
                         help='Kdb+ destination. Formatted as <host:port>',
                         default='')
@@ -77,6 +85,11 @@ def main():
                           schema=args.mysqlschema)
         db_clients.append(db_client)
         is_database_defined = True
+    if args.pg:
+        db_client = PGClient()
+        db_client.connect(connection_string=args.pgdest, schema=args.pgschema)
+        db_clients.append(db_client)
+        is_database_defined = True
     if args.csv:
         if args.csvpath != '':
             db_client = FileClient(dir=args.csvpath)
@@ -105,19 +118,19 @@ def main():
         print('Error: Please define the instrument subscription list. You can refer to subscriptions.ini.')
         parser.print_help()
         sys.exit(1)
-        
+
     # Use exchange timestamp rather than local timestamp
     if args.exchtime:
         ExchangeGateway.is_local_timestamp = False
-    
+
     # Initialize subscriptions
     subscription_instmts = SubscriptionManager(args.instmts).get_subscriptions()
     if len(subscription_instmts) == 0:
         print('Error: No instrument is found in the subscription file. ' +
               'Please check the file path and the content of the subscription file.')
         parser.print_help()
-        sys.exit(1)        
-    
+        sys.exit(1)
+
     # Initialize snapshot destination
     ExchangeGateway.init_snapshot_table(db_clients)
 
@@ -126,7 +139,7 @@ def main():
     for instmt in subscription_instmts:
         log_str += '%s/%s/%s\n' % (instmt.exchange_name, instmt.instmt_name, instmt.instmt_code)
     Logger.info('[main]', log_str)
-    
+
     exch_gws = []
     exch_gws.append(ExchGwBtccSpot(db_clients))
     exch_gws.append(ExchGwBtccFuture(db_clients))

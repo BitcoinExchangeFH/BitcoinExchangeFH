@@ -14,6 +14,7 @@ setup(
         },
     install_requires=[
             'pymysql',
+            'psycopg2',
             'websocket-client',
             'numpy',
             'qpython',

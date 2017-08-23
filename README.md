@@ -52,6 +52,7 @@ Scheduled exchange supported soon:
 - ZeroMQ
 - Kdb+
 - MySQL
+- PostgreSQL (>= 9.5)
 - Sqlite
 - CSV
 
@@ -138,6 +139,23 @@ For example connecting to localhost with user "bitcoin", password "bitcoin" and 
 bitcoinexchangefh -mysql -mysqldest "bitcoin:bitcoin@localhost:3306" -mysqlschema bcex -instmts subscription.ini
 ```
 
+#### PostgreSQL
+
+To store the market data to PostgreSQL database, please install [postgresql-server](https://www.postgresql.org/) first. Make sure that the installed version is at least 9.5. Then enable the following user privileges on your target database and schema
+
+```
+CREATE
+UPDATE
+INSERT
+SELECT
+```
+
+For example connecting to localhost with user "bitcoin", password "bitcoin", database "bcex" and schema "tickerdata", run the command
+
+```
+bitcoinexchangefh -pg -pgdest "bitcoin:bitcoin@localhost:5432/bcex" -pgschema tickerdata -instmts subscription.ini
+```
+
 #### CSV
 
 No further setup is required. Just define the output folder path.
@@ -173,6 +191,9 @@ bitcoinexchangefh -zmq -zmqdest "tcp://localhost:6001" -kdb -kdbdest "localhost:
 |sqlitepath|SQLite database file path, e.g. "bitcoinexchangefh.sqlite".|
 |mysql|Use MySQL.|
 |mysqldest|MySQL database destination. Formatted as "username:password@address:host", e.g. "peter:Password123@127.0.0.1:3306".|
+|pg|Use PostgreSQL.|
+|pgdest|PostgreSQL database destination. Formatted as "username:password@address:host/database", e.g. "peter:Password123@127.0.0.1:5432/bcxe".|
+|pgschema|PostgreSQL destination schema. Default "public".|
 |csv|Use CSV file as database.|
 |csvpath|CSV file directory, e.g. "data/"|
 |output|Verbose output file path.|

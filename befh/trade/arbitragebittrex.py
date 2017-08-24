@@ -144,37 +144,76 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
                 ex1 + ex2 + " " + "{:.4f}".format(calcaccountsamount(TradeClients, [ex1, ex2], [ins1, ins2])))
 
         # rebalance accounts
+
+        # client1->client2
+        if client2.address[ins1] not in withdrawrecords.keys():
+            withdrawrecords[client2.address[ins1]] = 0
+        if withdrawrecords[client2.address[ins1]] > 0 and client2.available[
+                    '_'.join(["SPOT", ins1]) + client2.currency] >= 10 * \
+                globalvar[ins1]:
+            withdrawrecords[client2.address[ins1]] = 0
         availablemoney = client1.available[instmt1] * exchanges_snapshot[snapshot1]["a1"]
         if availablemoney > 1.5 * threshhold and client2.available['_'.join(["SPOT", ins1]) + client2.currency] < 10 * \
-                globalvar[ins1]:
+                globalvar[ins1] and withdrawrecords[client2.address[ins1]] == 0:
             withdrawamount = min(np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold,
                                  globalvar["threshholdceil"]) / exchanges_snapshot[snapshot1]["a1"] * (
                                  1 - random.random() / 100)
             withdrawresult, wid = client1.withdrawcoin(instmt1, withdrawamount, client2.address[ins1], "address")
+            if withdrawresult:
+                withdrawrecords[client2.address[ins1]] = withdrawamount
 
+        # client2->client1
+        if client1.address[ins2] not in withdrawrecords.keys():
+            withdrawrecords[client1.address[ins2]] = 0
+        if withdrawrecords[client1.address[ins2]] > 0 and client1.available[
+                    '_'.join(["SPOT", ins2]) + client1.currency] >= 10 * \
+                globalvar[ins2]:
+            withdrawrecords[client1.address[ins2]] = 0
         availablemoney = client2.available['_'.join(["SPOT", ins2]) + client2.currency] * \
                          exchanges_snapshot[snapshot3]["a1"]
-        if availablemoney > 1.5 * threshhold and client1.available[instmt3] < 10 * globalvar[ins2]:
+        if availablemoney > 1.5 * threshhold and client1.available[instmt3] < 10 * globalvar[ins2] and withdrawrecords[
+            client1.address[ins2]] == 0:
             withdrawamount = min(np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold,
                                  globalvar["threshholdceil"]) / exchanges_snapshot[snapshot3]["b1"] * (
                                  1 - random.random() / 100)
             withdrawresult, wid = client2.withdrawcoin(ins2, withdrawamount, client1.address[ins2], "")
+            if withdrawresult:
+                withdrawrecords[client1.address[ins2]] = withdrawamount
 
+        # client1->client2
+        if client2.address[ins2] not in withdrawrecords.keys():
+            withdrawrecords[client2.address[ins2]] = 0
+        if withdrawrecords[client2.address[ins2]] > 0 and client2.available[
+                    '_'.join(["SPOT", ins2]) + client2.currency] >= 10 * \
+                globalvar[ins2]:
+            withdrawrecords[client2.address[ins2]] = 0
         availablemoney = client1.available[instmt3] * exchanges_snapshot[snapshot3]["a1"]
         if availablemoney > 1.5 * threshhold and client2.available['_'.join(["SPOT", ins2]) + client2.currency] < 10 * \
-                globalvar[ins2]:
+                globalvar[ins2] and withdrawrecords[client2.address[ins2]] == 0:
             withdrawamount = min(np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold,
                                  globalvar["threshholdceil"]) / exchanges_snapshot[snapshot3]["a1"] * (
                                  1 - random.random() / 100)
             withdrawresult, wid = client1.withdrawcoin(instmt3, withdrawamount, client2.address[ins2], "address")
+            if withdrawresult:
+                withdrawrecords[client2.address[ins2]] = withdrawamount
 
+        # client2->client1
+        if client1.address[ins1] not in withdrawrecords.keys():
+            withdrawrecords[client1.address[ins1]] = 0
+        if withdrawrecords[client1.address[ins1]] > 0 and client1.available[
+                    '_'.join(["SPOT", ins1]) + client1.currency] >= 10 * \
+                globalvar[ins1]:
+            withdrawrecords[client1.address[ins1]] = 0
         availablemoney = client2.available['_'.join(["SPOT", ins1]) + client2.currency] * exchanges_snapshot[snapshot1][
             "a1"]
-        if availablemoney > 1.5 * threshhold and client1.available[instmt1] < 10 * globalvar[ins1]:
+        if availablemoney > 1.5 * threshhold and client1.available[instmt1] < 10 * globalvar[ins1] and withdrawrecords[
+            client1.address[ins1]] == 0:
             withdrawamount = min(np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold,
                                  globalvar["threshholdceil"]) / exchanges_snapshot[snapshot1]["b1"] * (
                                  1 - random.random() / 100)
             withdrawresult, wid = client2.withdrawcoin(ins1, withdrawamount, client1.address[ins1], "")
+            if withdrawresult:
+                withdrawrecords[client1.address[ins1]] = withdrawamount
 
     return record
 

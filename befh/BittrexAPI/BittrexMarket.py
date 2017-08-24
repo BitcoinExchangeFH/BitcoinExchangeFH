@@ -152,4 +152,4 @@ if __name__ == '__main__':
     client = BittrexMarket()
     client.subscription_dict = dict([('_'.join([v.exchange_name, v.instmt_name]), v) for v in subscription_instmts])
 
-    client.withdrawcoin('LTC', 10000, 'LPz1zmWgBWvzLdPJBSnCtQ4pdokCg1bJBu','')
+    # client.withdrawcoin('LTC', 10000, 'LPz1zmWgBWvzLdPJBSnCtQ4pdokCg1bJBu','')

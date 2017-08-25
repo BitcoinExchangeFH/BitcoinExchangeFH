@@ -23,10 +23,20 @@ def calcaccountsamount(TradeClients, exs, inss):
     for ex in exs:
         if ex == BaseEx and ex in TradeClients.keys():
             AccountsAmount = AccountsAmount + TradeClients[ex].amount['total']
-            for excon in TradeClients[ex].amount.keys():
-                for ins in inss:
+            for ins in inss:
+                for excon in TradeClients[ex].amount.keys():
                     if ins in excon:
                         insamount[ins] = insamount[ins] + TradeClients[ex].amount[excon]
+                        instmt = '_'.join(["SPOT", ins]) + TradeClients[BaseEx].currency
+                        snapshot = '_'.join([BaseEx, instmt])
+                        if snapshot in exchanges_snapshot.keys():
+                            insvalue = exchanges_snapshot[snapshot]["a1"] * TradeClients[ex].amount[excon]
+                            logging.warning(ex + " " + ins + " " + "{:.4f}".format(insvalue))
+                            if TradeClients[ex].address[ins] in withdrawrecords.keys():
+                                insvalue = exchanges_snapshot[snapshot]["a1"] * withdrawrecords[
+                                    TradeClients[ex].address[ins]]
+                                if insvalue > 0:
+                                    logging.warning(ins + " withdraw to " + ex + " " + "{:.4f}".format(insvalue))
         elif ex != BaseEx and BaseEx in TradeClients.keys() and ex in TradeClients.keys():
             client = TradeClients[ex]
             for symbol in client.amount:
@@ -35,9 +45,16 @@ def calcaccountsamount(TradeClients, exs, inss):
                     instmt = '_'.join(["SPOT", ins]) + TradeClients[BaseEx].currency
                     snapshot = '_'.join([BaseEx, instmt])
                     if snapshot in exchanges_snapshot.keys():
-                        AccountsAmount = AccountsAmount + exchanges_snapshot[snapshot]["a1"] * client.amount[symbol]
-                elif "USD" == symbol:
-                    AccountsAmount = AccountsAmount + client.fc.convert(client.amount[symbol], symbol, "CNY")
+                        insvalue = exchanges_snapshot[snapshot]["a1"] * client.amount[symbol]
+                        logging.warning(ex + " " + ins + " " + "{:.4f}".format(insvalue))
+                        AccountsAmount = AccountsAmount + insvalue
+                        if TradeClients[ex].address[ins] in withdrawrecords.keys():
+                            insvalue = exchanges_snapshot[snapshot]["a1"] * withdrawrecords[
+                                TradeClients[ex].address[ins]]
+                            if insvalue > 0:
+                                logging.warning(ins + " withdraw to " + ex + " " + "{:.4f}".format(insvalue))
+                # elif "USD" == symbol:
+                #     AccountsAmount = AccountsAmount + client.fc.convert(client.amount[symbol], symbol, "CNY")
                 for ins in inss:
                     if ins in symbol:
                         insamount[ins] = insamount[ins] + client.amount[symbol]
@@ -46,13 +63,17 @@ def calcaccountsamount(TradeClients, exs, inss):
         snapshot = '_'.join([BaseEx, instmt])
         if snapshot in exchanges_snapshot.keys():
             insvalue = exchanges_snapshot[snapshot]["a1"] * insamount[ins]
-            logging.warning(ins + " " + "{:.4f}".format(insvalue))
+            logging.warning(json.dumps(exs) + " " + ins + " " + "{:.4f}".format(insvalue))
+
     return AccountsAmount
 
 
 def LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode, arbitrage_record):
     if arbitragecode in arbitrage_record.keys():
         record = arbitrage_record[arbitragecode]
+        if not record["isready"] and time.time() - record["time"] > 60:
+            record["time"] = time.time()
+            arbitrage_record[arbitragecode] = record
     else:
         record = {"isready": True, "detail": {}, "time": time.time()}
         record["detail"][snapshot1] = {"iscompleted": True, "originalamount": 0.0, "remainamount": 0.0,
@@ -140,8 +161,10 @@ def RefreshRecord(TradeClients, record, ex1, ex2, ins1, ins2, arbitrage_record, 
         if not updateaccount:
             client1.get_info()
             client2.get_info()
+            logging.warning("***********************************")
             logging.warning(
                 ex1 + ex2 + " " + "{:.4f}".format(calcaccountsamount(TradeClients, [ex1, ex2], [ins1, ins2])))
+            logging.warning("***********************************")
 
         # rebalance accounts
 
@@ -258,6 +281,7 @@ def UpdateRecord(client, record, instmt, orderid, snapshot, amount):
     record["detail"][snapshot] = {"iscompleted": status, "originalamount": amount, "remainamount": 0.0,
                                   "orderid": orderid, "executedamount": executedamount,
                                   "executedvolume": executedvolume}
+    record["time"] = time.time()
 
 
 def Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, ex1, ex2, ins1, ins2, ins1thresh, ins2thresh,

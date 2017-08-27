@@ -536,7 +536,7 @@ if __name__ == '__main__':
     arbitrage_record = {}
     itchatsendtime = {}
     withdrawrecords = {}
-    globalvar = {"threshholdfloor": 20000, "threshholdceil": 60000, "BTC": 0.01, "ETH": 0.01, "LTC": 0.1}
+    globalvar = {"threshholdfloor": 20000, "threshholdceil": 60000, "BTC": 0.01, "ETH": 0.01, "LTC": 0.1, "BCC": 0.001}
 
     # itchat
     # itchat.auto_login(hotReload=True)
@@ -561,5 +561,9 @@ if __name__ == '__main__':
             Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex",
                                tradesymbol[0], tradesymbol[1], globalvar[tradesymbol[0]], globalvar[tradesymbol[1]],
                                0.003)
+            # tradesymbol = ['ETH', 'BCC']
+            # Exchange3Arbitrage(globalvar, mjson, exchanges_snapshot, TradeClients, "OkCoinCN", "Bitfinex",
+            #                    tradesymbol[0], tradesymbol[1], globalvar[tradesymbol[0]], globalvar[tradesymbol[1]],
+            #                    0.003)
         except Exception as e:
             logging.exception(e)

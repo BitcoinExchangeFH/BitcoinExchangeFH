@@ -38,6 +38,7 @@ class BitfinexMarket(Market):
         self.address["BTC"] = setting['Bitfinex_BTC']
         self.address["ETH"] = setting['Bitfinex_ETH']
         self.address["LTC"] = setting['Bitfinex_LTC']
+        self.address["BCC"] = setting['Bitfinex_BCC']
 
     def buy(self, instmt, amount, price):
         """Create a buy limit order"""
@@ -144,6 +145,8 @@ class BitfinexMarket(Market):
             withdraw_type = "ethereumc"
         elif coin == "LTC":
             withdraw_type = "litecoin"
+        elif coin == "BCC":
+            withdraw_type="bcash"
         response = withdraw(withdraw_type, "exchange", str(amount), address, payment_id)
         logging.warning(json.dumps(response))
         if isinstance(response, list):

@@ -39,12 +39,15 @@ class OkcoinMarket(Market):
         self.address["BTC"] = setting['OkCoinCN_BTC']
         self.address["ETH"] = setting['OkCoinCN_ETH']
         self.address["LTC"] = setting['OkCoinCN_LTC']
+        self.address["BCC"] = setting['OkCoinCN_BCC']
         self.txfee["BTC"] = setting['TxFee_BTC']
         self.txfee["ETH"] = setting['TxFee_ETH']
         self.txfee["LTC"] = setting['TxFee_LTC']
+        self.txfee["BCC"] = setting['TxFee_BCC']
         self.tradefee["BTC"] = setting['TradeFee_BTC']
         self.tradefee["ETH"] = setting['TradeFee_ETH']
         self.tradefee["LTC"] = setting['TradeFee_LTC']
+        self.tradefee["BCC"] = setting['TradeFee_BCC']
 
         self.okcoinRESTURL = 'www.okcoin.cn'
         self.okcoinSpot = OKCoinSpot(self.okcoinRESTURL, self.apikey, self.secretkey)
@@ -175,12 +178,15 @@ class OkcoinMarket(Market):
                 chargefee = 0.01
             elif symbol == "ltc_cny":
                 chargefee = 0.001
+
         if symbol == "btc_cny" and amount < 0.01:
             return False, "amount less than 0.01"
         elif symbol == "eth_cny" and amount < 0.01:
             return False, "amount less than 0.01"
         elif symbol == "ltc_cny" and amount < 0.1:
             return False, "amount less than 0.1"
+        elif symbol == "bcc_cny" and amount < 0.001:
+            return False, "amount less than 0.001"
         response = self.okcoinSpot.withdraw(symbol, chargefee, self.tradepassword, address, amount, target)
         response = json.loads(response)
         logging.warning(json.dumps(response))

@@ -38,7 +38,7 @@ class BitfinexMarket(Market):
         self.address["BTC"] = setting['Bitfinex_BTC']
         self.address["ETH"] = setting['Bitfinex_ETH']
         self.address["LTC"] = setting['Bitfinex_LTC']
-        self.address["BCC"] = setting['Bitfinex_BCC']
+        # self.address["BCC"] = setting['Bitfinex_BCC']
 
     def buy(self, instmt, amount, price):
         """Create a buy limit order"""

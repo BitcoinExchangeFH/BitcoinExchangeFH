@@ -210,7 +210,8 @@ class ArbitrageTrade:
                             self.withdrawrecords[
                                 client1.address[ins2]] == 0:
                 withdrawamount = min(np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold,
-                                     100 * self.globalvar["threshholdceil"]) / self.exchanges_snapshot[snapshot3]["b1"] * (
+                                     100 * self.globalvar["threshholdceil"]) / self.exchanges_snapshot[snapshot3][
+                                     "b1"] * (
                                      1 - random.random() / 100)
                 withdrawresult, wid = client2.withdrawcoin(ins2, withdrawamount, client1.address[ins2], "")
                 if withdrawresult:
@@ -248,7 +249,8 @@ class ArbitrageTrade:
                             self.withdrawrecords[
                                 client1.address[ins1]] == 0:
                 withdrawamount = min(np.floor((availablemoney - 0.5 * threshhold) / threshhold) * threshhold,
-                                     100 * self.globalvar["threshholdceil"]) / self.exchanges_snapshot[snapshot1]["b1"] * (
+                                     100 * self.globalvar["threshholdceil"]) / self.exchanges_snapshot[snapshot1][
+                                     "b1"] * (
                                      1 - random.random() / 100)
                 withdrawresult, wid = client2.withdrawcoin(ins1, withdrawamount, client1.address[ins1], "")
                 if withdrawresult:
@@ -322,12 +324,20 @@ class ArbitrageTrade:
                 record = self.LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode)
             if record["isready"]:
                 # 计算是否有盈利空间
-                txfee1 = max(0, self.TradeClients[ex1].txfee[ins1] / (
-                    client1.available[instmt1] + client2.available['_'.join(["SPOT", ins1]) + client2.currency] - 0.5 *
-                    self.globalvar["threshholdfloor"] / self.exchanges_snapshot[snapshot1]["a1"]))
-                txfee2 = max(0, self.TradeClients[ex2].txfee[ins2] / (
-                    client1.available[instmt3] + client2.available['_'.join(["SPOT", ins2]) + client2.currency] - 0.5 *
-                    self.globalvar["threshholdfloor"] / self.exchanges_snapshot[snapshot3]["b1"]))
+                a1 = client1.available[instmt1] + client2.available['_'.join(["SPOT", ins1]) + client2.currency]
+                a2 = 0.5 * self.globalvar["threshholdfloor"] / self.exchanges_snapshot[snapshot1]["a1"]
+                a3 = self.globalvar["threshholdceil"] / self.exchanges_snapshot[snapshot1]["a1"]
+                if min(a1 - a2, a3) <= 0:
+                    txfee1 = self.TradeClients[ex1].txfee[ins1]
+                else:
+                    txfee1 = self.TradeClients[ex1].txfee[ins1] / min(a1 - a2, a3)
+                a1 = client1.available[instmt3] + client2.available['_'.join(["SPOT", ins2]) + client2.currency]
+                a2 = 0.5 * self.globalvar["threshholdfloor"] / self.exchanges_snapshot[snapshot3]["b1"]
+                a3 = self.globalvar["threshholdceil"] / self.exchanges_snapshot[snapshot3]["b1"]
+                if min(a1 - a2, a3) <= 0:
+                    txfee2 = self.TradeClients[ex2].txfee[ins2]
+                else:
+                    txfee2 = self.TradeClients[ex2].txfee[ins2] / min(a1 - a2, a3)
                 ratio = 1 / self.exchanges_snapshot[snapshot2]["a1"] * self.exchanges_snapshot[snapshot3]["b1"] / \
                         self.exchanges_snapshot[snapshot1]["a1"] - 1 - self.TradeClients[ex1].tradefee[ins1] - \
                         self.TradeClients[ex1].tradefee[ins2] - self.TradeClients[ex2].tradefee[ins2] - txfee1 - txfee2
@@ -438,12 +448,20 @@ class ArbitrageTrade:
                 record = self.LoadRecord(snapshot1, snapshot2, snapshot3, arbitragecode)
             if record["isready"]:
                 # 计算是否有盈利空间
-                txfee1 = max(0, self.TradeClients[ex1].txfee[ins2] / (
-                    client1.available[instmt3] + client2.available['_'.join(["SPOT", ins2]) + client2.currency] - 0.5 *
-                    self.globalvar["threshholdfloor"] / self.exchanges_snapshot[snapshot3]["a1"]))
-                txfee2 = max(0, self.TradeClients[ex2].txfee[ins1] / (
-                    client1.available[instmt1] + client2.available['_'.join(["SPOT", ins1]) + client2.currency] - 0.5 *
-                    self.globalvar["threshholdfloor"] / self.exchanges_snapshot[snapshot1]["b1"]))
+                a1 = client1.available[instmt3] + client2.available['_'.join(["SPOT", ins2]) + client2.currency]
+                a2 = 0.5 * self.globalvar["threshholdfloor"] / self.exchanges_snapshot[snapshot3]["a1"]
+                a3 = self.globalvar["threshholdceil"] / self.exchanges_snapshot[snapshot3]["a1"]
+                if min(a1 - a2, a3) <= 0:
+                    txfee1 = self.TradeClients[ex1].txfee[ins2]
+                else:
+                    txfee1 = self.TradeClients[ex1].txfee[ins2] / min(a1 - a2, a3)
+                a1 = client1.available[instmt1] + client2.available['_'.join(["SPOT", ins1]) + client2.currency]
+                a2 = 0.5 * self.globalvar["threshholdfloor"] / self.exchanges_snapshot[snapshot1]["b1"]
+                a3 = self.globalvar["threshholdceil"] / self.exchanges_snapshot[snapshot1]["b1"]
+                if min(a1 - a2, a3) <= 0:
+                    txfee2 = self.TradeClients[ex2].txfee[ins1]
+                else:
+                    txfee2 = self.TradeClients[ex2].txfee[ins1] / min(a1 - a2, a3)
                 ratio = self.exchanges_snapshot[snapshot2]["b1"] * self.exchanges_snapshot[snapshot1][
                     "b1"] / self.exchanges_snapshot[snapshot3]["a1"] - 1 - self.TradeClients[ex1].tradefee[ins1] - \
                         self.TradeClients[ex1].tradefee[ins2] - self.TradeClients[ex2].tradefee[ins2] - txfee1 - txfee2

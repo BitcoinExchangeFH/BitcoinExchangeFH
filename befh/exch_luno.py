@@ -114,20 +114,8 @@ class ExchGwApiLuno(WebSocketApiClient):
         """
         trade = Trade()
         keys = list(raw.keys())
-        trade_keys = None
 
-        if raw['create_update']:
-            trade_keys = list(raw['create_update'].keys)
-        elif raw['delete_update']
-            trade_keys = list(raw['delete_update'].keys)
-        else:
-            trade_keys = list(raw['trade_updates'].keys)
-
-        if cls.get_trades_timestamp_field_name() in keys and \
-                        cls.get_trade_id_field_name() in keys and \
-                        cls.get_trade_side_field_name() in keys and \
-                        cls.get_trade_price_field_name() in keys and \
-                        cls.get_trade_volume_field_name() in keys:
+        if cls.get_trades_timestamp_field_name() in keys and cls.get_trade_id_field_name() in keys:
 
             # Date time
             timestamp = raw[cls.get_trades_timestamp_field_name()]
@@ -135,16 +123,19 @@ class ExchGwApiLuno(WebSocketApiClient):
             trade.date_time = timestamp
 
             # Trade side
-            trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])
+            # trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])
 
             # Trade id
             trade.trade_id = raw[cls.get_trade_id_field_name()]
 
             # Trade price
             trade.trade_price = raw[cls.get_trade_price_field_name()]
+            trade.trade_price = raw[cls.get_trade_price_field_name()] if cls.get_trade_price_field_name() in raw else
+
 
             # Trade volume
             trade.trade_volume = raw[cls.get_trade_volume_field_name()]
+
         else:
             raise Exception('Does not contain trade keys in instmt %s-%s.\nOriginal:\n%s' % \
                             (instmt.get_exchange_name(), instmt.get_instmt_name(),
@@ -164,6 +155,7 @@ class ExchGwLuno(ExchangeGateway):
         :param db_client: Database client
         """
         ExchangeGateway.__init__(self, ExchGwApiLuno(), db_clients)
+        self.order_book = None
 
     @classmethod
     def get_exchange_name(cls):
@@ -204,41 +196,54 @@ class ExchGwLuno(ExchangeGateway):
         """
         pprint(message)
         keys = message.keys()
-        if "sequence" in keys:
-            self.api_socket.parse_l2_depth(instmt, message)
-        elif "timestamp" in keys:
-            self.api_socket.parse_trade(instmt, message)
 
-    # if 'info' in keys:
-    #     Logger.info(self.__class__.__name__, message['info'])
-    # elif 'subscribe' in keys:
-    #     Logger.info(self.__class__.__name__, 'Subscription of %s is %s' % \
-    #                 (message['request']['args'], \
-    #                  'successful' if message['success'] else 'failed'))
-    # elif 'table' in keys:
-    #     if message['table'] == 'trade':
-    #         for trade_raw in message['data']:
-    #             if trade_raw["symbol"] == instmt.get_instmt_code():
-    #                 # Filter out the initial subscriptions
-    #                 trade = self.api_socket.parse_trade(instmt, trade_raw)
-    #                 if trade.trade_id != instmt.get_exch_trade_id():
-    #                     instmt.incr_trade_id()
-    #                     instmt.set_exch_trade_id(trade.trade_id)
-    #                     self.insert_trade(instmt, trade)
-    #     elif message['table'] == 'orderBook10':
-    #         for data in message['data']:
-    #             if data["symbol"] == instmt.get_instmt_code():
-    #                 instmt.set_prev_l2_depth(instmt.get_l2_depth().copy())
-    #                 self.api_socket.parse_l2_depth(instmt, data)
-    #                 if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
-    #                     instmt.incr_order_book_id()
-    #                     self.insert_order_book(instmt)
-    #     else:
-    #         Logger.info(self.__class__.__name__, json.dumps(message, indent=2))
-    # else:
-    #     Logger.error(self.__class__.__name__, "Unrecognised message:\n" + json.dumps(message))
+        # if "sequence" in keys:
+        #     self.order_book = self.api_socket.parse_l2_depth(instmt, message)
+        #
+        # elif "timestamp" in keys:
+        #     if message['create_update']:
+        #         message['create_update'].update({"timestamp": message['timestamp']})
+        #         self.api_socket.parse_trade(instmt, message['create_update'])
+        #
+        #     elif message['delete_update']:
+        #         message['delete_update'].update({"timestamp": message['timestamp']})
+        #         self.api_socket.parse_trade(instmt, message['delete_update'])
+        #
+        #     elif message['trade_updates']:
+        #         for trade in message['trade_updates']:
+        #             trade.update({"timestamp": message['timestamp']})
+        #             self.api_socket.parse_trade(instmt, trade)
 
-    def start(self, instmt, credentials):
+        if 'info' in keys:
+            Logger.info(self.__class__.__name__, message['info'])
+        elif 'subscribe' in keys:
+            Logger.info(self.__class__.__name__, 'Subscription of %s is %s' % \
+                        (message['request']['args'], \
+                         'successful' if message['success'] else 'failed'))
+        elif 'table' in keys:
+            if message['table'] == 'trade':
+                for trade_raw in message['data']:
+                    if trade_raw["symbol"] == instmt.get_instmt_code():
+                        # Filter out the initial subscriptions
+                        trade = self.api_socket.parse_trade(instmt, trade_raw)
+                        if trade.trade_id != instmt.get_exch_trade_id():
+                            instmt.incr_trade_id()
+                            instmt.set_exch_trade_id(trade.trade_id)
+                            self.insert_trade(instmt, trade)
+            elif message['table'] == 'orderBook10':
+                for data in message['data']:
+                    if data["symbol"] == instmt.get_instmt_code():
+                        instmt.set_prev_l2_depth(instmt.get_l2_depth().copy())
+                        self.api_socket.parse_l2_depth(instmt, data)
+                        if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
+                            instmt.incr_order_book_id()
+                            self.insert_order_book(instmt)
+            else:
+                Logger.info(self.__class__.__name__, json.dumps(message, indent=2))
+        else:
+            Logger.error(self.__class__.__name__, "Unrecognised message:\n" + json.dumps(message))
+
+    def start(self, instmt):
         """
         Start the exchange gateway
         :param instmt: Instrument
@@ -286,6 +291,6 @@ if __name__ == '__main__':
     db_client = SqlClientTemplate()
     Logger.init_log()
     exch = ExchGwLuno([db_client])
-    td = exch.start(instmt, creds)
+    td = exch.start(instmt)
     # print(exch.send(creds))
     # exch.api_socket.

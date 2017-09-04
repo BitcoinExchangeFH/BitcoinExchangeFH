@@ -183,7 +183,7 @@ class ArbitrageTrade:
             if client2.address[ins1] not in self.withdrawrecords.keys():
                 self.withdrawrecords[client2.address[ins1]] = 0
             if self.withdrawrecords[client2.address[ins1]] > 0 and client2.available[
-                        '_'.join(["SPOT", ins1]) + client2.currency] >= 0.8 * self.withdrawrecords[
+                        '_'.join(["SPOT", ins1]) + client2.currency] >= 0.5 * self.withdrawrecords[
                 client2.address[ins1]]:
                 self.withdrawrecords[client2.address[ins1]] = 0
             availablemoney = client1.available[instmt1] * self.exchanges_snapshot[snapshot1]["a1"]
@@ -201,7 +201,7 @@ class ArbitrageTrade:
             if client1.address[ins2] not in self.withdrawrecords.keys():
                 self.withdrawrecords[client1.address[ins2]] = 0
             if self.withdrawrecords[client1.address[ins2]] > 0 and client1.available[
-                        '_'.join(["SPOT", ins2]) + client1.currency] >= 0.8 * self.withdrawrecords[
+                        '_'.join(["SPOT", ins2]) + client1.currency] >= 0.5 * self.withdrawrecords[
                 client1.address[ins2]]:
                 self.withdrawrecords[client1.address[ins2]] = 0
             availablemoney = client2.available['_'.join(["SPOT", ins2]) + client2.currency] * \
@@ -221,7 +221,7 @@ class ArbitrageTrade:
             if client2.address[ins2] not in self.withdrawrecords.keys():
                 self.withdrawrecords[client2.address[ins2]] = 0
             if self.withdrawrecords[client2.address[ins2]] > 0 and client2.available[
-                        '_'.join(["SPOT", ins2]) + client2.currency] >= 0.8 * self.withdrawrecords[
+                        '_'.join(["SPOT", ins2]) + client2.currency] >= 0.5 * self.withdrawrecords[
                 client2.address[ins2]]:
                 self.withdrawrecords[client2.address[ins2]] = 0
             availablemoney = client1.available[instmt3] * self.exchanges_snapshot[snapshot3]["a1"]
@@ -239,7 +239,7 @@ class ArbitrageTrade:
             if client1.address[ins1] not in self.withdrawrecords.keys():
                 self.withdrawrecords[client1.address[ins1]] = 0
             if self.withdrawrecords[client1.address[ins1]] > 0 and client1.available[
-                        '_'.join(["SPOT", ins1]) + client1.currency] >= 0.8 * self.withdrawrecords[
+                        '_'.join(["SPOT", ins1]) + client1.currency] >= 0.5 * self.withdrawrecords[
                 client1.address[ins1]]:
                 self.withdrawrecords[client1.address[ins1]] = 0
             availablemoney = client2.available['_'.join(["SPOT", ins1]) + client2.currency] * \

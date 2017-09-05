@@ -81,9 +81,8 @@ class ExchGwApiLuno(WebSocketApiClient):
                 and cls.get_asks_field_name() in keys:
 
             # Date time
-            timestamp = cls.get_order_book_timestamp_field_name()
-            timestamp = timestamp.replace('T', ' ').replace('Z', '').replace('-', '')
-            l2_depth.date_time = timestamp
+            timestamp = float(raw[cls.get_order_book_timestamp_field_name()]) / 1000.0
+            l2_depth.date_time = datetime.utcfromtimestamp(timestamp).strftime("%Y%m%d %H:%M:%S.%f")
 
             # Bids
             bids = raw[cls.get_bids_field_name()]
@@ -130,7 +129,7 @@ class ExchGwApiLuno(WebSocketApiClient):
 
             # Trade price
             trade.trade_price = raw[cls.get_trade_price_field_name()]
-            trade.trade_price = raw[cls.get_trade_price_field_name()] if cls.get_trade_price_field_name() in raw else
+            # trade.trade_price = raw[cls.get_trade_price_field_name()] if cls.get_trade_price_field_name() in raw else
 
 
             # Trade volume

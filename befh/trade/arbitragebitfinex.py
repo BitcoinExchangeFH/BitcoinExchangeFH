@@ -37,7 +37,7 @@ if __name__ == '__main__':
     exchanges_snapshot = {}
     arbitrage_record = {}
     withdrawrecords = {}
-    globalvar = {"threshholdfloor": 30000, "threshholdceil": 60000, "BTC": 0.01, "ETH": 0.01, "LTC": 0.1}
+    globalvar = {"threshholdfloor": 10000, "threshholdceil": 10000, "BTC": 0.01, "ETH": 0.01, "LTC": 0.1}
 
     arbitrade = ArbitrageTrade(globalvar, TradeClients, arbitrage_record, withdrawrecords)
 

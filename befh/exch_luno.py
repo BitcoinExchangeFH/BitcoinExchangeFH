@@ -241,7 +241,7 @@ class ExchGwLuno(ExchangeGateway):
         """
 
         if not message:
-            Logger.info(self.__class__.__name__, "message: \n{}\n".format(pformat(message)))
+            # Logger.info(self.__class__.__name__, "message: \n{}\n".format(pformat(message)))
             return
 
         keys = message.keys()

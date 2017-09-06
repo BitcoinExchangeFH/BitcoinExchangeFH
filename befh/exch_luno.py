@@ -8,7 +8,7 @@ import os
 import time
 import threading
 import json
-from pprint import pprint
+from pprint import pformat
 from functools import partial
 from datetime import datetime
 
@@ -23,6 +23,8 @@ class ExchGwApiLuno(WebSocketApiClient):
         Constructor
         """
         WebSocketApiClient.__init__(self, 'Luno')
+        # self.get_order_book()
+        self.local_order_book = None
 
     @classmethod
     def get_order_book_timestamp_field_name(cls):
@@ -57,7 +59,7 @@ class ExchGwApiLuno(WebSocketApiClient):
         return 'size'
 
     @classmethod
-    def get_link(cls):
+    def get_link(cls, instmt):
         return 'wss://ws.luno.com/api/1/stream/' + instmt.instmt_code
 
     @classmethod
@@ -66,6 +68,8 @@ class ExchGwApiLuno(WebSocketApiClient):
 
     @classmethod
     def get_trades_subscription_string(cls, instmt):
+        crds = _handle_creds()
+        creds = {'api_key_id': crds['k'], 'api_key_secret': crds['s']}
         return json.dumps(creds)
 
     @classmethod
@@ -77,28 +81,88 @@ class ExchGwApiLuno(WebSocketApiClient):
         """
         l2_depth = instmt.get_l2_depth()
         keys = list(raw.keys())
-        if cls.get_bids_field_name() in keys \
-                and cls.get_asks_field_name() in keys:
 
+        bids_field = cls.get_bids_field_name()
+        asks_field = cls.get_asks_field_name()
+
+        if bids_field in keys and asks_field in keys:
             # Date time
-            timestamp = float(raw[cls.get_order_book_timestamp_field_name()]) / 1000.0
-            l2_depth.date_time = datetime.utcfromtimestamp(timestamp).strftime("%Y%m%d %H:%M:%S.%f")
+            l2_depth.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
 
             # Bids
-            bids = raw[cls.get_bids_field_name()]
-            bids = sorted(bids, key=lambda x: x[0], reverse=True)
-            for i in range(0, len(bids)):
-                l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
-                l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]
+            bids = raw[bids_field]
+            bids_len = min(l2_depth.depth, len(bids))
+            for i in range(0, bids_len):
+                l2_depth.bids[i].price = float(bids[i]['price']) if type(bids[i]['price']) != float else bids[i][0]
+                l2_depth.bids[i].volume = float(bids[i]['volume']) if type(bids[i]['volume']) != float else bids[i][1]
+                l2_depth.bids[i].id = bids[i]['id']
 
-                # Asks
-            asks = raw[cls.get_asks_field_name()]
-            asks = sorted(asks, key=lambda x: x[0])
-            for i in range(0, len(asks)):
-                l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
-                l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]
+            # Asks
+            asks = raw[asks_field]
+            asks_len = min(l2_depth.depth, len(asks))
+            for i in range(0, asks_len):
+                l2_depth.asks[i].price = float(asks[i]['price']) if type(asks[i]['price']) != float else asks[i][0]
+                l2_depth.asks[i].volume = float(asks[i]['volume']) if type(asks[i]['volume']) != float else asks[i][1]
+                l2_depth.asks[i].id = asks[i]['id']
+
+        elif "order_id" in keys:
+            if 'type' in keys:
+                order_id = raw['order_id']
+                price = float(raw['price'])
+                volume = float(raw['volume'])
+                update_type = raw['type']
+
+                if update_type == "BID":
+                    l2_depth.bids.append(L2Depth.Depth(price=price,
+                                                       volume=volume))
+
+                    l2_depth.bids[-1].id = order_id
+
+                    l2_depth.sort_bids()
+
+                    if len(l2_depth.bids) > l2_depth.depth * 2:
+                        del l2_depth.bids[l2_depth.depth:]
+
+                elif update_type == "ASK":
+                    l2_depth.asks.append(L2Depth.Depth(price=price,
+                                                       volume=volume))
+
+                    l2_depth.asks[-1].id = order_id
+
+                    l2_depth.sort_asks()
+
+                    if len(l2_depth.asks) > l2_depth.depth * 2:
+                        del l2_depth.asks[l2_depth.depth:]
+
+            elif 'base' in keys:
+                order_id = raw['order_id']
+                volume = float(raw['base'])
+                price = float(raw['counter']) / float(raw['base'])
+
+                for i in range(0, len(l2_depth.bids)):
+                    if l2_depth.bids[i].id == order_id:
+                        if l2_depth.bids[i].price == price:
+                            l2_depth.bids[i].volume -= volume
+                            break
+
+            else:
+                order_id = raw['order_id']
+                found = False
+
+                for i in range(0, len(l2_depth.bids)):
+                    if l2_depth.bids[i].id == order_id:
+                        found = True
+                        del l2_depth.bids[i]
+                        break
+
+                if not found:
+                    for i in range(0, len(l2_depth.asks)):
+                        if l2_depth.asks[i].id == order_id:
+                            del l2_depth.asks[i]
+                            break
+
         else:
-            raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
+            raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' %
                             (instmt.get_exchange_name(), instmt.get_instmt_name(),
                              raw))
 
@@ -111,34 +175,17 @@ class ExchGwApiLuno(WebSocketApiClient):
         :param raw: Raw data in JSON
         :return:
         """
+
         trade = Trade()
-        keys = list(raw.keys())
+        trade_id = raw['order_id']
+        trade_price = float(raw['counter']) / float(raw['base'])
+        trade_volume = float(raw['base'])
 
-        if cls.get_trades_timestamp_field_name() in keys and cls.get_trade_id_field_name() in keys:
-
-            # Date time
-            timestamp = raw[cls.get_trades_timestamp_field_name()]
-            timestamp = timestamp.replace('T', ' ').replace('Z', '').replace('-', '')
-            trade.date_time = timestamp
-
-            # Trade side
-            # trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])
-
-            # Trade id
-            trade.trade_id = raw[cls.get_trade_id_field_name()]
-
-            # Trade price
-            trade.trade_price = raw[cls.get_trade_price_field_name()]
-            # trade.trade_price = raw[cls.get_trade_price_field_name()] if cls.get_trade_price_field_name() in raw else
-
-
-            # Trade volume
-            trade.trade_volume = raw[cls.get_trade_volume_field_name()]
-
-        else:
-            raise Exception('Does not contain trade keys in instmt %s-%s.\nOriginal:\n%s' % \
-                            (instmt.get_exchange_name(), instmt.get_instmt_name(),
-                             raw))
+        timestamp = float(raw[cls.get_trades_timestamp_field_name()]) / 1000.0
+        trade.date_time = datetime.utcfromtimestamp(timestamp).strftime("%Y%m%d %H:%M:%S.%f")
+        trade.trade_volume = trade_volume
+        trade.trade_id = trade_id
+        trade.trade_price = trade_price
 
         return trade
 
@@ -173,7 +220,6 @@ class ExchGwLuno(ExchangeGateway):
         Logger.info(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
                     (instmt.get_instmt_code(), instmt.get_exchange_name()))
         if not instmt.get_subscribed():
-            # ws.send(self.api_socket.get_order_book_subscription_string(instmt))
             ws.send(self.api_socket.get_trades_subscription_string(instmt))
             instmt.set_subscribed(True)
 
@@ -193,52 +239,47 @@ class ExchGwLuno(ExchangeGateway):
         :param instmt: Instrument
         :param message: Message
         """
-        pprint(message)
+
+        if not message:
+            Logger.info(self.__class__.__name__, "message: \n{}\n".format(pformat(message)))
+            return
+
         keys = message.keys()
 
-        # if "sequence" in keys:
-        #     self.order_book = self.api_socket.parse_l2_depth(instmt, message)
-        #
-        # elif "timestamp" in keys:
-        #     if message['create_update']:
-        #         message['create_update'].update({"timestamp": message['timestamp']})
-        #         self.api_socket.parse_trade(instmt, message['create_update'])
-        #
-        #     elif message['delete_update']:
-        #         message['delete_update'].update({"timestamp": message['timestamp']})
-        #         self.api_socket.parse_trade(instmt, message['delete_update'])
-        #
-        #     elif message['trade_updates']:
-        #         for trade in message['trade_updates']:
-        #             trade.update({"timestamp": message['timestamp']})
-        #             self.api_socket.parse_trade(instmt, trade)
+        if "bids" in keys:
+            self.order_book = self.api_socket.parse_l2_depth(instmt, message)
+            # Insert only if the first 5 levels are different
+            if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
+                instmt.incr_order_book_id()
+                self.insert_order_book(instmt)
 
-        if 'info' in keys:
-            Logger.info(self.__class__.__name__, message['info'])
-        elif 'subscribe' in keys:
-            Logger.info(self.__class__.__name__, 'Subscription of %s is %s' % \
-                        (message['request']['args'], \
-                         'successful' if message['success'] else 'failed'))
-        elif 'table' in keys:
-            if message['table'] == 'trade':
-                for trade_raw in message['data']:
-                    if trade_raw["symbol"] == instmt.get_instmt_code():
-                        # Filter out the initial subscriptions
-                        trade = self.api_socket.parse_trade(instmt, trade_raw)
-                        if trade.trade_id != instmt.get_exch_trade_id():
-                            instmt.incr_trade_id()
-                            instmt.set_exch_trade_id(trade.trade_id)
-                            self.insert_trade(instmt, trade)
-            elif message['table'] == 'orderBook10':
-                for data in message['data']:
-                    if data["symbol"] == instmt.get_instmt_code():
-                        instmt.set_prev_l2_depth(instmt.get_l2_depth().copy())
-                        self.api_socket.parse_l2_depth(instmt, data)
-                        if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
-                            instmt.incr_order_book_id()
-                            self.insert_order_book(instmt)
-            else:
-                Logger.info(self.__class__.__name__, json.dumps(message, indent=2))
+        elif "create_update" in keys:
+            if message['create_update']:
+                message['create_update'].update({"timestamp": message['timestamp']})
+                self.api_socket.parse_l2_depth(instmt, message['create_update'])
+                # Insert only if the first 5 levels are different
+                if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
+                    instmt.incr_order_book_id()
+                    self.insert_order_book(instmt)
+
+            elif message['delete_update']:
+                message['delete_update'].update({"timestamp": message['timestamp']})
+                self.api_socket.parse_l2_depth(instmt, message['delete_update'])
+                # Insert only if the first 5 levels are different
+                if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
+                    instmt.incr_order_book_id()
+                    self.insert_order_book(instmt)
+
+            elif message['trade_updates']:
+                for new_trade in message['trade_updates']:
+                    new_trade.update({"timestamp": message['timestamp']})
+                    trade = self.api_socket.parse_trade(instmt, new_trade)
+                    self.api_socket.parse_l2_depth(instmt, new_trade)
+                    if trade.trade_id != instmt.get_exch_trade_id():
+                        instmt.incr_trade_id()
+                        instmt.set_exch_trade_id(trade.trade_id)
+                        self.insert_trade(instmt, trade)
+
         else:
             Logger.error(self.__class__.__name__, "Unrecognised message:\n" + json.dumps(message))
 
@@ -253,19 +294,10 @@ class ExchGwLuno(ExchangeGateway):
         instmt.set_instmt_snapshot_table_name(self.get_instmt_snapshot_table_name(instmt.get_exchange_name(),
                                                                                   instmt.get_instmt_name()))
         self.init_instmt_snapshot_table(instmt)
-        return [self.api_socket.connect(self.api_socket.get_link(),
+        return [self.api_socket.connect(self.api_socket.get_link(instmt),
                                         on_message_handler=partial(self.on_message_handler, instmt),
                                         on_open_handler=partial(self.on_open_handler, instmt),
                                         on_close_handler=partial(self.on_close_handler, instmt))]
-        # temp = self.send()
-
-        # test = self.send(json.dumps(creds))
-
-        # print(test)
-        # return temp
-
-        # def send(self, msg):
-        #     return self.api_socket.send(json.dumps(msg))
 
 
 def _handle_creds(path_to_creds=None):
@@ -275,10 +307,6 @@ def _handle_creds(path_to_creds=None):
 
     with open(path_to_creds, "r") as read:
         return json.load(read)
-
-        # self.key = creds['k']
-        # self.__secret = creds['s']
-
 
 if __name__ == '__main__':
     exchange_name = 'Luno'
@@ -291,5 +319,3 @@ if __name__ == '__main__':
     Logger.init_log()
     exch = ExchGwLuno([db_client])
     td = exch.start(instmt)
-    # print(exch.send(creds))
-    # exch.api_socket.

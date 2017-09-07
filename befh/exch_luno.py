@@ -12,6 +12,20 @@ from pprint import pformat
 from functools import partial
 from datetime import datetime
 
+"""
+Please note that exch_luno.py is not added to bitcoinexchangefh.py by default as it requires API keys to function.
+If you would like to include Luno streaming please create an API key with your account.
+Store the credentials in your home directory in a file called luno.json, or alternatively change the path_to_creds
+param in the _handle_creds function at the button from None to the path to your credentials
+It must have the following structure:
+
+{'api_key_id': insert_api_key_id_here, 'api_key_secret': insert_api_key_secret_here}
+
+Then follow the final step in the Websocket Development Guide found here:
+
+https://github.com/Aurora-Team/BitcoinExchangeFH/wiki/Development-Guide-WebSocket
+
+"""
 
 class ExchGwApiLuno(WebSocketApiClient):
     """
@@ -107,6 +121,7 @@ class ExchGwApiLuno(WebSocketApiClient):
 
         elif "order_id" in keys:
             if 'type' in keys:
+                # Insertion
                 order_id = raw['order_id']
                 price = float(raw['price'])
                 volume = float(raw['volume'])
@@ -135,6 +150,7 @@ class ExchGwApiLuno(WebSocketApiClient):
                         del l2_depth.asks[l2_depth.depth:]
 
             elif 'base' in keys:
+                # Update
                 order_id = raw['order_id']
                 volume = float(raw['base'])
                 price = float(raw['counter']) / float(raw['base'])
@@ -146,6 +162,7 @@ class ExchGwApiLuno(WebSocketApiClient):
                             break
 
             else:
+                # Deletion
                 order_id = raw['order_id']
                 found = False
 
@@ -241,7 +258,6 @@ class ExchGwLuno(ExchangeGateway):
         """
 
         if not message:
-            # Logger.info(self.__class__.__name__, "message: \n{}\n".format(pformat(message)))
             return
 
         keys = message.keys()
@@ -301,6 +317,7 @@ class ExchGwLuno(ExchangeGateway):
 
 
 def _handle_creds(path_to_creds=None):
+    # Helper function to handle Luno API keys.
     if not path_to_creds:
         home = os.path.expanduser("~")
         path_to_creds = home + os.sep + "luno.json"

@@ -4,6 +4,7 @@ import threading
 from influxdb import InfluxDBClient
 import time
 import datetime
+import calendar
 import threading
 from functools import partial
 import queue
@@ -54,7 +55,7 @@ class InfluxDbClient(DatabaseClient):
         """
         Convert exchange time to unix. 20170909 08:19:28.679520
         """
-        return time.mktime(datetime.datetime.strptime(time_str, "%Y%m%d %H:%M:%S.%f").timetuple())
+        return calendar.timegm(datetime.datetime.strptime(time_str, "%Y%m%d %H:%M:%S.%f").timetuple())
 
     def insert_data_worker(self):
         while True:

@@ -103,7 +103,7 @@ No further setup is required. Just define the output sqlite file.
 For example, to record the data to default sqlite file "bitcoinexchange.raw", run the command
 
 ```
-bitcoinexchangefh -sqlite -sqlpath bitcoinexchangefh.sqlite -instmts subscription.ini
+bitcoinexchangefh -sqlite -sqlitepath bitcoinexchangefh.sqlite -instmts subscription.ini
 ```
 
 #### Kdb+

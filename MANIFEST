@@ -17,6 +17,7 @@ befh/exch_poloniex.py
 befh/exch_quoine.py
 befh/exch_restful_template.py
 befh/exch_ws_template.py
+befh/exch_yunbi.py
 befh/exchange.py
 befh/file_client.py
 befh/instrument.py

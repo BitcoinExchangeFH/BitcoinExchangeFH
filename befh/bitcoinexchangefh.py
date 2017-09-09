@@ -21,6 +21,7 @@ from befh.mysql_client import MysqlClient
 from befh.sqlite_client import SqliteClient
 from befh.file_client import FileClient
 from befh.zmq_client import ZmqClient
+from befh.influxdb_client import InfluxDbClient
 from befh.subscription_manager import SubscriptionManager
 from befh.util import Logger
 
@@ -34,6 +35,10 @@ def main():
     parser.add_argument('-sqlite', action='store_true', help='Use SQLite database.')
     parser.add_argument('-mysql', action='store_true', help='Use MySQL.')
     parser.add_argument('-zmq', action='store_true', help='Use zmq publisher.')
+    parser.add_argument('-influxdb', action='store_true', help='Use InfluxDb publisher.')
+    parser.add_argument('-influxdbdest', action='store', dest='influxdbdest',
+                        help='InfluxDb destination. Formatted as <name:pwd@host:port>',
+                        default='')
     parser.add_argument('-mysqldest', action='store', dest='mysqldest',
                         help='MySQL destination. Formatted as <name:pwd@host:port>',
                         default='')
@@ -94,6 +99,18 @@ def main():
         db_client.connect(addr=args.zmqdest)
         db_clients.append(db_client)
         is_database_defined = True
+    if args.influxdb:
+        db_client = InfluxDbClient()
+        influxdbdest = args.influxdbdest
+        logon_credential = influxdbdest.split('@')[0]
+        connection = (influxdbdest.split('@')[1]).split('/')[0]
+        db_client.connect(host=connection.split(':')[0],
+                          port=int(connection.split(':')[1]),
+                          user=logon_credential.split(':')[0],
+                          pwd=logon_credential.split(':')[1],
+                          dbname=(influxdbdest.split('@')[1]).split('/')[1])
+        db_clients.append(db_client)
+        is_database_defined = True
 
     if not is_database_defined:
         print('Error: Please define which database is used.')
@@ -105,19 +122,19 @@ def main():
         print('Error: Please define the instrument subscription list. You can refer to subscriptions.ini.')
         parser.print_help()
         sys.exit(1)
-        
+
     # Use exchange timestamp rather than local timestamp
     if args.exchtime:
         ExchangeGateway.is_local_timestamp = False
-    
+
     # Initialize subscriptions
     subscription_instmts = SubscriptionManager(args.instmts).get_subscriptions()
     if len(subscription_instmts) == 0:
         print('Error: No instrument is found in the subscription file. ' +
               'Please check the file path and the content of the subscription file.')
         parser.print_help()
-        sys.exit(1)        
-    
+        sys.exit(1)
+
     # Initialize snapshot destination
     ExchangeGateway.init_snapshot_table(db_clients)
 
@@ -126,7 +143,7 @@ def main():
     for instmt in subscription_instmts:
         log_str += '%s/%s/%s\n' % (instmt.exchange_name, instmt.instmt_name, instmt.instmt_code)
     Logger.info('[main]', log_str)
-    
+
     exch_gws = []
     exch_gws.append(ExchGwBtccSpot(db_clients))
     exch_gws.append(ExchGwBtccFuture(db_clients))

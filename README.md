@@ -34,6 +34,7 @@ Users can
 - Gatecoin (RESTful)
 - GDAX (Websocket)
 - Kraken (RESTful)
+- Liqui (RESTful)
 - OkCoin (Websocket)
 - Quoine (RESTful)
 - Poloniex (RESTful)

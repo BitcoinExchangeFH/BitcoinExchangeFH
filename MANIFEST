@@ -12,6 +12,7 @@ befh/exch_btcc.py
 befh/exch_gatecoin.py
 befh/exch_gdax.py
 befh/exch_kraken.py
+befh/exch_liqui.py
 befh/exch_okcoin.py
 befh/exch_poloniex.py
 befh/exch_quoine.py

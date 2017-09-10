@@ -55,7 +55,11 @@ class InfluxDbClient(DatabaseClient):
         """
         Convert exchange time to unix. 20170909 08:19:28.679520
         """
-        return calendar.timegm(datetime.datetime.strptime(time_str, "%Y%m%d %H:%M:%S.%f").timetuple())
+        tm = int(calendar.timegm(datetime.datetime.strptime(time_str, "%Y%m%d %H:%M:%S.%f").timetuple()))
+        us = time_str.split('.')[1]
+        us = int(us)
+
+        return tm * 1000000 + us
 
     def insert_data_worker(self):
         while True:
@@ -70,7 +74,7 @@ class InfluxDbClient(DatabaseClient):
 
                 self.lock.acquire()
                 try:
-                    rv = self.client.write_points(items, database=self.dbname, time_precision='s')
+                    rv = self.client.write_points(items, database=self.dbname, time_precision='u')
                     if not rv:
                         Logger.error(self.__class__.__name__, "Error writing to InfluxDb")
 

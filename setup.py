@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='BitcoinExchangeFH',
-    version='0.2.1',
+    version='0.2.2',
     author='Gavin Chan',
     author_email='gavincyi@gmail.com',
     packages=['befh'],

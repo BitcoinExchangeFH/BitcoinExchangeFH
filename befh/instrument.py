@@ -1,3 +1,6 @@
+import copy
+
+
 class Instrument(object):
     def __init__(self,
                  exchange_name,
@@ -25,6 +28,8 @@ class Instrument(object):
         self.last_trade = None
         self.order_book_channel_id = ''
         self.trades_channel_id = ''
+        self.realtime_order_book_prices = [{}, {}] # Only for BitMEX to use
+        self.realtime_order_book_ids = [{}, {}] # Only for BitMEX to use
 
     def copy(self, obj):
         """
@@ -44,6 +49,10 @@ class Instrument(object):
         self.last_trade = obj.last_trade
         self.order_book_channel_id = obj.order_book_channel_id
         self.trades_channel_id = obj.trades_channel_id
+        self.realtime_order_book_prices = copy.deepcopy(
+            obj.realtime_order_book_prices)
+        self.realtime_order_book_ids = copy.deepcopy(
+            obj.realtime_order_book_ids)            
 
     def get_exchange_name(self):
         return self.exchange_name

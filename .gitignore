@@ -8,3 +8,4 @@ _windows/*
 *.xml
 inspection/*
 .env/*
+*.egg-info/*

@@ -84,6 +84,9 @@ class ExchGwBitmexWs(WebSocketApiClient):
         if raw['action'] in ('partial', 'insert'):
             # Order book initialization or insertion
             for data in raw['data']:
+                if data['symbol'] != instmt.get_instmt_code():
+                    continue
+                
                 price, side, id, volume = get_order_info(data)
                 instmt.realtime_order_book_ids[side][id] = price
                 if price not in instmt.realtime_order_book_prices[side].keys():
@@ -94,6 +97,9 @@ class ExchGwBitmexWs(WebSocketApiClient):
         elif raw['action'] == 'update':
             # Order book update
             for data in raw['data']:
+                if data['symbol'] != instmt.get_instmt_code():
+                    continue
+                
                 _, side, id, volume = get_order_info(data)
                 price = instmt.realtime_order_book_ids[side][id]
                 instmt.realtime_order_book_ids[side][id] = price
@@ -102,6 +108,9 @@ class ExchGwBitmexWs(WebSocketApiClient):
         elif raw['action'] == 'delete':
             # Order book delete
             for data in raw['data']:
+                if data['symbol'] != instmt.get_instmt_code():
+                    continue                
+                
                 _, side, id, _ = get_order_info(data)
                 price = instmt.realtime_order_book_ids[side][id]
                 del instmt.realtime_order_book_prices[side][price][id]

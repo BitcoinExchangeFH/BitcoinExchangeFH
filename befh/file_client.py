@@ -4,6 +4,7 @@ import threading
 import os
 import csv
 
+
 class FileClient(DatabaseClient):
     """
     File client
@@ -53,7 +54,6 @@ class FileClient(DatabaseClient):
         :param is_ifnotexists: Create table if not exists keyword
         """
         file_path = os.path.join(self.file_directory, table + ".csv")
-        print(file_path)
         columns = [e.split(' ')[0] for e in columns]
         if len(columns) != len(types):
             return False
@@ -80,7 +80,7 @@ class FileClient(DatabaseClient):
         :param is_orreplace: Indicate if the query is "INSERT OR REPLACE"
         """
         ret = True
-        file_path = self.file_directory + table + ".csv"
+        file_path = os.path.join(self.file_directory, table + ".csv")
         if len(columns) != len(values):
             return False
 

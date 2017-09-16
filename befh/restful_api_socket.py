@@ -5,6 +5,7 @@ except ImportError:
     import urllib as urlrequest
 
 import json
+import ssl
 
 class RESTfulApiSocket(ApiSocket):
     """
@@ -17,7 +18,7 @@ class RESTfulApiSocket(ApiSocket):
         ApiSocket.__init__(self)
 
     @classmethod
-    def request(cls, url):
+    def request(cls, url, verify_cert=True):
         """
         Web request
         :param: url: The url link
@@ -25,7 +26,10 @@ class RESTfulApiSocket(ApiSocket):
         """
         req = urlrequest.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
         # res = urlrequest.urlopen(url)
-        res = urlrequest.urlopen(req)
+        if verify_cert:
+            res = urlrequest.urlopen(req)
+        else:
+            res = urlrequest.urlopen(req, context=ssl._create_unverified_context())
         try:
             res = json.loads(res.read().decode('utf8'))
             return res

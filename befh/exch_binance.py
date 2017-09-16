@@ -55,7 +55,7 @@ class ExchGwApiBinance(RESTfulApiSocket):
         
     @classmethod
     def get_order_book_link(cls, instmt):
-        return "https://data.btcchina.com/data/orderbook?limit=5&market=%s" % instmt.get_instmt_code()
+        return "https://www.binance.com/api/v1/depth?symbol=%s&limit=100" % instmt.get_instmt_code()
 
     @classmethod
     def get_trades_link(cls, instmt):
@@ -75,15 +75,12 @@ class ExchGwApiBinance(RESTfulApiSocket):
         """
         l2_depth = L2Depth()
         keys = list(raw.keys())
-        if cls.get_order_book_timestamp_field_name() in keys and \
-           cls.get_bids_field_name() in keys and \
+        if cls.get_bids_field_name() in keys and \
            cls.get_asks_field_name() in keys:
             
-            # Date time
-            date_time = float(raw[cls.get_order_book_timestamp_field_name()])
-            date_time = date_time / cls.get_timestamp_offset()
-            l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
-            
+            # No Date time information, has update id only
+            l2_depth.date_time = datetime.now().strftime("%Y%m%d %H:%M:%S.%f")
+
             # Bids
             bids = raw[cls.get_bids_field_name()]
             bids = sorted(bids, key=lambda x: x[0], reverse=True)
@@ -149,7 +146,8 @@ class ExchGwApiBinance(RESTfulApiSocket):
         :param instmt: Instrument
         :return: Object L2Depth
         """
-        res = cls.request(cls.get_order_book_link(instmt))
+        # If verify cert, got <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:749)>
+        res = cls.request(cls.get_order_book_link(instmt), verify_cert=True)
         if len(res) > 0:
             return cls.parse_l2_depth(instmt=instmt,
                                        raw=res)
@@ -264,8 +262,8 @@ class ExchGwBinance(ExchangeGateway):
 if __name__ == '__main__':
     Logger.init_log()
     exchange_name = 'Binance'
-    instmt_name = 'BTCCNY'
-    instmt_code = 'btccny'
+    instmt_name = 'LTCBTC'
+    instmt_code = 'LTCBTC'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)    
     db_client = SqlClientTemplate()
     exch = ExchGwBinance([db_client])

@@ -19,7 +19,7 @@ class ExchGwApiBinance(RESTfulApiSocket):
         
     @classmethod
     def get_timestamp_offset(cls):
-        return 1
+        return 1000
         
     @classmethod
     def get_order_book_timestamp_field_name(cls):
@@ -27,7 +27,7 @@ class ExchGwApiBinance(RESTfulApiSocket):
         
     @classmethod
     def get_trades_timestamp_field_name(cls):
-        return 'date'
+        return 'T'
     
     @classmethod
     def get_bids_field_name(cls):
@@ -43,15 +43,15 @@ class ExchGwApiBinance(RESTfulApiSocket):
         
     @classmethod
     def get_trade_id_field_name(cls):
-        return 'tid'
+        return 'a'
         
     @classmethod
     def get_trade_price_field_name(cls):
-        return 'price'        
+        return 'p'
         
     @classmethod
     def get_trade_volume_field_name(cls):
-        return 'amount'        
+        return 'q'
         
     @classmethod
     def get_order_book_link(cls, instmt):
@@ -60,10 +60,10 @@ class ExchGwApiBinance(RESTfulApiSocket):
     @classmethod
     def get_trades_link(cls, instmt):
         if int(instmt.get_exch_trade_id()) > 0:
-            return "https://data.btcchina.com/data/historydata?market=%s&since=%s" % \
+            return "https://www.binance.com/api/v1/aggTrades?symbol=%s&fromId=%s" % \
                 (instmt.get_instmt_code(), instmt.get_exch_trade_id())
         else:
-            return "https://data.btcchina.com/data/historydata?limit=100&market=%s" % \
+            return "https://www.binance.com/api/v1/aggTrades?symbol=%s&limit=100" % \
                 (instmt.get_instmt_code())         
                 
     @classmethod
@@ -147,7 +147,7 @@ class ExchGwApiBinance(RESTfulApiSocket):
         :return: Object L2Depth
         """
         # If verify cert, got <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:749)>
-        res = cls.request(cls.get_order_book_link(instmt), verify_cert=True)
+        res = cls.request(cls.get_order_book_link(instmt), verify_cert=False)
         if len(res) > 0:
             return cls.parse_l2_depth(instmt=instmt,
                                        raw=res)
@@ -163,7 +163,9 @@ class ExchGwApiBinance(RESTfulApiSocket):
         :return: List of trades
         """
         link = cls.get_trades_link(instmt)
-        res = cls.request(link)
+        print(link)
+        # If verify cert, got <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:749)>
+        res = cls.request(link, verify_cert=False)
         trades = []
         if len(res) > 0:
             for t in res:
@@ -222,7 +224,9 @@ class ExchGwBinance(ExchangeGateway):
                     time.sleep(1)
                     continue
             except Exception as e:
-                Logger.error(self.__class__.__name__, "Error in trades: %s" % e)                
+                Logger.error(self.__class__.__name__, "Error in trades: %s" % e)
+                time.sleep(1)
+                continue
                 
             for trade in ret:
                 assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)

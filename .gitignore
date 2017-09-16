@@ -7,4 +7,5 @@ bitcoinexchangefh.tar.gz
 _windows/*
 *.xml
 inspection/*
-virtualenv/*
+.env/*
+*.egg-info/*

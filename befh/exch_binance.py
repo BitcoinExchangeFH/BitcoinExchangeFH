@@ -10,7 +10,7 @@ from multiprocessing import Process
 import time
 
 
-class ExchGwApiTemplate(RESTfulApiSocket):
+class ExchGwApiBinance(RESTfulApiSocket):
     """
     Exchange gateway RESTfulApi
     """
@@ -176,7 +176,7 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         return trades
 
 
-class ExchGwTemplate(ExchangeGateway):
+class ExchGwBinance(ExchangeGateway):
     """
     Exchange gateway
     """
@@ -185,7 +185,7 @@ class ExchGwTemplate(ExchangeGateway):
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwApiTemplate(), db_clients)
+        ExchangeGateway.__init__(self, ExchGwApiBinance(), db_clients)
 
     @classmethod
     def get_exchange_name(cls):
@@ -193,7 +193,7 @@ class ExchGwTemplate(ExchangeGateway):
         Get exchange name
         :return: Exchange name string
         """
-        return 'Template'
+        return 'Binance'
 
     def get_order_book_worker(self, instmt):
         """
@@ -263,12 +263,12 @@ class ExchGwTemplate(ExchangeGateway):
         
 if __name__ == '__main__':
     Logger.init_log()
-    exchange_name = 'Template'
+    exchange_name = 'Binance'
     instmt_name = 'BTCCNY'
     instmt_code = 'btccny'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)    
     db_client = SqlClientTemplate()
-    exch = ExchGwTemplate([db_client])
+    exch = ExchGwBinance([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
     instmt.set_recovered(False)    

@@ -6,26 +6,23 @@ from befh.sql_client_template import SqlClientTemplate
 from befh.util import Logger
 import os
 import time
-import threading
 import json
-from pprint import pformat
 from functools import partial
 from datetime import datetime
 
-"""
-Please note that exch_luno.py is not added to bitcoinexchangefh.py by default as it requires API keys to function.
-If you would like to include Luno streaming please create an API key with your account.
-Store the credentials in your home directory in a file called luno.json, or alternatively change the path_to_creds
-param in the _handle_creds function at the button from None to the path to your credentials
-It must have the following structure:
 
-{'api_key_id': insert_api_key_id_here, 'api_key_secret': insert_api_key_secret_here}
+# Please note that exch_luno.py is not added to bitcoinexchangefh.py by default as it requires API keys to function.
+# If you would like to include Luno streaming please create an API key with your account.
+# Store the credentials in your home directory in a file called luno.json, or alternatively change the path_to_creds
+# param in the _handle_creds function at the button from None to the path to your credentials
+# It must have the following structure:
+#
+# {'api_key_id': insert_api_key_id_here, 'api_key_secret': insert_api_key_secret_here}
+#
+# Then follow the final step in the Websocket Development Guide found here:
+#
+# https://github.com/Aurora-Team/BitcoinExchangeFH/wiki/Development-Guide-WebSocket
 
-Then follow the final step in the Websocket Development Guide found here:
-
-https://github.com/Aurora-Team/BitcoinExchangeFH/wiki/Development-Guide-WebSocket
-
-"""
 
 class ExchGwApiLuno(WebSocketApiClient):
     """
@@ -82,9 +79,18 @@ class ExchGwApiLuno(WebSocketApiClient):
 
     @classmethod
     def get_trades_subscription_string(cls, instmt):
-        crds = _handle_creds()
+        crds = cls._handle_creds()
         creds = {'api_key_id': crds['k'], 'api_key_secret': crds['s']}
         return json.dumps(creds)
+
+    @classmethod
+    def _handle_creds(cls, path_to_creds=None):
+        # Helper function to handle Luno API keys.
+        if not path_to_creds:
+            path_to_creds = os.path.join(os.path.abspath(os.path.dirname(__file__)), "luno.json")
+
+        with open(path_to_creds, "r") as read:
+            return json.load(read)
 
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
@@ -107,16 +113,20 @@ class ExchGwApiLuno(WebSocketApiClient):
             bids = raw[bids_field]
             bids_len = min(l2_depth.depth, len(bids))
             for i in range(0, bids_len):
-                l2_depth.bids[i].price = float(bids[i]['price']) if type(bids[i]['price']) != float else bids[i][0]
-                l2_depth.bids[i].volume = float(bids[i]['volume']) if type(bids[i]['volume']) != float else bids[i][1]
+                l2_depth.bids[i].price = float(bids[i]['price']) \
+                    if not isinstance(bids[i]['price'], float) else bids[i][0]
+                l2_depth.bids[i].volume = float(bids[i]['volume']) \
+                    if not isinstance(bids[i]['volume'], float) else bids[i][1]
                 l2_depth.bids[i].id = bids[i]['id']
 
             # Asks
             asks = raw[asks_field]
             asks_len = min(l2_depth.depth, len(asks))
             for i in range(0, asks_len):
-                l2_depth.asks[i].price = float(asks[i]['price']) if type(asks[i]['price']) != float else asks[i][0]
-                l2_depth.asks[i].volume = float(asks[i]['volume']) if type(asks[i]['volume']) != float else asks[i][1]
+                l2_depth.asks[i].price = float(asks[i]['price']) \
+                    if not isinstance(asks[i]['price'], float) else asks[i][0]
+                l2_depth.asks[i].volume = float(asks[i]['volume']) \
+                    if not isinstance(asks[i]['volume'], float) else asks[i][1]
                 l2_depth.asks[i].id = asks[i]['id']
 
         elif "order_id" in keys:
@@ -316,19 +326,8 @@ class ExchGwLuno(ExchangeGateway):
                                         on_close_handler=partial(self.on_close_handler, instmt))]
 
 
-def _handle_creds(path_to_creds=None):
-    # Helper function to handle Luno API keys.
-    if not path_to_creds:
-        home = os.path.expanduser("~")
-        path_to_creds = home + os.sep + "luno.json"
-
-    with open(path_to_creds, "r") as read:
-        return json.load(read)
-
 if __name__ == '__main__':
     exchange_name = 'Luno'
-    crds = _handle_creds()
-    creds = {'api_key_id': crds['k'], 'api_key_secret': crds['s']}
     instmt_name = 'XBTZAR'
     instmt_code = 'XBTZAR'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)

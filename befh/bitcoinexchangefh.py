@@ -18,6 +18,7 @@ from befh.exch_bittrex import ExchGwBittrex
 from befh.exch_yunbi import ExchGwYunbi
 from befh.exch_liqui import ExchGwLiqui
 from befh.exch_binance import ExchGwBinance
+from befh.exch_cryptopia import ExchGwCryptopia
 from befh.kdbplus_client import KdbPlusClient
 from befh.mysql_client import MysqlClient
 from befh.sqlite_client import SqliteClient
@@ -145,6 +146,7 @@ def main():
     exch_gws.append(ExchGwYunbi(db_clients))
     exch_gws.append(ExchGwLiqui(db_clients))
     exch_gws.append(ExchGwBinance(db_clients))
+    exch_gws.append(ExchGwCryptopia(db_clients))
     threads = []
     for exch in exch_gws:
         for instmt in subscription_instmts:

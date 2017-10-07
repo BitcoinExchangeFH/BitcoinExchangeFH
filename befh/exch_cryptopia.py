@@ -10,7 +10,7 @@ from multiprocessing import Process
 import time
 
 
-class ExchGwApiTemplate(RESTfulApiSocket):
+class ExchGwApiCryptopia(RESTfulApiSocket):
     """
     Exchange gateway RESTfulApi
     """
@@ -18,53 +18,52 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         RESTfulApiSocket.__init__(self)
         
     @classmethod
+    def get_content_field_name(cls):
+        return 'Data'
+
+    @classmethod
     def get_timestamp_offset(cls):
         return 1
         
     @classmethod
-    def get_order_book_timestamp_field_name(cls):
-        return 'date'
-        
-    @classmethod
     def get_trades_timestamp_field_name(cls):
-        return 'date'
+        return 'Timestamp'
     
     @classmethod
     def get_bids_field_name(cls):
-        return 'bids'
+        return 'Buy'
         
     @classmethod
     def get_asks_field_name(cls):
-        return 'asks'
-        
+        return 'Sell'
+
+    @classmethod
+    def get_order_book_price_field_name(cls):
+        return 'Price'
+
+    @classmethod
+    def get_order_book_volume_field_name(cls):
+        return 'Volume'
+
     @classmethod
     def get_trade_side_field_name(cls):
-        return 'type'
-        
-    @classmethod
-    def get_trade_id_field_name(cls):
-        return 'tid'
+        return 'Type'
         
     @classmethod
     def get_trade_price_field_name(cls):
-        return 'price'        
+        return 'Price'
         
     @classmethod
     def get_trade_volume_field_name(cls):
-        return 'amount'        
+        return 'Amount'
         
     @classmethod
     def get_order_book_link(cls, instmt):
-        return "https://data.btcchina.com/data/orderbook?limit=5&market=%s" % instmt.get_instmt_code()
+        return "https://www.cryptopia.co.nz/api/GetMarketOrders/%s" % instmt.get_instmt_code()
 
     @classmethod
     def get_trades_link(cls, instmt):
-        if int(instmt.get_exch_trade_id()) > 0:
-            return "https://data.btcchina.com/data/historydata?market=%s&since=%s" % \
-                (instmt.get_instmt_code(), instmt.get_exch_trade_id())
-        else:
-            return "https://data.btcchina.com/data/historydata?limit=100&market=%s" % \
-                (instmt.get_instmt_code())         
+        return "https://www.cryptopia.co.nz/api/GetMarketHistory/%s" % (instmt.get_instmt_code())
                 
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
@@ -74,29 +73,33 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         :param raw: Raw data in JSON
         """
         l2_depth = L2Depth()
+
+        if not cls.get_content_field_name() in raw.keys():
+            raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
+                (instmt.get_exchange_name(), instmt.get_instmt_name(), \
+                 raw))
+
+        raw = raw[cls.get_content_field_name()]
         keys = list(raw.keys())
-        if cls.get_order_book_timestamp_field_name() in keys and \
-           cls.get_bids_field_name() in keys and \
+        if cls.get_bids_field_name() in keys and \
            cls.get_asks_field_name() in keys:
             
             # Date time
-            date_time = float(raw[cls.get_order_book_timestamp_field_name()])
-            date_time = date_time / cls.get_timestamp_offset()
-            l2_depth.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
-            
+            l2_depth.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
+
             # Bids
             bids = raw[cls.get_bids_field_name()]
-            bids = sorted(bids, key=lambda x: x[0], reverse=True)
+            bids = sorted(bids, key=lambda x: x[cls.get_order_book_price_field_name()], reverse=True)
             for i in range(0, 5):
-                l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
-                l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
-                
+                l2_depth.bids[i].price = bids[i][cls.get_order_book_price_field_name()]
+                l2_depth.bids[i].volume = bids[i][cls.get_order_book_volume_field_name()]
+
             # Asks
             asks = raw[cls.get_asks_field_name()]
-            asks = sorted(asks, key=lambda x: x[0])
+            asks = sorted(asks, key=lambda x: x[cls.get_order_book_price_field_name()])
             for i in range(0, 5):
-                l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
-                l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]            
+                l2_depth.asks[i].price = asks[i][cls.get_order_book_price_field_name()]
+                l2_depth.asks[i].volume = asks[i][cls.get_order_book_volume_field_name()]
         else:
             raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
@@ -113,9 +116,7 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         """
         trade = Trade()
         keys = list(raw.keys())
-        
         if cls.get_trades_timestamp_field_name() in keys and \
-           cls.get_trade_id_field_name() in keys and \
            cls.get_trade_price_field_name() in keys and \
            cls.get_trade_volume_field_name() in keys:
         
@@ -125,16 +126,17 @@ class ExchGwApiTemplate(RESTfulApiSocket):
             trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")      
             
             # Trade side
-            trade.trade_side = 1
-                
-            # Trade id
-            trade.trade_id = str(raw[cls.get_trade_id_field_name()])
-            
+            trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])
+
             # Trade price
             trade.trade_price = float(str(raw[cls.get_trade_price_field_name()]))
             
             # Trade volume
             trade.trade_volume = float(str(raw[cls.get_trade_volume_field_name()]))
+
+            # Trade id
+            trade.trade_id = trade.date_time + '-P' + str(trade.trade_price) + '-V' + str(trade.trade_volume)
+
         else:
             raise Exception('Does not contain trade keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
@@ -167,8 +169,8 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         link = cls.get_trades_link(instmt)
         res = cls.request(link)
         trades = []
-        if len(res) > 0:
-            for t in res:
+        if len(res) > 0 and cls.get_content_field_name() in res.keys():
+            for t in res[cls.get_content_field_name()]:
                 trade = cls.parse_trade(instmt=instmt,
                                          raw=t)
                 trades.append(trade)
@@ -176,7 +178,7 @@ class ExchGwApiTemplate(RESTfulApiSocket):
         return trades
 
 
-class ExchGwTemplate(ExchangeGateway):
+class ExchGwCryptopia(ExchangeGateway):
     """
     Exchange gateway
     """
@@ -185,7 +187,7 @@ class ExchGwTemplate(ExchangeGateway):
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwApiTemplate(), db_clients)
+        ExchangeGateway.__init__(self, ExchGwApiCryptopia(), db_clients)
 
     @classmethod
     def get_exchange_name(cls):
@@ -193,7 +195,7 @@ class ExchGwTemplate(ExchangeGateway):
         Get exchange name
         :return: Exchange name string
         """
-        return 'Template'
+        return 'Cryptopia'
 
     def get_order_book_worker(self, instmt):
         """
@@ -225,16 +227,15 @@ class ExchGwTemplate(ExchangeGateway):
                     continue
             except Exception as e:
                 Logger.error(self.__class__.__name__, "Error in trades: %s" % e)                
-                
+
             for trade in ret:
                 assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
                 assert isinstance(instmt.get_exch_trade_id(), str), \
                        "instmt.get_exch_trade_id()(%s) = %s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id())
-                if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
+                if trade.trade_id > instmt.get_exch_trade_id():
                     instmt.set_exch_trade_id(trade.trade_id)
-                    instmt.incr_trade_id()
                     self.insert_trade(instmt, trade)
-            
+
             # After the first time of getting the trade, indicate the instrument
             # is recovered
             if not instmt.get_recovered():
@@ -263,14 +264,14 @@ class ExchGwTemplate(ExchangeGateway):
         
 if __name__ == '__main__':
     Logger.init_log()
-    exchange_name = 'Template'
-    instmt_name = 'BTCCNY'
-    instmt_code = 'btccny'
+    exchange_name = 'Cryptopia'
+    instmt_name = 'DOTBTC'
+    instmt_code = 'DOT_BTC'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)    
     db_client = SqlClientTemplate()
-    exch = ExchGwTemplate([db_client])
+    exch = ExchGwCryptopia([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
     instmt.set_recovered(False)    
-    exch.get_order_book_worker(instmt)
+    # exch.get_order_book_worker(instmt)
     exch.get_trades_worker(instmt)

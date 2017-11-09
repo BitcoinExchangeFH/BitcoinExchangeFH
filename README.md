@@ -152,6 +152,13 @@ For example to a folder named "data", you can run the following command.
 bitcoinexchangefh -csv -csvpath data/ -instmts subscription.ini
 ```
 
+#### Kafka
+
+```
+bitcoinexchangefh -kafka -kafkadest "127.0.0.1:9092" -instmts subscription.ini
+```
+
+
 ### Multiple destination
 
 Bitcoinexchangefh supports multiple destinations. 

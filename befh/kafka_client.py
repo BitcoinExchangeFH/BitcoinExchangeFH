@@ -91,6 +91,7 @@ class KafkaClient(DatabaseClient):
         ret['table'] = table
         self.lock.acquire()
 
+        print('table:', table)
         future = self.conn.send(table, value=ret)
 
         result = True

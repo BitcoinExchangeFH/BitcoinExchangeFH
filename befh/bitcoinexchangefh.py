@@ -3,6 +3,7 @@
 import argparse
 import sys
 
+<<<<<<< HEAD
 from befh.exchanges.gateway import ExchangeGateway
 from befh.exchanges.bitmex import ExchGwBitmex
 from befh.exchanges.btcc import ExchGwBtccSpot, ExchGwBtccFuture
@@ -30,6 +31,30 @@ from befh.clients.mysql import MysqlClient
 from befh.clients.sqlite import SqliteClient
 from befh.clients.csv import FileClient
 from befh.clients.zmq import ZmqClient
+=======
+from befh.exchange import ExchangeGateway
+from befh.exch_bitmex import ExchGwBitmex
+from befh.exch_btcc import ExchGwBtccSpot, ExchGwBtccFuture
+from befh.exch_bitfinex import ExchGwBitfinex
+from befh.exch_okcoin import ExchGwOkCoin
+from befh.exch_kraken import ExchGwKraken
+from befh.exch_gdax import ExchGwGdax
+from befh.exch_bitstamp import ExchGwBitstamp
+from befh.exch_gatecoin import ExchGwGatecoin
+from befh.exch_quoine import ExchGwQuoine
+from befh.exch_poloniex import ExchGwPoloniex
+from befh.exch_bittrex import ExchGwBittrex
+from befh.exch_yunbi import ExchGwYunbi
+from befh.exch_liqui import ExchGwLiqui
+from befh.exch_binance import ExchGwBinance
+from befh.exch_cryptopia import ExchGwCryptopia
+from befh.kdbplus_client import KdbPlusClient
+from befh.mysql_client import MysqlClient
+from befh.sqlite_client import SqliteClient
+from befh.file_client import FileClient
+from befh.zmq_client import ZmqClient
+from befh.kafka_client import KafkaClient
+>>>>>>> support kafka
 from befh.subscription_manager import SubscriptionManager
 from befh.util import Logger
 
@@ -43,6 +68,7 @@ def main():
     parser.add_argument('-sqlite', action='store_true', help='Use SQLite database.')
     parser.add_argument('-mysql', action='store_true', help='Use MySQL.')
     parser.add_argument('-zmq', action='store_true', help='Use zmq publisher.')
+    parser.add_argument('-kafka', action='store_true', help='Use kafka publisher.')
     parser.add_argument('-mysqldest', action='store', dest='mysqldest',
                         help='MySQL destination. Formatted as <name:pwd@host:port>',
                         default='')
@@ -54,6 +80,9 @@ def main():
                         default='')
     parser.add_argument('-zmqdest', action='store', dest='zmqdest',
                         help='Zmq destination. For example \"tcp://127.0.0.1:3306\"',
+                        default='')
+    parser.add_argument('-kafkadest', action='store', dest='kafkadest',
+                        help='Kafka destination. For example \"127.0.0.1:9092\"',
                         default='')
     parser.add_argument('-sqlitepath', action='store', dest='sqlitepath',
                         help='SQLite database path',
@@ -101,6 +130,11 @@ def main():
     if args.zmq:
         db_client = ZmqClient()
         db_client.connect(addr=args.zmqdest)
+        db_clients.append(db_client)
+        is_database_defined = True
+    if args.kafka:
+        db_client = KafkaClient()
+        db_client.connect(addr=args.kafkadest)
         db_clients.append(db_client)
         is_database_defined = True
 

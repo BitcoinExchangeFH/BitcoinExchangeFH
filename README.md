@@ -8,7 +8,7 @@ BitcoinExchangeFH is a slim application to record the price depth and trades in 
 
 Users can
 
-1. Streaming market data to a target application (via ZeroMQ)
+1. Streaming market data to a target application (via ZeroMQ or Kafka)
 2. Recording market data for backtesting and analysis.
 3. Recording market data to a in-memory database and other applications can quickly access to it.
 4. Customize the project for trading use.
@@ -53,6 +53,7 @@ Currently the support of other exchanges is still under development.
 
 ## Supported database/channel
 
+- Kafka
 - ZeroMQ
 - Kdb+
 - MySQL
@@ -78,7 +79,7 @@ pip3 install bitcoinexchangefh
 
 #### Applications
 
-You can write your application to receive the market data via ZeroMQ socket.
+You can write your application to receive the market data via ZeroMQ/Kafka socket.
 
 BitcoinExchangeFH acts as a publisher in the 
 [Publish/Subscibe](http://learning-0mq-with-pyzmq.readthedocs.io/en/latest/pyzmq/patterns/pubsub.html) model.
@@ -154,8 +155,16 @@ bitcoinexchangefh -csv -csvpath data/ -instmts subscription.ini
 
 #### Kafka
 
+Please install Kafka firstly.
+
 ```
 bitcoinexchangefh -kafka -kafkadest "127.0.0.1:9092" -instmts subscription.ini
+```
+or 
+
+```
+source setup-env.sh
+python ./befh/bitcoinexchangefh.py -kafka -kafkadest "127.0.0.1:9092" -instmts subscriptions.ini
 ```
 
 

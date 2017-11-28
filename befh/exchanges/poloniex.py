@@ -226,8 +226,24 @@ class ExchGwPoloniex(ExchangeGateway):
                         self.insert_trade(instmt, trade)
 
             except Exception as e:
+<<<<<<< HEAD:befh/exchanges/poloniex.py
                 Logger.error(self.__class__.__name__, "Error in trades: %s" % e)
 
+=======
+                Logger.error(self.__class__.__name__, "Error in trades: %s" % e)                
+                time.sleep(1)
+                continue
+
+            for trade in ret:
+                assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
+                assert isinstance(instmt.get_exch_trade_id(), str), \
+                       "instmt.get_exch_trade_id()(%s) = %s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id())
+                if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
+                    instmt.set_exch_trade_id(trade.trade_id)
+                    instmt.incr_trade_id()
+                    self.insert_trade(instmt, trade)
+            
+>>>>>>> add kkex.:befh/exch_poloniex.py
             # After the first time of getting the trade, indicate the instrument
             # is recovered
             if not instmt.get_recovered():
@@ -264,6 +280,12 @@ if __name__ == '__main__':
     exch = ExchGwPoloniex([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
+<<<<<<< HEAD:befh/exchanges/poloniex.py
     instmt.set_recovered(False)
     exch.get_order_book_worker(instmt)
     #exch.get_trades_worker(instmt)
+=======
+    instmt.set_recovered(False)    
+    # exch.get_order_book_worker(instmt)
+    exch.get_trades_worker(instmt)
+>>>>>>> add kkex.:befh/exch_poloniex.py

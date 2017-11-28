@@ -87,18 +87,24 @@ class KafkaClient(DatabaseClient):
                           e.g. [0] means the first column is the primary key
         :param is_orreplace: Indicate if the query is "INSERT OR REPLACE"
         """
+
         ret = dict(zip(columns, values))
         ret['table'] = table
         self.lock.acquire()
 
         print('table:', table)
+        print(ret)
+        # print('columns:', columns)
+        # print('types:', types)
+        print(values)
+
         future = self.conn.send(table, value=ret)
 
         result = True
         # Block for 'synchronous' sends
         try:
             record_metadata = future.get(timeout=60)
-            print(record_metadata)
+            # print(record_metadata)
         except  Exception as ex:
             print("exception in producer:%s" % ex)
             traceback.print_exc()

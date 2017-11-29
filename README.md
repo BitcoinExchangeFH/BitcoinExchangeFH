@@ -47,7 +47,11 @@ Users can
 - Okex (Websocket)
 - Quoine (RESTful)
 - Yunbi (RESTful)
+<<<<<<< HEAD
 - Wex (Restful)
+=======
+- Kkex (RESTful)
+>>>>>>> replace process with threading.
 
 Currently the support of other exchanges is still under development.
 
@@ -164,7 +168,7 @@ or
 
 ```
 source setup-env.sh
-python ./befh/bitcoinexchangefh.py -kafka -kafkadest "127.0.0.1:9092" -instmts subscriptions.ini
+python ./befh/bitcoinexchangefh.py -kafka -kafkadest "127.0.0.1:9092" -instmts subscription.ini
 ```
 
 

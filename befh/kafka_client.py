@@ -92,11 +92,10 @@ class KafkaClient(DatabaseClient):
         ret['table'] = table
         self.lock.acquire()
 
-        print('table:', table)
         print(ret)
         # print('columns:', columns)
         # print('types:', types)
-        print(values)
+        # print(values)
 
         future = self.conn.send(table, value=ret)
 
@@ -107,11 +106,12 @@ class KafkaClient(DatabaseClient):
             # print(record_metadata)
         except  Exception as ex:
             print("exception in producer:%s" % ex)
-            traceback.print_exc()
+            # traceback.print_exc()
             result = False
-            raise Exception("kafka send failed.")
-            
-        self.lock.release()
+            # raise Exception("kafka send failed.")
+        finally:
+            self.lock.release()
+
         return result
 
     def select(self, table, columns=['*'], condition='', orderby='', limit=0, isFetchAll=True):

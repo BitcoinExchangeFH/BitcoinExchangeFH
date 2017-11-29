@@ -11,7 +11,7 @@ class RESTfulApiSocket(ApiSocket):
     """
     Generic REST API call
     """
-    DEFAULT_URLOPEN_TIMEOUT = 5
+    DEFAULT_URLOPEN_TIMEOUT = 10
 
     def __init__(self):
         """

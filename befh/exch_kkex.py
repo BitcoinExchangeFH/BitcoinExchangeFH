@@ -23,7 +23,7 @@ class ExchGwApiKkex(RESTfulApiSocket):
         
     @classmethod
     def get_trades_timestamp_field_name(cls):
-        return 'timestamp'
+        return 'date'
     
     @classmethod
     def get_bids_field_name(cls):
@@ -67,7 +67,6 @@ class ExchGwApiKkex(RESTfulApiSocket):
         :param raw: Raw data in JSON
         """
         l2_depth = L2Depth()
-        raw = raw[instmt.instmt_code]
         keys = list(raw.keys())
         if (cls.get_bids_field_name() in keys and 
             cls.get_asks_field_name() in keys):
@@ -89,7 +88,7 @@ class ExchGwApiKkex(RESTfulApiSocket):
             raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
                  raw))
-        
+
         return l2_depth
 
     @classmethod
@@ -103,6 +102,7 @@ class ExchGwApiKkex(RESTfulApiSocket):
         keys = list(raw.keys())
         
         if cls.get_trades_timestamp_field_name() in keys and \
+           cls.get_trade_side_field_name() in keys and \
            cls.get_trade_id_field_name() in keys and \
            cls.get_trade_price_field_name() in keys and \
            cls.get_trade_volume_field_name() in keys:
@@ -113,8 +113,8 @@ class ExchGwApiKkex(RESTfulApiSocket):
             trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")      
             
             # Trade side
-            trade.trade_side = 1
-                
+            trade.trade_side = Trade.parse_side(str(raw[cls.get_trade_side_field_name()]))
+
             # Trade id
             trade.trade_id = str(raw[cls.get_trade_id_field_name()])
             
@@ -137,7 +137,8 @@ class ExchGwApiKkex(RESTfulApiSocket):
         :param instmt: Instrument
         :return: Object L2Depth
         """
-        res = cls.request(cls.get_order_book_link(instmt))
+        link = cls.get_order_book_link(instmt)
+        res = cls.request(link)
         if len(res) > 0:
             return cls.parse_l2_depth(instmt=instmt,
                                        raw=res)
@@ -156,7 +157,6 @@ class ExchGwApiKkex(RESTfulApiSocket):
         res = cls.request(link)
         trades = []
         if len(res) > 0:
-            res = res[instmt.instmt_code]
             for i in range(0, len(res)):
                 t = res[len(res) - 1 - i]
                 trade = cls.parse_trade(instmt=instmt,
@@ -183,7 +183,7 @@ class ExchGwKkex(ExchangeGateway):
         Get exchange name
         :return: Exchange name string
         """
-        return 'Liqui'
+        return 'Kkex'
 
     def get_order_book_worker(self, instmt):
         """
@@ -217,8 +217,9 @@ class ExchGwKkex(ExchangeGateway):
                 Logger.error(self.__class__.__name__, "Error in trades: %s" % e)                
                 time.sleep(1)
                 continue
-
+            
             for trade in ret:
+                # print(trade)
                 assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
                 assert isinstance(instmt.get_exch_trade_id(), str), \
                        "instmt.get_exch_trade_id()(%s) = %s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id())
@@ -256,13 +257,16 @@ class ExchGwKkex(ExchangeGateway):
 if __name__ == '__main__':
     Logger.init_log()
     exchange_name = 'Kkex'
-    instmt_name = 'BCHBTC'
-    instmt_code = 'BCHBTC'
+    instmt_name = 'BCDBTC'
+    instmt_code = 'BCDBTC'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)    
     db_client = SqlClientTemplate()
     exch = ExchGwKkex([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
+    instmt.set_instmt_snapshot_table_name(exch.get_instmt_snapshot_table_name(instmt.get_exchange_name(),
+                                                                                  instmt.get_instmt_name()))
+    exch.init_instmt_snapshot_table(instmt)
     instmt.set_recovered(False)    
     # exch.get_order_book_worker(instmt)
     exch.get_trades_worker(instmt)

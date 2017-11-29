@@ -3,4 +3,8 @@ websocket-client
 numpy
 qpython
 pyzmq
+<<<<<<< HEAD
 tzlocal
+=======
+requests
+>>>>>>> replace urllib with request.

@@ -92,7 +92,7 @@ class KafkaClient(DatabaseClient):
         ret['table'] = table
         self.lock.acquire()
 
-        print(ret)
+        # print(ret)
         # print('columns:', columns)
         # print('types:', types)
         # print(values)

@@ -4,7 +4,13 @@ numpy
 qpython
 pyzmq
 <<<<<<< HEAD
+<<<<<<< HEAD
 tzlocal
 =======
 requests
 >>>>>>> replace urllib with request.
+=======
+requests
+pandas
+kafka-python
+>>>>>>> add ratelimit.

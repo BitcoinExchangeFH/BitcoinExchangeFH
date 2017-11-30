@@ -12,6 +12,10 @@ from befh.file_client import FileClient
 from befh.market_data import L2Depth, Trade, Snapshot
 from datetime import datetime
 from threading import Lock
+<<<<<<< HEAD:befh/exchanges/gateway.py
+=======
+import time
+>>>>>>> add ratelimit.:befh/exchange.py
 
 class ExchangeGateway:
     ############################################################################
@@ -35,8 +39,22 @@ class ExchangeGateway:
         self.api_socket = api_socket
         self.lock = Lock()
         self.exch_snapshot_id = 0
+<<<<<<< HEAD:befh/exchanges/gateway.py
         self.date_time = datetime.utcnow().date()
+=======
+        self.last_tick = 0
+        self.tick_wait = 1
 
+    def rate_limit(self):
+        current_time = time.time()
+        if current_time - self.last_tick < self.tick_wait:
+            # print('.')
+            return True
+>>>>>>> add ratelimit.:befh/exchange.py
+
+        self.last_tick = current_time
+        return False
+        
     @classmethod
     def get_exchange_name(cls):
         """

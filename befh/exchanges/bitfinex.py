@@ -228,7 +228,10 @@ class ExchGwBitfinex(ExchangeGateway):
                     self.api_socket.parse_l2_depth(instmt, message)
                 else:
                     return
-
+                
+                # if self.rate_limit():
+                #     return
+                
                 if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
                     instmt.incr_order_book_id()
                     self.insert_order_book(instmt)

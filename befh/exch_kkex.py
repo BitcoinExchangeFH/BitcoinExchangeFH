@@ -76,13 +76,15 @@ class ExchGwApiKkex(RESTfulApiSocket):
             
             # Bids
             bids = raw[cls.get_bids_field_name()]
-            for i in range(0, 5):
+            max_bid_len = min(len(bids), 5)
+            for i in range(0, max_bid_len):
                 l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
                 l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
                 
             # Asks
             asks = raw[cls.get_asks_field_name()]
-            for i in range(0, 5):
+            max_ask_len = min(len(asks), 5)
+            for i in range(0, max_ask_len):
                 l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
                 l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]            
         else:
@@ -194,7 +196,8 @@ class ExchGwKkex(ExchangeGateway):
         while True:
             try:
                 l2_depth = self.api_socket.get_order_book(instmt)
-                if l2_depth is not None and l2_depth.is_diff(instmt.get_l2_depth()):
+                # if l2_depth is not None and l2_depth.is_diff(instmt.get_l2_depth()):
+                if l2_depth is not None:
                     instmt.set_prev_l2_depth(instmt.get_l2_depth())
                     instmt.set_l2_depth(l2_depth)
                     instmt.incr_order_book_id()

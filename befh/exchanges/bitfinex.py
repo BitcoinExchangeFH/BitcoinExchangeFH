@@ -3,6 +3,7 @@ from befh.exchanges.gateway import ExchangeGateway
 from befh.instrument import Instrument
 from befh.ws_api_socket import WebSocketApiClient
 from befh.util import Logger
+from befh.sql_client_template import SqlClientTemplate
 import time
 import threading
 import json
@@ -57,6 +58,9 @@ class ExchGwBitfinexWs(WebSocketApiClient):
             volume = raw[3]
             found = False
 
+            print('count=', count)
+            print('price=', price)
+            print('volume=', volume)
             if count == 0:
                 # Deletion
                 if volume > 0:
@@ -64,12 +68,14 @@ class ExchGwBitfinexWs(WebSocketApiClient):
                         if price == l2_depth.bids[i].price:
                             found = True
                             del l2_depth.bids[i]
+                            print('rm...')
                             break
                 else:
                     for i in range(0, len(l2_depth.asks)):
                         if price == l2_depth.asks[i].price:
                             found = True
                             del l2_depth.asks[i]
+                            print('rm2...')
                             break
 
                 if not found:
@@ -93,6 +99,7 @@ class ExchGwBitfinexWs(WebSocketApiClient):
                         depth_text += "\n"
                     Logger.info(cls.__name__, "Cannot find the deletion of the message: %s\nDepth:\n%s\n" % \
                               (raw, depth_text))
+                    exit(-1)
             else:
                 # Insertion/Update
                 if volume > 0:
@@ -131,6 +138,15 @@ class ExchGwBitfinexWs(WebSocketApiClient):
 
                         if len(l2_depth.asks) > l2_depth.depth * 2:
                             del l2_depth.asks[l2_depth.depth:]
+        if len(l2_depth.asks) <5:
+            print('..asks<5..')
+            print(l2_depth.values())
+            exit(-1)
+
+        if len(l2_depth.bids) <5:
+            print('...asks<5..')
+            print(l2_depth.values())
+            exit(-1)
 
         return l2_depth
 
@@ -158,7 +174,7 @@ class ExchGwBitfinexWs(WebSocketApiClient):
 
 class ExchGwBitfinex(ExchangeGateway):
     """
-    Exchange gateway BTCC
+    Exchange gateway Bitfinex
     """
     def __init__(self, db_clients):
         """
@@ -221,22 +237,31 @@ class ExchGwBitfinex(ExchangeGateway):
                               (message['channel'], instmt.get_instmt_code(), message['chanId']))
         elif isinstance(message, list):
             if message[0] == instmt.get_order_book_channel_id():
+                print(message)
                 if isinstance(message[1], list):
+                    print('list....')
                     self.api_socket.parse_l2_depth(instmt, message[1])
                 elif len(message) != 2:
+                    print('not list....')
+                    print(instmt)
+
                     instmt.set_prev_l2_depth(instmt.get_l2_depth().copy())
                     self.api_socket.parse_l2_depth(instmt, message)
+                    print(instmt)
+                    print('______')
+
                 else:
                     return
                 
-                # if self.rate_limit():
-                #     return
+                if self.rate_limit():
+                    return
                 
                 if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
                     instmt.incr_order_book_id()
                     self.insert_order_book(instmt)
 
             elif message[0] == instmt.get_trades_channel_id():
+<<<<<<< HEAD:befh/exchanges/bitfinex.py
                 # No recovery trade
 
                 # if isinstance(message[1], list):
@@ -254,6 +279,8 @@ class ExchGwBitfinex(ExchangeGateway):
                 #             Logger.info('test', "instmt.get_exch_trade_id()(%s):%s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id()))
                 #             raise e
 
+=======
+>>>>>>> trace log.:befh/exch_bitfinex.py
                 if message[1] == 'tu':
                     trade = self.api_socket.parse_trade(instmt, message[3:])
                     if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
@@ -277,3 +304,13 @@ class ExchGwBitfinex(ExchangeGateway):
                                         on_open_handler=partial(self.on_open_handler, instmt),
                                         on_close_handler=partial(self.on_close_handler, instmt))]
 
+
+if __name__ == '__main__':
+    exchange_name = 'Bitfinex'
+    instmt_name = 'BCHBTC'
+    instmt_code = 'BCHBTC'
+    instmt = Instrument(exchange_name, instmt_name, instmt_code)
+    db_client = SqlClientTemplate()
+    Logger.init_log()
+    exch = ExchGwBitfinex([db_client])
+    td = exch.start(instmt)    

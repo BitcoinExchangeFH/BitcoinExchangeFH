@@ -118,8 +118,8 @@ class ExchGwBitfinexWs(WebSocketApiClient):
                                                          volume=volume))
                         l2_depth.sort_bids()
 
-                        if len(l2_depth.bids) > l2_depth.depth * 2:
-                            del l2_depth.bids[l2_depth.depth:]
+                        # if len(l2_depth.bids) > l2_depth.depth * 2:
+                        #     del l2_depth.bids[l2_depth.depth:]
                 else:
                     for i in range(0, len(l2_depth.asks)):
                         # Update
@@ -136,17 +136,17 @@ class ExchGwBitfinexWs(WebSocketApiClient):
                                                     volume=-volume))
                         l2_depth.sort_asks()
 
-                        if len(l2_depth.asks) > l2_depth.depth * 2:
-                            del l2_depth.asks[l2_depth.depth:]
+                        # if len(l2_depth.asks) > l2_depth.depth * 2:
+                        #     del l2_depth.asks[l2_depth.depth:]
         if len(l2_depth.asks) <5:
             print('..asks<5..')
             print(l2_depth.values())
-            exit(-1)
+            # exit(-1)
 
         if len(l2_depth.bids) <5:
             print('...asks<5..')
             print(l2_depth.values())
-            exit(-1)
+            # exit(-1)
 
         return l2_depth
 

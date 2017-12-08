@@ -58,9 +58,6 @@ class ExchGwBitfinexWs(WebSocketApiClient):
             volume = raw[3]
             found = False
 
-            print('count=', count)
-            print('price=', price)
-            print('volume=', volume)
             if count == 0:
                 # Deletion
                 if volume > 0:
@@ -68,14 +65,12 @@ class ExchGwBitfinexWs(WebSocketApiClient):
                         if price == l2_depth.bids[i].price:
                             found = True
                             del l2_depth.bids[i]
-                            print('rm...')
                             break
                 else:
                     for i in range(0, len(l2_depth.asks)):
                         if price == l2_depth.asks[i].price:
                             found = True
                             del l2_depth.asks[i]
-                            print('rm2...')
                             break
 
                 if not found:
@@ -239,17 +234,10 @@ class ExchGwBitfinex(ExchangeGateway):
             if message[0] == instmt.get_order_book_channel_id():
                 print(message)
                 if isinstance(message[1], list):
-                    print('list....')
                     self.api_socket.parse_l2_depth(instmt, message[1])
                 elif len(message) != 2:
-                    print('not list....')
-                    print(instmt)
-
                     instmt.set_prev_l2_depth(instmt.get_l2_depth().copy())
                     self.api_socket.parse_l2_depth(instmt, message)
-                    print(instmt)
-                    print('______')
-
                 else:
                     return
                 

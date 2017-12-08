@@ -82,7 +82,6 @@ class Instrument(object):
         return self.recovered
 
     def get_l2_depth(self):
-        print('get_l2_depth')
         return self.l2_depth
 
     def get_prev_l2_depth(self):
@@ -121,7 +120,6 @@ class Instrument(object):
         self.recovered = recovered
         
     def set_l2_depth(self, l2_depth):
-        print('set_l2_depth..')
         self.l2_depth = l2_depth
         
     def set_prev_l2_depth(self, prev_l2_depth):

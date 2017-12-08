@@ -232,7 +232,6 @@ class ExchGwBitfinex(ExchangeGateway):
                               (message['channel'], instmt.get_instmt_code(), message['chanId']))
         elif isinstance(message, list):
             if message[0] == instmt.get_order_book_channel_id():
-                print(message)
                 if isinstance(message[1], list):
                     self.api_socket.parse_l2_depth(instmt, message[1])
                 elif len(message) != 2:

@@ -6,7 +6,8 @@ from befh.instrument import Instrument
 from befh.clients.sql_template import SqlClientTemplate
 from functools import partial
 from datetime import datetime
-from multiprocessing import Process
+# from multiprocessing import Process
+import threading
 import time
 
 
@@ -49,6 +50,13 @@ class ExchGwApiCryptopia(RESTfulApiSocket):
     def get_trade_side_field_name(cls):
         return 'Type'
 
+<<<<<<< HEAD:befh/exchanges/cryptopia.py
+=======
+    @classmethod
+    def get_trade_id_field_name(cls):
+        return 'TradePairId'
+        
+>>>>>>> add Cryptopia:befh/exch_cryptopia.py
     @classmethod
     def get_trade_price_field_name(cls):
         return 'Price'
@@ -117,6 +125,8 @@ class ExchGwApiCryptopia(RESTfulApiSocket):
         trade = Trade()
         keys = list(raw.keys())
         if cls.get_trades_timestamp_field_name() in keys and \
+           cls.get_trade_side_field_name() in keys and \
+           cls.get_trade_id_field_name() in keys and \
            cls.get_trade_price_field_name() in keys and \
            cls.get_trade_volume_field_name() in keys:
 
@@ -135,7 +145,8 @@ class ExchGwApiCryptopia(RESTfulApiSocket):
             trade.trade_volume = float(str(raw[cls.get_trade_volume_field_name()]))
 
             # Trade id
-            trade.trade_id = trade.date_time + '-P' + str(trade.trade_price) + '-V' + str(trade.trade_volume)
+            trade.trade_id = str(raw[cls.get_trade_id_field_name()])
+            # trade.trade_id = trade.date_time + '-P' + str(trade.trade_price) + '-V' + str(trade.trade_volume)
 
         else:
             raise Exception('Does not contain trade keys in instmt %s-%s.\nOriginal:\n%s' % \
@@ -262,8 +273,11 @@ class ExchGwCryptopia(ExchangeGateway):
                                                                                   instmt.get_instmt_name()))
         self.init_instmt_snapshot_table(instmt)
         instmt.set_recovered(False)
-        t1 = Process(target=partial(self.get_order_book_worker, instmt))
-        t2 = Process(target=partial(self.get_trades_worker, instmt))
+        # t1 = Process(target=partial(self.get_order_book_worker, instmt))
+        # t2 = Process(target=partial(self.get_trades_worker, instmt))
+
+        t1 = threading.Thread(target=partial(self.get_order_book_worker, instmt))
+        t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))
         t1.start()
         t2.start()
         return [t1, t2]
@@ -272,13 +286,26 @@ class ExchGwCryptopia(ExchangeGateway):
 if __name__ == '__main__':
     Logger.init_log()
     exchange_name = 'Cryptopia'
+<<<<<<< HEAD:befh/exchanges/cryptopia.py
     instmt_name = 'DOTBTC'
     instmt_code = 'DOT_BTC'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)
+=======
+    instmt_name = 'BTXBTC'
+    instmt_code = 'BTX_BTC'
+    instmt = Instrument(exchange_name, instmt_name, instmt_code)    
+>>>>>>> add Cryptopia:befh/exch_cryptopia.py
     db_client = SqlClientTemplate()
     exch = ExchGwCryptopia([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
+<<<<<<< HEAD:befh/exchanges/cryptopia.py
     instmt.set_recovered(False)
+=======
+    instmt.set_instmt_snapshot_table_name(exch.get_instmt_snapshot_table_name(instmt.get_exchange_name(),
+                                                                                  instmt.get_instmt_name()))
+    exch.init_instmt_snapshot_table(instmt)
+    instmt.set_recovered(False)    
+>>>>>>> add Cryptopia:befh/exch_cryptopia.py
     # exch.get_order_book_worker(instmt)
     exch.get_trades_worker(instmt)

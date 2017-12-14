@@ -92,9 +92,9 @@ class KafkaClient(DatabaseClient):
         ret['table'] = table
         self.lock.acquire()
 
-        print(ret)
-        print('columns:', columns)
-        print('values:', values)
+        # print(ret)
+        # print('columns:', columns)
+        # print('values:', values)
 
         future = self.conn.send(table, value=ret)
 
@@ -102,9 +102,9 @@ class KafkaClient(DatabaseClient):
         # Block for 'synchronous' sends
         try:
             record_metadata = future.get(timeout=60)
-            print(record_metadata)
+            Logger.info(self.__class__.__name__, "%s" % record_metadata)
         except  Exception as ex:
-            print("exception in producer:%s" % ex)
+            Logger.error(self.__class__.__name__, "exception in producer:%s" % ex)
             # traceback.print_exc()
             result = False
             # raise Exception("kafka send failed.")

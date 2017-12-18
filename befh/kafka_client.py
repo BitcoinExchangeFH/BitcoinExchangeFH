@@ -102,7 +102,8 @@ class KafkaClient(DatabaseClient):
         # Block for 'synchronous' sends
         try:
             record_metadata = future.get(timeout=60)
-            Logger.info(self.__class__.__name__, "%s" % record_metadata)
+            # print(record_metadata)
+            Logger.info(self.__class__.__name__, "topic: %s, offset: %s" % (record_metadata.topic, record_metadata.offset))
         except  Exception as ex:
             Logger.error(self.__class__.__name__, "exception in producer:%s" % ex)
             # traceback.print_exc()

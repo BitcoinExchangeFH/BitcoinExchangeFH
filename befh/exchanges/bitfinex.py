@@ -135,11 +135,13 @@ class ExchGwBitfinexWs(WebSocketApiClient):
                         #     del l2_depth.asks[l2_depth.depth:]
         if len(l2_depth.asks) <5:
             print('..asks<5..')
+            print(l2_depth.asks)
             print(l2_depth.values())
             # exit(-1)
 
         if len(l2_depth.bids) <5:
-            print('...asks<5..')
+            print('...bids<5..')
+            print(l2_depth.bids)
             print(l2_depth.values())
             # exit(-1)
 

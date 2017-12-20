@@ -204,6 +204,7 @@ class ExchGwKkex(ExchangeGateway):
                     self.insert_order_book(instmt)
             except Exception as e:
                 Logger.error(self.__class__.__name__, "Error in order book: %s" % e)
+                time.sleep(5)
             time.sleep(2)
 
     def get_trades_worker(self, instmt):
@@ -215,11 +216,11 @@ class ExchGwKkex(ExchangeGateway):
             try:
                 ret = self.api_socket.get_trades(instmt)
                 if ret is None or len(ret) == 0:
-                    time.sleep(2)
+                    time.sleep(5)
                     continue
             except Exception as e:
                 Logger.error(self.__class__.__name__, "Error in trades: %s" % e)                
-                time.sleep(2)
+                time.sleep(5)
                 continue
             
             for trade in ret:
@@ -255,12 +256,13 @@ class ExchGwKkex(ExchangeGateway):
         # t2 = Process(target=partial(self.get_trades_worker, instmt))
 
         t1 = threading.Thread(target=partial(self.get_order_book_worker, instmt))
-        t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))
+        # t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))
 
         t1.start()
-        t2.start()
+        # t2.start()
+        return [t1]
 
-        return [t1, t2]
+        # return [t1, t2]
         
         
 if __name__ == '__main__':

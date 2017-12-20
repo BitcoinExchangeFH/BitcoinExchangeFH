@@ -150,7 +150,6 @@ class ExchangeGateway:
             id = self.get_instmt_snapshot_id(instmt)
             for db_client in self.db_clients:
                 if self.is_allowed_snapshot(db_client):
-                    print('insert snapshot')
                     db_client.insert(table=self.get_snapshot_table_name(),
                                      columns=Snapshot.columns(),
                                      types=Snapshot.types(),

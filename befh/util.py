@@ -27,6 +27,8 @@ class Logger:
             flogger.setFormatter(formatter)
             Logger.logger.addHandler(flogger)
 
+        logging.getLogger("websocket").setLevel(logging.WARNING)
+
     @staticmethod
     def info(method, str):
         """

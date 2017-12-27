@@ -10,6 +10,8 @@ class Logger:
         """
         Initialise the logger
         """
+        logging.basicConfig()
+
         Logger.logger = logging.getLogger('BitcoinExchangeFH')
 <<<<<<< HEAD
         Logger.logger.setLevel(logging.INFO)

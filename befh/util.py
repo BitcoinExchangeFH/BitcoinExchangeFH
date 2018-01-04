@@ -11,8 +11,9 @@ class Logger:
         Initialise the logger
         """
         Logger.logger = logging.getLogger('BitcoinExchangeFH')
-        Logger.logger.setLevel(logging.ERROR)
-        Logger.logger.setLevel(logging.INFO)
+        Logger.logger.setLevel(logging.DEBUG)
+        #Logger.logger.setLevel(logging.ERROR)
+        #Logger.logger.setLevel(logging.INFO)
         formatter = logging.Formatter('%(asctime)s - %(levelname)s \n%(message)s\n')
         if output is None:
             slogger = logging.StreamHandler()

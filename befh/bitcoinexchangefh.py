@@ -11,6 +11,7 @@ from befh.exch_okcoin import ExchGwOkCoin
 from befh.exch_kraken import ExchGwKraken
 from befh.exch_gdax import ExchGwGdax
 from befh.exch_bitstamp import ExchGwBitstamp
+from befh.exch_huobi import ExchGwHuoBi
 from befh.exch_gatecoin import ExchGwGatecoin
 from befh.exch_quoine import ExchGwQuoine
 from befh.exch_poloniex import ExchGwPoloniex
@@ -139,6 +140,7 @@ def main():
     exch_gws.append(ExchGwKraken(db_clients))
     exch_gws.append(ExchGwGdax(db_clients))
     exch_gws.append(ExchGwBitstamp(db_clients))
+    exch_gws.append(ExchGwHuoBi(db_clients))
     exch_gws.append(ExchGwGatecoin(db_clients))
     exch_gws.append(ExchGwQuoine(db_clients))
     exch_gws.append(ExchGwPoloniex(db_clients))

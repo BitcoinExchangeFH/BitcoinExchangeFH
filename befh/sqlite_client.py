@@ -2,6 +2,8 @@
 
 from befh.sql_client import SqlClient
 import sqlite3
+from befh.util import Logger
+
 
 class SqliteClient(SqlClient):
     """
@@ -32,6 +34,7 @@ class SqliteClient(SqlClient):
         Execute the sql command
         :param sql: SQL command
         """
+        Logger.info(self.__class__.__name__, 'Command: {}'.format(sql))
         self.cursor.execute(sql)
         
     def commit(self):

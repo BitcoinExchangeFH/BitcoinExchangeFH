@@ -4,6 +4,7 @@ import websocket
 import threading
 import json
 import time
+import gzip
 
 class WebSocketApiClient(ApiSocket):
     """
@@ -81,7 +82,11 @@ class WebSocketApiClient(ApiSocket):
             time.sleep(reconnect_interval)
 
     def __on_message(self, ws, m):
-        m = json.loads(m)
+        try:
+            content = gzip.decompress(m).decode('utf-8')
+            m = json.loads(content)
+        except:
+            m = json.loads(m)
         if len(self.on_message_handlers) > 0:
             for handler in self.on_message_handlers:
                 handler(m)

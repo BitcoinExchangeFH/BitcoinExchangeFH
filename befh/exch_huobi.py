@@ -22,7 +22,7 @@ class ExchGwApiHuoBiWs(WebSocketApiClient):
         """
         Constructor
         """
-        WebSocketApiClient.__init__(self, 'ExchApiHuoBi')
+        WebSocketApiClient.__init__(self, 'ExchApiHuoBi', received_data_compressed=True)
 
     @classmethod
     def get_order_book_timestamp_field_name(cls):

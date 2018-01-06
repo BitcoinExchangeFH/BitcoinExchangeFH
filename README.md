@@ -36,11 +36,13 @@ Users can
 - Cryptopia (RESTful)
 - Gatecoin (RESTful)
 - GDAX (Websocket)
+- HuoBi (Websocket)
 - Kraken (RESTful)
 - Liqui (RESTful)
 - Luno (Websocket)
 - Poloniex (RESTful)
 - OkCoin (Websocket)
+- Okex (Websocket)
 - Quoine (RESTful)
 - Yunbi (RESTful)
 

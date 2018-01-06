@@ -84,7 +84,7 @@ class WebSocketApiClient(ApiSocket):
 
     def __on_message(self, ws, m):
         if self._received_data_compressed is True:
-            data = zlib.decompress(m, zlib.MAX_WBITS|16)
+            data = zlib.decompress(m, zlib.MAX_WBITS|16).decode('UTF-8')
             m = json.loads(data)
         else:
             m = json.loads(m)

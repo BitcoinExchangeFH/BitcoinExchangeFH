@@ -45,6 +45,7 @@ Users can
 - Okex (Websocket)
 - Quoine (RESTful)
 - Yunbi (RESTful)
+- Wex (Restful)
 
 Currently the support of other exchanges is still under development.
 

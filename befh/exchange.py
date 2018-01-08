@@ -4,7 +4,6 @@ from befh.file_client import FileClient
 from befh.market_data import L2Depth, Trade, Snapshot
 from datetime import datetime
 from threading import Lock
-from befh.util import Logger
 
 class ExchangeGateway:
     ############################################################################

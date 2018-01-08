@@ -9,9 +9,12 @@ import threading
 import json
 from functools import partial
 from datetime import datetime
+import pytz
+import re
+from tzlocal import get_localzone
 
 
-class ExchGwApiHuoBiWs(WebSocketApiClient):
+class ExchGwApiOkexWs(WebSocketApiClient):
     """
     Exchange Socket
     """
@@ -22,15 +25,7 @@ class ExchGwApiHuoBiWs(WebSocketApiClient):
         """
         Constructor
         """
-        WebSocketApiClient.__init__(self, 'ExchApiHuoBi', received_data_compressed=True)
-
-    @classmethod
-    def get_order_book_timestamp_field_name(cls):
-        return 'ts'
-
-    @classmethod
-    def get_trades_timestamp_field_name(cls):
-        return 'ts'
+        WebSocketApiClient.__init__(self, 'ExchApiHuoBi')
 
     @classmethod
     def get_bids_field_name(cls):
@@ -41,32 +36,16 @@ class ExchGwApiHuoBiWs(WebSocketApiClient):
         return 'asks'
 
     @classmethod
-    def get_trade_side_field_name(cls):
-        return 'direction'
-
-    @classmethod
-    def get_trade_id_field_name(cls):
-        return 'id'
-
-    @classmethod
-    def get_trade_price_field_name(cls):
-        return 'price'
-
-    @classmethod
-    def get_trade_volume_field_name(cls):
-        return 'amount'
-
-    @classmethod
     def get_link(cls):
-        return 'wss://api.huobipro.com/ws'
+        return 'wss://real.okex.com:10440/websocket/okexapi'
 
     @classmethod
     def get_order_book_subscription_string(cls, instmt):
-        return json.dumps({"sub": "market.{}.depth.step2".format(instmt.instmt_code), "id": "id{}".format(cls.Client_Id)})
+        return json.dumps({'event':'addChannel','channel':'ok_sub_futureusd_{}_depth_this_week'.format(instmt.instmt_code)})
 
     @classmethod
     def get_trades_subscription_string(cls, instmt):
-        return json.dumps({"sub": "market.{}.trade.detail".format(instmt.instmt_code), "id": "id{}".format(cls.Client_Id)})
+        return json.dumps({'event':'addChannel','channel':'ok_sub_futureusd_{}_trade_this_week'.format(instmt.instmt_code)})
 
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
@@ -81,7 +60,7 @@ class ExchGwApiHuoBiWs(WebSocketApiClient):
            cls.get_asks_field_name() in keys:
 
             # Date time
-            timestamp = raw['ts']
+            timestamp = raw['timestamp']
             l2_depth.date_time = datetime.utcfromtimestamp(timestamp/1000.0).strftime("%Y%m%d %H:%M:%S.%f")
 
             # Bids
@@ -101,7 +80,6 @@ class ExchGwApiHuoBiWs(WebSocketApiClient):
             raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
                  raw))
-
         return l2_depth
 
     @classmethod
@@ -113,42 +91,32 @@ class ExchGwApiHuoBiWs(WebSocketApiClient):
         """
 
         trades = []
-        for raw in raws:
+        for item in raws:
             trade = Trade()
-            keys = list(raw.keys())
-
-            if cls.get_trades_timestamp_field_name() in keys and \
-               cls.get_trade_id_field_name() in keys and \
-               cls.get_trade_side_field_name() in keys and \
-               cls.get_trade_price_field_name() in keys and \
-               cls.get_trade_volume_field_name() in keys:
-
-                # Date time
-                date_time = float(raw[cls.get_trades_timestamp_field_name()])
-                trade.date_time = datetime.utcfromtimestamp(date_time/1000.0).strftime("%Y%m%d %H:%M:%S.%f")
-
-                # Trade side
-                # Buy = 0
-                # Side = 1
-                trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])
-
-                # Trade id
-                trade.trade_id = str(raw[cls.get_trade_id_field_name()])
-
-                # Trade price
-                trade.trade_price = raw[cls.get_trade_price_field_name()]
-
-                # Trade volume
-                trade.trade_volume = raw[cls.get_trade_volume_field_name()]
-            else:
-                raise Exception('Does not contain trade keys in instmt %s-%s.\nOriginal:\n%s' % \
-                                (instmt.get_exchange_name(), instmt.get_instmt_name(), \
-                                 raw))
+            today = datetime.today().date()
+            time = item[3]
+            #trade.date_time = datetime.utcfromtimestamp(date_time/1000.0).strftime("%Y%m%d %H:%M:%S.%f")
+            #Convert local time as to UTC.
+            date_time = datetime(today.year, today.month, today.day,
+                                 *list(map(lambda x: int(x), time.split(':'))),
+                                 tzinfo = get_localzone()
+            )
+            trade.date_time = date_time.astimezone(pytz.utc)
+            # Trade side
+            # Buy = 0
+            # Side = 1
+            trade.trade_side = Trade.parse_side(item[4])
+            # Trade id
+            trade.trade_id = str(item[0])
+            # Trade price
+            trade.trade_price = item[1]
+            # Trade volume
+            trade.trade_volume = item[2]
             trades.append(trade)
         return trades
 
 
-class ExchGwHuoBi(ExchangeGateway):
+class ExchGwOkex(ExchangeGateway):
     """
     Exchange gateway
     """
@@ -157,7 +125,7 @@ class ExchGwHuoBi(ExchangeGateway):
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwApiHuoBiWs(), db_clients)
+        ExchangeGateway.__init__(self, ExchGwApiOkexWs(), db_clients)
 
     @classmethod
     def get_exchange_name(cls):
@@ -165,7 +133,7 @@ class ExchGwHuoBi(ExchangeGateway):
         Get exchange name
         :return: Exchange name string
         """
-        return 'HuoBi'
+        return 'Okex'
 
     def on_open_handler(self, instmt, ws):
         """
@@ -198,32 +166,24 @@ class ExchGwHuoBi(ExchangeGateway):
         :param instmt: Instrument
         :param message: Message
         """
-        if 'ping' in message:
-            #handle ping response
-            ts = message['ping']
-            self.api_socket.send(json.dumps({'pong': ts}))
-        elif 'ch' in message:
-            Logger.info(self.__class__.__name__, 'checking CH')
-            if 'trade.detail' in message['ch']:
-                trades = self.api_socket.parse_trade(instmt, message['tick']['data'])
-                for trade in trades:
-                    Logger.info(self.__class__.__name__, 'before insert trade')
-                    if trade.trade_id != instmt.get_exch_trade_id():
-                        instmt.incr_trade_id()
-                        instmt.set_exch_trade_id(trade.trade_id)
-                        Logger.info(self.__class__.__name__, 'insert trade')
-                        self.insert_trade(instmt, trade)
-            elif 'depth.step' in message['ch']:
-                instmt.set_prev_l2_depth(instmt.get_l2_depth().copy())
-                self.api_socket.parse_l2_depth(instmt, message['tick'])
-                if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
-                    instmt.incr_order_book_id()
-                    Logger.info(self.__class__.__name__, 'insert orderbook')
-                    self.insert_order_book(instmt)
-            else:
-                Logger.error(self.__class__.__name__, 'Not Trade or Market')
-        else:
-            Logger.error(self.__class__.__name__, 'Nothing to do!!')
+        for item in message:
+            if 'channel' in item:
+                if re.search(r'ok_sub_futureusd_(.*)_depth_this_week', item['channel']):
+                    instmt.set_prev_l2_depth(instmt.get_l2_depth().copy())
+                    self.api_socket.parse_l2_depth(instmt, item['data'])
+                    if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
+                        instmt.incr_order_book_id()
+                        self.insert_order_book(instmt)
+                elif re.search(r'ok_sub_futureusd_(.*)_trade_this_week', item['channel']):
+                    Logger.info(self.__class__.__name__, 'Parsing trades...')
+                    trades = self.api_socket.parse_trade(instmt, item['data'])
+                    for trade in trades:
+                        if trade.trade_id != instmt.get_exch_trade_id():
+                            instmt.incr_trade_id()
+                            instmt.set_exch_trade_id(trade.trade_id)
+                            self.insert_trade(instmt, trade)
+                else:
+                    Logger.error(self.__class__.__name__, 'Nothing to do!!')
 
     def start(self, instmt):
         """
@@ -248,11 +208,11 @@ if __name__ == '__main__':
     websocket.enableTrace(True)
     logging.basicConfig()
     Logger.init_log()
-    exchange_name = 'HuoBi'
-    instmt_name = 'BTCUSDT'
-    instmt_code = 'btcusdt'
+    exchange_name = 'Okex'
+    instmt_name = 'BTC'
+    instmt_code = 'btc'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)
     db_client = SqlClientTemplate()
-    exch = ExchGwHuoBi([db_client])
+    exch = ExchGwOkex([db_client])
     td = exch.start(instmt)
     pass

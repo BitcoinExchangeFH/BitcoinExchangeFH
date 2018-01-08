@@ -4,13 +4,13 @@ import websocket
 import threading
 import json
 import time
-import gzip
+import zlib
 
 class WebSocketApiClient(ApiSocket):
     """
     Generic REST API call
     """
-    def __init__(self, id):
+    def __init__(self, id, received_data_compressed=False):
         """
         Constructor
         :param id: Socket id
@@ -21,6 +21,7 @@ class WebSocketApiClient(ApiSocket):
         self.wst = None             # Web socket thread
         self._connecting = False
         self._connected = False
+        self._received_data_compressed = received_data_compressed
         self.on_message_handlers = []
         self.on_open_handlers = []
         self.on_close_handlers = []
@@ -82,10 +83,10 @@ class WebSocketApiClient(ApiSocket):
             time.sleep(reconnect_interval)
 
     def __on_message(self, ws, m):
-        try:
-            content = gzip.decompress(m).decode('utf-8')
-            m = json.loads(content)
-        except:
+        if self._received_data_compressed is True:
+            data = zlib.decompress(m, zlib.MAX_WBITS|16).decode('UTF-8')
+            m = json.loads(data)
+        else:
             m = json.loads(m)
         if len(self.on_message_handlers) > 0:
             for handler in self.on_message_handlers:

@@ -1,4 +1,5 @@
 #!/bin/python
+from pprint import pformat
 from datetime import datetime
 import copy
 
@@ -23,6 +24,9 @@ class MarketDataBase:
 
         def copy(self):
             return copy.deepcopy(self)
+
+        def __repr__(self):
+            return pformat(vars(self))
 
     @staticmethod
     def parse_side(value):
@@ -52,7 +56,6 @@ class MarketDataBase:
         Constructor
         """
         pass
-
 
 class L2Depth(MarketDataBase):
     """
@@ -150,6 +153,9 @@ class L2Depth(MarketDataBase):
                 return True
         return False
 
+    def __repr__(self):
+        return pformat(vars(self))
+
 class Trade(MarketDataBase):
     """
     Trade. Container of date, time, trade price, volume and side.
@@ -191,6 +197,8 @@ class Trade(MarketDataBase):
         return [self.date_time] + \
                [self.trade_id] + [self.trade_price] + [self.trade_volume] + [self.trade_side]
 
+    def __repr__(self):
+        return pformat(vars(self))
 
 class Snapshot(MarketDataBase):
     """

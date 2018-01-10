@@ -188,7 +188,7 @@ class ExchGwBibox(ExchangeGateway):
         Get exchange name
         :return: Exchange name string
         """
-        return 'Binance'
+        return 'Bibox'
 
     def get_order_book_worker(self, instmt):
         """

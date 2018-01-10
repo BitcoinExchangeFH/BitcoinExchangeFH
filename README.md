@@ -51,7 +51,11 @@ Users can
 - Wex (Restful)
 =======
 - Kkex (RESTful)
+<<<<<<< HEAD
 >>>>>>> replace process with threading.
+=======
+- Bibox (RESTful)
+>>>>>>> add bibox
 
 Currently the support of other exchanges is still under development.
 

@@ -198,7 +198,6 @@ class ExchGwBibox(ExchangeGateway):
         while True:
             try:
                 l2_depth = self.api_socket.get_order_book(instmt)
-                print(l2_depth)
                 if l2_depth is not None and l2_depth.is_diff(instmt.get_l2_depth()):
                     instmt.set_prev_l2_depth(instmt.get_l2_depth())
                     instmt.set_l2_depth(l2_depth)

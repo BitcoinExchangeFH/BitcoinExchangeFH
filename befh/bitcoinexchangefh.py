@@ -23,6 +23,7 @@ from befh.exch_binance import ExchGwBinance
 from befh.exch_cryptopia import ExchGwCryptopia
 from befh.exch_okex import ExchGwOkex
 from befh.exch_wex import ExchGwWex
+from befh.exch_bitflyer import ExchGwBitflyer
 from befh.kdbplus_client import KdbPlusClient
 from befh.mysql_client import MysqlClient
 from befh.sqlite_client import SqliteClient
@@ -143,6 +144,7 @@ def main():
     exch_gws.append(ExchGwKraken(db_clients))
     exch_gws.append(ExchGwGdax(db_clients))
     exch_gws.append(ExchGwBitstamp(db_clients))
+    exch_gws.append(ExchGwBitflyer(db_clients))
     exch_gws.append(ExchGwHuoBi(db_clients))
     exch_gws.append(ExchGwCoincheck(db_clients))
     exch_gws.append(ExchGwGatecoin(db_clients))

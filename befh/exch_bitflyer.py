@@ -6,7 +6,7 @@ from befh.instrument import Instrument
 from befh.sql_client_template import SqlClientTemplate
 from functools import partial
 from datetime import datetime
-from multiprocessing import Process
+import threading
 import time
 
 
@@ -16,56 +16,51 @@ class ExchGwApiBitflyer(RESTfulApiSocket):
     """
     def __init__(self):
         RESTfulApiSocket.__init__(self)
-        
+
     @classmethod
     def get_timestamp_offset(cls):
         return 1000
-        
+
     @classmethod
     def get_order_book_timestamp_field_name(cls):
         return 'date'
-        
+
     @classmethod
     def get_trades_timestamp_field_name(cls):
-        return 'T'
-    
+        return 'exec_date'
+
     @classmethod
     def get_bids_field_name(cls):
         return 'bids'
-        
+
     @classmethod
     def get_asks_field_name(cls):
         return 'asks'
-        
+
     @classmethod
     def get_trade_side_field_name(cls):
-        return 'type'
-        
+        return 'side'
+
     @classmethod
     def get_trade_id_field_name(cls):
-        return 'a'
-        
+        return 'id'
+
     @classmethod
     def get_trade_price_field_name(cls):
-        return 'p'
-        
+        return 'price'
+
     @classmethod
     def get_trade_volume_field_name(cls):
-        return 'q'
-        
+        return 'size'
+
     @classmethod
     def get_order_book_link(cls, instmt):
-        return "https://www.binance.com/api/v1/depth?symbol=%s&limit=100" % instmt.get_instmt_code()
+        return 'https://api.bitflyer.jp/v1/getboard?product_code={}'.format(instmt.instmt_code)
 
     @classmethod
     def get_trades_link(cls, instmt):
-        if int(instmt.get_exch_trade_id()) > 0:
-            return "https://www.binance.com/api/v1/aggTrades?symbol=%s&fromId=%s" % \
-                (instmt.get_instmt_code(), instmt.get_exch_trade_id())
-        else:
-            return "https://www.binance.com/api/v1/aggTrades?symbol=%s&limit=100" % \
-                (instmt.get_instmt_code())         
-                
+        return 'https://api.bitflyer.jp/v1/getexecutions?product_cdoe={}'.format(instmt.instmt_code)
+
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
@@ -77,28 +72,28 @@ class ExchGwApiBitflyer(RESTfulApiSocket):
         keys = list(raw.keys())
         if cls.get_bids_field_name() in keys and \
            cls.get_asks_field_name() in keys:
-            
+
             # No Date time information, has update id only
             l2_depth.date_time = datetime.now().strftime("%Y%m%d %H:%M:%S.%f")
 
             # Bids
             bids = raw[cls.get_bids_field_name()]
-            bids = sorted(bids, key=lambda x: x[0], reverse=True)
+            bids = sorted(bids, key=lambda x: x['price'], reverse=True)
             for i in range(0, 5):
-                l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
-                l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
-                
+                l2_depth.bids[i].price = float(bids[i]['price']) if type(bids[i]['price']) != float else bids[i]['price']
+                l2_depth.bids[i].volume = float(bids[i]['size']) if type(bids[i]['size']) != float else bids[i]['size']
+
             # Asks
             asks = raw[cls.get_asks_field_name()]
-            asks = sorted(asks, key=lambda x: x[0])
+            asks = sorted(asks, key=lambda x: x['price'])
             for i in range(0, 5):
-                l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
-                l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]            
+                l2_depth.asks[i].price = float(asks[i]['price']) if type(asks[i]['price']) != float else asks[i]['price']
+                l2_depth.asks[i].volume = float(asks[i]['size']) if type(asks[i]['size']) != float else asks[i]['size']
         else:
             raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
                  raw))
-        
+
         return l2_depth
 
     @classmethod
@@ -110,20 +105,18 @@ class ExchGwApiBitflyer(RESTfulApiSocket):
         """
         trade = Trade()
         keys = list(raw.keys())
-        
+
         if cls.get_trades_timestamp_field_name() in keys and \
            cls.get_trade_id_field_name() in keys and \
            cls.get_trade_price_field_name() in keys and \
            cls.get_trade_volume_field_name() in keys:
-        
+
             # Date time
-            date_time = float(raw[cls.get_trades_timestamp_field_name()])
-            date_time = date_time / cls.get_timestamp_offset()
-            trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")      
+            date_time = raw[cls.get_trades_timestamp_field_name()]
+            trade.date_time = datetime.strptime(date_time, '%Y-%m-%dT%H:%M:%S.%f')
             
             # Trade side
-            trade.trade_side = 1
-                
+            trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])
             # Trade id
             trade.trade_id = str(raw[cls.get_trade_id_field_name()])
             
@@ -135,7 +128,7 @@ class ExchGwApiBitflyer(RESTfulApiSocket):
         else:
             raise Exception('Does not contain trade keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
-                 raw))        
+                 raw))
 
         return trade
 
@@ -176,7 +169,7 @@ class ExchGwApiBitflyer(RESTfulApiSocket):
         return trades
 
 
-class ExchGwBinance(ExchangeGateway):
+class ExchGwBitflyer(ExchangeGateway):
     """
     Exchange gateway
     """
@@ -185,7 +178,7 @@ class ExchGwBinance(ExchangeGateway):
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwApiBinance(), db_clients)
+        ExchangeGateway.__init__(self, ExchGwApiBitflyer(), db_clients)
 
     @classmethod
     def get_exchange_name(cls):
@@ -193,7 +186,7 @@ class ExchGwBinance(ExchangeGateway):
         Get exchange name
         :return: Exchange name string
         """
-        return 'Binance'
+        return 'Bitflyer'
 
     def get_order_book_worker(self, instmt):
         """
@@ -227,7 +220,7 @@ class ExchGwBinance(ExchangeGateway):
                 Logger.error(self.__class__.__name__, "Error in trades: %s" % e)
                 time.sleep(1)
                 continue
-                
+
             for trade in ret:
                 assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
                 assert isinstance(instmt.get_exch_trade_id(), str), \
@@ -236,7 +229,7 @@ class ExchGwBinance(ExchangeGateway):
                     instmt.set_exch_trade_id(trade.trade_id)
                     instmt.incr_trade_id()
                     self.insert_trade(instmt, trade)
-            
+
             # After the first time of getting the trade, indicate the instrument
             # is recovered
             if not instmt.get_recovered():
@@ -256,23 +249,24 @@ class ExchGwBinance(ExchangeGateway):
                                                                                   instmt.get_instmt_name()))
         self.init_instmt_snapshot_table(instmt)
         instmt.set_recovered(False)
-        t1 = Process(target=partial(self.get_order_book_worker, instmt))
-        t2 = Process(target=partial(self.get_trades_worker, instmt))
+        t1 = threading.Thread(target=partial(self.get_order_book_worker, instmt))
+        t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))
         t1.start()
         t2.start()
         return [t1, t2]
-        
-        
+
+
 if __name__ == '__main__':
-    Lnge_name = 'Binance'
-    instmt_name = 'LTCBTC'
-    instmt_code = 'LTCBTC'
-    instmt = Instrument(exchange_name, instmt_name, instmt_coogger.init_log()
-    exchade)
+    exchange_name = 'Bitflyer'
+    instmt_name = 'BTC_JPY'
+    instmt_code = 'BTC_JPY'
+    instmt = Instrument(exchange_name, instmt_name, instmt_code)
+    Logger.init_log()
     db_client = SqlClientTemplate()
-    exch = ExchGwBinance([db_client])
+    exch = ExchGwBitflyer([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
-    instmt.set_recovered(False)    
-    exch.get_order_book_worker(instmt)
-    exch.get_trades_worker(instmt)
+    instmt.set_recovered(False)
+    exch.start(instmt)
+    #exch.get_order_book_worker(instmt)
+    #exch.get_trades_worker(instmt)

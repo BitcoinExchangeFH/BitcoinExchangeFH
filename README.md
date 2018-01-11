@@ -28,6 +28,7 @@ Users can
 ## Supported exchanges
 
 - Binance (RESTful)
+- Bitflyer (RESTful)
 - Bitfinex (Websocket)
 - BitMEX (Websocket)
 - Bitstamp (Websocket)

@@ -7,7 +7,7 @@ from befh.sql_client_template import SqlClientTemplate
 from befh.sqlite_client import SqliteClient
 from functools import partial
 from datetime import datetime
-from multiprocessing import Process
+import threading
 import time
 
 
@@ -17,51 +17,51 @@ class ExchGwApiCoincheck(RESTfulApiSocket):
     """
     def __init__(self):
         RESTfulApiSocket.__init__(self)
-        
+
     @classmethod
     def get_timestamp_offset(cls):
         return 1000
-        
+
     @classmethod
     def get_order_book_timestamp_field_name(cls):
         return 'date'
-        
+
     @classmethod
     def get_trades_timestamp_field_name(cls):
         return 'created_at'
-    
+
     @classmethod
     def get_bids_field_name(cls):
         return 'bids'
-        
+
     @classmethod
     def get_asks_field_name(cls):
         return 'asks'
-        
+
     @classmethod
     def get_trade_side_field_name(cls):
         return 'order_type'
-        
+
     @classmethod
     def get_trade_id_field_name(cls):
         return 'id'
-        
+
     @classmethod
     def get_trade_price_field_name(cls):
         return 'rate'
-        
+
     @classmethod
     def get_trade_volume_field_name(cls):
         return 'amount'
-        
+
     @classmethod
     def get_order_book_link(cls, instmt):
         return "https://coincheck.com/api/order_books"
 
     @classmethod
     def get_trades_link(cls, instmt):
-        return "https://coincheck.com/api/trades?pair=" % instmt.get_instmt_code()
-                
+        return "https://coincheck.com/api/trades?pair=%s" % instmt.get_instmt_code()
+
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
@@ -73,7 +73,7 @@ class ExchGwApiCoincheck(RESTfulApiSocket):
         keys = list(raw.keys())
         if cls.get_bids_field_name() in keys and \
            cls.get_asks_field_name() in keys:
-            
+
             # No Date time information, has update id only
             l2_depth.date_time = datetime.now().strftime("%Y%m%d %H:%M:%S.%f")
 
@@ -82,19 +82,19 @@ class ExchGwApiCoincheck(RESTfulApiSocket):
             bids = sorted(bids, key=lambda x: x[0], reverse=True)
             for i in range(0, 5):
                 l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
-                l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
-                
+                l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]
+
             # Asks
             asks = raw[cls.get_asks_field_name()]
             asks = sorted(asks, key=lambda x: x[0])
             for i in range(0, 5):
                 l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
-                l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]            
+                l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]
         else:
             raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
                  raw))
-        
+
         return l2_depth
 
     @classmethod
@@ -106,32 +106,32 @@ class ExchGwApiCoincheck(RESTfulApiSocket):
         """
         trade = Trade()
         keys = list(raw.keys())
-        
+
         if cls.get_trades_timestamp_field_name() in keys and \
            cls.get_trade_id_field_name() in keys and \
            cls.get_trade_price_field_name() in keys and \
            cls.get_trade_volume_field_name() in keys:
-        
+
             # Date time
-            date_time = float(raw[cls.get_trades_timestamp_field_name()])
-            date_time = date_time / cls.get_timestamp_offset()
-            trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")      
-            
+            #date_time = float(raw[cls.get_trades_timestamp_field_name()])
+            #date_time = date_time / cls.get_timestamp_offset()
+            date_time = raw[cls.get_trades_timestamp_field_name()]
+            trade.date_time = datetime.strptime(date_time, '%Y-%m-%dT%H:%M:%S.%fZ')
+
             # Trade side
-            trade.trade_side = 1
-                
+            trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])
             # Trade id
             trade.trade_id = str(raw[cls.get_trade_id_field_name()])
-            
+
             # Trade price
             trade.trade_price = float(str(raw[cls.get_trade_price_field_name()]))
-            
+
             # Trade volume
             trade.trade_volume = float(str(raw[cls.get_trade_volume_field_name()]))
         else:
             raise Exception('Does not contain trade keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
-                 raw))        
+                 raw))
 
         return trade
 
@@ -163,8 +163,8 @@ class ExchGwApiCoincheck(RESTfulApiSocket):
         # If verify cert, got <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:749)>
         res = cls.request(link, verify_cert=False)
         trades = []
-        if len(res) > 0:
-            for t in res:
+        if len(res['data']) > 0:
+            for t in res['data']:
                 trade = cls.parse_trade(instmt=instmt,
                                          raw=t)
                 trades.append(trade)
@@ -252,13 +252,13 @@ class ExchGwCoincheck(ExchangeGateway):
                                                                                   instmt.get_instmt_name()))
         self.init_instmt_snapshot_table(instmt)
         instmt.set_recovered(False)
-        t1 = Process(target=partial(self.get_order_book_worker, instmt))
-        t2 = Process(target=partial(self.get_trades_worker, instmt))
+        t1 = threading.Thread(target=partial(self.get_order_book_worker, instmt))
+        t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))
         t1.start()
         t2.start()
         return [t1, t2]
-        
-        
+
+
 if __name__ == '__main__':
     Logger.init_log()
     exchange_name = 'Coincheck'
@@ -266,12 +266,11 @@ if __name__ == '__main__':
     instmt_code = 'btc_jpy'
     exch = ExchGwApiCoincheck()
     instmt = Instrument(exchange_name, instmt_name, instmt_code)
-    db_client = SqliteClient()
-    db_client.connect(path="test.sqlite")
-    ExchangeGateway.init_snapshot_table([db_client])
+    db_client = SqlClientTemplate()
     exch = ExchGwCoincheck([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
     instmt.set_recovered(False)
-    exch.get_order_book_worker(instmt)
-    exch.get_trades_worker(instmt)
+    exch.start(instmt)
+    #exch.get_order_book_worker(instmt)
+    #exch.get_trades_worker(instmt)

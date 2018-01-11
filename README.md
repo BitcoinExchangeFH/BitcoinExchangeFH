@@ -35,6 +35,7 @@ Users can
 - Bittrex (RESTful)
 - BTCC (RESTful)
 - Cryptopia (RESTful)
+- Coincheck (RESTful)
 - Gatecoin (RESTful)
 - GDAX (Websocket)
 - HuoBi (Websocket)

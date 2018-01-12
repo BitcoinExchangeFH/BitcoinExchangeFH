@@ -129,12 +129,10 @@ class ExchGwOkex(ExchangeGateway):
         :param instmt: Instrument
         :param ws: Web socket
         """
-        print('........')
         Logger.info(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
                   (instmt.get_instmt_code(), instmt.get_exchange_name()))
         if not instmt.get_subscribed():
             instmt_code_split = instmt.get_instmt_code().split('_')
-            print(instmt_code_split)
             if len(instmt_code_split) == 2:
                 # Future instruments
                 instmt.set_order_book_channel_id("ok_sub_spot_%s_%s_depth_20" % \

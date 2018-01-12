@@ -22,6 +22,10 @@ class ExchGwOkexWs(WebSocketApiClient):
         WebSocketApiClient.__init__(self, 'ExchGwOkex')
         
     @classmethod
+    def get_timestamp_offset(cls):
+        return 1000
+
+    @classmethod
     def get_order_book_timestamp_field_name(cls):
         return 'timestamp'
     
@@ -59,7 +63,7 @@ class ExchGwOkexWs(WebSocketApiClient):
            cls.get_asks_field_name() in keys:
             
             # Date time
-            timestamp = float(raw[cls.get_order_book_timestamp_field_name()])/1000.0
+            timestamp = float(raw[cls.get_order_book_timestamp_field_name()])/cls.get_timestamp_offset()
             l2_depth.date_time = datetime.utcfromtimestamp(timestamp).strftime("%Y%m%d %H:%M:%S.%f")
             
             # Bids
@@ -93,10 +97,11 @@ class ExchGwOkexWs(WebSocketApiClient):
         trade_id = raw[0]
         trade_price = float(raw[1])
         trade_volume = float(raw[2])
-        timestamp = raw[3]
+        date_time = raw[3]
         trade_side = raw[4]
         
-        trade.trade_id = trade_id + timestamp
+        # trade.date_time = date_time
+        trade.trade_id = str(trade_id)
         trade.trade_price = trade_price
         trade.trade_volume = trade_volume
         trade.trade_side = Trade.parse_side(trade_side)

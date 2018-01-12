@@ -17,8 +17,12 @@ class Logger:
         Logger.logger.setLevel(logging.INFO)
 =======
         Logger.logger.setLevel(logging.ERROR)
+<<<<<<< HEAD
         # Logger.logger.setLevel(logging.INFO)
 >>>>>>> fix.
+=======
+        Logger.logger.setLevel(logging.INFO)
+>>>>>>> add okex
         formatter = logging.Formatter('%(asctime)s - %(levelname)s \n%(message)s\n')
         if output is None:
             slogger = logging.StreamHandler()

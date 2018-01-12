@@ -46,7 +46,7 @@ class WebSocketApiClient(ApiSocket):
                            argument
         :param reconnect_interval: The time interval for reconnection
         """
-        Logger.info(self.__class__.__name__, "Connecting to socket <%s>..." % self.id)
+        Logger.info(self.__class__.__name__, "Connecting to socket <%s> <%s>..." % (self.id, url))
         if on_message_handler is not None:
             self.on_message_handlers.append(on_message_handler)
         if on_open_handler is not None:
@@ -108,7 +108,7 @@ class WebSocketApiClient(ApiSocket):
                 handler(ws)
         
     def __on_error(self, ws, error):
-        Logger.info(self.__class__.__name__, "Socket <%s> error:\n %s" % (self.id, error))
+        Logger.error(self.__class__.__name__, "Socket <%s> error:\n %s" % (self.id, error))
         if len(self.on_error_handlers) > 0:
             for handler in self.on_error_handlers:
                 handler(ws, error)

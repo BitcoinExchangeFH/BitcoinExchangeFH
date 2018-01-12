@@ -36,7 +36,7 @@ from befh.exchange import ExchangeGateway
 from befh.exch_bitmex import ExchGwBitmex
 from befh.exch_btcc import ExchGwBtccSpot, ExchGwBtccFuture
 from befh.exch_bitfinex import ExchGwBitfinex
-from befh.exch_okcoin import ExchGwOkCoin
+from befh.exch_okex import ExchGwOkex
 from befh.exch_kraken import ExchGwKraken
 from befh.exch_gdax import ExchGwGdax
 from befh.exch_bitstamp import ExchGwBitstamp
@@ -178,7 +178,7 @@ def main():
     exch_gws.append(ExchGwBtccFuture(db_clients))
     exch_gws.append(ExchGwBitmex(db_clients))
     exch_gws.append(ExchGwBitfinex(db_clients))
-    exch_gws.append(ExchGwOkCoin(db_clients))
+    exch_gws.append(ExchGwOkex(db_clients))
     exch_gws.append(ExchGwKraken(db_clients))
     exch_gws.append(ExchGwGdax(db_clients))
     exch_gws.append(ExchGwBitstamp(db_clients))

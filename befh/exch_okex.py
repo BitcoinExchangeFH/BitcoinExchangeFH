@@ -216,7 +216,7 @@ class ExchGwOkex(ExchangeGateway):
 if __name__ == '__main__':
     exchange_name = 'Okex'
     instmt_name = 'BCHBTC'
-    instmt_code = 'BCHBTC'
+    instmt_code = 'BCH_BTC'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)
     db_client = SqlClientTemplate()
     Logger.init_log()

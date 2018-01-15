@@ -56,7 +56,9 @@ class ExchGwOkexWs(WebSocketApiClient):
         :param instmt: Instrument
         :param raw: Raw data in JSON
         """
-        l2_depth = instmt.get_l2_depth()
+        # l2_depth = instmt.get_l2_depth()
+        l2_depth = L2Depth()
+
         keys = list(raw.keys())
         if cls.get_order_book_timestamp_field_name() in keys and \
            cls.get_bids_field_name() in keys and \
@@ -69,14 +71,18 @@ class ExchGwOkexWs(WebSocketApiClient):
             # Bids
             bids = raw[cls.get_bids_field_name()]
             bids = sorted(bids, key=lambda x: x[0], reverse=True)
-            for i in range(0, len(bids)):
+            max_bid_len = min(len(bids), 5)
+
+            for i in range(0, max_bid_len):
                 l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
                 l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
-                
+     
             # Asks
             asks = raw[cls.get_asks_field_name()]
             asks = sorted(asks, key=lambda x: x[0])
-            for i in range(0, len(asks)):
+            max_ask_len = min(len(asks), 5)
+
+            for i in range(0, max_ask_len):
                 l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
                 l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]            
         else:
@@ -140,7 +146,7 @@ class ExchGwOkex(ExchangeGateway):
             instmt_code_split = instmt.get_instmt_code().split('_')
             if len(instmt_code_split) == 2:
                 # Future instruments
-                instmt.set_order_book_channel_id("ok_sub_spot_%s_%s_depth_20" % \
+                instmt.set_order_book_channel_id("ok_sub_spot_%s_%s_depth_5" % \
                                                  (instmt_code_split[0],
                                                   instmt_code_split[1]))
                 instmt.set_trades_channel_id("ok_sub_spot_%s_%s_deals" % \
@@ -148,11 +154,11 @@ class ExchGwOkex(ExchangeGateway):
                                                 instmt_code_split[1]))
             else:
                 # Spot instruments
-                instmt.set_order_book_channel_id("ok_sub_spot_%s_depth_20" % instmt.get_instmt_code())
+                instmt.set_order_book_channel_id("ok_sub_spot_%s_depth_5" % instmt.get_instmt_code())
                 instmt.set_trades_channel_id("ok_sub_spot_%s_deals" % instmt.get_instmt_code())
 
             ws.send(self.api_socket.get_order_book_subscription_string(instmt))
-            ws.send(self.api_socket.get_trades_subscription_string(instmt))
+            # ws.send(self.api_socket.get_trades_subscription_string(instmt))
             instmt.set_subscribed(True)
 
     def on_close_handler(self, instmt, ws):
@@ -173,15 +179,17 @@ class ExchGwOkex(ExchangeGateway):
         """
         for message in messages:
             keys = message.keys()
+            print(keys)
             if 'channel' in keys:
                 if 'data' in keys:
                     if message['channel'] == instmt.get_order_book_channel_id():
                         data = message['data']
-                        instmt.set_prev_l2_depth(instmt.get_l2_depth().copy())
-                        self.api_socket.parse_l2_depth(instmt, data)
-
+                        l2_depth = self.api_socket.parse_l2_depth(instmt, data)
+                        if l2_depth is not None:
                         # Insert only if the first 5 levels are different
-                        if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
+                        # if l2_depth is not None and instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
+                            instmt.set_prev_l2_depth(instmt.get_l2_depth())
+                            instmt.set_l2_depth(l2_depth)
                             instmt.incr_order_book_id()
                             self.insert_order_book(instmt)
 

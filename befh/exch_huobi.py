@@ -176,8 +176,6 @@ class ExchGwHuoBi(ExchangeGateway):
         Logger.info(self.__class__.__name__, "Instrument %s is subscribed in channel %s" % \
                   (instmt.get_instmt_name(), instmt.get_exchange_name()))
         if not instmt.get_subscribed():
-            Logger.info(self.__class__.__name__, 'order book string:{}'.format(self.api_socket.get_order_book_subscription_string(instmt)))
-            Logger.info(self.__class__.__name__, 'trade string:{}'.format(self.api_socket.get_trades_subscription_string(instmt)))
             ws.send(self.api_socket.get_order_book_subscription_string(instmt))
             ws.send(self.api_socket.get_trades_subscription_string(instmt))
             instmt.set_subscribed(True)
@@ -203,22 +201,18 @@ class ExchGwHuoBi(ExchangeGateway):
             ts = message['ping']
             self.api_socket.send(json.dumps({'pong': ts}))
         elif 'ch' in message:
-            Logger.info(self.__class__.__name__, 'checking CH')
             if 'trade.detail' in message['ch']:
                 trades = self.api_socket.parse_trade(instmt, message['tick']['data'])
                 for trade in trades:
-                    Logger.info(self.__class__.__name__, 'before insert trade')
                     if trade.trade_id != instmt.get_exch_trade_id():
                         instmt.incr_trade_id()
                         instmt.set_exch_trade_id(trade.trade_id)
-                        Logger.info(self.__class__.__name__, 'insert trade')
                         self.insert_trade(instmt, trade)
             elif 'depth.step' in message['ch']:
                 instmt.set_prev_l2_depth(instmt.get_l2_depth().copy())
                 self.api_socket.parse_l2_depth(instmt, message['tick'])
                 if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
                     instmt.incr_order_book_id()
-                    Logger.info(self.__class__.__name__, 'insert orderbook')
                     self.insert_order_book(instmt)
             else:
                 Logger.error(self.__class__.__name__, 'Not Trade or Market')
@@ -236,7 +230,6 @@ class ExchGwHuoBi(ExchangeGateway):
         instmt.set_instmt_snapshot_table_name(self.get_instmt_snapshot_table_name(instmt.get_exchange_name(),
                                                                                   instmt.get_instmt_name()))
         self.init_instmt_snapshot_table(instmt)
-        Logger.info(self.__class__.__name__, 'instmt snapshot table: {}'.format(instmt.get_instmt_snapshot_table_name()))
         return [self.api_socket.connect(self.api_socket.get_link(),
                                         on_message_handler=partial(self.on_message_handler, instmt),
                                         on_open_handler=partial(self.on_open_handler, instmt),

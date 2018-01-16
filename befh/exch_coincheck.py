@@ -116,7 +116,7 @@ class ExchGwApiCoincheck(RESTfulApiSocket):
             #date_time = float(raw[cls.get_trades_timestamp_field_name()])
             #date_time = date_time / cls.get_timestamp_offset()
             date_time = raw[cls.get_trades_timestamp_field_name()]
-            trade.date_time = datetime.strptime(date_time, '%Y-%m-%dT%H:%M:%S.%fZ')
+            trade.date_time = datetime.strptime(date_time, '%Y-%m-%dT%H:%M:%S.%fZ').strftime('%Y%m%d %H:%M:%S.%f')
 
             # Trade side
             trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])

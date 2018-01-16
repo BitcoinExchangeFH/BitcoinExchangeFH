@@ -101,7 +101,7 @@ class ExchGwApiOkexWs(WebSocketApiClient):
                                  *list(map(lambda x: int(x), time.split(':'))),
                                  tzinfo = get_localzone()
             )
-            trade.date_time = date_time.astimezone(pytz.utc)
+            trade.date_time = date_time.astimezone(pytz.utc).strftime('%Y%m%d %H:%M:%S.%f')
             # Trade side
             # Buy = 0
             # Side = 1

@@ -112,9 +112,7 @@ class ExchGwApiWex(RESTfulApiSocket):
            cls.get_trade_volume_field_name() in keys:
             # Date time
             date_time = float(raw[cls.get_trades_timestamp_field_name()])
-            #date_time = date_time / cls.get_timestamp_offset()
-            trade.date_time = datetime.utcfromtimestamp(date_time)
-            Logger.info(cls.__class__.__name__, 'trade date time is :{}'.format(trade.date_time))
+            trade.date_time = datetime.utcfromtimestamp(date_time).strftime('%Y%m%d %H:%M:%S.%f')
             # Trade side
             #trade.trade_side = 1
             trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])

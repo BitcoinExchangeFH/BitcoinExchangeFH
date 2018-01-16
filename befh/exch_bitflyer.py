@@ -113,7 +113,7 @@ class ExchGwApiBitflyer(RESTfulApiSocket):
 
             # Date time
             date_time = raw[cls.get_trades_timestamp_field_name()]
-            trade.date_time = datetime.strptime(date_time, '%Y-%m-%dT%H:%M:%S.%f')
+            trade.date_time = datetime.strptime(date_time, '%Y-%m-%dT%H:%M:%S.%f').strftime('%Y%m%d %H:%M:%S.%f')
             
             # Trade side
             trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])

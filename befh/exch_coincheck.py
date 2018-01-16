@@ -75,7 +75,7 @@ class ExchGwApiCoincheck(RESTfulApiSocket):
            cls.get_asks_field_name() in keys:
 
             # No Date time information, has update id only
-            l2_depth.date_time = datetime.now().strftime("%Y%m%d %H:%M:%S.%f")
+            l2_depth.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
 
             # Bids
             bids = raw[cls.get_bids_field_name()]

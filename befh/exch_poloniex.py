@@ -216,18 +216,18 @@ class ExchGwPoloniex(ExchangeGateway):
                 if ret is None or len(ret) == 0:
                     time.sleep(1)
                     continue
+                for trade in ret:
+                    assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
+                    assert isinstance(instmt.get_exch_trade_id(), str), \
+                        "instmt.get_exch_trade_id()(%s) = %s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id())
+                    if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
+                        instmt.set_exch_trade_id(trade.trade_id)
+                        instmt.incr_trade_id()
+                        self.insert_trade(instmt, trade)
+
             except Exception as e:
-                Logger.error(self.__class__.__name__, "Error in trades: %s" % e)                
-                
-            for trade in ret:
-                assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
-                assert isinstance(instmt.get_exch_trade_id(), str), \
-                       "instmt.get_exch_trade_id()(%s) = %s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id())
-                if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
-                    instmt.set_exch_trade_id(trade.trade_id)
-                    instmt.incr_trade_id()
-                    self.insert_trade(instmt, trade)
-            
+                Logger.error(self.__class__.__name__, "Error in trades: %s" % e)
+
             # After the first time of getting the trade, indicate the instrument
             # is recovered
             if not instmt.get_recovered():
@@ -257,13 +257,13 @@ class ExchGwPoloniex(ExchangeGateway):
 if __name__ == '__main__':
     Logger.init_log()
     exchange_name = 'Poloniex'
-    instmt_name = 'BTCETH'
-    instmt_code = 'BTC_ETH'
+    instmt_name = 'BTC_NXT'
+    instmt_code = 'BTC_NXT'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)    
     db_client = SqlClientTemplate()
     exch = ExchGwPoloniex([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
     instmt.set_recovered(False)    
-    # exch.get_order_book_worker(instmt)
-    exch.get_trades_worker(instmt)
+    exch.get_order_book_worker(instmt)
+    #exch.get_trades_worker(instmt)

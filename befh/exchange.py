@@ -81,7 +81,7 @@ class ExchangeGateway:
                              ['int'] + Snapshot.types(False),
                              [0], is_ifnotexists=True)
 
-            if isinstance(db_client, MysqlClient):
+            if isinstance(db_client, (MysqlClient, SqliteClient)):
                 with self.lock:
                     r = db_client.execute('select max(id) from {};'.format(table_name))
                     db_client.conn.commit()

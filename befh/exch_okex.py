@@ -175,7 +175,6 @@ class ExchGwOkex(ExchangeGateway):
                         instmt.incr_order_book_id()
                         self.insert_order_book(instmt)
                 elif re.search(r'ok_sub_futureusd_(.*)_trade_this_week', item['channel']):
-                    Logger.info(self.__class__.__name__, 'Parsing trades...')
                     trades = self.api_socket.parse_trade(instmt, item['data'])
                     for trade in trades:
                         if trade.trade_id != instmt.get_exch_trade_id():
@@ -183,7 +182,7 @@ class ExchGwOkex(ExchangeGateway):
                             instmt.set_exch_trade_id(trade.trade_id)
                             self.insert_trade(instmt, trade)
                 else:
-                    Logger.error(self.__class__.__name__, 'Nothing to do!!')
+                    Logger.info(self.__class__.__name__, 'Nothing to do!!')
 
     def start(self, instmt):
         """

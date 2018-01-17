@@ -74,7 +74,7 @@ class ExchGwApiBitflyer(RESTfulApiSocket):
            cls.get_asks_field_name() in keys:
 
             # No Date time information, has update id only
-            l2_depth.date_time = datetime.now().strftime("%Y%m%d %H:%M:%S.%f")
+            l2_depth.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
 
             # Bids
             bids = raw[cls.get_bids_field_name()]
@@ -113,8 +113,11 @@ class ExchGwApiBitflyer(RESTfulApiSocket):
 
             # Date time
             date_time = raw[cls.get_trades_timestamp_field_name()]
-            trade.date_time = datetime.strptime(date_time, '%Y-%m-%dT%H:%M:%S.%f').strftime('%Y%m%d %H:%M:%S.%f')
-            
+            try:
+                trade.date_time = datetime.strptime(date_time, '%Y-%m-%dT%H:%M:%S.%f').strftime('%Y%m%d %H:%M:%S.%f')
+            except Exception as e:
+                trade.date_time = datetime.strptime(date_time, '%Y-%m-%dT%H:%M:%S').strftime('%Y%m%d %H:%M:%S.%f')
+
             # Trade side
             trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])
             # Trade id

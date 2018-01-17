@@ -217,7 +217,7 @@ class ExchGwHuoBi(ExchangeGateway):
             else:
                 Logger.error(self.__class__.__name__, 'Not Trade or Market')
         else:
-            Logger.error(self.__class__.__name__, 'Nothing to do!!')
+            Logger.info(self.__class__.__name__, 'Nothing to do!!')
 
     def start(self, instmt):
         """

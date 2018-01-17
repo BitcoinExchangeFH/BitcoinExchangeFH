@@ -1,6 +1,8 @@
 #!/bin/python
 from befh.zmq_client import ZmqClient
 from befh.file_client import FileClient
+from befh.mysql_client import MysqlClient
+from befh.sqlite_client import SqliteClient
 from befh.market_data import L2Depth, Trade, Snapshot
 from datetime import datetime
 from threading import Lock
@@ -39,7 +41,6 @@ class ExchangeGateway:
         """
         return ''
 
-    #@classmethod
     def get_instmt_snapshot_table_name(self, exchange, instmt_name):
         """
         Get instmt snapshot
@@ -69,8 +70,8 @@ class ExchangeGateway:
             db_client.create(cls.get_snapshot_table_name(),
                              Snapshot.columns(),
                              Snapshot.types(),
-                             [0,1])
-                             
+                             [0,1], is_ifnotexists=True)
+
     def init_instmt_snapshot_table(self, instmt):
         table_name = self.get_instmt_snapshot_table_name(instmt.get_exchange_name(),
                                                          instmt.get_instmt_name())
@@ -78,7 +79,19 @@ class ExchangeGateway:
             db_client.create(table_name,
                              ['id'] + Snapshot.columns(False),
                              ['int'] + Snapshot.types(False),
-                             [0])
+                             [0], is_ifnotexists=True)
+
+            if isinstance(db_client, MysqlClient):
+                with self.lock:
+                    r = db_client.execute('select max(id) from {};'.format(table_name))
+                    db_client.conn.commit()
+                    if r > 0:
+                        res = db_client.cursor.fetchone()
+                        max_id = res['max(id)']
+                        if max_id:
+                            self.exch_snapshot_id = max_id
+                        else:
+                            self.exch_snapshot_id = 0
 
     def start(self, instmt):
         """
@@ -148,7 +161,6 @@ class ExchangeGateway:
         date_time = datetime.strptime(trade.date_time, "%Y%m%d %H:%M:%S.%f").date()
         if date_time != self.date_time:
             self.date_time = date_time
-            self.exch_snapshot_id = 0
             self.init_instmt_snapshot_table(instmt)
 
         # Set the last trade to the current one

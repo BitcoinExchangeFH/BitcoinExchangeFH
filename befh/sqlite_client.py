@@ -33,7 +33,7 @@ class SqliteClient(SqlClient):
         Execute the sql command
         :param sql: SQL command
         """
-        self.cursor.execute(sql)
+        return self.cursor.execute(sql)
         
     def commit(self):
         """

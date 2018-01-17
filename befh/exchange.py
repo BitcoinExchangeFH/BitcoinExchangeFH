@@ -85,9 +85,9 @@ class ExchangeGateway:
                 with self.lock:
                     r = db_client.execute('select max(id) from {};'.format(table_name))
                     db_client.conn.commit()
-                    if r > 0:
+                    if r:
                         res = db_client.cursor.fetchone()
-                        max_id = res['max(id)']
+                        max_id = res['max(id)'] if isinstance(db_client, MysqlClient) else res[0]
                         if max_id:
                             self.exch_snapshot_id = max_id
                         else:

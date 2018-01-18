@@ -54,7 +54,7 @@ from befh.exch_aex import ExchGwAex
 
 from befh.kdbplus_client import KdbPlusClient
 from befh.mysql_client import MysqlClient
-from befh.sqlite_client import SqliteClient
+# from befh.sqlite_client import SqliteClient
 from befh.file_client import FileClient
 from befh.zmq_client import ZmqClient
 from befh.kafka_client import KafkaClient
@@ -102,11 +102,11 @@ def main():
 
     db_clients = []
     is_database_defined = False
-    if args.sqlite:
-        db_client = SqliteClient()
-        db_client.connect(path=args.sqlitepath)
-        db_clients.append(db_client)
-        is_database_defined = True
+    # if args.sqlite:
+    #     db_client = SqliteClient()
+    #     db_client.connect(path=args.sqlitepath)
+    #     db_clients.append(db_client)
+    #     is_database_defined = True
     if args.mysql:
         db_client = MysqlClient()
         mysqldest = args.mysqldest

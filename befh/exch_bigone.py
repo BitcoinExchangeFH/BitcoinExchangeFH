@@ -251,8 +251,8 @@ class ExchGwBigone(ExchangeGateway):
                                                                                   instmt.get_instmt_name()))
         self.init_instmt_snapshot_table(instmt)
         instmt.set_recovered(False)
-        t1 = Process(target=partial(self.get_order_book_worker, instmt))
-        t2 = Process(target=partial(self.get_trades_worker, instmt))
+        t1 = threading.Thread(target=partial(self.get_order_book_worker, instmt))
+        t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))
         t1.start()
         t2.start()
         return [t1, t2]

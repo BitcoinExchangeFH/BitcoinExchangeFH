@@ -55,7 +55,12 @@ Users can
 >>>>>>> replace process with threading.
 =======
 - Bibox (RESTful)
+<<<<<<< HEAD
 >>>>>>> add bibox
+=======
+- Okex (RESTful)
+- Aex (RESTful)
+>>>>>>> update
 
 Currently the support of other exchanges is still under development.
 

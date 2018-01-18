@@ -75,6 +75,9 @@ class ExchangeGateway:
     def init_instmt_snapshot_table(self, instmt):
         table_name = self.get_instmt_snapshot_table_name(instmt.get_exchange_name(),
                                                          instmt.get_instmt_name())
+
+        instmt.set_instmt_snapshot_table_name(table_name)
+
         for db_client in self.db_clients:
             db_client.create(table_name,
                              ['id'] + Snapshot.columns(False),

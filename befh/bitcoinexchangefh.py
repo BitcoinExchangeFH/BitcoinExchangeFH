@@ -44,7 +44,6 @@ from befh.exch_gatecoin import ExchGwGatecoin
 from befh.exch_quoine import ExchGwQuoine
 from befh.exch_poloniex import ExchGwPoloniex
 from befh.exch_bittrex import ExchGwBittrex
-from befh.exch_yunbi import ExchGwYunbi
 from befh.exch_liqui import ExchGwLiqui
 from befh.exch_binance import ExchGwBinance
 from befh.exch_cryptopia import ExchGwCryptopia
@@ -192,7 +191,6 @@ def main():
     exch_gws.append(ExchGwQuoine(db_clients))
     exch_gws.append(ExchGwPoloniex(db_clients))
     exch_gws.append(ExchGwBittrex(db_clients))
-    exch_gws.append(ExchGwYunbi(db_clients))
     exch_gws.append(ExchGwLiqui(db_clients))
     exch_gws.append(ExchGwBinance(db_clients))
     exch_gws.append(ExchGwCryptopia(db_clients))

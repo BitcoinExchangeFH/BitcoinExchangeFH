@@ -114,7 +114,7 @@ class ExchGwApiBigone(RESTfulApiSocket):
            cls.get_trade_volume_field_name() in keys:
         
             # Date time
-            trade.date_time = datetime.utcnow().utstrftime("%Y%m%d %H:%M:%S.%f")      
+            trade.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")      
             
             # Trade side
             trade.trade_side = Trade.parse_side(str(raw[cls.get_trade_side_field_name()]))

@@ -204,7 +204,9 @@ class ExchGwBigone(ExchangeGateway):
                     self.insert_order_book(instmt)
             except Exception as e:
                 Logger.error(self.__class__.__name__, "Error in order book: %s" % e)
-            time.sleep(1)
+                time.sleep(5)
+
+            time.sleep(3)
 
     def get_trades_worker(self, instmt):
         """
@@ -215,11 +217,11 @@ class ExchGwBigone(ExchangeGateway):
             try:
                 ret = self.api_socket.get_trades(instmt)
                 if ret is None or len(ret) == 0:
-                    time.sleep(1)
+                    time.sleep(5)
                     continue
             except Exception as e:
                 Logger.error(self.__class__.__name__, "Error in trades: %s" % e)                
-                time.sleep(1)
+                time.sleep(5)
                 continue
             
             # print(ret)
@@ -237,7 +239,7 @@ class ExchGwBigone(ExchangeGateway):
             if not instmt.get_recovered():
                 instmt.set_recovered(True)
 
-            time.sleep(1)
+            time.sleep(3)
 
     def start(self, instmt):
         """

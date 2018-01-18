@@ -6,7 +6,7 @@ from befh.instrument import Instrument
 from befh.sql_client_template import SqlClientTemplate
 from functools import partial
 from datetime import datetime
-from multiprocessing import Process
+import threading
 import time
 
 

@@ -29,8 +29,8 @@ class RESTfulApiSocket(ApiSocket):
         :return JSON object
         """
         # try:
-        response = requests.request("GET", url, timeout=RESTfulApiSocket.DEFAULT_URLOPEN_TIMEOUT)
-        res = response.json()
+        res = requests.request("GET", url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=RESTfulApiSocket.DEFAULT_URLOPEN_TIMEOUT)  
+        res = res.json()
         return res
         # except expression as identifier:
         #     return {}

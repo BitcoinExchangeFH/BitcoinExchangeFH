@@ -50,6 +50,7 @@ from befh.exch_binance import ExchGwBinance
 from befh.exch_cryptopia import ExchGwCryptopia
 from befh.exch_kkex import ExchGwKkex
 from befh.exch_bibox import ExchGwBibox
+from befh.exch_aex import ExchGwAex
 
 from befh.kdbplus_client import KdbPlusClient
 from befh.mysql_client import MysqlClient
@@ -200,6 +201,7 @@ def main():
 =======
     exch_gws.append(ExchGwKkex(db_clients))
     exch_gws.append(ExchGwBibox(db_clients))
+    exch_gws.append(ExchGwAex(db_clients))
 
 >>>>>>> add kkex.
     threads = []

@@ -179,7 +179,7 @@ class ExchGwOkex(ExchangeGateway):
         """
         for message in messages:
             keys = message.keys()
-            print(keys)
+            # print(keys)
             if 'channel' in keys:
                 if 'data' in keys:
                     if message['channel'] == instmt.get_order_book_channel_id():

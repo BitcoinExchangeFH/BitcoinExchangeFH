@@ -222,7 +222,7 @@ class ExchGwBigone(ExchangeGateway):
                 time.sleep(1)
                 continue
             
-            print(ret)
+            # print(ret)
             for trade in ret:
                 assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
                 assert isinstance(instmt.get_exch_trade_id(), str), \

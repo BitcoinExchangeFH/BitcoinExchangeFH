@@ -51,6 +51,7 @@ from befh.exch_kkex import ExchGwKkex
 from befh.exch_bibox import ExchGwBibox
 from befh.exch_aex import ExchGwAex
 from befh.exch_bigone import ExchGwBigone
+from befh.exch_gateio import ExchGwGateio
 
 from befh.kdbplus_client import KdbPlusClient
 from befh.mysql_client import MysqlClient
@@ -202,6 +203,7 @@ def main():
     exch_gws.append(ExchGwBibox(db_clients))
     exch_gws.append(ExchGwAex(db_clients))
     exch_gws.append(ExchGwBigone(db_clients))
+    exch_gws.append(ExchGwGateio(db_clients))
 
 >>>>>>> add kkex.
     threads = []

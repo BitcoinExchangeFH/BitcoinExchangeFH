@@ -256,10 +256,11 @@ class ExchGwGateio(ExchangeGateway):
         self.init_instmt_snapshot_table(instmt)
         instmt.set_recovered(False)
         t1 = threading.Thread(target=partial(self.get_order_book_worker, instmt))
-        t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))
+        # t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))
         t1.start()
-        t2.start()
-        return [t1, t2]
+        # t2.start()
+        return [t1]
+        # return [t1, t2]
         
         
 if __name__ == '__main__':

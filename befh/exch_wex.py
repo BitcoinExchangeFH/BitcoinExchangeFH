@@ -10,7 +10,7 @@ import threading
 import time
 
 
-class ExchGwApiPoloniex(RESTfulApiSocket):
+class ExchGwApiWex(RESTfulApiSocket):
     """
     Exchange gateway RESTfulApi
     """
@@ -18,12 +18,16 @@ class ExchGwApiPoloniex(RESTfulApiSocket):
         RESTfulApiSocket.__init__(self)
         
     @classmethod
-    def get_trades_timestamp_field_name(cls):
-        return 'date'
+    def get_timestamp_offset(cls):
+        return 1000
+        
+    # @classmethod
+    # def get_order_book_timestamp_field_name(cls):
+    #     return 'date'
         
     @classmethod
-    def get_trades_timestamp_format(cls):
-        return '%Y-%m-%d %H:%M:%S'
+    def get_trades_timestamp_field_name(cls):
+        return 'timestamp'
     
     @classmethod
     def get_bids_field_name(cls):
@@ -39,29 +43,24 @@ class ExchGwApiPoloniex(RESTfulApiSocket):
         
     @classmethod
     def get_trade_id_field_name(cls):
-        return 'tradeID'
+        return 'tid'
         
     @classmethod
     def get_trade_price_field_name(cls):
-        return 'rate'        
+        return 'price'
         
     @classmethod
     def get_trade_volume_field_name(cls):
-        return 'amount'        
+        return 'amount'
         
     @classmethod
     def get_order_book_link(cls, instmt):
-        return "https://poloniex.com/public?command=returnOrderBook&currencyPair=%s&depth=5" % instmt.get_instmt_code()
+        return "https://wex.nz/api/3/depth/{}".format(instmt.get_instmt_code())
 
     @classmethod
     def get_trades_link(cls, instmt):
-        if instmt.get_last_trade() is not None:
-            return "https://poloniex.com/public?command=returnTradeHistory&currencyPair=%s&start=%d" % \
-                (instmt.get_instmt_code(), int(instmt.get_last_trade().update_date_time.timestamp()) - 1)
-        else:
-            return "https://poloniex.com/public?command=returnTradeHistory&currencyPair=%s" % \
-                (instmt.get_instmt_code())         
-                
+        return "https://wex.nz/api/3/trades/{}".format(instmt.get_instmt_code())
+
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
@@ -73,17 +72,17 @@ class ExchGwApiPoloniex(RESTfulApiSocket):
         keys = list(raw.keys())
         if cls.get_bids_field_name() in keys and \
            cls.get_asks_field_name() in keys:
-            
-            # Date time
+
+            # No Date time information, has update id only
             l2_depth.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
-            
+
             # Bids
             bids = raw[cls.get_bids_field_name()]
             bids = sorted(bids, key=lambda x: x[0], reverse=True)
             for i in range(0, 5):
                 l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
                 l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
-                
+
             # Asks
             asks = raw[cls.get_asks_field_name()]
             asks = sorted(asks, key=lambda x: x[0])
@@ -94,7 +93,7 @@ class ExchGwApiPoloniex(RESTfulApiSocket):
             raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
                  raw))
-        
+
         return l2_depth
 
     @classmethod
@@ -106,32 +105,27 @@ class ExchGwApiPoloniex(RESTfulApiSocket):
         """
         trade = Trade()
         keys = list(raw.keys())
-        
+
         if cls.get_trades_timestamp_field_name() in keys and \
            cls.get_trade_id_field_name() in keys and \
            cls.get_trade_price_field_name() in keys and \
            cls.get_trade_volume_field_name() in keys:
-        
             # Date time
-            date_time = raw[cls.get_trades_timestamp_field_name()]
-            date_time = datetime.strptime(date_time, cls.get_trades_timestamp_format())
-            trade.date_time = date_time.strftime("%Y%m%d %H:%M:%S.%f")      
-            
+            date_time = float(raw[cls.get_trades_timestamp_field_name()])
+            trade.date_time = datetime.utcfromtimestamp(date_time).strftime('%Y%m%d %H:%M:%S.%f')
             # Trade side
-            trade.trade_side = 1 if raw[cls.get_trade_side_field_name()] == 'buy' else 2
-                
+            #trade.trade_side = 1
+            trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])
             # Trade id
             trade.trade_id = str(raw[cls.get_trade_id_field_name()])
-            
             # Trade price
             trade.trade_price = float(str(raw[cls.get_trade_price_field_name()]))
-            
             # Trade volume
             trade.trade_volume = float(str(raw[cls.get_trade_volume_field_name()]))
         else:
             raise Exception('Does not contain trade keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
-                 raw))        
+                 raw))
 
         return trade
 
@@ -142,10 +136,11 @@ class ExchGwApiPoloniex(RESTfulApiSocket):
         :param instmt: Instrument
         :return: Object L2Depth
         """
-        res = cls.request(cls.get_order_book_link(instmt))
+        # If verify cert, got <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:749)>
+        res = cls.request(cls.get_order_book_link(instmt), verify_cert=False)
         if len(res) > 0:
             return cls.parse_l2_depth(instmt=instmt,
-                                       raw=res)
+                                       raw=res[instmt.get_instmt_code()])
         else:
             return None
 
@@ -158,27 +153,30 @@ class ExchGwApiPoloniex(RESTfulApiSocket):
         :return: List of trades
         """
         link = cls.get_trades_link(instmt)
-        res = cls.request(link)
+        print(link)
+        # If verify cert, got <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:749)>
+        res = cls.request(link, verify_cert=False)
         trades = []
-        if len(res) > 0:
-            for i in range(len(res)-1, -1, -1):
+        if instmt.get_instmt_code() in res and \
+           len(res[instmt.get_instmt_code()]) > 0:
+            for t in res[instmt.get_instmt_code()]:
                 trade = cls.parse_trade(instmt=instmt,
-                                         raw=res[i])
+                                         raw=t)
                 trades.append(trade)
 
         return trades
 
 
-class ExchGwPoloniex(ExchangeGateway):
+class ExchGwWex(ExchangeGateway):
     """
-    Exchange gateway Poloniex
+    Exchange gateway
     """
     def __init__(self, db_clients):
         """
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwApiPoloniex(), db_clients)
+        ExchangeGateway.__init__(self, ExchGwApiWex(), db_clients)
 
     @classmethod
     def get_exchange_name(cls):
@@ -186,7 +184,7 @@ class ExchGwPoloniex(ExchangeGateway):
         Get exchange name
         :return: Exchange name string
         """
-        return 'Poloniex'
+        return 'Wex'
 
     def get_order_book_worker(self, instmt):
         """
@@ -207,7 +205,7 @@ class ExchGwPoloniex(ExchangeGateway):
 
     def get_trades_worker(self, instmt):
         """
-        Get order book worker thread
+        Get trades worker thread
         :param instmt: Instrument name
         """
         while True:
@@ -216,17 +214,19 @@ class ExchGwPoloniex(ExchangeGateway):
                 if ret is None or len(ret) == 0:
                     time.sleep(1)
                     continue
-                for trade in ret:
-                    assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
-                    assert isinstance(instmt.get_exch_trade_id(), str), \
-                        "instmt.get_exch_trade_id()(%s) = %s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id())
-                    if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
-                        instmt.set_exch_trade_id(trade.trade_id)
-                        instmt.incr_trade_id()
-                        self.insert_trade(instmt, trade)
-
             except Exception as e:
                 Logger.error(self.__class__.__name__, "Error in trades: %s" % e)
+                time.sleep(1)
+                continue
+
+            for trade in ret:
+                # assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
+                # assert isinstance(instmt.get_exch_trade_id(), str), \
+                #        "instmt.get_exch_trade_id()(%s) = %s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id())
+                if trade.trade_id != instmt.get_exch_trade_id():
+                    instmt.set_exch_trade_id(trade.trade_id)
+                    instmt.incr_trade_id()
+                    self.insert_trade(instmt, trade)
 
             # After the first time of getting the trade, indicate the instrument
             # is recovered
@@ -252,18 +252,21 @@ class ExchGwPoloniex(ExchangeGateway):
         t1.start()
         t2.start()
         return [t1, t2]
-        
-        
+
+
 if __name__ == '__main__':
     Logger.init_log()
-    exchange_name = 'Poloniex'
-    instmt_name = 'BTC_NXT'
-    instmt_code = 'BTC_NXT'
-    instmt = Instrument(exchange_name, instmt_name, instmt_code)    
+    exchange_name = 'Wex'
+    instmt_name = 'BTC_USD'
+    instmt_code = 'btc_usd'
+    instmt = Instrument(exchange_name, instmt_name, instmt_code)
     db_client = SqlClientTemplate()
-    exch = ExchGwPoloniex([db_client])
+    exch = ExchGwWex([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
-    instmt.set_recovered(False)    
-    exch.get_order_book_worker(instmt)
+    instmt.set_recovered(False)
+    #exch.get_order_book_worker(instmt)
     #exch.get_trades_worker(instmt)
+    threads = exch.start(instmt)
+    for thread in threads:
+        thread.join()

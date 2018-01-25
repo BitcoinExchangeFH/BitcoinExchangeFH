@@ -236,13 +236,13 @@ class Snapshot(MarketDataBase):
         Return static column types
         """
         if is_name:
-            return ['varchar(20)', 'varchar(20)', 'decimal(10,5)', 'decimal(20,8)'] + \
-                   ['decimal(10,5)'] * 10 + \
+            return ['varchar(20)', 'varchar(20)', 'decimal(20,8)', 'decimal(20,8)'] + \
+                   ['decimal(20,8)'] * 10 + \
                    ['decimal(20,8)'] * 10 + \
                    ['varchar(25)', 'varchar(25)', 'int']
         else:
-            return ['decimal(10,5)', 'decimal(20,8)'] + \
-                   ['decimal(10,5)'] * 10 + \
+            return ['decimal(20,8)', 'decimal(20,8)'] + \
+                   ['decimal(20,8)'] * 10 + \
                    ['decimal(20,8)'] * 10 + \
                    ['varchar(25)', 'varchar(25)', 'int']
 

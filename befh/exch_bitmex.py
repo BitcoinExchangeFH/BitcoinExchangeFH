@@ -268,8 +268,8 @@ class ExchGwBitmex(ExchangeGateway):
 
 if __name__ == '__main__':
     exchange_name = 'BitMEX'
-    instmt_name = 'XBTU17'
-    instmt_code = 'XBTU17'
+    instmt_name = 'XBTUSD'
+    instmt_code = 'XBTUSD'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)
     db_client = SqlClientTemplate()
     Logger.init_log()

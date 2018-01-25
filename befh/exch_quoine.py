@@ -17,39 +17,39 @@ class ExchGwApiQuoine(RESTfulApiSocket):
     """
     def __init__(self):
         RESTfulApiSocket.__init__(self)
-        
+
     @classmethod
     def get_timestamp_offset(cls):
         return 1
-        
+
     @classmethod
     def get_trades_timestamp_field_name(cls):
         return 'created_at'
-    
+
     @classmethod
     def get_bids_field_name(cls):
         return 'buy_price_levels'
-        
+
     @classmethod
     def get_asks_field_name(cls):
         return 'sell_price_levels'
-        
+
     @classmethod
     def get_trade_side_field_name(cls):
         return 'taker_side'
-        
+
     @classmethod
     def get_trade_id_field_name(cls):
         return 'id'
-        
+
     @classmethod
     def get_trade_price_field_name(cls):
-        return 'price'        
-        
+        return 'price'
+
     @classmethod
     def get_trade_volume_field_name(cls):
         return 'quantity'
-        
+
     @classmethod
     def get_order_book_link(cls, instmt):
         return "https://api.quoine.com/products/%s/price_levels" % instmt.get_instmt_code()
@@ -58,7 +58,7 @@ class ExchGwApiQuoine(RESTfulApiSocket):
     def get_trades_link(cls, instmt, page=1):
             return "https://api.quoine.com/executions?product_id=%s&page=%d" % \
                    (instmt.get_instmt_code(), page)
-                
+
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
@@ -70,28 +70,28 @@ class ExchGwApiQuoine(RESTfulApiSocket):
         keys = list(raw.keys())
         if cls.get_bids_field_name() in keys and \
            cls.get_asks_field_name() in keys:
-            
+
             # Date time
             l2_depth.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
-            
+
             # Bids
             bids = raw[cls.get_bids_field_name()]
             bids = sorted(bids, key=lambda x: x[0], reverse=True)
             for i in range(0, 5):
-                l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
-                l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
-                
+                l2_depth.bids[i].price = float(bids[i][0]) if not isinstance(bids[i][0], float) else bids[i][0]
+                l2_depth.bids[i].volume = float(bids[i][1]) if not isinstance(bids[i][1], float) else bids[i][1]
+
             # Asks
             asks = raw[cls.get_asks_field_name()]
             asks = sorted(asks, key=lambda x: x[0])
             for i in range(0, 5):
-                l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
-                l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]            
+                l2_depth.asks[i].price = float(asks[i][0]) if not isinstance(asks[i][0], float) else asks[i][0]
+                l2_depth.asks[i].volume = float(asks[i][1]) if not isinstance(asks[i][1], float) else asks[i][1]
         else:
             raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
                  raw))
-        
+
         return l2_depth
 
     @classmethod
@@ -103,33 +103,33 @@ class ExchGwApiQuoine(RESTfulApiSocket):
         """
         trade = Trade()
         keys = list(raw.keys())
-        
+
         if cls.get_trades_timestamp_field_name() in keys and \
            cls.get_trade_id_field_name() in keys and \
            cls.get_trade_price_field_name() in keys and \
            cls.get_trade_volume_field_name() in keys and \
            cls.get_trade_side_field_name() in keys:
-        
+
             # Date time
             date_time = float(raw[cls.get_trades_timestamp_field_name()])
             date_time = date_time / cls.get_timestamp_offset()
-            trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")      
-            
+            trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
+
             # Trade side
             trade.trade_side = 1
-                
+
             # Trade id
             trade.trade_id = str(raw[cls.get_trade_id_field_name()])
-            
+
             # Trade price
             trade.trade_price = float(str(raw[cls.get_trade_price_field_name()]))
-            
+
             # Trade volume
             trade.trade_volume = float(str(raw[cls.get_trade_volume_field_name()]))
         else:
             raise Exception('Does not contain trade keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
-                 raw))        
+                 raw))
 
         return trade
 
@@ -284,14 +284,14 @@ class ExchGwQuoine(ExchangeGateway):
         t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))
         t2.start()
         return [t1, t2]
-        
-        
+
+
 if __name__ == '__main__':
     Logger.init_log()
     exchange_name = 'Quoine'
     instmt_name = 'BTCUSD'
     instmt_code = '1'
-    instmt = Instrument(exchange_name, instmt_name, instmt_code)    
+    instmt = Instrument(exchange_name, instmt_name, instmt_code)
     db_client = SqlClientTemplate()
     exch = ExchGwQuoine([db_client])
     instmt.set_l2_depth(L2Depth(5))
@@ -300,6 +300,6 @@ if __name__ == '__main__':
                                                                     instmt.get_instmt_name()))
     instmt.set_trades_table_name(exch.get_trades_table_name(instmt.get_exchange_name(),
                                                             instmt.get_instmt_name()))
-    instmt.set_recovered(False)    
+    instmt.set_recovered(False)
     # exch.get_order_book_worker(instmt)
     exch.get_trades_worker(instmt)

@@ -9,18 +9,16 @@ from threading import Lock
 
 class ExchangeGateway:
     ############################################################################
-    # Static variable 
+    # Static variable
     # Applied on all gateways whether to record the timestamp in local machine,
     # rather than exchange timestamp given by the API
     is_local_timestamp = False
     ############################################################################
-    
+
     """
     Exchange gateway
     """
-    def __init__(self, 
-                 api_socket, 
-                 db_clients=[]):
+    def __init__(self, api_socket, db_clients=[]):
         """
         Constructor
         :param exchange_name: Exchange name
@@ -118,7 +116,7 @@ class ExchangeGateway:
         # If local timestamp indicator is on, assign the local timestamp again
         if self.is_local_timestamp:
             instmt.get_l2_depth().date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
-        
+
         # Update the snapshot
         if instmt.get_l2_depth() is not None:
             id = self.get_instmt_snapshot_id(instmt)
@@ -156,7 +154,7 @@ class ExchangeGateway:
         # If the instrument is not recovered, skip inserting into the table
         if not instmt.get_recovered():
             return
-        
+
         # If local timestamp indicator is on, assign the local timestamp again
         if self.is_local_timestamp:
             trade.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")

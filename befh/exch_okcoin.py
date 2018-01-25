@@ -19,19 +19,19 @@ class ExchGwOkCoinWs(WebSocketApiClient):
         Constructor
         """
         WebSocketApiClient.__init__(self, 'ExchGwOkCoin')
-        
+
     @classmethod
     def get_order_book_timestamp_field_name(cls):
         return 'timestamp'
-    
+
     @classmethod
     def get_bids_field_name(cls):
         return 'bids'
-        
+
     @classmethod
     def get_asks_field_name(cls):
         return 'asks'
-        
+
     @classmethod
     def get_link(cls):
         return 'wss://real.okcoin.com:10440/websocket/okcoinapi'
@@ -56,28 +56,28 @@ class ExchGwOkCoinWs(WebSocketApiClient):
         if cls.get_order_book_timestamp_field_name() in keys and \
            cls.get_bids_field_name() in keys and \
            cls.get_asks_field_name() in keys:
-            
+
             # Date time
             timestamp = float(raw[cls.get_order_book_timestamp_field_name()])/1000.0
             l2_depth.date_time = datetime.utcfromtimestamp(timestamp).strftime("%Y%m%d %H:%M:%S.%f")
-            
+
             # Bids
             bids = raw[cls.get_bids_field_name()]
             bids = sorted(bids, key=lambda x: x[0], reverse=True)
             for i in range(0, len(bids)):
-                l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
-                l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
-                
+                l2_depth.bids[i].price = float(bids[i][0]) if not isinstance(bids[i][0], float) else bids[i][0]
+                l2_depth.bids[i].volume = float(bids[i][1]) if not isinstance(bids[i][1], float) else bids[i][1]
+
             # Asks
             asks = raw[cls.get_asks_field_name()]
             asks = sorted(asks, key=lambda x: x[0])
             for i in range(0, len(asks)):
-                l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
-                l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]            
+                l2_depth.asks[i].price = float(asks[i][0]) if not isinstance(asks[i][0], float) else asks[i][0]
+                l2_depth.asks[i].volume = float(asks[i][1]) if not isinstance(asks[i][1], float) else asks[i][1]
         else:
             raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
-                 raw))        
+                 raw))
 
         return l2_depth
 
@@ -94,7 +94,7 @@ class ExchGwOkCoinWs(WebSocketApiClient):
         trade_volume = float(raw[2])
         timestamp = raw[3]
         trade_side = raw[4]
-        
+
         trade.trade_id = trade_id + timestamp
         trade.trade_price = trade_price
         trade.trade_volume = trade_volume

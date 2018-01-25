@@ -6,7 +6,7 @@ class ApiSocket:
     """
     def __init__(self):
         pass
-    
+
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
@@ -24,7 +24,7 @@ class ApiSocket:
         :return:
         """
         return None
-    
+
     def get_order_book(self, instmt):
         """
         Get order book

@@ -16,43 +16,43 @@ class ExchGwApiGatecoin(RESTfulApiSocket):
     """
     def __init__(self):
         RESTfulApiSocket.__init__(self)
-        
+
     @classmethod
     def get_trade_timestamp_field_name(cls):
         return 'transactionTime'
-    
+
     @classmethod
     def get_bids_field_name(cls):
         return 'bids'
-        
+
     @classmethod
     def get_asks_field_name(cls):
         return 'asks'
-        
+
     @classmethod
     def get_order_book_price_field_name(cls):
         return 'price'
-        
+
     @classmethod
     def get_order_book_volume_field_name(cls):
         return 'volume'
-        
+
     @classmethod
     def get_trade_side_field_name(cls):
         return 'way'
-        
+
     @classmethod
     def get_trade_id_field_name(cls):
         return 'transactionId'
-        
+
     @classmethod
     def get_trade_price_field_name(cls):
-        return 'price'        
-        
+        return 'price'
+
     @classmethod
     def get_trade_volume_field_name(cls):
-        return 'quantity'        
-        
+        return 'quantity'
+
     @classmethod
     def get_order_book_link(cls, instmt):
         return "https://api.gatecoin.com/Public/MarketDepth/%s" % instmt.get_instmt_code()
@@ -64,8 +64,8 @@ class ExchGwApiGatecoin(RESTfulApiSocket):
                 (instmt.get_instmt_code(), instmt.get_exch_trade_id())
         else:
             return "https://api.gatecoin.com/Public/Transactions/%s" % \
-                (instmt.get_instmt_code())         
-                
+                (instmt.get_instmt_code())
+
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
@@ -76,7 +76,7 @@ class ExchGwApiGatecoin(RESTfulApiSocket):
         keys = list(raw.keys())
         if cls.get_bids_field_name() in keys and \
           cls.get_asks_field_name() in keys:
-            
+
             l2_depth = L2Depth()
             # Bids
             bids = raw[cls.get_bids_field_name()]
@@ -84,36 +84,36 @@ class ExchGwApiGatecoin(RESTfulApiSocket):
             for bid in bids:
                 price = bid[cls.get_order_book_price_field_name()]
                 volume = bid[cls.get_order_book_volume_field_name()]
-                
+
                 if bid_level == -1 or l2_depth.bids[bid_level].price != price:
                     bid_level += 1
-                    
+
                     if bid_level < 5:
                         l2_depth.bids[bid_level].price = float(price)
                     else:
                         break
-                
+
                 l2_depth.bids[bid_level].volume += float(volume)
-            
+
             # Asks
             asks = raw[cls.get_asks_field_name()]
             ask_level = -1
             for ask in asks:
                 price = ask[cls.get_order_book_price_field_name()]
                 volume = ask[cls.get_order_book_volume_field_name()]
-                
+
                 if ask_level == -1 or l2_depth.asks[ask_level].price != price:
                     ask_level += 1
-                    
+
                     if ask_level < 5:
                         l2_depth.asks[ask_level].price = float(price)
                     else:
                         break
-                
+
                 l2_depth.asks[ask_level].volume += float(volume)
-            
+
             return l2_depth
-            
+
         else:
             raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
@@ -128,31 +128,31 @@ class ExchGwApiGatecoin(RESTfulApiSocket):
         """
         trade = Trade()
         keys = list(raw.keys())
-        
+
         if cls.get_trade_timestamp_field_name() in keys and \
           cls.get_trade_id_field_name() in keys and \
           cls.get_trade_price_field_name() in keys and \
           cls.get_trade_volume_field_name() in keys:
-        
+
             # Date time
             date_time = float(raw[cls.get_trade_timestamp_field_name()])
-            trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")      
-            
+            trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
+
             # Trade side
             trade.trade_side = 1
-                
+
             # Trade id
             trade.trade_id = str(raw[cls.get_trade_id_field_name()])
-            
+
             # Trade price
             trade.trade_price = float(str(raw[cls.get_trade_price_field_name()]))
-            
+
             # Trade volume
             trade.trade_volume = float(str(raw[cls.get_trade_volume_field_name()]))
         else:
             raise Exception('Does not contain trade keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
-                 raw))        
+                 raw))
 
         return trade
 
@@ -240,8 +240,8 @@ class ExchGwGatecoin(ExchangeGateway):
                     time.sleep(1)
                     continue
             except Exception as e:
-                Logger.error(self.__class__.__name__, "Error in trades: %s" % e)                
-                
+                Logger.error(self.__class__.__name__, "Error in trades: %s" % e)
+
             for trade in ret:
                 assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
                 assert isinstance(instmt.get_exch_trade_id(), str), \
@@ -250,7 +250,7 @@ class ExchGwGatecoin(ExchangeGateway):
                     instmt.set_exch_trade_id(trade.trade_id)
                     instmt.incr_trade_id()
                     self.insert_trade(instmt, trade)
-            
+
             # After the first time of getting the trade, indicate the instrument
             # is recovered
             if not instmt.get_recovered():
@@ -275,14 +275,14 @@ class ExchGwGatecoin(ExchangeGateway):
         t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))
         t2.start()
         return [t1, t2]
-        
-        
+
+
 if __name__ == '__main__':
     Logger.init_log()
     exchange_name = 'Gatecoin'
     instmt_name = 'BTCHKD'
     instmt_code = 'BTCHKD'
-    instmt = Instrument(exchange_name, instmt_name, instmt_code)    
+    instmt = Instrument(exchange_name, instmt_name, instmt_code)
     db_client = SqlClientTemplate()
     exch = ExchGwGatecoin([db_client])
     instmt.set_l2_depth(L2Depth(5))
@@ -291,6 +291,6 @@ if __name__ == '__main__':
                                                                     instmt.get_instmt_name()))
     instmt.set_trades_table_name(exch.get_trades_table_name(instmt.get_exchange_name(),
                                                             instmt.get_instmt_name()))
-    instmt.set_recovered(False)    
+    instmt.set_recovered(False)
     # exch.get_order_book_worker(instmt)
     exch.get_trades_worker(instmt)

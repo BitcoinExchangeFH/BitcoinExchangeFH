@@ -19,7 +19,7 @@ class ExchGwBitfinexWs(WebSocketApiClient):
         Constructor
         """
         WebSocketApiClient.__init__(self, 'ExchGwBitfinex')
-            
+
     @classmethod
     def get_link(cls):
         return 'wss://api2.bitfinex.com:3000/ws'
@@ -146,7 +146,7 @@ class ExchGwBitfinexWs(WebSocketApiClient):
         timestamp = raw[1]
         trade_price = raw[2]
         trade_volume = raw[3]
-        
+
         trade.date_time = datetime.utcfromtimestamp(timestamp).strftime("%Y%m%d %H:%M:%S.%f")
         trade.trade_side = Trade.Side.BUY if trade_volume > 0 else Trade.Side.SELL
         trade.trade_volume = abs(trade_volume)
@@ -235,7 +235,7 @@ class ExchGwBitfinex(ExchangeGateway):
 
             elif message[0] == instmt.get_trades_channel_id():
                 # No recovery trade
-                
+
                 # if isinstance(message[1], list):
                 #     raw_trades = message[1]
                 #     raw_trades.sort(key=lambda x:x[0])
@@ -249,7 +249,7 @@ class ExchGwBitfinex(ExchangeGateway):
                 #         except Exception as e:
                 #             Logger.info('test', "trade.trade_id(%s):%s" % (type(trade.trade_id), trade.trade_id))
                 #             Logger.info('test', "instmt.get_exch_trade_id()(%s):%s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id()))
-                #             raise e                            
+                #             raise e
 
                 if message[1] == 'tu':
                     trade = self.api_socket.parse_trade(instmt, message[3:])

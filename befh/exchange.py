@@ -1,17 +1,18 @@
 #!/bin/python
 from befh.zmq_client import ZmqClient
 from befh.file_client import FileClient
+from befh.mysql_client import MysqlClient
+from befh.sqlite_client import SqliteClient
 from befh.market_data import L2Depth, Trade, Snapshot
 from datetime import datetime
 from threading import Lock
-
 
 class ExchangeGateway:
     ############################################################################
     # Static variable 
     # Applied on all gateways whether to record the timestamp in local machine,
     # rather than exchange timestamp given by the API
-    is_local_timestamp = True
+    is_local_timestamp = False
     ############################################################################
     
     """
@@ -30,6 +31,7 @@ class ExchangeGateway:
         self.api_socket = api_socket
         self.lock = Lock()
         self.exch_snapshot_id = 0
+        self.date_time = datetime.utcnow().date()
 
     @classmethod
     def get_exchange_name(cls):
@@ -39,16 +41,17 @@ class ExchangeGateway:
         """
         return ''
 
-    @classmethod
-    def get_instmt_snapshot_table_name(cls, exchange, instmt_name):
+    def get_instmt_snapshot_table_name(self, exchange, instmt_name):
         """
         Get instmt snapshot
         :param exchange: Exchange name
         :param instmt_name: Instrument name
         """
+        #return 'exch_' + exchange.lower() + '_' + instmt_name.lower() + \
+        #       '_snapshot_' + datetime.utcnow().strftime("%Y%m%d")
         return 'exch_' + exchange.lower() + '_' + instmt_name.lower() + \
-               '_snapshot_' + datetime.utcnow().strftime("%Y%m%d")
-        
+               '_snapshot_' + self.date_time.strftime("%Y%m%d")
+
     @classmethod
     def get_snapshot_table_name(cls):
         return 'exchanges_snapshot'
@@ -67,16 +70,31 @@ class ExchangeGateway:
             db_client.create(cls.get_snapshot_table_name(),
                              Snapshot.columns(),
                              Snapshot.types(),
-                             [0,1])
-                             
+                             [0,1], is_ifnotexists=True)
+
     def init_instmt_snapshot_table(self, instmt):
         table_name = self.get_instmt_snapshot_table_name(instmt.get_exchange_name(),
                                                          instmt.get_instmt_name())
+
+        instmt.set_instmt_snapshot_table_name(table_name)
+
         for db_client in self.db_clients:
             db_client.create(table_name,
                              ['id'] + Snapshot.columns(False),
                              ['int'] + Snapshot.types(False),
-                             [0])
+                             [0], is_ifnotexists=True)
+
+            if isinstance(db_client, (MysqlClient, SqliteClient)):
+                with self.lock:
+                    r = db_client.execute('select max(id) from {};'.format(table_name))
+                    db_client.conn.commit()
+                    if r:
+                        res = db_client.cursor.fetchone()
+                        max_id = res['max(id)'] if isinstance(db_client, MysqlClient) else res[0]
+                        if max_id:
+                            self.exch_snapshot_id = max_id
+                        else:
+                            self.exch_snapshot_id = 0
 
     def start(self, instmt):
         """
@@ -142,7 +160,12 @@ class ExchangeGateway:
         # If local timestamp indicator is on, assign the local timestamp again
         if self.is_local_timestamp:
             trade.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
-        
+
+        date_time = datetime.strptime(trade.date_time, "%Y%m%d %H:%M:%S.%f").date()
+        if date_time != self.date_time:
+            self.date_time = date_time
+            self.init_instmt_snapshot_table(instmt)
+
         # Set the last trade to the current one
         instmt.set_last_trade(trade)
 

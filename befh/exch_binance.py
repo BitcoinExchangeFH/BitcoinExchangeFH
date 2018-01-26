@@ -16,43 +16,43 @@ class ExchGwApiBinance(RESTfulApiSocket):
     """
     def __init__(self):
         RESTfulApiSocket.__init__(self)
-        
+
     @classmethod
     def get_timestamp_offset(cls):
         return 1000
-        
+
     @classmethod
     def get_order_book_timestamp_field_name(cls):
         return 'date'
-        
+
     @classmethod
     def get_trades_timestamp_field_name(cls):
         return 'T'
-    
+
     @classmethod
     def get_bids_field_name(cls):
         return 'bids'
-        
+
     @classmethod
     def get_asks_field_name(cls):
         return 'asks'
-        
+
     @classmethod
     def get_trade_side_field_name(cls):
         return 'type'
-        
+
     @classmethod
     def get_trade_id_field_name(cls):
         return 'a'
-        
+
     @classmethod
     def get_trade_price_field_name(cls):
         return 'p'
-        
+
     @classmethod
     def get_trade_volume_field_name(cls):
         return 'q'
-        
+
     @classmethod
     def get_order_book_link(cls, instmt):
         return "https://www.binance.com/api/v1/depth?symbol=%s&limit=100" % instmt.get_instmt_code()
@@ -64,8 +64,8 @@ class ExchGwApiBinance(RESTfulApiSocket):
                 (instmt.get_instmt_code(), instmt.get_exch_trade_id())
         else:
             return "https://www.binance.com/api/v1/aggTrades?symbol=%s&limit=100" % \
-                (instmt.get_instmt_code())         
-                
+                (instmt.get_instmt_code())
+
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
@@ -77,7 +77,7 @@ class ExchGwApiBinance(RESTfulApiSocket):
         keys = list(raw.keys())
         if cls.get_bids_field_name() in keys and \
            cls.get_asks_field_name() in keys:
-            
+
             # No Date time information, has update id only
             l2_depth.date_time = datetime.now().strftime("%Y%m%d %H:%M:%S.%f")
 
@@ -85,20 +85,20 @@ class ExchGwApiBinance(RESTfulApiSocket):
             bids = raw[cls.get_bids_field_name()]
             bids = sorted(bids, key=lambda x: x[0], reverse=True)
             for i in range(0, 5):
-                l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
-                l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
-                
+                l2_depth.bids[i].price = float(bids[i][0]) if not isinstance(bids[i][0], float) else bids[i][0]
+                l2_depth.bids[i].volume = float(bids[i][1]) if not isinstance(bids[i][1], float) else bids[i][1]
+
             # Asks
             asks = raw[cls.get_asks_field_name()]
             asks = sorted(asks, key=lambda x: x[0])
             for i in range(0, 5):
-                l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
-                l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]            
+                l2_depth.asks[i].price = float(asks[i][0]) if not isinstance(asks[i][0], float) else asks[i][0]
+                l2_depth.asks[i].volume = float(asks[i][1]) if not isinstance(asks[i][1], float) else asks[i][1]
         else:
             raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
                  raw))
-        
+
         return l2_depth
 
     @classmethod
@@ -110,32 +110,32 @@ class ExchGwApiBinance(RESTfulApiSocket):
         """
         trade = Trade()
         keys = list(raw.keys())
-        
+
         if cls.get_trades_timestamp_field_name() in keys and \
            cls.get_trade_id_field_name() in keys and \
            cls.get_trade_price_field_name() in keys and \
            cls.get_trade_volume_field_name() in keys:
-        
+
             # Date time
             date_time = float(raw[cls.get_trades_timestamp_field_name()])
             date_time = date_time / cls.get_timestamp_offset()
-            trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")      
-            
+            trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
+
             # Trade side
             trade.trade_side = 1
-                
+
             # Trade id
             trade.trade_id = str(raw[cls.get_trade_id_field_name()])
-            
+
             # Trade price
             trade.trade_price = float(str(raw[cls.get_trade_price_field_name()]))
-            
+
             # Trade volume
             trade.trade_volume = float(str(raw[cls.get_trade_volume_field_name()]))
         else:
             raise Exception('Does not contain trade keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
-                 raw))        
+                 raw))
 
         return trade
 
@@ -227,7 +227,7 @@ class ExchGwBinance(ExchangeGateway):
                 Logger.error(self.__class__.__name__, "Error in trades: %s" % e)
                 time.sleep(1)
                 continue
-                
+
             for trade in ret:
                 assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
                 assert isinstance(instmt.get_exch_trade_id(), str), \
@@ -236,7 +236,7 @@ class ExchGwBinance(ExchangeGateway):
                     instmt.set_exch_trade_id(trade.trade_id)
                     instmt.incr_trade_id()
                     self.insert_trade(instmt, trade)
-            
+
             # After the first time of getting the trade, indicate the instrument
             # is recovered
             if not instmt.get_recovered():
@@ -261,18 +261,18 @@ class ExchGwBinance(ExchangeGateway):
         t1.start()
         t2.start()
         return [t1, t2]
-        
-        
+
+
 if __name__ == '__main__':
     Logger.init_log()
     exchange_name = 'Binance'
     instmt_name = 'LTCBTC'
     instmt_code = 'LTCBTC'
-    instmt = Instrument(exchange_name, instmt_name, instmt_code)    
+    instmt = Instrument(exchange_name, instmt_name, instmt_code)
     db_client = SqlClientTemplate()
     exch = ExchGwBinance([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
-    instmt.set_recovered(False)    
+    instmt.set_recovered(False)
     exch.get_order_book_worker(instmt)
     exch.get_trades_worker(instmt)

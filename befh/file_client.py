@@ -45,7 +45,7 @@ class FileClient(DatabaseClient):
             return from_str
 
 
-    def create(self, table, columns, types, is_ifnotexists=True):
+    def create(self, table, columns, types, primary_key_index=(), is_ifnotexists=True):
         """
         Create table in the database
         :param table: Table name
@@ -67,8 +67,8 @@ class FileClient(DatabaseClient):
 
         self.lock.release()
         return True
-    
-    def insert(self, table, columns, types, values, primary_key_index=[], is_orreplace=False, is_commit=True):
+
+    def insert(self, table, columns, types, values, primary_key_index=(), is_orreplace=False, is_commit=True):
         """
         Insert into the table
         :param table: Table name

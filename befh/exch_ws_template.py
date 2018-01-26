@@ -20,51 +20,51 @@ class ExchGwApiTemplate(WebSocketApiClient):
         Constructor
         """
         WebSocketApiClient.__init__(self, 'Template')
-        
+
     @classmethod
     def get_order_book_timestamp_field_name(cls):
         return 'timestamp'
-        
+
     @classmethod
     def get_trades_timestamp_field_name(cls):
         return 'timestamp'
-    
+
     @classmethod
     def get_bids_field_name(cls):
         return 'bids'
-        
+
     @classmethod
     def get_asks_field_name(cls):
         return 'asks'
-        
+
     @classmethod
     def get_trade_side_field_name(cls):
         return 'side'
-        
+
     @classmethod
     def get_trade_id_field_name(cls):
         return 'trdMatchID'
-        
+
     @classmethod
     def get_trade_price_field_name(cls):
-        return 'price'        
-        
+        return 'price'
+
     @classmethod
     def get_trade_volume_field_name(cls):
-        return 'size'   
-        
+        return 'size'
+
     @classmethod
     def get_link(cls):
         return 'wss://www.bitmex.com/realtime'
-        
+
     @classmethod
     def get_order_book_subscription_string(cls, instmt):
         return json.dumps({"op":"subscribe", "args": ["orderBook10:%s" % instmt.get_instmt_code()]})
-        
+
     @classmethod
     def get_trades_subscription_string(cls, instmt):
         return json.dumps({"op":"subscribe", "args": ["trade:%s" % instmt.get_instmt_code()]})
-            
+
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
@@ -77,31 +77,31 @@ class ExchGwApiTemplate(WebSocketApiClient):
         if cls.get_order_book_timestamp_field_name() in keys and \
            cls.get_bids_field_name() in keys and \
            cls.get_asks_field_name() in keys:
-            
+
             # Date time
             timestamp = raw[cls.get_order_book_timestamp_field_name()]
             timestamp = timestamp.replace('T', ' ').replace('Z', '').replace('-' , '')
             l2_depth.date_time = timestamp
-            
+
             # Bids
             bids = raw[cls.get_bids_field_name()]
             bids = sorted(bids, key=lambda x: x[0], reverse=True)
             for i in range(0, len(bids)):
-                l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
-                l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
-                
+                l2_depth.bids[i].price = float(bids[i][0]) if not isinstance(bids[i][0], float) else bids[i][0]
+                l2_depth.bids[i].volume = float(bids[i][1]) if not isinstance(bids[i][1], float) else bids[i][1]
+
             # Asks
             asks = raw[cls.get_asks_field_name()]
             asks = sorted(asks, key=lambda x: x[0])
             for i in range(0, len(asks)):
-                l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
-                l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]            
+                l2_depth.asks[i].price = float(asks[i][0]) if not isinstance(asks[i][0], float) else asks[i][0]
+                l2_depth.asks[i].volume = float(asks[i][1]) if not isinstance(asks[i][1], float) else asks[i][1]
         else:
             raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
                  raw))
-        
-        return l2_depth        
+
+        return l2_depth
 
     @classmethod
     def parse_trade(cls, instmt, raw):
@@ -112,35 +112,35 @@ class ExchGwApiTemplate(WebSocketApiClient):
         """
         trade = Trade()
         keys = list(raw.keys())
-        
+
         if cls.get_trades_timestamp_field_name() in keys and \
            cls.get_trade_id_field_name() in keys and \
            cls.get_trade_side_field_name() in keys and \
            cls.get_trade_price_field_name() in keys and \
            cls.get_trade_volume_field_name() in keys:
-        
+
             # Date time
             timestamp = raw[cls.get_trades_timestamp_field_name()]
             timestamp = timestamp.replace('T', ' ').replace('Z', '').replace('-' , '')
             trade.date_time = timestamp
-            
+
             # Trade side
             trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])
-                
+
             # Trade id
             trade.trade_id = raw[cls.get_trade_id_field_name()]
-            
+
             # Trade price
-            trade.trade_price = raw[cls.get_trade_price_field_name()]            
-            
+            trade.trade_price = raw[cls.get_trade_price_field_name()]
+
             # Trade volume
-            trade.trade_volume = raw[cls.get_trade_volume_field_name()]                        
+            trade.trade_volume = raw[cls.get_trade_volume_field_name()]
         else:
             raise Exception('Does not contain trade keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
-                 raw))        
+                 raw))
 
-        return trade        
+        return trade
 
 
 class ExchGwTemplate(ExchangeGateway):
@@ -236,7 +236,7 @@ class ExchGwTemplate(ExchangeGateway):
                                         on_message_handler=partial(self.on_message_handler, instmt),
                                         on_open_handler=partial(self.on_open_handler, instmt),
                                         on_close_handler=partial(self.on_close_handler, instmt))]
-                                        
+
 
 if __name__ == '__main__':
     exchange_name = 'Template'

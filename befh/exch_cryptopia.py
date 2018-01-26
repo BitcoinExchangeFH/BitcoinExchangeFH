@@ -16,7 +16,7 @@ class ExchGwApiCryptopia(RESTfulApiSocket):
     """
     def __init__(self):
         RESTfulApiSocket.__init__(self)
-        
+
     @classmethod
     def get_content_field_name(cls):
         return 'Data'
@@ -24,15 +24,15 @@ class ExchGwApiCryptopia(RESTfulApiSocket):
     @classmethod
     def get_timestamp_offset(cls):
         return 1
-        
+
     @classmethod
     def get_trades_timestamp_field_name(cls):
         return 'Timestamp'
-    
+
     @classmethod
     def get_bids_field_name(cls):
         return 'Buy'
-        
+
     @classmethod
     def get_asks_field_name(cls):
         return 'Sell'
@@ -48,15 +48,15 @@ class ExchGwApiCryptopia(RESTfulApiSocket):
     @classmethod
     def get_trade_side_field_name(cls):
         return 'Type'
-        
+
     @classmethod
     def get_trade_price_field_name(cls):
         return 'Price'
-        
+
     @classmethod
     def get_trade_volume_field_name(cls):
         return 'Amount'
-        
+
     @classmethod
     def get_order_book_link(cls, instmt):
         return "https://www.cryptopia.co.nz/api/GetMarketOrders/%s" % instmt.get_instmt_code()
@@ -64,7 +64,7 @@ class ExchGwApiCryptopia(RESTfulApiSocket):
     @classmethod
     def get_trades_link(cls, instmt):
         return "https://www.cryptopia.co.nz/api/GetMarketHistory/%s" % (instmt.get_instmt_code())
-                
+
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
@@ -83,7 +83,7 @@ class ExchGwApiCryptopia(RESTfulApiSocket):
         keys = list(raw.keys())
         if cls.get_bids_field_name() in keys and \
            cls.get_asks_field_name() in keys:
-            
+
             # Date time
             l2_depth.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
 
@@ -104,7 +104,7 @@ class ExchGwApiCryptopia(RESTfulApiSocket):
             raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
                  raw))
-        
+
         return l2_depth
 
     @classmethod
@@ -119,18 +119,18 @@ class ExchGwApiCryptopia(RESTfulApiSocket):
         if cls.get_trades_timestamp_field_name() in keys and \
            cls.get_trade_price_field_name() in keys and \
            cls.get_trade_volume_field_name() in keys:
-        
+
             # Date time
             date_time = float(raw[cls.get_trades_timestamp_field_name()])
             date_time = date_time / cls.get_timestamp_offset()
-            trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")      
-            
+            trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")
+
             # Trade side
             trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])
 
             # Trade price
             trade.trade_price = float(str(raw[cls.get_trade_price_field_name()]))
-            
+
             # Trade volume
             trade.trade_volume = float(str(raw[cls.get_trade_volume_field_name()]))
 
@@ -140,7 +140,7 @@ class ExchGwApiCryptopia(RESTfulApiSocket):
         else:
             raise Exception('Does not contain trade keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
-                 raw))        
+                 raw))
 
         return trade
 
@@ -226,7 +226,7 @@ class ExchGwCryptopia(ExchangeGateway):
                     time.sleep(1)
                     continue
             except Exception as e:
-                Logger.error(self.__class__.__name__, "Error in trades: %s" % e)                
+                Logger.error(self.__class__.__name__, "Error in trades: %s" % e)
 
             for trade in ret:
                 assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
@@ -260,18 +260,18 @@ class ExchGwCryptopia(ExchangeGateway):
         t1.start()
         t2.start()
         return [t1, t2]
-        
-        
+
+
 if __name__ == '__main__':
     Logger.init_log()
     exchange_name = 'Cryptopia'
     instmt_name = 'DOTBTC'
     instmt_code = 'DOT_BTC'
-    instmt = Instrument(exchange_name, instmt_name, instmt_code)    
+    instmt = Instrument(exchange_name, instmt_name, instmt_code)
     db_client = SqlClientTemplate()
     exch = ExchGwCryptopia([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
-    instmt.set_recovered(False)    
+    instmt.set_recovered(False)
     # exch.get_order_book_worker(instmt)
     exch.get_trades_worker(instmt)

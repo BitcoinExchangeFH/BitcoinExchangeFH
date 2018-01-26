@@ -16,43 +16,43 @@ class ExchGwApiWex(RESTfulApiSocket):
     """
     def __init__(self):
         RESTfulApiSocket.__init__(self)
-        
+
     @classmethod
     def get_timestamp_offset(cls):
         return 1000
-        
+
     # @classmethod
     # def get_order_book_timestamp_field_name(cls):
     #     return 'date'
-        
+
     @classmethod
     def get_trades_timestamp_field_name(cls):
         return 'timestamp'
-    
+
     @classmethod
     def get_bids_field_name(cls):
         return 'bids'
-        
+
     @classmethod
     def get_asks_field_name(cls):
         return 'asks'
-        
+
     @classmethod
     def get_trade_side_field_name(cls):
         return 'type'
-        
+
     @classmethod
     def get_trade_id_field_name(cls):
         return 'tid'
-        
+
     @classmethod
     def get_trade_price_field_name(cls):
         return 'price'
-        
+
     @classmethod
     def get_trade_volume_field_name(cls):
         return 'amount'
-        
+
     @classmethod
     def get_order_book_link(cls, instmt):
         return "https://wex.nz/api/3/depth/{}".format(instmt.get_instmt_code())
@@ -80,15 +80,15 @@ class ExchGwApiWex(RESTfulApiSocket):
             bids = raw[cls.get_bids_field_name()]
             bids = sorted(bids, key=lambda x: x[0], reverse=True)
             for i in range(0, 5):
-                l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
-                l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
+                l2_depth.bids[i].price = float(bids[i][0]) if not isinstance(bids[i][0], float) else bids[i][0]
+                l2_depth.bids[i].volume = float(bids[i][1]) if not isinstance(bids[i][1], float) else bids[i][1]
 
             # Asks
             asks = raw[cls.get_asks_field_name()]
             asks = sorted(asks, key=lambda x: x[0])
             for i in range(0, 5):
-                l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
-                l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]            
+                l2_depth.asks[i].price = float(asks[i][0]) if not isinstance(asks[i][0], float) else asks[i][0]
+                l2_depth.asks[i].volume = float(asks[i][1]) if not isinstance(asks[i][1], float) else asks[i][1]
         else:
             raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \

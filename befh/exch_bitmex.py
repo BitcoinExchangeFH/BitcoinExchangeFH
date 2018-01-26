@@ -20,39 +20,39 @@ class ExchGwBitmexWs(WebSocketApiClient):
         Constructor
         """
         WebSocketApiClient.__init__(self, 'ExchGwBitMEX')
-        
+
     @classmethod
     def get_order_book_timestamp_field_name(cls):
         return 'timestamp'
-        
+
     @classmethod
     def get_trades_timestamp_field_name(cls):
         return 'timestamp'
-    
+
     @classmethod
     def get_bids_field_name(cls):
         return 'bids'
-        
+
     @classmethod
     def get_asks_field_name(cls):
         return 'asks'
-        
+
     @classmethod
     def get_trade_side_field_name(cls):
         return 'side'
-        
+
     @classmethod
     def get_trade_id_field_name(cls):
         return 'trdMatchID'
-        
+
     @classmethod
     def get_trade_price_field_name(cls):
-        return 'price'        
-        
+        return 'price'
+
     @classmethod
     def get_trade_volume_field_name(cls):
-        return 'size'   
-        
+        return 'size'
+
     @classmethod
     def get_link(cls):
         return 'wss://www.bitmex.com/realtime'
@@ -80,47 +80,47 @@ class ExchGwBitmexWs(WebSocketApiClient):
                 data['size'] if 'size' in data.keys() else None
             )
 
-        
+
         if raw['action'] in ('partial', 'insert'):
             # Order book initialization or insertion
             for data in raw['data']:
                 if data['symbol'] != instmt.get_instmt_code():
                     continue
-                
+
                 price, side, id, volume = get_order_info(data)
                 instmt.realtime_order_book_ids[side][id] = price
                 if price not in instmt.realtime_order_book_prices[side].keys():
                     instmt.realtime_order_book_prices[side][price] = { id: volume }
                 else:
                     instmt.realtime_order_book_prices[side][price][id] = volume
-                    
+
         elif raw['action'] == 'update':
             # Order book update
             for data in raw['data']:
                 if data['symbol'] != instmt.get_instmt_code():
                     continue
-                
+
                 _, side, id, volume = get_order_info(data)
                 price = instmt.realtime_order_book_ids[side][id]
                 instmt.realtime_order_book_ids[side][id] = price
-                instmt.realtime_order_book_prices[side][price][id] = volume                
-                    
+                instmt.realtime_order_book_prices[side][price][id] = volume
+
         elif raw['action'] == 'delete':
             # Order book delete
             for data in raw['data']:
                 if data['symbol'] != instmt.get_instmt_code():
-                    continue                
-                
+                    continue
+
                 _, side, id, _ = get_order_info(data)
                 price = instmt.realtime_order_book_ids[side][id]
                 del instmt.realtime_order_book_prices[side][price][id]
                 if len(instmt.realtime_order_book_prices[side][price]) == 0:
                     del instmt.realtime_order_book_prices[side][price]
-        
+
         # return l2_depth
         l2_depth = L2Depth()
         l2_depth.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
-        
+
         bids_px = sorted(list(instmt.realtime_order_book_prices[0].keys()), reverse=True)[:5]
         asks_px = sorted(list(instmt.realtime_order_book_prices[1].keys()))[:5]
         bids_qty = [sum(instmt.realtime_order_book_prices[0][px].values()) for px in bids_px]
@@ -130,7 +130,7 @@ class ExchGwBitmexWs(WebSocketApiClient):
             l2_depth.bids[i].volume = bids_qty[i]
             l2_depth.asks[i].price = asks_px[i]
             l2_depth.asks[i].volume = asks_qty[i]
-            
+
         return l2_depth
 
     @classmethod
@@ -142,35 +142,35 @@ class ExchGwBitmexWs(WebSocketApiClient):
         """
         trade = Trade()
         keys = list(raw.keys())
-        
+
         if cls.get_trades_timestamp_field_name() in keys and \
            cls.get_trade_id_field_name() in keys and \
            cls.get_trade_side_field_name() in keys and \
            cls.get_trade_price_field_name() in keys and \
            cls.get_trade_volume_field_name() in keys:
-        
+
             # Date time
             timestamp = raw[cls.get_trades_timestamp_field_name()]
             timestamp = timestamp.replace('T', ' ').replace('Z', '').replace('-' , '')
             trade.date_time = timestamp
-            
+
             # Trade side
             trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])
-                
+
             # Trade id
             trade.trade_id = raw[cls.get_trade_id_field_name()]
-            
+
             # Trade price
-            trade.trade_price = raw[cls.get_trade_price_field_name()]            
-            
+            trade.trade_price = raw[cls.get_trade_price_field_name()]
+
             # Trade volume
-            trade.trade_volume = raw[cls.get_trade_volume_field_name()]                        
+            trade.trade_volume = raw[cls.get_trade_volume_field_name()]
         else:
             raise Exception('Does not contain trade keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
-                 raw))        
+                 raw))
 
-        return trade        
+        return trade
 
 
 class ExchGwBitmex(ExchangeGateway):
@@ -274,4 +274,4 @@ if __name__ == '__main__':
     db_client = SqlClientTemplate()
     Logger.init_log()
     exch = ExchGwBitmex([db_client])
-    td = exch.start(instmt)    
+    td = exch.start(instmt)

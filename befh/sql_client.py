@@ -46,7 +46,7 @@ class SqlClient(DatabaseClient):
         """
         return []
 
-    def create(self, table, columns, types, primary_key_index=[], is_ifnotexists=True):
+    def create(self, table, columns, types, primary_key_index=(), is_ifnotexists=True):
         """
         Create table in the database
         :param table: Table name
@@ -61,7 +61,7 @@ class SqlClient(DatabaseClient):
         column_names = ''
         for i in range(0, len(columns)):
             column_names += '%s %s,' % (columns[i], types[i])
-        
+
         if len(primary_key_index) > 0:
             column_names += 'PRIMARY KEY (%s)' % (",".join([columns[e] for e in primary_key_index]))
         else:
@@ -73,17 +73,17 @@ class SqlClient(DatabaseClient):
             sql = "create table %s (%s)" % (table, column_names)
 
         self.lock.acquire()
-        
+
         try:
             self.execute(sql)
         except Exception as e:
             raise Exception("Error in create statement (%s).\nError: %s\n" % (sql, e))
-            
+
         self.commit()
         self.lock.release()
         return True
 
-    def insert(self, table, columns, types, values, primary_key_index=[], is_orreplace=False, is_commit=True):
+    def insert(self, table, columns, types, values, primary_key_index=(), is_orreplace=False, is_commit=True):
         """
         Insert into the table
         :param table: Table name

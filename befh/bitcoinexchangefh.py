@@ -114,19 +114,19 @@ def main():
         print('Error: Please define the instrument subscription list. You can refer to subscriptions.ini.')
         parser.print_help()
         sys.exit(1)
-        
+
     # Use exchange timestamp rather than local timestamp
     if args.exchtime:
         ExchangeGateway.is_local_timestamp = False
-    
+
     # Initialize subscriptions
     subscription_instmts = SubscriptionManager(args.instmts).get_subscriptions()
     if len(subscription_instmts) == 0:
         print('Error: No instrument is found in the subscription file. ' +
               'Please check the file path and the content of the subscription file.')
         parser.print_help()
-        sys.exit(1)        
-    
+        sys.exit(1)
+
     # Initialize snapshot destination
     ExchangeGateway.init_snapshot_table(db_clients)
 
@@ -135,7 +135,7 @@ def main():
     for instmt in subscription_instmts:
         log_str += '%s/%s/%s\n' % (instmt.exchange_name, instmt.instmt_name, instmt.instmt_code)
     Logger.info('[main]', log_str)
-    
+
     exch_gws = []
     exch_gws.append(ExchGwBtccSpot(db_clients))
     exch_gws.append(ExchGwBtccFuture(db_clients))

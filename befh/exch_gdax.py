@@ -17,19 +17,19 @@ class ExchGwApiGdaxOrderBook(RESTfulApiSocket):
     """
     def __init__(self):
         RESTfulApiSocket.__init__(self)
-        
+
     @classmethod
     def get_bids_field_name(cls):
         return 'bids'
-        
+
     @classmethod
     def get_asks_field_name(cls):
         return 'asks'
-        
+
     @classmethod
     def get_order_book_link(cls, instmt):
         return "https://api.gdax.com/products/%s/book?level=2" % instmt.get_instmt_code()
-                
+
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
@@ -41,28 +41,28 @@ class ExchGwApiGdaxOrderBook(RESTfulApiSocket):
         keys = list(raw.keys())
         if cls.get_bids_field_name() in keys and \
            cls.get_asks_field_name() in keys:
-            
+
             # Date time
             l2_depth.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
-            
+
             # Bids
             bids = raw[cls.get_bids_field_name()]
             bids = sorted(bids, key=lambda x: x[0], reverse=True)
             for i in range(0, 5):
-                l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
-                l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
-                
+                l2_depth.bids[i].price = float(bids[i][0]) if not isinstance(bids[i][0], float) else bids[i][0]
+                l2_depth.bids[i].volume = float(bids[i][1]) if not isinstance(bids[i][1], float) else bids[i][1]
+
             # Asks
             asks = raw[cls.get_asks_field_name()]
             asks = sorted(asks, key=lambda x: x[0])
             for i in range(0, 5):
-                l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
-                l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]            
+                l2_depth.asks[i].price = float(asks[i][0]) if not isinstance(asks[i][0], float) else asks[i][0]
+                l2_depth.asks[i].volume = float(asks[i][1]) if not isinstance(asks[i][1], float) else asks[i][1]
         else:
             raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
                  raw))
-        
+
         return l2_depth
 
     @classmethod
@@ -72,7 +72,7 @@ class ExchGwApiGdaxOrderBook(RESTfulApiSocket):
         :param raw: Raw data in JSON
         :return:
         """
-        raise Exception("parse_trade should not be called.")    
+        raise Exception("parse_trade should not be called.")
 
     @classmethod
     def get_order_book(cls, instmt):
@@ -96,8 +96,8 @@ class ExchGwApiGdaxOrderBook(RESTfulApiSocket):
         :param trade_id: Trade id
         :return: List of trades
         """
-        raise Exception("get_trades should not be called.")    
-        
+        raise Exception("get_trades should not be called.")
+
 
 class ExchGwApiGdaxTrades(WebSocketApiClient):
     """
@@ -108,35 +108,35 @@ class ExchGwApiGdaxTrades(WebSocketApiClient):
         Constructor
         """
         WebSocketApiClient.__init__(self, 'Gdax')
-        
+
     @classmethod
     def get_trades_timestamp_field_name(cls):
         return 'time'
-        
+
     @classmethod
     def get_trade_side_field_name(cls):
         return 'side'
-        
+
     @classmethod
     def get_trade_id_field_name(cls):
         return 'trade_id'
-        
+
     @classmethod
     def get_trade_price_field_name(cls):
-        return 'price'        
-        
+        return 'price'
+
     @classmethod
     def get_trade_volume_field_name(cls):
-        return 'size'   
-        
+        return 'size'
+
     @classmethod
     def get_link(cls):
         return 'wss://ws-feed.gdax.com'
-        
+
     @classmethod
     def get_trades_subscription_string(cls, instmt):
         return json.dumps({"type":"subscribe", "product_id": instmt.get_instmt_code()})
-            
+
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
@@ -144,7 +144,7 @@ class ExchGwApiGdaxTrades(WebSocketApiClient):
         :param instmt: Instrument
         :param raw: Raw data in JSON
         """
-        raise Exception("parse_l2_depth should not be called.")        
+        raise Exception("parse_l2_depth should not be called.")
 
     @classmethod
     def parse_trade(cls, instmt, raw):
@@ -155,35 +155,35 @@ class ExchGwApiGdaxTrades(WebSocketApiClient):
         """
         trade = Trade()
         keys = list(raw.keys())
-        
+
         if cls.get_trades_timestamp_field_name() in keys and \
            cls.get_trade_id_field_name() in keys and \
            cls.get_trade_side_field_name() in keys and \
            cls.get_trade_price_field_name() in keys and \
            cls.get_trade_volume_field_name() in keys:
-        
+
             # Date time
             # timestamp = raw[cls.get_trades_timestamp_field_name()]
             # timestamp = timestamp.replace('T', ' ').replace('Z', '')
             trade.date_time = datetime.utcnow().strftime("%Y%m%d %H:%M:%S.%f")
-            
+
             # Trade side
             trade.trade_side = Trade.parse_side(raw[cls.get_trade_side_field_name()])
-                
+
             # Trade id
             trade.trade_id = str(raw[cls.get_trade_id_field_name()])
-            
+
             # Trade price
             trade.trade_price = float(raw[cls.get_trade_price_field_name()])
-            
+
             # Trade volume
             trade.trade_volume = float(raw[cls.get_trade_volume_field_name()])
         else:
             raise Exception('Does not contain trade keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
-                 raw))        
+                 raw))
 
-        return trade        
+        return trade
 
 
 class ExchGwGdax(ExchangeGateway):
@@ -243,7 +243,7 @@ class ExchGwGdax(ExchangeGateway):
                     if trade.trade_id != instmt.get_exch_trade_id():
                         instmt.incr_trade_id()
                         instmt.set_exch_trade_id(trade.trade_id)
-                        self.insert_trade(instmt, trade)     
+                        self.insert_trade(instmt, trade)
             else:
                 # Never handler order book query here
                 pass
@@ -280,12 +280,12 @@ class ExchGwGdax(ExchangeGateway):
                                         on_message_handler=partial(self.on_message_handler, instmt),
                                         on_open_handler=partial(self.on_open_handler, instmt),
                                         on_close_handler=partial(self.on_close_handler, instmt))
-                                        
-        t_order_book = threading.Thread(target=partial(self.get_order_book_worker, instmt))   
-        t_order_book.start()         
-        
+
+        t_order_book = threading.Thread(target=partial(self.get_order_book_worker, instmt))
+        t_order_book.start()
+
         return [t_order_book, t_trades]
-                                        
+
 
 if __name__ == '__main__':
     exchange_name = 'Gdax'

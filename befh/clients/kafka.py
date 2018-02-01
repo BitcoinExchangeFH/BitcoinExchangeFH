@@ -1,4 +1,4 @@
-from befh.database_client import DatabaseClient
+from befh.clients.sql import SqlClient
 from befh.util import Logger
 import threading
 import re
@@ -9,7 +9,7 @@ from kafka import KafkaProducer
 from kafka import KafkaConsumer
 from kafka.errors import KafkaError
 
-class KafkaClient(DatabaseClient):
+class KafkaClient(SqlClient):
     """
     Kafka Client
     """
@@ -18,7 +18,7 @@ class KafkaClient(DatabaseClient):
         """
         Constructor
         """
-        DatabaseClient.__init__(self)
+        SqlClient.__init__(self)
         self.conn = None
         self.lock = threading.Lock()
 

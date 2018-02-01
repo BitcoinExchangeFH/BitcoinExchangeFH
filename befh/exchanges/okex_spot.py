@@ -1,9 +1,9 @@
 from befh.ws_api_socket import WebSocketApiClient
 from befh.market_data import L2Depth, Trade
-from befh.exchange import ExchangeGateway
+from befh.exchanges.gateway import ExchangeGateway
 from befh.instrument import Instrument
 from befh.util import Logger
-from befh.sql_client_template import SqlClientTemplate
+from befh.clients.sql_template import SqlClientTemplate
 import time
 import threading
 import json
@@ -115,7 +115,7 @@ class ExchGwOkexWs(WebSocketApiClient):
         return trade
 
 
-class ExchGwOkex(ExchangeGateway):
+class ExchGwOkexSpot(ExchangeGateway):
     """
     Exchange gateway
     """
@@ -132,7 +132,7 @@ class ExchGwOkex(ExchangeGateway):
         Get exchange name
         :return: Exchange name string
         """
-        return 'Okex'
+        return 'OkexSpot'
 
     def on_open_handler(self, instmt, ws):
         """
@@ -231,5 +231,5 @@ if __name__ == '__main__':
     instmt = Instrument(exchange_name, instmt_name, instmt_code)
     db_client = SqlClientTemplate()
     Logger.init_log()
-    exch = ExchGwOkex([db_client])
+    exch = ExchGwOkexSpot([db_client])
     td = exch.start(instmt)    

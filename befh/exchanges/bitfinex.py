@@ -3,7 +3,7 @@ from befh.exchanges.gateway import ExchangeGateway
 from befh.instrument import Instrument
 from befh.ws_api_socket import WebSocketApiClient
 from befh.util import Logger
-from befh.sql_client_template import SqlClientTemplate
+from befh.clients.sql_template import SqlClientTemplate
 import time
 import threading
 import json
@@ -250,7 +250,6 @@ class ExchGwBitfinex(ExchangeGateway):
                     self.insert_order_book(instmt)
 
             elif message[0] == instmt.get_trades_channel_id():
-<<<<<<< HEAD:befh/exchanges/bitfinex.py
                 # No recovery trade
 
                 # if isinstance(message[1], list):
@@ -268,8 +267,6 @@ class ExchGwBitfinex(ExchangeGateway):
                 #             Logger.info('test', "instmt.get_exch_trade_id()(%s):%s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id()))
                 #             raise e
 
-=======
->>>>>>> trace log.:befh/exch_bitfinex.py
                 if message[1] == 'tu':
                     trade = self.api_socket.parse_trade(instmt, message[3:])
                     if int(trade.trade_id) > int(instmt.get_exch_trade_id()):

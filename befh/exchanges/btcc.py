@@ -219,15 +219,10 @@ class ExchGwBtcc(ExchangeGateway):
                     time.sleep(1)
                     continue
             except Exception as e:
-<<<<<<< HEAD:befh/exchanges/btcc.py
-                Logger.error(self.__class__.__name__, "Error in trades: %s" % e)
-
-=======
                 Logger.error(self.__class__.__name__, "Error in trades: %s" % e)                
                 time.sleep(1)
                 continue
             
->>>>>>> add kkex.:befh/exch_btcc.py
             for trade in ret:
                 assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
                 assert isinstance(instmt.get_exch_trade_id(), str), \
@@ -430,9 +425,5 @@ if __name__ == '__main__':
                                                                     instmt.get_instmt_name()))
     instmt.set_trades_table_name(exch.get_trades_table_name(instmt.get_exchange_name(),
                                                             instmt.get_instmt_name()))
-<<<<<<< HEAD:befh/exchanges/btcc.py
     instmt.set_recovered(False)
-=======
-    instmt.set_recovered(False)    
->>>>>>> add kkex.:befh/exch_btcc.py
     exch.get_order_book_worker(instmt)

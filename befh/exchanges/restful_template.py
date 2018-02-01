@@ -224,13 +224,9 @@ class ExchGwTemplate(ExchangeGateway):
                     time.sleep(1)
                     continue
             except Exception as e:
-<<<<<<< HEAD:befh/exchanges/restful_template.py
-                Logger.error(self.__class__.__name__, "Error in trades: %s" % e)
-=======
                 Logger.error(self.__class__.__name__, "Error in trades: %s" % e)                
                 time.sleep(1)
                 continue
->>>>>>> add kkex.:befh/exch_restful_template.py
 
             for trade in ret:
                 assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)

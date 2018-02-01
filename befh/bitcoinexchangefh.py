@@ -3,7 +3,7 @@
 import argparse
 import sys
 
-<<<<<<< HEAD
+
 from befh.exchanges.gateway import ExchangeGateway
 from befh.exchanges.bitmex import ExchGwBitmex
 from befh.exchanges.btcc import ExchGwBtccSpot, ExchGwBtccFuture
@@ -26,40 +26,18 @@ from befh.exchanges.okex import ExchGwOkex
 from befh.exchanges.wex import ExchGwWex
 from befh.exchanges.bitflyer import ExchGwBitflyer
 from befh.exchanges.coinone import ExchGwCoinOne
+from befh.exchanges.kkex import ExchGwKkex
+from befh.exchanges.bibox import ExchGwBibox
+from befh.exchanges.aex import ExchGwAex
+from befh.exchanges.bigone import ExchGwBigone
+from befh.exchanges.gateio import ExchGwGateio
+
 from befh.clients.kdbplus import KdbPlusClient
 from befh.clients.mysql import MysqlClient
 from befh.clients.sqlite import SqliteClient
 from befh.clients.csv import FileClient
 from befh.clients.zmq import ZmqClient
-=======
-from befh.exchange import ExchangeGateway
-from befh.exch_bitmex import ExchGwBitmex
-from befh.exch_btcc import ExchGwBtccSpot, ExchGwBtccFuture
-from befh.exch_bitfinex import ExchGwBitfinex
-from befh.exch_okex import ExchGwOkex
-from befh.exch_kraken import ExchGwKraken
-from befh.exch_gdax import ExchGwGdax
-from befh.exch_bitstamp import ExchGwBitstamp
-from befh.exch_gatecoin import ExchGwGatecoin
-from befh.exch_quoine import ExchGwQuoine
-from befh.exch_poloniex import ExchGwPoloniex
-from befh.exch_bittrex import ExchGwBittrex
-from befh.exch_liqui import ExchGwLiqui
-from befh.exch_binance import ExchGwBinance
-from befh.exch_cryptopia import ExchGwCryptopia
-from befh.exch_kkex import ExchGwKkex
-from befh.exch_bibox import ExchGwBibox
-from befh.exch_aex import ExchGwAex
-from befh.exch_bigone import ExchGwBigone
-from befh.exch_gateio import ExchGwGateio
-
-from befh.kdbplus_client import KdbPlusClient
-from befh.mysql_client import MysqlClient
-# from befh.sqlite_client import SqliteClient
-from befh.file_client import FileClient
-from befh.zmq_client import ZmqClient
-from befh.kafka_client import KafkaClient
->>>>>>> support kafka
+from befh.clients.kafka import KafkaClient
 from befh.subscription_manager import SubscriptionManager
 from befh.util import Logger
 
@@ -195,17 +173,14 @@ def main():
     exch_gws.append(ExchGwLiqui(db_clients))
     exch_gws.append(ExchGwBinance(db_clients))
     exch_gws.append(ExchGwCryptopia(db_clients))
-<<<<<<< HEAD
     exch_gws.append(ExchGwOkex(db_clients))
     exch_gws.append(ExchGwWex(db_clients))
-=======
     exch_gws.append(ExchGwKkex(db_clients))
     exch_gws.append(ExchGwBibox(db_clients))
     exch_gws.append(ExchGwAex(db_clients))
     exch_gws.append(ExchGwBigone(db_clients))
     exch_gws.append(ExchGwGateio(db_clients))
 
->>>>>>> add kkex.
     threads = []
     for exch in exch_gws:
         for instmt in subscription_instmts:

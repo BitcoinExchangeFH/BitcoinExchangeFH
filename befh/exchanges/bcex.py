@@ -1,15 +1,15 @@
 from befh.restful_api_socket import RESTfulApiSocket
-from befh.exchange import ExchangeGateway
+from befh.exchanges.gateway import ExchangeGateway
 from befh.market_data import L2Depth, Trade
 from befh.util import Logger
 from befh.instrument import Instrument
-from befh.sql_client_template import SqlClientTemplate
+from befh.clients.sql_template import SqlClientTemplate
 from functools import partial
 from datetime import datetime
 import time
 import threading
 
-class ExchGwApiGateio(RESTfulApiSocket):
+class ExchGwApiBcex(RESTfulApiSocket):
     """
     Exchange gateway RESTfulApi
     """
@@ -18,11 +18,15 @@ class ExchGwApiGateio(RESTfulApiSocket):
         
     @classmethod
     def get_timestamp_offset(cls):
-        return 1
+        return 1000
+        
+    @classmethod
+    def get_order_book_timestamp_field_name(cls):
+        return 'update_time'
         
     @classmethod
     def get_trades_timestamp_field_name(cls):
-        return 'timestamp'
+        return 'time'
     
     @classmethod
     def get_bids_field_name(cls):
@@ -34,15 +38,15 @@ class ExchGwApiGateio(RESTfulApiSocket):
         
     @classmethod
     def get_trade_side_field_name(cls):
-        return 'type'
+        return 'side'
         
     @classmethod
     def get_trade_id_field_name(cls):
-        return 'tradeID'
+        return None
         
     @classmethod
     def get_trade_price_field_name(cls):
-        return 'rate'
+        return 'price'
         
     @classmethod
     def get_trade_volume_field_name(cls):
@@ -50,12 +54,12 @@ class ExchGwApiGateio(RESTfulApiSocket):
         
     @classmethod
     def get_order_book_link(cls, instmt):
-        return "http://data.gate.io/api2/1/orderBook/%s" % instmt.get_instmt_code()
+        return "https://www.bcex.ca/Api_Order/depth"
 
     @classmethod
     def get_trades_link(cls, instmt):
-        return "http://data.gate.io/api2/1/tradeHistory/%s" % \
-                (instmt.get_instmt_code())         
+        return "https://www.bcex.ca/Api_Order/marketOrder"
+      
                 
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
@@ -74,19 +78,19 @@ class ExchGwApiGateio(RESTfulApiSocket):
 
             # Bids
             bids = raw[cls.get_bids_field_name()]
-            bids = sorted(bids, key=lambda x: x[0], reverse=True)
+            bids = sorted(bids, key=lambda x: x['price'], reverse=True)
             max_bid_len = min(len(bids), 5)
             for i in range(0, max_bid_len):
-                l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
-                l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
+                l2_depth.bids[i].price = float(bids[i]['price']) if type(bids[i]['price']) != float else bids[i]['price']
+                l2_depth.bids[i].volume = float(bids[i]['volume']) if type(bids[i]['volume']) != float else bids[i]['volume']  
                 
             # Asks
             asks = raw[cls.get_asks_field_name()]
-            asks = sorted(asks, key=lambda x: x[0])
+            asks = sorted(asks, key=lambda x: x['price'])
             max_ask_len =  min(len(asks), 5)
             for i in range(0, max_ask_len):
-                l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
-                l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]            
+                l2_depth.asks[i].price = float(asks[i]['price']) if type(asks[i]['price']) != float else asks[i]['price']
+                l2_depth.asks[i].volume = float(asks[i]['volume']) if type(asks[i]['volume']) != float else asks[i]['volume']           
         else:
             raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \
@@ -102,11 +106,9 @@ class ExchGwApiGateio(RESTfulApiSocket):
         :return:
         """
         trade = Trade()
-        # print(raw)
         keys = list(raw.keys())
         
         if cls.get_trades_timestamp_field_name() in keys and \
-           cls.get_trade_id_field_name() in keys and \
            cls.get_trade_price_field_name() in keys and \
            cls.get_trade_volume_field_name() in keys:
         
@@ -116,10 +118,10 @@ class ExchGwApiGateio(RESTfulApiSocket):
             trade.date_time = datetime.utcfromtimestamp(date_time).strftime("%Y%m%d %H:%M:%S.%f")      
             
             # Trade side
-            trade.trade_side = Trade.parse_side(str(raw[cls.get_trade_side_field_name()]))
+            trade.trade_side = raw[cls.get_trade_side_field_name()]
                 
             # Trade id
-            trade.trade_id = str(raw[cls.get_trade_id_field_name()])
+            trade.trade_id = str(raw[cls.get_trades_timestamp_field_name()])
             
             # Trade price
             trade.trade_price = float(str(raw[cls.get_trade_price_field_name()]))
@@ -142,9 +144,9 @@ class ExchGwApiGateio(RESTfulApiSocket):
         """
         # If verify cert, got <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:749)>
         res = cls.request(cls.get_order_book_link(instmt), verify_cert=False)
-        if res:
+        if len(res['result']) > 0:
             return cls.parse_l2_depth(instmt=instmt,
-                                       raw=res)
+                                       raw=res['result'])
         else:
             return None
 
@@ -157,12 +159,11 @@ class ExchGwApiGateio(RESTfulApiSocket):
         :return: List of trades
         """
         link = cls.get_trades_link(instmt)
-        # print(link)
         # If verify cert, got <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:749)>
         res = cls.request(link, verify_cert=False)
         trades = []
-        if len(res['data']) > 0:
-            for t in res['data']:
+        if len(res['result']) > 0:
+            for t in res['result']:
                 trade = cls.parse_trade(instmt=instmt,
                                          raw=t)
                 trades.append(trade)
@@ -170,7 +171,7 @@ class ExchGwApiGateio(RESTfulApiSocket):
         return trades
 
 
-class ExchGwGateio(ExchangeGateway):
+class ExchGwBcex(ExchangeGateway):
     """
     Exchange gateway
     """
@@ -179,7 +180,7 @@ class ExchGwGateio(ExchangeGateway):
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwApiGateio(), db_clients)
+        ExchangeGateway.__init__(self, ExchGwApiBcex(), db_clients)
 
     @classmethod
     def get_exchange_name(cls):
@@ -187,7 +188,7 @@ class ExchGwGateio(ExchangeGateway):
         Get exchange name
         :return: Exchange name string
         """
-        return 'Gateio'
+        return 'Bcex'
 
     def get_order_book_worker(self, instmt):
         """
@@ -198,8 +199,7 @@ class ExchGwGateio(ExchangeGateway):
             try:
                 l2_depth = self.api_socket.get_order_book(instmt)
                 # if l2_depth is not None and l2_depth.is_diff(instmt.get_l2_depth()):
-                if l2_depth:
-                    # print(l2_depth)
+                if l2_depth is not None:
                     instmt.set_prev_l2_depth(instmt.get_l2_depth())
                     instmt.set_l2_depth(l2_depth)
                     instmt.incr_order_book_id()
@@ -217,8 +217,8 @@ class ExchGwGateio(ExchangeGateway):
         """
         while True:
             try:
-                ret = self.api_socket.get_trades(instmt)
-                if ret is None or len(ret) == 0:
+                trades = self.api_socket.get_trades(instmt)
+                if trades is None or len(trades) == 0:
                     time.sleep(5)
                     continue
             except Exception as e:
@@ -226,12 +226,11 @@ class ExchGwGateio(ExchangeGateway):
                 time.sleep(5)
                 continue
                 
-            for trade in ret:
+            for trade in trades:
                 assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
                 assert isinstance(instmt.get_exch_trade_id(), str), \
                        "instmt.get_exch_trade_id()(%s) = %s" % (type(instmt.get_exch_trade_id()), instmt.get_exch_trade_id())
                 if int(trade.trade_id) > int(instmt.get_exch_trade_id()):
-                    # print(trade)
                     instmt.set_exch_trade_id(trade.trade_id)
                     instmt.incr_trade_id()
                     self.insert_trade(instmt, trade)
@@ -256,21 +255,20 @@ class ExchGwGateio(ExchangeGateway):
         self.init_instmt_snapshot_table(instmt)
         instmt.set_recovered(False)
         t1 = threading.Thread(target=partial(self.get_order_book_worker, instmt))
-        # t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))
+        t2 = threading.Thread(target=partial(self.get_trades_worker, instmt))
         t1.start()
-        # t2.start()
-        return [t1]
-        # return [t1, t2]
+        t2.start()
+        return [t1, t2]
         
         
 if __name__ == '__main__':
     Logger.init_log()
-    exchange_name = 'Gateio'
-    instmt_name = 'AEUSDT'
-    instmt_code = 'AE_USDT'
+    exchange_name = 'Bcex'
+    instmt_name = 'ETHBTC'
+    instmt_code = 'eth2btc'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)    
     db_client = SqlClientTemplate()
-    exch = ExchGwGateio([db_client])
+    exch = ExchGwBcex([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
     instmt.set_recovered(False)    

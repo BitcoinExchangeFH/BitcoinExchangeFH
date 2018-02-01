@@ -62,15 +62,9 @@ class ExchGwApiBinance(RESTfulApiSocket):
             return "https://www.binance.com/api/v1/aggTrades?symbol=%s&fromId=%s" % \
                 (instmt.get_instmt_code(), instmt.get_exch_trade_id())
         else:
-<<<<<<< HEAD:befh/exchanges/binance.py
-            return "https://www.binance.com/api/v1/aggTrades?symbol=%s&limit=100" % \
-                (instmt.get_instmt_code())
-
-=======
             return "https://www.binance.com/api/v1/aggTrades?symbol=%s&limit=10" % \
                 (instmt.get_instmt_code())         
                 
->>>>>>> fix binance:befh/exch_binance.py
     @classmethod
     def parse_l2_depth(cls, instmt, raw):
         """
@@ -89,31 +83,18 @@ class ExchGwApiBinance(RESTfulApiSocket):
             # Bids
             bids = raw[cls.get_bids_field_name()]
             bids = sorted(bids, key=lambda x: x[0], reverse=True)
-<<<<<<< HEAD:befh/exchanges/binance.py
-            for i in range(0, 5):
+            max_bid_len = min(len(bids), 5)
+            for i in range(0, max_bid_len):
                 l2_depth.bids[i].price = float(bids[i][0]) if not isinstance(bids[i][0], float) else bids[i][0]
                 l2_depth.bids[i].volume = float(bids[i][1]) if not isinstance(bids[i][1], float) else bids[i][1]
 
             # Asks
             asks = raw[cls.get_asks_field_name()]
             asks = sorted(asks, key=lambda x: x[0])
-            for i in range(0, 5):
-                l2_depth.asks[i].price = float(asks[i][0]) if not isinstance(asks[i][0], float) else asks[i][0]
-                l2_depth.asks[i].volume = float(asks[i][1]) if not isinstance(asks[i][1], float) else asks[i][1]
-=======
-            max_bid_len = min(len(bids), 5)
-            for i in range(0, max_bid_len):
-                l2_depth.bids[i].price = float(bids[i][0]) if type(bids[i][0]) != float else bids[i][0]
-                l2_depth.bids[i].volume = float(bids[i][1]) if type(bids[i][1]) != float else bids[i][1]   
-                
-            # Asks
-            asks = raw[cls.get_asks_field_name()]
-            asks = sorted(asks, key=lambda x: x[0])
             max_ask_len =  min(len(asks), 5)
             for i in range(0, max_ask_len):
-                l2_depth.asks[i].price = float(asks[i][0]) if type(asks[i][0]) != float else asks[i][0]
-                l2_depth.asks[i].volume = float(asks[i][1]) if type(asks[i][1]) != float else asks[i][1]            
->>>>>>> fix binance:befh/exch_binance.py
+                l2_depth.asks[i].price = float(asks[i][0]) if not isinstance(asks[i][0], float) else asks[i][0]
+                l2_depth.asks[i].volume = float(asks[i][1]) if not isinstance(asks[i][1], float) else asks[i][1]
         else:
             raise Exception('Does not contain order book keys in instmt %s-%s.\nOriginal:\n%s' % \
                 (instmt.get_exchange_name(), instmt.get_instmt_name(), \

@@ -13,20 +13,8 @@ class Logger:
         logging.basicConfig()
 
         Logger.logger = logging.getLogger('BitcoinExchangeFH')
-<<<<<<< HEAD
         Logger.logger.setLevel(logging.INFO)
-=======
-        Logger.logger.setLevel(logging.ERROR)
-<<<<<<< HEAD
-<<<<<<< HEAD
-        # Logger.logger.setLevel(logging.INFO)
->>>>>>> fix.
-=======
-        Logger.logger.setLevel(logging.INFO)
->>>>>>> add okex
-=======
-        # Logger.logger.setLevel(logging.INFO)
->>>>>>> clean
+
         formatter = logging.Formatter('%(asctime)s - %(levelname)s \n%(message)s\n')
         if output is None:
             slogger = logging.StreamHandler()

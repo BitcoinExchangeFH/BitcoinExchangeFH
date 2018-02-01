@@ -50,13 +50,10 @@ class ExchGwApiCryptopia(RESTfulApiSocket):
     def get_trade_side_field_name(cls):
         return 'Type'
 
-<<<<<<< HEAD:befh/exchanges/cryptopia.py
-=======
     @classmethod
     def get_trade_id_field_name(cls):
         return 'TradePairId'
         
->>>>>>> add Cryptopia:befh/exch_cryptopia.py
     @classmethod
     def get_trade_price_field_name(cls):
         return 'Price'
@@ -237,15 +234,10 @@ class ExchGwCryptopia(ExchangeGateway):
                     time.sleep(1)
                     continue
             except Exception as e:
-<<<<<<< HEAD:befh/exchanges/cryptopia.py
-                Logger.error(self.__class__.__name__, "Error in trades: %s" % e)
-
-=======
                 Logger.error(self.__class__.__name__, "Error in trades: %s" % e)                
                 time.sleep(1)
                 continue
             
->>>>>>> add kkex.:befh/exch_cryptopia.py
             for trade in ret:
                 assert isinstance(trade.trade_id, str), "trade.trade_id(%s) = %s" % (type(trade.trade_id), trade.trade_id)
                 assert isinstance(instmt.get_exch_trade_id(), str), \
@@ -286,26 +278,17 @@ class ExchGwCryptopia(ExchangeGateway):
 if __name__ == '__main__':
     Logger.init_log()
     exchange_name = 'Cryptopia'
-<<<<<<< HEAD:befh/exchanges/cryptopia.py
-    instmt_name = 'DOTBTC'
-    instmt_code = 'DOT_BTC'
-    instmt = Instrument(exchange_name, instmt_name, instmt_code)
-=======
     instmt_name = 'BTXBTC'
     instmt_code = 'BTX_BTC'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)    
->>>>>>> add Cryptopia:befh/exch_cryptopia.py
     db_client = SqlClientTemplate()
     exch = ExchGwCryptopia([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
-<<<<<<< HEAD:befh/exchanges/cryptopia.py
-    instmt.set_recovered(False)
-=======
+
     instmt.set_instmt_snapshot_table_name(exch.get_instmt_snapshot_table_name(instmt.get_exchange_name(),
                                                                                   instmt.get_instmt_name()))
     exch.init_instmt_snapshot_table(instmt)
     instmt.set_recovered(False)    
->>>>>>> add Cryptopia:befh/exch_cryptopia.py
     # exch.get_order_book_worker(instmt)
     exch.get_trades_worker(instmt)

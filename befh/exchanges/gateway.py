@@ -1,21 +1,13 @@
 #!/bin/python
-<<<<<<< HEAD:befh/exchanges/gateway.py
 from befh.clients.zmq import ZmqClient
 from befh.clients.csv import FileClient
 from befh.clients.mysql import MysqlClient
 from befh.clients.sqlite import SqliteClient
-=======
-from befh.kafka_client import KafkaClient
-from befh.zmq_client import ZmqClient
-from befh.file_client import FileClient
->>>>>>> update kafka.:befh/exchange.py
+from befh.clients.kafka import KafkaClient
 from befh.market_data import L2Depth, Trade, Snapshot
 from datetime import datetime
 from threading import Lock
-<<<<<<< HEAD:befh/exchanges/gateway.py
-=======
 import time
->>>>>>> add ratelimit.:befh/exchange.py
 
 class ExchangeGateway:
     ############################################################################
@@ -39,9 +31,7 @@ class ExchangeGateway:
         self.api_socket = api_socket
         self.lock = Lock()
         self.exch_snapshot_id = 0
-<<<<<<< HEAD:befh/exchanges/gateway.py
         self.date_time = datetime.utcnow().date()
-=======
         self.last_tick = 0
         self.tick_wait = 1
 
@@ -50,7 +40,6 @@ class ExchangeGateway:
         if current_time - self.last_tick < self.tick_wait:
             # print('.')
             return True
->>>>>>> add ratelimit.:befh/exchange.py
 
         self.last_tick = current_time
         return False

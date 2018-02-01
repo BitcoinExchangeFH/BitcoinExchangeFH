@@ -47,20 +47,11 @@ Users can
 - Okex (Websocket)
 - Quoine (RESTful)
 - Yunbi (RESTful)
-<<<<<<< HEAD
 - Wex (Restful)
-=======
 - Kkex (RESTful)
-<<<<<<< HEAD
->>>>>>> replace process with threading.
-=======
 - Bibox (RESTful)
-<<<<<<< HEAD
->>>>>>> add bibox
-=======
 - Okex (RESTful)
 - Aex (RESTful)
->>>>>>> update
 
 Currently the support of other exchanges is still under development.
 

@@ -14,7 +14,7 @@ import re
 from tzlocal import get_localzone
 
 
-class ExchGwApiOkexWs(WebSocketApiClient):
+class ExchGwApiOkexFutureWs(WebSocketApiClient):
     """
     Exchange Socket
     """
@@ -25,7 +25,7 @@ class ExchGwApiOkexWs(WebSocketApiClient):
         """
         Constructor
         """
-        WebSocketApiClient.__init__(self, 'ExchApiHuoBi')
+        WebSocketApiClient.__init__(self, 'ExchApiOkexFuture')
 
     @classmethod
     def get_bids_field_name(cls):
@@ -116,7 +116,7 @@ class ExchGwApiOkexWs(WebSocketApiClient):
         return trades
 
 
-class ExchGwOkex(ExchangeGateway):
+class ExchGwOkexFuture(ExchangeGateway):
     """
     Exchange gateway
     """
@@ -125,7 +125,7 @@ class ExchGwOkex(ExchangeGateway):
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwApiOkexWs(), db_clients)
+        ExchangeGateway.__init__(self, ExchGwApiOkexFutureWs(), db_clients)
 
     @classmethod
     def get_exchange_name(cls):
@@ -133,7 +133,7 @@ class ExchGwOkex(ExchangeGateway):
         Get exchange name
         :return: Exchange name string
         """
-        return 'Okex'
+        return 'OkexFuture'
 
     def on_open_handler(self, instmt, ws):
         """
@@ -207,11 +207,11 @@ if __name__ == '__main__':
     websocket.enableTrace(True)
     logging.basicConfig()
     Logger.init_log()
-    exchange_name = 'Okex'
+    exchange_name = 'OkexFuture'
     instmt_name = 'BTC'
     instmt_code = 'btc'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)
     db_client = SqlClientTemplate()
-    exch = ExchGwOkex([db_client])
+    exch = ExchGwOkexFuture([db_client])
     td = exch.start(instmt)
     pass

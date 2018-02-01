@@ -11,7 +11,7 @@ from functools import partial
 from datetime import datetime
 
 
-class ExchGwOkexWs(WebSocketApiClient):
+class ExchGwApiOkexSpotWs(WebSocketApiClient):
     """
     Exchange socket
     """
@@ -19,7 +19,7 @@ class ExchGwOkexWs(WebSocketApiClient):
         """
         Constructor
         """
-        WebSocketApiClient.__init__(self, 'ExchGwOkex')
+        WebSocketApiClient.__init__(self, 'ExchGwOkexSpot')
         
     @classmethod
     def get_timestamp_offset(cls):
@@ -124,7 +124,7 @@ class ExchGwOkexSpot(ExchangeGateway):
         Constructor
         :param db_client: Database client
         """
-        ExchangeGateway.__init__(self, ExchGwOkexWs(), db_clients)
+        ExchangeGateway.__init__(self, ExchGwApiOkexSpotWs(), db_clients)
 
     @classmethod
     def get_exchange_name(cls):
@@ -132,7 +132,7 @@ class ExchGwOkexSpot(ExchangeGateway):
         Get exchange name
         :return: Exchange name string
         """
-        return 'OkexSpot'
+        return 'Okex'
 
     def on_open_handler(self, instmt, ws):
         """

@@ -22,7 +22,8 @@ from befh.exchanges.yunbi import ExchGwYunbi
 from befh.exchanges.liqui import ExchGwLiqui
 from befh.exchanges.binance import ExchGwBinance
 from befh.exchanges.cryptopia import ExchGwCryptopia
-from befh.exchanges.okex import ExchGwOkex
+from befh.exchanges.okex_spot import ExchGwOkexSpot
+from befh.exchanges.okex_future import ExchGwOkexFuture
 from befh.exchanges.wex import ExchGwWex
 from befh.exchanges.bitflyer import ExchGwBitflyer
 from befh.exchanges.coinone import ExchGwCoinOne
@@ -158,7 +159,8 @@ def main():
     exch_gws.append(ExchGwBtccFuture(db_clients))
     exch_gws.append(ExchGwBitmex(db_clients))
     exch_gws.append(ExchGwBitfinex(db_clients))
-    exch_gws.append(ExchGwOkex(db_clients))
+    exch_gws.append(ExchGwOkexSpot(db_clients))
+    exch_gws.append(ExchGwOkexFuture(db_clients))
     exch_gws.append(ExchGwKraken(db_clients))
     exch_gws.append(ExchGwGdax(db_clients))
     exch_gws.append(ExchGwBitstamp(db_clients))
@@ -173,7 +175,6 @@ def main():
     exch_gws.append(ExchGwLiqui(db_clients))
     exch_gws.append(ExchGwBinance(db_clients))
     exch_gws.append(ExchGwCryptopia(db_clients))
-    exch_gws.append(ExchGwOkex(db_clients))
     exch_gws.append(ExchGwWex(db_clients))
     exch_gws.append(ExchGwKkex(db_clients))
     exch_gws.append(ExchGwBibox(db_clients))

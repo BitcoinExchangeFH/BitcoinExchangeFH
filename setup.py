@@ -17,6 +17,8 @@ setup(
             'websocket-client',
             'numpy',
             'qpython',
-            'pyzmq'
+            'pyzmq',
+            'kafka-python',
+            'requests'
         ]
     )

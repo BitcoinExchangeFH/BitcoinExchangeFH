@@ -35,7 +35,7 @@ from befh.exchanges.gateio import ExchGwGateio
 
 from befh.clients.kdbplus import KdbPlusClient
 from befh.clients.mysql import MysqlClient
-from befh.clients.sqlite import SqliteClient
+# from befh.clients.sqlite import SqliteClient
 from befh.clients.csv import FileClient
 from befh.clients.zmq import ZmqClient
 from befh.clients.kafka import KafkaClient

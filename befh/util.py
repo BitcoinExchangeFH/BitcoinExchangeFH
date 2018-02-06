@@ -13,7 +13,8 @@ class Logger:
         logging.basicConfig()
 
         Logger.logger = logging.getLogger('BitcoinExchangeFH')
-        Logger.logger.setLevel(logging.INFO)
+        # Logger.logger.setLevel(logging.INFO)
+        Logger.logger.setLevel(logging.WARNING)
 
         formatter = logging.Formatter('%(asctime)s - %(levelname)s \n%(message)s\n')
         if output is None:

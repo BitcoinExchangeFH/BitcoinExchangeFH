@@ -2,7 +2,7 @@
 from befh.clients.zmq import ZmqClient
 from befh.clients.csv import FileClient
 from befh.clients.mysql import MysqlClient
-from befh.clients.sqlite import SqliteClient
+# from befh.clients.sqlite import SqliteClient
 from befh.clients.kafka import KafkaClient
 from befh.market_data import L2Depth, Trade, Snapshot
 from datetime import datetime
@@ -95,7 +95,8 @@ class ExchangeGateway:
                              ['int'] + Snapshot.types(False),
                              [0], is_ifnotexists=True)
 
-            if isinstance(db_client, (MysqlClient, SqliteClient)):
+            # if isinstance(db_client, (MysqlClient, SqliteClient)):
+            if isinstance(db_client, (MysqlClient)):
                 with self.lock:
                     r = db_client.execute('select max(id) from {};'.format(table_name))
                     db_client.conn.commit()

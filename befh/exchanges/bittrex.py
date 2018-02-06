@@ -83,13 +83,15 @@ class ExchGwApiBittrex(RESTfulApiSocket):
 
             # Bids
             bids = raw[cls.get_bids_field_name()]
-            for i in range(0, 5):
+            max_bid_len = min(len(bids), 5)
+            for i in range(0, max_bid_len):
                 l2_depth.bids[i].price = bids[i][cls.get_price_field_name()]
                 l2_depth.bids[i].volume = bids[i][cls.get_volume_field_name()]
 
             # Asks
             asks = raw[cls.get_asks_field_name()]
-            for i in range(0, 5):
+            max_ask_len =  min(len(asks), 5)
+            for i in range(0, max_ask_len):
                 l2_depth.asks[i].price = asks[i][cls.get_price_field_name()]
                 l2_depth.asks[i].volume = asks[i][cls.get_volume_field_name()]
         else:
@@ -203,14 +205,17 @@ class ExchGwBittrex(ExchangeGateway):
         while True:
             try:
                 l2_depth = self.api_socket.get_order_book(instmt)
-                if l2_depth is not None and l2_depth.is_diff(instmt.get_l2_depth()):
+                print(l2_depth)
+                if l2_depth is not None:
                     instmt.set_prev_l2_depth(instmt.get_l2_depth())
                     instmt.set_l2_depth(l2_depth)
                     instmt.incr_order_book_id()
                     self.insert_order_book(instmt)
             except Exception as e:
                 Logger.error(self.__class__.__name__, "Error in order book: %s" % e)
-            time.sleep(1)
+                time.sleep(2)
+
+            time.sleep(3)
 
     def get_trades_worker(self, instmt):
         """
@@ -221,11 +226,11 @@ class ExchGwBittrex(ExchangeGateway):
             try:
                 ret = self.api_socket.get_trades(instmt)
                 if ret is None or len(ret) == 0:
-                    time.sleep(1)
+                    time.sleep(5)
                     continue
             except Exception as e:
                 Logger.error(self.__class__.__name__, "Error in trades: %s" % e)                
-                time.sleep(1)
+                time.sleep(5)
                 continue
             
             for trade in ret:
@@ -242,7 +247,7 @@ class ExchGwBittrex(ExchangeGateway):
             if not instmt.get_recovered():
                 instmt.set_recovered(True)
 
-            time.sleep(1)
+            time.sleep(3)
 
     def start(self, instmt):
         """
@@ -266,13 +271,13 @@ class ExchGwBittrex(ExchangeGateway):
 if __name__ == '__main__':
     Logger.init_log()
     exchange_name = 'Bittrex'
-    instmt_name = 'BTCETH'
-    instmt_code = 'BTC-ETH'
+    instmt_name = 'GBYTE'
+    instmt_code = 'BTC-GBYTE'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)
     db_client = SqlClientTemplate()
     exch = ExchGwBittrex([db_client])
     instmt.set_l2_depth(L2Depth(5))
     instmt.set_prev_l2_depth(L2Depth(5))
     instmt.set_recovered(False)
-    # exch.get_order_book_worker(instmt)
-    exch.get_trades_worker(instmt)
+    exch.get_order_book_worker(instmt)
+    # exch.get_trades_worker(instmt)

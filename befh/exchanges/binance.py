@@ -211,7 +211,7 @@ class ExchGwBinance(ExchangeGateway):
                     self.insert_order_book(instmt)
             except Exception as e:
                 Logger.error(self.__class__.__name__, "Error in order book: %s" % e)
-                time.sleep(5)
+                time.sleep(2)
 
             time.sleep(3)
 

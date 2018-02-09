@@ -245,7 +245,8 @@ class ExchGwBitfinex(ExchangeGateway):
                 if self.rate_limit():
                     return
                 
-                if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
+                # if instmt.get_l2_depth().is_diff(instmt.get_prev_l2_depth()):
+                if instmt.get_l2_depth():
                     instmt.incr_order_book_id()
                     self.insert_order_book(instmt)
 
@@ -293,8 +294,8 @@ class ExchGwBitfinex(ExchangeGateway):
 
 if __name__ == '__main__':
     exchange_name = 'Bitfinex'
-    instmt_name = 'BCHBTC'
-    instmt_code = 'BCHBTC'
+    instmt_name = 'ELFBTC'
+    instmt_code = 'ELFBTC'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)
     db_client = SqlClientTemplate()
     Logger.init_log()

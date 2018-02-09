@@ -134,8 +134,8 @@ class ExchangeGateway:
         # Update the snapshot
         if instmt.get_l2_depth() is not None:
             l2_depth = instmt.get_l2_depth()
-            assert(len(l2_depth.asks) == 5)
-            assert(len(l2_depth.bids) == 5)
+            assert(len(l2_depth.asks) >= 5)
+            assert(len(l2_depth.bids) >= 5)
 
             id = self.get_instmt_snapshot_id(instmt)
             for db_client in self.db_clients:

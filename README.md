@@ -87,7 +87,7 @@ You can open a TCP or inter-process traffic.
 For example, if you decide the data feed is subscribed at 127.0.0.1 at port 6001.
 
 ```
-bitcoinexchangefh -zmq -zmqdest "tcp://127.0.0.1:6001" -instmts subscription.ini
+bitcoinexchangefh -zmq -zmqdest "tcp://127.0.0.1:6001" -instmts subscriptions.ini
 ```
 
 According to [zmq-tcp](http://api.zeromq.org/2-1:zmq-tcp), please provide "127.0.0.1"
@@ -96,7 +96,7 @@ instead of "localhost" as the local machine destination.
 If the data feed is subscribed via inter-process shared memory with address "bitcoin".
 
 ```
-bitcoinexchangefh -zmq -zmqdest "ipc://bitcoin" -instmts subscription.ini
+bitcoinexchangefh -zmq -zmqdest "ipc://bitcoin" -instmts subscriptions.ini
 ```
 
 #### Sqlite
@@ -106,7 +106,7 @@ No further setup is required. Just define the output sqlite file.
 For example, to record the data to default sqlite file "bitcoinexchange.raw", run the command
 
 ```
-bitcoinexchangefh -sqlite -sqlitepath bitcoinexchangefh.sqlite -instmts subscription.ini
+bitcoinexchangefh -sqlite -sqlitepath bitcoinexchangefh.sqlite -instmts subscriptions.ini
 ```
 
 #### Kdb+
@@ -122,7 +122,7 @@ Then connect to the database with dedicated port (for example 5000 in the exampl
 For example connecting to localhost at port 5000, run the command
 
 ```
-bitcoinexchangefh -kdb -kdbdest "localhost:5000" -instmts subscription.ini
+bitcoinexchangefh -kdb -kdbdest "localhost:5000" -instmts subscriptions.ini
 ```
 
 #### MySQL
@@ -139,7 +139,7 @@ SELECT
 For example connecting to localhost with user "bitcoin", password "bitcoin" and schema "bcex", run the command
 
 ```
-bitcoinexchangefh -mysql -mysqldest "bitcoin:bitcoin@localhost:3306" -mysqlschema bcex -instmts subscription.ini
+bitcoinexchangefh -mysql -mysqldest "bitcoin:bitcoin@localhost:3306" -mysqlschema bcex -instmts subscriptions.ini
 ```
 
 #### CSV
@@ -149,7 +149,7 @@ No further setup is required. Just define the output folder path.
 For example to a folder named "data", you can run the following command.
 
 ```
-bitcoinexchangefh -csv -csvpath data/ -instmts subscription.ini
+bitcoinexchangefh -csv -csvpath data/ -instmts subscriptions.ini
 ```
 
 ### Multiple destination
@@ -159,7 +159,7 @@ Bitcoinexchangefh supports multiple destinations.
 For example, if you store the market data into the database and, at the same time, publish the data through ZeroMQ publisher, you can run the command
 
 ```
-bitcoinexchangefh -zmq -zmqdest "tcp://localhost:6001" -kdb -kdbdest "localhost:5000" -instmts subscription.ini
+bitcoinexchangefh -zmq -zmqdest "tcp://localhost:6001" -kdb -kdbdest "localhost:5000" -instmts subscriptions.ini
 ```
 
 ### Arguments

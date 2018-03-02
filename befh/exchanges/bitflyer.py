@@ -159,7 +159,6 @@ class ExchGwApiBitflyer(RESTfulApiSocket):
         :return: List of trades
         """
         link = cls.get_trades_link(instmt)
-        print(link)
         # If verify cert, got <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:749)>
         res = cls.request(link, verify_cert=False)
         trades = []

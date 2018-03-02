@@ -6,7 +6,7 @@ from befh.instrument import Instrument
 from befh.clients.sql_template import SqlClientTemplate
 from functools import partial
 from datetime import datetime
-from multiprocessing import Process
+from threading import Thread
 import time
 
 
@@ -163,7 +163,6 @@ class ExchGwApiBinance(RESTfulApiSocket):
         :return: List of trades
         """
         link = cls.get_trades_link(instmt)
-        print(link)
         # If verify cert, got <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:749)>
         res = cls.request(link, verify_cert=False)
         trades = []
@@ -256,8 +255,8 @@ class ExchGwBinance(ExchangeGateway):
                                                                                   instmt.get_instmt_name()))
         self.init_instmt_snapshot_table(instmt)
         instmt.set_recovered(False)
-        t1 = Process(target=partial(self.get_order_book_worker, instmt))
-        t2 = Process(target=partial(self.get_trades_worker, instmt))
+        t1 = Thread(target=partial(self.get_order_book_worker, instmt))
+        t2 = Thread(target=partial(self.get_trades_worker, instmt))
         t1.start()
         t2.start()
         return [t1, t2]

@@ -181,8 +181,6 @@ class ExchGwOkex(ExchangeGateway):
                             instmt.incr_trade_id()
                             instmt.set_exch_trade_id(trade.trade_id)
                             self.insert_trade(instmt, trade)
-                else:
-                    Logger.info(self.__class__.__name__, 'Nothing to do!!')
 
     def start(self, instmt):
         """

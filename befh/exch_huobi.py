@@ -216,8 +216,6 @@ class ExchGwHuoBi(ExchangeGateway):
                     self.insert_order_book(instmt)
             else:
                 Logger.error(self.__class__.__name__, 'Not Trade or Market')
-        else:
-            Logger.info(self.__class__.__name__, 'Nothing to do!!')
 
     def start(self, instmt):
         """

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='BitcoinExchangeFH',
-    version='0.2.4',
+    version='0.2.5',
     author='Gavin Chan',
     author_email='gavincyi@gmail.com',
     packages=find_packages(),

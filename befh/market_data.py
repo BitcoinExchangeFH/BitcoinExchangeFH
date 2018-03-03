@@ -81,26 +81,37 @@ class L2Depth(MarketDataBase):
                 'aq1', 'aq2', 'aq3', 'aq4', 'aq5']
 
     @staticmethod
-    def types():
+    def types(db_client=None):
         """
         Return static column types
         """
-        return ['varchar(25)'] + \
-               ['decimal(10,5)'] * 10 + \
-               ['decimal(20,8)'] * 10
+        date_time = 'varchar(25)'
+        bests = 'decimal(10,5)'
+        quantities = 'decimal(20,8)'
 
-    def values(self):
+        if db_client and db_client.name == 'mysql' and db_client.use_timestamps == True:
+            date_time = 'timestamp(6)'
+
+        return [date_time] + \
+               [bests] * 10 + \
+               [quantities] * 10
+
+    def values(self,db_client=None):
         """
         Return values in a list
         """
+        date_time = self.date_time
+        if db_client and db_client.name == 'mysql' and db_client.use_timestamps == True:
+            date_time = date_time[:4] + '-' + date_time[4:6] + '-' + date_time[6:8] + date_time[8:]
+
         if self.depth == 5:
-            return [self.date_time] + \
+            return [date_time] + \
                    [b.price for b in self.bids] + \
                    [a.price for a in self.asks] + \
                    [b.volume for b in self.bids] + \
                    [a.volume for a in self.asks]
         else:
-            return [self.date_time] + \
+            return [date_time] + \
                    [b.price for b in self.bids[0:5]] + \
                    [a.price for a in self.asks[0:5]] + \
                    [b.volume for b in self.bids[0:5]] + \
@@ -177,17 +188,30 @@ class Trade(MarketDataBase):
         return ['date_time', 'trade_id', 'trade_price', 'trade_volume', 'trade_side']
 
     @staticmethod
-    def types():
+    def types(db_client=None):
         """
         Return static column types
         """
-        return ['varchar(25)', 'text', 'decimal(10,5)', 'decimal(20,8)', 'int']
+        date_time = 'varchar(25)'
+        trade_id = 'text'
+        trade_price = 'decimal(10,5)'
+        trade_volume = 'decimal(20,8)'
+        trade_side = 'int'
 
-    def values(self):
+        if db_client and db_client.name == 'mysql' and db_client.use_timestamps == True:
+            date_time = 'timestamp(6)'
+        
+        return [date_time, trade_id, trade_price, trade_volume, trade_side]
+
+    def values(self,db_client=None):
         """
         Return values in a list
         """
-        return [self.date_time] + \
+        date_time = self.date_time
+        if db_client and db_client.name == 'mysql' and db_client.use_timestamps == True:
+            date_time = date_time[:4] + '-' + date_time[4:6] + '-' + date_time[6:8] + date_time[8:]
+
+        return [date_time] + \
                [self.trade_id] + [self.trade_price] + [self.trade_volume] + [self.trade_side]
 
 
@@ -231,28 +255,52 @@ class Snapshot(MarketDataBase):
                     'order_date_time', 'trades_date_time', 'update_type']
 
     @staticmethod
-    def types(is_name=True):
+    def types(is_name=True, db_client=None):
         """
         Return static column types
         """
+        exchange = 'varchar(20)'
+        instmt = 'varchar(20)'
+        trade_px = 'decimal(20,8)'
+        trade_volume = 'decimal(20,8)'
+        bests = 'decimal(20,8)'
+        quantities = 'decimal(20,8)'
+        order_date_time = 'varchar(25)'
+        trades_date_time = 'varchar(25)'
+        update_type = 'int'
+
+        if db_client and db_client.name == 'mysql' and db_client.use_timestamps == True:
+            order_date_time = 'timestamp(6)'
+            trades_date_time = 'timestamp(6)'
+
         if is_name:
-            return ['varchar(20)', 'varchar(20)', 'decimal(20,8)', 'decimal(20,8)'] + \
-                   ['decimal(20,8)'] * 10 + \
-                   ['decimal(20,8)'] * 10 + \
-                   ['varchar(25)', 'varchar(25)', 'int']
+            return [exchange, instmt, trade_px, trade_volume] + \
+                   [bests] * 10 + \
+                   [quantities] * 10 + \
+                   [order_date_time, trades_date_time, update_type]
         else:
-            return ['decimal(20,8)', 'decimal(20,8)'] + \
-                   ['decimal(20,8)'] * 10 + \
-                   ['decimal(20,8)'] * 10 + \
-                   ['varchar(25)', 'varchar(25)', 'int']
+            return [trade_px, trade_volume] + \
+                   [bests] * 10 + \
+                   [quantities] * 10 + \
+                   [order_date_time, trades_date_time, update_type]
 
                 
     @staticmethod
-    def values(exchange_name='', instmt_name='', l2_depth=None, last_trade=None, update_type=UpdateType.NONE):
+    def values(exchange_name='', instmt_name='', l2_depth=None, last_trade=None, update_type=UpdateType.NONE, db_client=None):
         """
         Return values in a list
         """
+
         assert l2_depth is not None and last_trade is not None, "L2 depth and last trade must not be none."
+
+        order_date_time = l2_depth.date_time
+        trades_date_time = last_trade.date_time
+
+        if db_client and db_client.name == 'mysql' and db_client.use_timestamps == True:
+            order_date_time = order_date_time[:4] + '-' + order_date_time[4:6] + '-' + order_date_time[6:8] + order_date_time[8:]
+            trades_date_time = trades_date_time[:4] + '-' + trades_date_time[4:6] + '-' + trades_date_time[6:8] + trades_date_time[8:]
+
+
         return ([exchange_name] if exchange_name else []) + \
                ([instmt_name] if instmt_name else []) + \
                [last_trade.trade_price, last_trade.trade_volume] + \
@@ -260,5 +308,5 @@ class Snapshot(MarketDataBase):
                [a.price for a in l2_depth.asks[0:5]] + \
                [b.volume for b in l2_depth.bids[0:5]] + \
                [a.volume for a in l2_depth.asks[0:5]] + \
-               [l2_depth.date_time, last_trade.date_time, update_type]
+               [order_date_time, trades_date_time, update_type]
         

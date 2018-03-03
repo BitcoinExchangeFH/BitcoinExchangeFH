@@ -16,6 +16,7 @@ class SqlClient(DatabaseClient):
         Constructor
         """
         DatabaseClient.__init__(self)
+        self.name = 'sql'
         self.conn = None
         self.cursor = None
         self.lock = threading.Lock()

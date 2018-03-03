@@ -12,6 +12,7 @@ class SqlClientTemplate(SqlClient):
         """
         Constructor
         """
+        self.name = 'sql'
         SqlClient.__init__(self)
 
     def connect(self, **kwargs):

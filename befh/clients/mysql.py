@@ -6,11 +6,13 @@ class MysqlClient(SqlClient):
     """
     Sqlite client
     """
-    def __init__(self):
+    def __init__(self, use_timestamps=False):
         """
         Constructor
         """
         SqlClient.__init__(self)
+        self.use_timestamps = use_timestamps
+        self.name = 'mysql'
 
     def connect(self, **kwargs):
         """

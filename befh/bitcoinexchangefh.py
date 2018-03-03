@@ -43,6 +43,7 @@ def main():
     parser.add_argument('-sqlite', action='store_true', help='Use SQLite database.')
     parser.add_argument('-mysql', action='store_true', help='Use MySQL.')
     parser.add_argument('-zmq', action='store_true', help='Use zmq publisher.')
+    parser.add_argument('-mysqlTimestamps', action='store_true', help='Use timestamp for time colums.')
     parser.add_argument('-mysqldest', action='store', dest='mysqldest',
                         help='MySQL destination. Formatted as <name:pwd@host:port>',
                         default='')
@@ -75,7 +76,7 @@ def main():
         db_clients.append(db_client)
         is_database_defined = True
     if args.mysql:
-        db_client = MysqlClient()
+        db_client = MysqlClient(use_timestamps=args.mysqlTimestamps)
         mysqldest = args.mysqldest
         logon_credential = mysqldest.split('@')[0]
         connection = mysqldest.split('@')[1]

@@ -6,6 +6,7 @@ class DatabaseClient:
         """
         Constructor
         """
+        self.name = 'database'
         pass
 
     @classmethod

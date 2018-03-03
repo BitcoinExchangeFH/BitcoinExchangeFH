@@ -11,6 +11,12 @@ class KdbPlusClient(DatabaseClient):
     """
     Kdb+ Client
     """
+    def __init__(self):
+        """
+        Constructor
+        """
+        self.name = 'kdbplus'
+
     @classmethod
     def parse_condition(cls, condition):
         """

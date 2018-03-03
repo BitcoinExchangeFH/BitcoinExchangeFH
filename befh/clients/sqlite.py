@@ -17,6 +17,7 @@ class SqliteClient(SqlClient):
         Constructor
         """
         SqlClient.__init__(self)
+        self.name = 'sqllite'
 
     def connect(self, **kwargs):
         """

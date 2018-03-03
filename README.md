@@ -142,6 +142,8 @@ For example connecting to localhost with user "bitcoin", password "bitcoin" and 
 bitcoinexchangefh -mysql -mysqldest "bitcoin:bitcoin@localhost:3306" -mysqlschema bcex -instmts subscription.ini
 ```
 
+If you have MySQL 5.6.4+ then you can also use `-mysqlTimestamps` this use timestamp(6) column type instead of varchar(25)
+
 #### CSV
 
 No further setup is required. Just define the output folder path.

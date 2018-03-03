@@ -67,7 +67,7 @@ class ExchangeGateway:
         for db_client in db_clients:
             db_client.create(cls.get_snapshot_table_name(),
                              Snapshot.columns(),
-                             Snapshot.types(),
+                             Snapshot.types(db_client=db_client),
                              [0,1], is_ifnotexists=True)
 
     def init_instmt_snapshot_table(self, instmt):
@@ -79,7 +79,7 @@ class ExchangeGateway:
         for db_client in self.db_clients:
             db_client.create(table_name,
                              ['id'] + Snapshot.columns(False),
-                             ['int'] + Snapshot.types(False),
+                             ['int'] + Snapshot.types(False,db_client=db_client),
                              [0], is_ifnotexists=True)
 
             if isinstance(db_client, (MysqlClient, SqliteClient)):
@@ -124,12 +124,13 @@ class ExchangeGateway:
                 if self.is_allowed_snapshot(db_client):
                     db_client.insert(table=self.get_snapshot_table_name(),
                                      columns=Snapshot.columns(),
-                                     types=Snapshot.types(),
+                                     types=Snapshot.types(db_client=db_client),
                                      values=Snapshot.values(instmt.get_exchange_name(),
                                                             instmt.get_instmt_name(),
                                                             instmt.get_l2_depth(),
                                                             Trade() if instmt.get_last_trade() is None else instmt.get_last_trade(),
-                                                            Snapshot.UpdateType.ORDER_BOOK),
+                                                            Snapshot.UpdateType.ORDER_BOOK,
+                                                            db_client=db_client),
                                      primary_key_index=[0,1],
                                      is_orreplace=True,
                                      is_commit=True)
@@ -137,13 +138,14 @@ class ExchangeGateway:
                 if self.is_allowed_instmt_record(db_client):
                     db_client.insert(table=instmt.get_instmt_snapshot_table_name(),
                                           columns=['id'] + Snapshot.columns(False),
-                                          types=['int'] + Snapshot.types(False),
+                                          types=['int'] + Snapshot.types(False,db_client=db_client),
                                           values=[id] +
                                                   Snapshot.values('',
                                                                  '',
                                                                  instmt.get_l2_depth(),
                                                                  Trade() if instmt.get_last_trade() is None else instmt.get_last_trade(),
-                                                                 Snapshot.UpdateType.ORDER_BOOK),
+                                                                 Snapshot.UpdateType.ORDER_BOOK,
+                                                                 db_client=db_client),
                                           is_commit=True)
 
     def insert_trade(self, instmt, trade):
@@ -181,8 +183,9 @@ class ExchangeGateway:
                                                             instmt.get_instmt_name(),
                                                             instmt.get_l2_depth(),
                                                             instmt.get_last_trade(),
-                                                            Snapshot.UpdateType.TRADES),
-                                     types=Snapshot.types(),
+                                                            Snapshot.UpdateType.TRADES,
+                                                            db_client=db_client),
+                                     types=Snapshot.types(db_client=db_client),
                                      primary_key_index=[0,1],
                                      is_orreplace=True,
                                      is_commit=not is_allowed_instmt_record)
@@ -190,11 +193,12 @@ class ExchangeGateway:
                 if is_allowed_instmt_record:
                     db_client.insert(table=instmt.get_instmt_snapshot_table_name(),
                                      columns=['id'] + Snapshot.columns(False),
-                                     types=['int'] + Snapshot.types(False),
+                                     types=['int'] + Snapshot.types(False,db_client=db_client),
                                      values=[id] +
                                             Snapshot.values('',
                                                          '',
                                                          instmt.get_l2_depth(),
                                                          instmt.get_last_trade(),
-                                                         Snapshot.UpdateType.TRADES),
+                                                         Snapshot.UpdateType.TRADES,
+                                                         db_client=db_client),
                                      is_commit=True)

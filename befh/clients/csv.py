@@ -31,6 +31,7 @@ class FileClient(DatabaseClient):
             raise Exception("FileClient does not accept empty directory.")
 
         self.file_directory = dir
+        self.name = 'csv'
 
     @staticmethod
     def convert_to(from_str, to_type):

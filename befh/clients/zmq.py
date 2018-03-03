@@ -18,6 +18,7 @@ class ZmqClient(DatabaseClient):
         self.context = zmq.Context()
         self.conn = self.context.socket(zmq.PUB)
         self.lock = threading.Lock()
+        self.name = 'zmq'
 
     def connect(self, **kwargs):
         """

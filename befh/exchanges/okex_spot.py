@@ -147,15 +147,15 @@ class ExchGwOkexSpot(ExchangeGateway):
             if len(instmt_code_split) == 2:
                 # Future instruments
                 instmt.set_order_book_channel_id("ok_sub_spot_%s_%s_depth_5" % \
-                                                 (instmt_code_split[0],
-                                                  instmt_code_split[1]))
+                                                 (instmt_code_split[0].lower(),
+                                                  instmt_code_split[1].lower()))
                 instmt.set_trades_channel_id("ok_sub_spot_%s_%s_deals" % \
-                                               (instmt_code_split[0],
-                                                instmt_code_split[1]))
+                                               (instmt_code_split[0].lower(),
+                                                instmt_code_split[1].lower()))
             else:
                 # Spot instruments
-                instmt.set_order_book_channel_id("ok_sub_spot_%s_depth_5" % instmt.get_instmt_code())
-                instmt.set_trades_channel_id("ok_sub_spot_%s_deals" % instmt.get_instmt_code())
+                instmt.set_order_book_channel_id("ok_sub_spot_%s_depth_5" % instmt.get_instmt_code().lower())
+                instmt.set_trades_channel_id("ok_sub_spot_%s_deals" % instmt.get_instmt_code().lower())
 
             ws.send(self.api_socket.get_order_book_subscription_string(instmt))
             # ws.send(self.api_socket.get_trades_subscription_string(instmt))

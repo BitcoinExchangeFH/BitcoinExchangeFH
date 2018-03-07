@@ -215,7 +215,7 @@ class Snapshot(MarketDataBase):
         Return static columns names
         """
         if is_name:
-            return ['exchange', 'instmt',
+            return ['exchange', 'instmt', 'trade_side',
                     'trade_px', 'trade_volume',
                     'b1', 'b2', 'b3', 'b4', 'b5',
                     'a1', 'a2', 'a3', 'a4', 'a5',
@@ -223,7 +223,7 @@ class Snapshot(MarketDataBase):
                     'aq1', 'aq2', 'aq3', 'aq4', 'aq5',
                     'order_date_time', 'trades_date_time', 'update_type']
         else:
-            return ['trade_px', 'trade_volume',
+            return ['trade_side', 'trade_px', 'trade_volume',
                     'b1', 'b2', 'b3', 'b4', 'b5',
                     'a1', 'a2', 'a3', 'a4', 'a5',
                     'bq1', 'bq2', 'bq3', 'bq4', 'bq5',
@@ -236,12 +236,12 @@ class Snapshot(MarketDataBase):
         Return static column types
         """
         if is_name:
-            return ['varchar(20)', 'varchar(20)', 'decimal(20,8)', 'decimal(20,8)'] + \
+            return ['varchar(20)', 'varchar(20)', 'int', 'decimal(20,8)', 'decimal(20,8)'] + \
                    ['decimal(20,8)'] * 10 + \
                    ['decimal(20,8)'] * 10 + \
                    ['varchar(25)', 'varchar(25)', 'int']
         else:
-            return ['decimal(20,8)', 'decimal(20,8)'] + \
+            return ['int', 'decimal(20,8)', 'decimal(20,8)'] + \
                    ['decimal(20,8)'] * 10 + \
                    ['decimal(20,8)'] * 10 + \
                    ['varchar(25)', 'varchar(25)', 'int']
@@ -255,6 +255,7 @@ class Snapshot(MarketDataBase):
         assert l2_depth is not None and last_trade is not None, "L2 depth and last trade must not be none."
         return ([exchange_name] if exchange_name else []) + \
                ([instmt_name] if instmt_name else []) + \
+               [last_trade.trade_side] + \
                [last_trade.trade_price, last_trade.trade_volume] + \
                [b.price for b in l2_depth.bids[0:5]] + \
                [a.price for a in l2_depth.asks[0:5]] + \

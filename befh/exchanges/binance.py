@@ -204,7 +204,7 @@ class ExchGwBinance(ExchangeGateway):
         while True:
             try:
                 l2_depth = self.api_socket.get_order_book(instmt)
-                if l2_depth is not None and l2_depth.is_diff(instmt.get_l2_depth()):
+                if l2_depth is not None:
                     instmt.set_prev_l2_depth(instmt.get_l2_depth())
                     instmt.set_l2_depth(l2_depth)
                     instmt.incr_order_book_id()
@@ -269,8 +269,8 @@ class ExchGwBinance(ExchangeGateway):
 if __name__ == '__main__':
     Logger.init_log()
     exchange_name = 'Binance'
-    instmt_name = 'LTCBTC'
-    instmt_code = 'LTCBTC'
+    instmt_name = 'NANOBTC'
+    instmt_code = 'NANOBTC'
     instmt = Instrument(exchange_name, instmt_name, instmt_code)
     db_client = SqlClientTemplate()
     exch = ExchGwBinance([db_client])

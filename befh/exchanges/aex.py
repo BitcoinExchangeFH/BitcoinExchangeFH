@@ -61,13 +61,13 @@ class ExchGwApiAex(RESTfulApiSocket):
     def get_order_book_link(cls, instmt):
         c, mk_type = cls.get_pair(instmt)
 
-        return "https://api.aex.com/depth.php?c={0}&mk_type={1}".format(c, mk_type)
+        return "https://api.aex-global.com/depth.php?c={0}&mk_type={1}".format(c, mk_type)
 
     @classmethod
     def get_trades_link(cls, instmt):        
         c, mk_type = cls.get_pair(instmt)
 
-        return "https://api.aex.com/trades.php?c={0}&mk_type={1}".format(c, mk_type)
+        return "https://api.aex-global.com/trades.php?c={0}&mk_type={1}".format(c, mk_type)
                 
     @classmethod
     def parse_l2_depth(cls, instmt, raw):

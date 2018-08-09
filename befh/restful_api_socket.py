@@ -30,7 +30,10 @@ class RESTfulApiSocket(ApiSocket):
         """
         # try:
         res = requests.request("GET", url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=RESTfulApiSocket.DEFAULT_URLOPEN_TIMEOUT)  
-        res = res.json()
+        if res.status_code >= 400:
+            raise Exception('request failed! {} {}'.format(res.status_code, url))
+        else:
+            res = res.json()
         return res
         # except expression as identifier:
         #     return {}

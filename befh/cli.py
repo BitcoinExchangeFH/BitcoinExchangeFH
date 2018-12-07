@@ -7,7 +7,7 @@ import logging
 import click
 import yaml
 
-from befh import Configuration
+from befh import Configuration, Runner
 
 LOGGER = logging.getLogger(__name__)
 
@@ -37,6 +37,10 @@ def main(configuration, debug):
     configuration = yaml.load(configuration)
     LOGGER.debug('Configuration:\n%s', configuration)
     configuration = Configuration(configuration)
+
+    runner = Runner(config=configuration)
+    runner.load()
+    runner.run()
 
 
 if __name__ == "__main__":

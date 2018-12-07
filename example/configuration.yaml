@@ -1,0 +1,11 @@
+subscriptions:
+    Binance:
+        instruments: 
+          - ETH/BTC
+          - XRP/BTC
+
+handlers:
+    debug:
+        level: INFO
+    sql:
+        connection: "sqlite:///:memory:"

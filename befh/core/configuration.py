@@ -10,17 +10,60 @@ class Configuration:
         self._config = config
 
     @property
-    def subscription(self):
-        """Subscription.
+    def subscriptions(self):
+        """Subscriptions.
         """
-        if 'subscription' not in self.keys():
-            raise RuntimeError(
-                'No subscription is found.')
+        return self._config['subscriptions']
 
-        return self._config['subscription']
+    @property
+    def handlers(self):
+        """Handlers.
+        """
+        return self._config['handlers']
 
     def keys(self):
         """Keys.
         """
         for key in self._config.keys():
             yield key.lower()
+
+    def check_configuration(self):
+        """Check configuration.
+        """
+        self._check_subscriptions()
+        self._check_handlers()
+
+    def _check_subscriptions(self):
+        """Check subscriptions.
+        """
+        if 'subscriptions' not in self.keys():
+            raise RuntimeError(
+                'No subscription section is found in the configuration')
+
+        if not isinstance(self.subscriptions, dict):
+            raise RuntimeError(
+                'Subscription handler must be a dict.')
+
+        for exchange, subscription in self.subscriptions.items():
+            if not isinstance(subscription, dict):
+                raise RuntimeError(
+                    'No subscription information is found in '
+                    'exchange %s', exchange)
+
+            if 'instruments' not in subscription:
+                raise RuntimeError(
+                    'Subscription instruments is not found in '
+                    'exchange %s. Please state the "instruments" '
+                    'for subscription',
+                    exchange)
+
+    def _check_handlers(self):
+        """Check handlers.
+        """
+        if 'handlers' not in self.keys():
+            raise RuntimeError(
+                'No handler section is found in the configuration')
+
+        if not isinstance(self.handlers, dict):
+            raise RuntimeError(
+                'Handler section must be a dict.')

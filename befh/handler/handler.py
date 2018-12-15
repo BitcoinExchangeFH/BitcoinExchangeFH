@@ -7,10 +7,11 @@ class Handler:
     """Handler.
     """
 
-    def __init__(self, config):
+    def __init__(self, is_debug, is_cold):
         """Constructor.
         """
-        self._config = config
+        self._is_debug = is_debug
+        self._is_cold = is_cold
 
     def load(self):
         """Load.
@@ -19,6 +20,13 @@ class Handler:
 
     def create_table(self, **kwargs):
         """Create table.
+        """
+        raise NotImplementedError(
+            'Not implemented on exchange %s' %
+                self.__class__.__name__)
+
+    def insert(self, **kwargs):
+        """Insert.
         """
         raise NotImplementedError(
             'Not implemented on exchange %s' %

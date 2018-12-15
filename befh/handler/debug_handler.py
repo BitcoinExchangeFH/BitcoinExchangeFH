@@ -13,17 +13,9 @@ class DebugHandler(Handler):
         """
         pass
 
-    def update_order_book(self, exchange, symbol, bids, asks):
-        """Update order book.
+    def insert(self, table_name, fields):
+        """Insert.
         """
-        LOGGER.info('Exchange %s order book:\n\tbids:%s\n\tasks:%s',
-                    exchange.name,
-                    bids,
-                    asks)
-
-    def update_trade(self, exchange, symbol, trade):
-        """Update trade.
-        """
-        LOGGER.info('Exchange %s trade:\n\t%s',
-                    exchange.name,
-                    trade)
+        LOGGER.info('Table name %s:\n%s',
+                    table_name,
+                    fields)

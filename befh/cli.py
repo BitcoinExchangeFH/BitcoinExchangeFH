@@ -22,7 +22,12 @@ LOGGER = logging.getLogger(__name__)
     default=False,
     is_flag=True,
     help='Debug mode.')
-def main(configuration, debug):
+@click.option(
+    '--cold',
+    default=False,
+    is_flag=True,
+    help='Cold start mode.')
+def main(configuration, debug, cold):
     """Console script for BitcoinExchangeFH."""
     if debug:
         level = logging.DEBUG
@@ -38,7 +43,10 @@ def main(configuration, debug):
     LOGGER.debug('Configuration:\n%s', configuration)
     configuration = Configuration(configuration)
 
-    runner = Runner(config=configuration)
+    runner = Runner(
+        config=configuration,
+        is_debug=debug,
+        is_cold=cold)
     runner.load()
     runner.run()
 

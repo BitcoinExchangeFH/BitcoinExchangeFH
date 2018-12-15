@@ -13,10 +13,12 @@ class Runner:
     """Runner.
     """
 
-    def __init__(self, config):
+    def __init__(self, config, is_debug, is_cold):
         """Constructor.
         """
         self._config = config
+        self._is_debug = is_debug
+        self._is_cold = is_cold
         self._exchanges = {}
 
     def load(self):
@@ -32,7 +34,9 @@ class Runner:
         handlers_configuration = self._config.handlers
         run_exchange = partial(
             Runner.run_exchange,
-            handlers_configuration=handlers_configuration)
+            handlers_configuration=handlers_configuration,
+            is_debug=self._is_debug,
+            is_cold=self._is_cold)
 
         with mp.Pool() as pool:
             pool.starmap(
@@ -41,15 +45,24 @@ class Runner:
             )
 
     @staticmethod
-    def run_exchange(exchange_name, subscription, handlers_configuration):
+    def run_exchange(
+            exchange_name,
+            subscription,
+            handlers_configuration,
+            is_debug,
+            is_cold):
         """Run exchange.
         """
         LOGGER.info('Running exchange subscription %s', exchange_name)
         exchange = Runner.create_exchange(
             exchange_name=exchange_name,
-            subscription=subscription)
+            subscription=subscription,
+            is_debug=is_debug,
+            is_cold=is_cold)
         handlers = Runner.create_handlers(
-            handlers_configuration=handlers_configuration)
+            handlers_configuration=handlers_configuration,
+            is_debug=is_debug,
+            is_cold=is_cold)
 
         for handler_name, handler in handlers.items():
             exchange._handlers.append(handler)
@@ -58,32 +71,34 @@ class Runner:
             exchange._trade_callbacks.append(
                 handler.update_trade)
 
+        exchange.load()
         exchange.run()
 
     @staticmethod
-    def create_exchange(exchange_name, subscription):
+    def create_exchange(exchange_name, subscription, is_debug, is_cold):
         """Create exchange.
         """
         exchange = RestApiExchange(
             name=exchange_name,
-            config=subscription)
+            config=subscription,
+            is_debug=is_debug,
+            is_cold=is_cold)
         exchange.load()
 
         return exchange
 
     @staticmethod
-    def create_handler(handler_name, connection):
+    def create_handler(handler_name, handler_parameters, is_debug, is_cold):
         """Create handler.
         """
         handler_name = handler_name.lower()
 
         if handler_name == "sql":
             from befh.handler import SqlHandler
-            handler = SqlHandler(config=connection)
-            handler.load()
-        elif handler_name == 'debug':
-            from befh.handler import DebugHandler
-            handler = DebugHandler(config=connection)
+            handler = SqlHandler(
+                is_debug=is_debug,
+                is_cold=is_cold,
+                **handler_parameters)
             handler.load()
         else:
             raise NotImplementedError(
@@ -93,14 +108,16 @@ class Runner:
 
 
     @staticmethod
-    def create_handlers(handlers_configuration):
+    def create_handlers(handlers_configuration, is_debug, is_cold):
         """Create handlers.
         """
         handlers = {}
 
-        for handler_name, connection in handlers_configuration.items():
+        for handler_name, handler_para in handlers_configuration.items():
             handlers[handler_name] = Runner.create_handler(
                 handler_name=handler_name,
-                connection=connection)
+                handler_parameters=handler_para,
+                is_debug=is_debug,
+                is_cold=is_cold)
 
         return handlers

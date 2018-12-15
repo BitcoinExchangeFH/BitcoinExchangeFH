@@ -1,7 +1,14 @@
 import logging
 from datetime import datetime
 
-from sqlalchemy import create_engine
+from sqlalchemy import (
+    create_engine,
+    Table,
+    Column,
+    Integer,
+    String,
+    Numeric,
+    MetaData)
 
 from .handler import Handler
 
@@ -12,75 +19,96 @@ class SqlHandler(Handler):
     """Sql handler.
     """
 
-    def __init__(self, config):
+    def __init__(self, connection, **kwargs):
         """Constructor.
         """
-        super().__init__(config=config)
+        super().__init__(**kwargs)
+        self._connection = connection
         self._engine = None
 
     def load(self):
         """Load.
         """
-        connection = self._config['connection']
-        self._engine = create_engine(connection)
+        self._engine = create_engine(self._connection)
 
     def create_table(self, table_name, fields, **kwargs):
         """Create table.
         """
         assert self._engine, "Engine is not initialized"
 
+        # Check if the table exists
+        if table_name in self._engine.table_names():
+            if self._is_cold:
+                self._engine.execute(
+                    'delete table {table_name}'.format(
+                        table_name=table_name))
+                LOGGER.info(
+                    'Table %s is deleted in cold mode',
+                    table_name)
+            else:
+                LOGGER.info('Table %s is created', table_name)
+                return
+
+        meta_data = MetaData()
+        columns = []
+
+        for field_name, field in fields.items():
+            columns.append(self.create_column(
+                field_name=field_name,
+                field=field))
+
+        Table(table_name, meta_data, *columns)
+        meta_data.create_all(self._engine)
+
+    def insert(self, table_name, fields, **kwargs):
+        """Insert.
+        """
+        assert self._engine, "Engine is not initialized"
+
+        fields = [
+            (k, v) for k, v in fields.items() if not v.is_auto_increment]
+        fields = list(zip(*fields))
+
+        column_names = (','.join(fields[0]))
+        values = (','.join([str(f) for f in fields[1]]))
+
         sql_statement = (
-            "create table {table_name} (".format(
-                table_name=table_name))
+            "insert into {table_name} ({column_names}) values "
+            "({values})").format(
+                table_name=table_name,
+                column_names=column_names,
+                values=values)
 
-        assert fields, (
-            "The number of fields must be greater than 1")
-
-        for field in fields:
-            sql_statement += (
-                "{field_name} {field_type}, ".format(
-                    field_name=field.name,
-                    field_type=self.parse_field_type(
-                        field)))
-
-        sql_statement += (
-            "PRIMARY KEY (id));")
-
-        LOGGER.info('Create table by statement %s',
-            sql_statement)
         self._engine.execute(sql_statement)
 
-    def update_order_book(self, exchange, symbol, bids, asks):
-        """Update order book.
-        """
-        pass
-
-    def update_trade(self, exchange, symbol, trade):
-        """Update trades.
-        """
-        pass
+        if self._is_debug:
+            LOGGER.info(sql_statement)
 
     @staticmethod
-    def parse_field_type(field):
-        """Parse field type.
+    def create_column(field_name, field):
+        """Create column.
         """
-        field_type = field.field_type
+        field_params = {}
 
-        if field_type is int:
-            if field.is_key:
-                return 'int NOT NULL AUTO_INCREMENT'
+        if field.field_type is int:
+            field_type = Integer
+        elif field.field_type is str:
+            field_type = String(field.field_length)
+        elif field.field_type is float:
+            field_type = Numeric(
+                precision=field.size,
+                scale=field.decimal)
+        elif field.field_type is datetime:
+            field_type = String(26)
+        else:
+            raise NotImplementedError(
+                'Field type {type} not implemented'.format(
+                    type=field.field_type))
 
-            return 'int'
-        elif field_type is str:
-            return 'varchar({len})'.format(
-                len=field.field_length)
-        elif field_type is float:
-            return 'decimal({size},{dec})'.format(
-                size=field.size,
-                dec=field.decimal)
-        elif field_type is datetime:
-            return 'varchar(26)'
+        if field.is_key:
+            field_params['primary_key'] = True
 
-        raise NotImplementedError(
-            'Field type {type} not implemented'.format(
-                type=field_type))
+        if field.is_auto_increment:
+            field_params['autoincrement'] = True
+
+        return Column(field_name, field_type, **field_params)

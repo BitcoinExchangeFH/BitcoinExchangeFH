@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime
+from time import sleep
 
 from sqlalchemy import (
     create_engine,
@@ -25,11 +26,19 @@ class SqlHandler(Handler):
         super().__init__(**kwargs)
         self._connection = connection
         self._engine = None
+        self._queue = None
 
-    def load(self):
+    @property
+    def queue(self):
+        """Queue.
+        """
+        return self._queue
+
+    def load(self, queue):
         """Load.
         """
         self._engine = create_engine(self._connection)
+        self._queue = queue
 
     def create_table(self, table_name, fields, **kwargs):
         """Create table.
@@ -79,10 +88,20 @@ class SqlHandler(Handler):
                 column_names=column_names,
                 values=values)
 
-        self._engine.execute(sql_statement)
+        self._queue.put(sql_statement)
 
         if self._is_debug:
             LOGGER.info(sql_statement)
+
+    def run(self):
+        """Run.
+        """
+        while True:
+            while not self._queue.empty():
+                element = self._queue.get()
+                self._engine.execute(element)
+
+            sleep(1)
 
     @staticmethod
     def create_column(field_name, field):

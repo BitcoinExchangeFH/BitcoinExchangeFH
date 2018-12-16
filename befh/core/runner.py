@@ -1,6 +1,5 @@
 import logging
-import multiprocessing.dummy as mp
-from functools import partial
+import multiprocessing as mp
 
 from befh.exchange import (
     RestApiExchange
@@ -32,43 +31,24 @@ class Runner:
         LOGGER.info('Start running the feed handler')
 
         handlers_configuration = self._config.handlers
-        run_exchange = partial(
-            Runner.run_exchange,
+
+        handlers = self.create_handlers(
             handlers_configuration=handlers_configuration,
             is_debug=self._is_debug,
             is_cold=self._is_cold)
 
-        with mp.Pool() as pool:
-            pool.starmap(
-                run_exchange,
-                list(self._config.subscriptions.items())
-            )
+        for exchange_name, subscription in self._config.subscriptions.items():
+            exchange = self.create_exchange(
+                exchange_name=exchange_name,
+                subscription=subscription,
+                is_debug=self._is_debug,
+                is_cold=self._is_cold)
 
-    @staticmethod
-    def run_exchange(
-            exchange_name,
-            subscription,
-            handlers_configuration,
-            is_debug,
-            is_cold):
-        """Run exchange.
-        """
-        LOGGER.info('Running exchange subscription %s', exchange_name)
-        exchange = Runner.create_exchange(
-            exchange_name=exchange_name,
-            subscription=subscription,
-            is_debug=is_debug,
-            is_cold=is_cold)
-        handlers = Runner.create_handlers(
-            handlers_configuration=handlers_configuration,
-            is_debug=is_debug,
-            is_cold=is_cold)
+            for _, handler in handlers.items():
+                exchange.append_handler(handler)
 
-        for handler_name, handler in handlers.items():
-            exchange.append_handler(handler)
-
-        exchange.load()
-        exchange.run()
+            exchange.load()
+            mp.Process(target=exchange.run).start()
 
     @staticmethod
     def create_exchange(exchange_name, subscription, is_debug, is_cold):
@@ -79,7 +59,6 @@ class Runner:
             config=subscription,
             is_debug=is_debug,
             is_cold=is_cold)
-        exchange.load()
 
         return exchange
 
@@ -95,11 +74,12 @@ class Runner:
                 is_debug=is_debug,
                 is_cold=is_cold,
                 **handler_parameters)
-            handler.load()
         else:
             raise NotImplementedError(
                 'Handler %s is not implemented' % handler_name)
 
+        handler.load(queue=mp.Queue())
+        mp.Process(target=handler.run).start()
         return handler
 
 

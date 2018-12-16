@@ -28,8 +28,6 @@ class Exchange:
         self._last_request_time = datetime(1990, 1, 1)
         self._exchange_interface = None
         self._handlers = []
-        self._order_book_callbacks = []
-        self._trade_callbacks = []
 
     @classmethod
     def get_order_book_class(cls):
@@ -58,6 +56,11 @@ class Exchange:
                 handler.create_table(
                     table_name=instmt_info.table_name,
                     fields=instmt_info.fields)
+
+    def append_handler(self, handler):
+        """Append handler.
+        """
+        self._handlers.append(handler)
 
 class RestApiExchange(Exchange):
     """Rest API exchange.

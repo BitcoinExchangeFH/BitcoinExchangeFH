@@ -65,11 +65,7 @@ class Runner:
             is_cold=is_cold)
 
         for handler_name, handler in handlers.items():
-            exchange._handlers.append(handler)
-            exchange._order_book_callbacks.append(
-                handler.update_order_book)
-            exchange._trade_callbacks.append(
-                handler.update_trade)
+            exchange.append_handler(handler)
 
         exchange.load()
         exchange.run()

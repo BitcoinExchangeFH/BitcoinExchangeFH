@@ -4,8 +4,11 @@ subscriptions:
           - ETH/BTC
           - XRP/BTC
 
+    Poloniex:
+        instruments:
+          - ETH/BTC
+          - XRP/BTC
+
 handlers:
-    debug:
-        level: INFO
     sql:
-        connection: "sqlite:///:memory:"
+        connection: "sqlite:///.data/order_book.db"

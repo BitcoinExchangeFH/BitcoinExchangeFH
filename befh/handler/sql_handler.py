@@ -26,7 +26,9 @@ class SqlHandler(Handler):
         super().__init__(**kwargs)
         self._connection = connection
         self._engine = None
+        self._meta_data = None
         self._queue = None
+        self._tables = {}
 
     @property
     def queue(self):
@@ -38,6 +40,7 @@ class SqlHandler(Handler):
         """Load.
         """
         self._engine = create_engine(self._connection)
+        self._meta_data = MetaData()
         self._queue = queue
 
     def create_table(self, table_name, fields, **kwargs):
@@ -56,18 +59,20 @@ class SqlHandler(Handler):
                     table_name)
             else:
                 LOGGER.info('Table %s is created', table_name)
+                self._tables[table_name] = Table(
+                    table_name, self._meta_data, autoload=True,
+                    autoload_with=self._engine)
                 return
 
-        meta_data = MetaData()
         columns = []
 
         for field_name, field in fields.items():
-            columns.append(self.create_column(
+            columns.append(self._create_column(
                 field_name=field_name,
                 field=field))
 
-        Table(table_name, meta_data, *columns)
-        meta_data.create_all(self._engine)
+        self._tables[table_name] = Table(table_name, self._meta_data, *columns)
+        self._meta_data.create_all(self._engine)
 
     def insert(self, table_name, fields, **kwargs):
         """Insert.
@@ -93,6 +98,38 @@ class SqlHandler(Handler):
         if self._is_debug:
             LOGGER.info(sql_statement)
 
+    def rename_table(self, from_name, to_name, fields=None, keep_table=True):
+        """Rename table.
+        """
+        from alembic.migration import MigrationContext
+        from alembic.operations import Operations
+
+        conn = self._engine.connect()
+        ctx = MigrationContext.configure(conn)
+        op = Operations(ctx)
+        op.rename_table(from_name, to_name)
+
+        if keep_table:
+            assert fields is not None, (
+                "Fields must be provided to create the table")
+            self._meta_data.create_all(self._engine)
+
+    def rotate_table(self, table, last_datetime):
+        """Rotate table.
+        """
+        from_name = table.table_name
+        to_name = "%s_%s" % (
+            from_name, last_datetime.strftime(self._rotate_frequency))
+
+        LOGGER.info('Rotate table from %s to %s',
+                    from_name,
+                    to_name)
+        self.rename_table(
+            from_name=from_name,
+            to_name=to_name,
+            fields=table.fields,
+            keep_table=True)
+
     def run(self):
         """Run.
         """
@@ -104,7 +141,7 @@ class SqlHandler(Handler):
             sleep(1)
 
     @staticmethod
-    def create_column(field_name, field):
+    def _create_column(field_name, field):
         """Create column.
         """
         field_params = {}

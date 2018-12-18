@@ -7,18 +7,18 @@ from setuptools import setup, find_packages
 
 requirements = [
     'Click>=6.0',
-    'pyyaml',
-    # TODO: put package requirements here
+    'pyyaml>=17.12.1',
+    'ccxt>=1.17.485',
+    'sqlalchemy>=1.1.11',
+    'alembic>=0.9.3',
 ]
 
 setup_requirements = [
     'pytest-runner',
-    # TODO(gavincyi): put setup requirements (distutils extensions, etc.) here
 ]
 
 test_requirements = [
     'pytest',
-    # TODO: put package test requirements here
 ]
 
 setup(

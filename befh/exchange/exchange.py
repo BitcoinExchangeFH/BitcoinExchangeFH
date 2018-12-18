@@ -75,6 +75,20 @@ class RestApiExchange(Exchange):
         self._check_valid_instrument()
         self._initialize_instmt_info()
 
+    def run(self):
+        """Run.
+        """
+        while True:
+            for symbol, instmt_info in self._instruments.items():
+                self._update_order_book(
+                    symbol=symbol,
+                    instmt_info=instmt_info)
+
+                if instmt_info.is_possible_trade():
+                    self._update_trades(
+                        symbol=symbol,
+                        instmt_info=instmt_info)
+
     def _check_valid_instrument(self):
         """Check valid instrument.
         """
@@ -126,6 +140,8 @@ class RestApiExchange(Exchange):
 
         if is_update_handler:
             for handler in self._handlers:
+                self._rotate_order_table(handler=handler,
+                                         instmt_info=instmt_info)
                 instmt_info.update_table(handler=handler)
 
     def _update_trades(self, symbol, instmt_info, is_update_handler=True):
@@ -150,22 +166,28 @@ class RestApiExchange(Exchange):
 
             if is_update_handler:
                 for handler in self._handlers:
+                    self._rotate_order_table(handler=handler,
+                                             instmt_info=instmt_info)
                     instmt_info.update_table(handler=handler)
 
-    def run(self):
-        """Run.
+    @staticmethod
+    def _rotate_order_table(handler, instmt_info):
+        """Rotate order table.
         """
-        while True:
-            for symbol, instmt_info in self._instruments.items():
-                self._update_order_book(
-                    symbol=symbol,
-                    instmt_info=instmt_info)
+        if handler.is_rotate:
+            prev_update_time = (
+                instmt_info._prev_update_time.value.strftime(
+                    handler.rotate_frequency))
+            update_time = (
+                instmt_info._update_time.value.strftime(
+                    handler.rotate_frequency))
 
-                if instmt_info.is_possible_trade():
-                    self._update_trades(
-                        symbol=symbol,
-                        instmt_info=instmt_info)
-
+            if (prev_update_time != update_time and
+                instmt_info._prev_update_time.value.year > 2000):
+                # Rotate the table
+                handler.rotate_table(
+                    table=instmt_info,
+                    last_datetime=instmt_info._prev_update_time.value)
 
     def _load_balance(self):
         """Load balance.

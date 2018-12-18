@@ -7,11 +7,27 @@ class Handler:
     """Handler.
     """
 
-    def __init__(self, is_debug, is_cold):
+    def __init__(self, is_debug, is_cold,
+                 is_rotate=False,
+                 rotate_frequency='%Y%m%d'):
         """Constructor.
         """
         self._is_debug = is_debug
         self._is_cold = is_cold
+        self._is_rotate = is_rotate
+        self._rotate_frequency = rotate_frequency
+
+    @property
+    def is_rotate(self):
+        """Is rotate.
+        """
+        return self._is_rotate
+
+    @property
+    def rotate_frequency(self):
+        """Rotate frequency.
+        """
+        return self._rotate_frequency
 
     def load(self):
         """Load.

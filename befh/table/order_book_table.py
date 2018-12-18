@@ -55,8 +55,10 @@ class OrderBook(Table):
         self._update_type = OrderBookUpdateTypeField(
             name='update_type',
             value=0)
-        self._last_update_time = DateTimeField(
-            name='date_time')
+        self._update_time = DateTimeField(
+            name='date_time', value=datetime(2000, 1, 1))
+        self._prev_update_time = DateTimeField(
+            name='date_time', value=datetime(2000, 1, 1))
         self._trades_per_timestamp = {}
 
     @staticmethod
@@ -104,7 +106,7 @@ class OrderBook(Table):
         """
         fields = [
             IntIdField(name='id'),
-            self._last_update_time,
+            self._update_time,
             self._update_type,
             self._trade[self.TRADE_PX_INDEX],
             self._trade[self.TRADE_QTY_INDEX]
@@ -162,7 +164,8 @@ class OrderBook(Table):
             self._asks[i][0].value = asks[i][0]
             self._asks[i][1].value = asks[i][1]
 
-        self._last_update_time.value = datetime.utcnow()
+        self._prev_update_time.value = self._update_time.value
+        self._update_time.value = datetime.utcnow()
         self._update_type.value = (
             OrderBookUpdateTypeField.ORDER_BOOK)
 
@@ -200,7 +203,8 @@ class OrderBook(Table):
         self._trade[self.TRADE_QTY_INDEX].value = trade['amount']
         self._trade[self.TRADE_ID_INDEX].value = trade['id']
         self._trade[self.TRADE_TIMESTAMP_INDEX].value = trade['timestamp']
-        self._last_update_time.value = current_timestamp
+        self._prev_update_time.value = self._update_time.value
+        self._update_time.value = current_timestamp
         self._update_type.value = OrderBookUpdateTypeField.TRADE
         self._trades_per_timestamp.setdefault(timestamp, []).append(
             trade_id)

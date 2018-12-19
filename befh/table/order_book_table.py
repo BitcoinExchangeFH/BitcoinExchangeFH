@@ -150,6 +150,8 @@ class OrderBook(Table):
     def update_bids_asks(self, bids, asks):
         """Update bids and asks.
         """
+        is_update = False
+
         self._prev_bids = deepcopy(self._bids)
         self._prev_asks = deepcopy(self._asks)
 
@@ -159,17 +161,25 @@ class OrderBook(Table):
         for i in range(0, max_bid_depth):
             self._bids[i][0].value = bids[i][0]
             self._bids[i][1].value = bids[i][1]
+            is_update |= (
+                self._bids[i][0] != self._prev_bids[i][0] or
+                self._bids[i][1] != self._prev_bids[i][1]
+            )
 
         for i in range(0, max_ask_depth):
             self._asks[i][0].value = asks[i][0]
             self._asks[i][1].value = asks[i][1]
+            is_update |= (
+                self._asks[i][0] != self._prev_asks[i][0] or
+                self._asks[i][1] != self._prev_asks[i][1]
+            )
 
         self._prev_update_time.value = self._update_time.value
         self._update_time.value = datetime.utcnow()
         self._update_type.value = (
             OrderBookUpdateTypeField.ORDER_BOOK)
 
-        return True
+        return is_update
 
     def update_trade(self, trade, current_timestamp):
         """Update trades.

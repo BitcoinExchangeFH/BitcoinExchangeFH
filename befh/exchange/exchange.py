@@ -3,7 +3,7 @@ from datetime import datetime
 from time import sleep
 
 import ccxt
-from ccxt.base.errors import RequestTimeout
+from ccxt.base.errors import RequestTimeout, NetworkError
 
 from befh.table.order_book_table import OrderBook
 
@@ -124,7 +124,7 @@ class RestApiExchange(Exchange):
                 order_book = self._exchange_interface.fetch_order_book(
                     symbol=symbol)
                 break
-            except RequestTimeout as e:
+            except (RequestTimeout, NetworkError) as e:
                 tolerence_count += 1
                 LOGGER.warning('Request timeout %s', e)
 
@@ -154,7 +154,7 @@ class RestApiExchange(Exchange):
             try:
                 trades = self._exchange_interface.fetch_trades(symbol=symbol)
                 break
-            except RequestTimeout as e:
+            except (RequestTimeout, NetworkError) as e:
                 tolerence_count += 1
                 LOGGER.warning('Request timeout %s', e)
 

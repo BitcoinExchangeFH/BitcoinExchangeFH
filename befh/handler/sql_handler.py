@@ -64,6 +64,7 @@ class SqlHandler(Handler):
                     autoload_with=self._engine)
                 return
 
+        LOGGER.info ('Creating table %s', table_name)
         columns = []
 
         for field_name, field in fields.items():
@@ -73,6 +74,7 @@ class SqlHandler(Handler):
 
         self._tables[table_name] = Table(table_name, self._meta_data, *columns)
         self._meta_data.create_all(self._engine)
+        LOGGER.info ('Created table %s', table_name)
 
     def insert(self, table_name, fields, **kwargs):
         """Insert.

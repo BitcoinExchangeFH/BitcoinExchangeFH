@@ -16,6 +16,7 @@ class Exchange:
 
     DEFAULT_ORDER_BOOK_CLASS = OrderBook
     TIMEOUT_TOLERANCE = 5
+    DEFAULT_DEPTH = 5
 
     def __init__(self, name, config, is_debug, is_cold):
         """Constructor.
@@ -25,6 +26,7 @@ class Exchange:
         self._is_debug = is_debug
         self._is_cold = is_cold
         self._instruments = {}
+        self._depth = Exchange.DEFAULT_DEPTH
         self._last_request_time = datetime(1990, 1, 1)
         self._exchange_interface = None
         self._handlers = []
@@ -41,10 +43,22 @@ class Exchange:
         """
         return self._name
 
-    def load(self, **kwargs):
+    def load(self, handlers, **kwargs):
         """Load.
         """
         LOGGER.info('Loading exchange %s', self._name)
+        self._load_handlers(handlers=handlers)
+        self._load_instruments()
+        self._load_depth()
+
+    def _load_handlers(self, handlers):
+        """Load handlers.
+        """
+        self._handlers = list(handlers.values())
+
+    def _load_instruments(self):
+        """Load instruments.
+        """
         instruments = self._config['instruments']
         for symbol in instruments:
             instmt_info = self.DEFAULT_ORDER_BOOK_CLASS(
@@ -57,10 +71,14 @@ class Exchange:
                     table_name=instmt_info.table_name,
                     fields=instmt_info.fields)
 
-    def append_handler(self, handler):
-        """Append handler.
+    def _load_depth(self):
+        """Load depth.
         """
-        self._handlers.append(handler)
+        if 'depth' in self._config:
+            self._depth = self._config['depth']
+            assert isinstance(self._depth, int), (
+                "Depth ({}) must be an integer".format(
+                    self._depth))
 
 class RestApiExchange(Exchange):
     """Rest API exchange.

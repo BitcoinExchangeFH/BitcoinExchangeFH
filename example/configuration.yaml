@@ -3,6 +3,7 @@ subscriptions:
         instruments: 
           - ETH/BTC
           - XRP/BTC
+        depth: 10
 
     Poloniex:
         instruments:

@@ -44,10 +44,7 @@ class Runner:
                 is_debug=self._is_debug,
                 is_cold=self._is_cold)
 
-            for _, handler in handlers.items():
-                exchange.append_handler(handler)
-
-            exchange.load()
+            exchange.load(handlers=handlers)
 
             LOGGER.info('Running exchange %s', exchange_name)
             if len(self._config.subscriptions) > 1:

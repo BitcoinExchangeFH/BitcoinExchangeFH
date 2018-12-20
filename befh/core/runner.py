@@ -48,6 +48,8 @@ class Runner:
                 exchange.append_handler(handler)
 
             exchange.load()
+
+            LOGGER.info('Runngin exchange %s', exchange_name)
             mp.Process(target=exchange.run).start()
 
     @staticmethod

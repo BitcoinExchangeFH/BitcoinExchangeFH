@@ -50,7 +50,10 @@ class Runner:
             exchange.load()
 
             LOGGER.info('Runngin exchange %s', exchange_name)
-            mp.Process(target=exchange.run).start()
+            if len(self._config.subscriptions) > 1:
+                mp.Process(target=exchange.run).start()
+            else:
+                exchange.run()
 
     @staticmethod
     def create_exchange(exchange_name, subscription, is_debug, is_cold):

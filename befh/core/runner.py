@@ -68,6 +68,7 @@ class Runner:
     def create_handler(handler_name, handler_parameters, is_debug, is_cold):
         """Create handler.
         """
+        LOGGER.info('Creating handler %s', handler_name)
         handler_name = handler_name.lower()
 
         if handler_name == "sql":
@@ -81,9 +82,10 @@ class Runner:
                 'Handler %s is not implemented' % handler_name)
 
         handler.load(queue=mp.Queue())
+
+        LOGGER.info('Running handler %s', handler_name)
         mp.Process(target=handler.run).start()
         return handler
-
 
     @staticmethod
     def create_handlers(handlers_configuration, is_debug, is_cold):

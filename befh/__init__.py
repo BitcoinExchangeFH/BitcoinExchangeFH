@@ -6,4 +6,5 @@ __author__ = """Gavin Chan"""
 __email__ = 'gavincyi@gmail.com'
 __version__ = '2.0.0'
 
-from .core import *
+# flake8: noqa
+from .core import Configuration, Runner

@@ -80,6 +80,7 @@ class Exchange:
                 "Depth ({}) must be an integer".format(
                     self._depth))
 
+
 class RestApiExchange(Exchange):
     """Rest API exchange.
     """
@@ -129,7 +130,6 @@ class RestApiExchange(Exchange):
                 symbol=symbol,
                 instmt_info=instmt_info,
                 is_update_handler=False)
-
 
     def _update_order_book(self, symbol, instmt_info, is_update_handler=True):
         """Callback order book.
@@ -201,7 +201,7 @@ class RestApiExchange(Exchange):
                     handler.rotate_frequency))
 
             if (prev_update_time != update_time and
-                instmt_info._prev_update_time.value.year > 2000):
+                    instmt_info._prev_update_time.value.year > 2000):
                 # Rotate the table
                 handler.rotate_table(
                     table=instmt_info,
@@ -211,7 +211,8 @@ class RestApiExchange(Exchange):
         """Load balance.
         """
         current_time = datetime.now()
-        time_diff = (current_time - self._last_request_time).microseconds / 1000.0
+        time_diff = (current_time -
+                     self._last_request_time).microseconds / 1000.0
 
         # Rate limit is represented as microseconds,
         # number of requests per seconds = 1000 / rateLimit

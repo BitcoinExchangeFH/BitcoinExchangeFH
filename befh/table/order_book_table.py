@@ -207,7 +207,6 @@ class OrderBook(Table):
                 if trade_id in timestamp_trades:
                     return False
 
-
         self._prev_trade = deepcopy(self._trade)
         self._trade[self.TRADE_PX_INDEX].value = trade['price']
         self._trade[self.TRADE_QTY_INDEX].value = trade['amount']

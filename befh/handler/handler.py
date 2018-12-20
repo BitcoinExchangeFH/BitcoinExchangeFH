@@ -39,25 +39,25 @@ class Handler:
         """
         raise NotImplementedError(
             'Not implemented on exchange %s' %
-                self.__class__.__name__)
+            self.__class__.__name__)
 
     def insert(self, **kwargs):
         """Insert.
         """
         raise NotImplementedError(
             'Not implemented on exchange %s' %
-                self.__class__.__name__)
+            self.__class__.__name__)
 
     def update_order_book(self, exchange, symbol, bids, asks):
         """Update order book.
         """
         raise NotImplementedError(
             'Not implemented on exchange %s' %
-                self.__class__.__name__)
+            self.__class__.__name__)
 
     def update_trade(self, exchange, symbol, bids, asks):
         """Update trades.
         """
         raise NotImplementedError(
             'Not implemented on exchange %s' %
-                self.__class__.__name__)
+            self.__class__.__name__)

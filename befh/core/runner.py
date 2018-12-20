@@ -49,7 +49,7 @@ class Runner:
 
             exchange.load()
 
-            LOGGER.info('Runngin exchange %s', exchange_name)
+            LOGGER.info('Running exchange %s', exchange_name)
             if len(self._config.subscriptions) > 1:
                 mp.Process(target=exchange.run).start()
             else:

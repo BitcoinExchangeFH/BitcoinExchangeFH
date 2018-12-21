@@ -11,7 +11,7 @@ from sqlalchemy import (
     Numeric,
     MetaData)
 
-from .handler import Handler
+from .handler import Handler, HandlerAction
 
 LOGGER = logging.getLogger(__name__)
 
@@ -135,12 +135,32 @@ class SqlHandler(Handler):
     def run(self):
         """Run.
         """
-        while True:
+        LOGGER.info('Running %s', self.__class__.__name__)
+
+        running = True
+
+        while running:
             while not self._queue.empty():
                 element = self._queue.get()
-                self._engine.execute(element)
+
+                LOGGER.debug('Received element %s', element)
+
+                if isinstance(element, str):
+                    self._engine.execute(element)
+                elif isinstance(element, HandlerAction):
+                    if element == HandlerAction.CLOSE:
+                        LOGGER.debug('Receiving closing signal')
+                        running = False
 
             sleep(1)
+
+        LOGGER.info('Completed running  %s', self.__class__.__name__)
+
+    def close(self):
+        """Close.
+        """
+        LOGGER.debug('Publishing closing signal')
+        self._queue.put(HandlerAction.CLOSE)
 
     @staticmethod
     def _create_column(field_name, field):

@@ -27,7 +27,12 @@ LOGGER = logging.getLogger(__name__)
     default=False,
     is_flag=True,
     help='Cold start mode.')
-def main(configuration, debug, cold):
+@click.option(
+    '--archive',
+    default=None,
+    help='Manually archive the tables.',
+    required=False)
+def main(configuration, debug, cold, archive):
     """Console script for BitcoinExchangeFH."""
     if debug:
         level = logging.DEBUG
@@ -48,7 +53,11 @@ def main(configuration, debug, cold):
         is_debug=debug,
         is_cold=cold)
     runner.load()
-    runner.run()
+
+    if archive is not None:
+        runner.archive(date=archive)
+    else:
+        runner.run()
 
 
 if __name__ == "__main__":

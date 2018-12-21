@@ -1,6 +1,14 @@
 import logging
+from enum import Enum
 
 LOGGER = logging.getLogger(__name__)
+
+
+class HandlerAction(Enum):
+    """Handler action.
+    """
+
+    CLOSE = 1
 
 
 class Handler:
@@ -61,3 +69,8 @@ class Handler:
         raise NotImplementedError(
             'Not implemented on exchange %s' %
             self.__class__.__name__)
+
+    def close(self):
+        """Close.
+        """
+        pass

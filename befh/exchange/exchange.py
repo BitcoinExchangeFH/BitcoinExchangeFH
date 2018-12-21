@@ -29,7 +29,7 @@ class Exchange:
         self._depth = Exchange.DEFAULT_DEPTH
         self._last_request_time = datetime(1990, 1, 1)
         self._exchange_interface = None
-        self._handlers = []
+        self._handlers = {}
 
     @classmethod
     def get_order_book_class(cls):
@@ -43,6 +43,18 @@ class Exchange:
         """
         return self._name
 
+    @property
+    def instruments(self):
+        """Instruments.
+        """
+        return self._instruments
+
+    @property
+    def handlers(self):
+        """Handlers.
+        """
+        return self._handlers
+
     def load(self, handlers, **kwargs):
         """Load.
         """
@@ -54,7 +66,7 @@ class Exchange:
     def _load_handlers(self, handlers):
         """Load handlers.
         """
-        self._handlers = list(handlers.values())
+        self._handlers = handlers
 
     def _load_instruments(self):
         """Load instruments.
@@ -66,7 +78,7 @@ class Exchange:
                 symbol=symbol)
             self._instruments[symbol] = instmt_info
 
-            for handler in self._handlers:
+            for handler in self._handlers.values():
                 handler.create_table(
                     table_name=instmt_info.table_name,
                     fields=instmt_info.fields)
@@ -157,7 +169,7 @@ class RestApiExchange(Exchange):
             return
 
         if is_update_handler:
-            for handler in self._handlers:
+            for handler in self._handlers.values():
                 self._rotate_order_table(handler=handler,
                                          instmt_info=instmt_info)
                 instmt_info.update_table(handler=handler)
@@ -183,7 +195,7 @@ class RestApiExchange(Exchange):
                 continue
 
             if is_update_handler:
-                for handler in self._handlers:
+                for handler in self._handlers.values():
                     self._rotate_order_table(handler=handler,
                                              instmt_info=instmt_info)
                     instmt_info.update_table(handler=handler)

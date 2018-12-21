@@ -48,6 +48,8 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 
 lint: ## check style with flake8
+	autopep8 --in-place befh/*.py
+	autopep8 --in-place befh/*/*.py
 	flake8 befh tests
 
 test: ## run tests quickly with the default Python

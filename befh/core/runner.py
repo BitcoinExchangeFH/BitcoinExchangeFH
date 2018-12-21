@@ -1,5 +1,6 @@
 import logging
 import multiprocessing as mp
+from datetime import datetime
 
 from befh.exchange import (
     RestApiExchange
@@ -19,41 +20,92 @@ class Runner:
         self._is_debug = is_debug
         self._is_cold = is_cold
         self._exchanges = {}
+        self._handlers = {}
 
     def load(self):
         """Load.
         """
         LOGGER.info('Loading runner')
 
-    def run(self):
-        """Run.
-        """
-        LOGGER.info('Start running the feed handler')
-
         handlers_configuration = self._config.handlers
-
         handlers = self.create_handlers(
             handlers_configuration=handlers_configuration,
             is_debug=self._is_debug,
             is_cold=self._is_cold)
 
-        for exchange_name, subscription in self._config.subscriptions.items():
-            exchange = self.create_exchange(
-                exchange_name=exchange_name,
-                subscription=subscription,
-                is_debug=self._is_debug,
-                is_cold=self._is_cold)
+        self._handlers = handlers
 
-            exchange.load(handlers=handlers)
+        exchanges_configuration = self._config.subscriptions
+        exchanges = self.create_exchanges(
+            exchanges_configuration=exchanges_configuration,
+            handlers=handlers,
+            is_debug=self._is_debug,
+            is_cold=self._is_cold)
 
-            LOGGER.info('Running exchange %s', exchange_name)
-            if len(self._config.subscriptions) > 1:
-                mp.Process(target=exchange.run).start()
+        self._exchanges = exchanges
+
+    def run(self):
+        """Run.
+        """
+        LOGGER.info('Start running the feed handler')
+
+        processes = []
+
+        for name, handler in self._handlers.items():
+            LOGGER.info('Running handler %s', name)
+            process = mp.Process(target=handler.run)
+            process.start()
+            processes.append(process)
+
+        for name, exchange in self._exchanges.items():
+            LOGGER.info('Running exchange %s', name)
+
+            if len(self._exchanges) > 1:
+                process = mp.Process(target=exchange.run)
+                process.start()
+                processes.append(process)
             else:
                 exchange.run()
 
+        LOGGER.info('Joining all the processes')
+        for process in processes:
+            process.join()
+
+    def archive(self, date):
+        """Archive.
+        """
+        date = datetime.strptime(date, '%Y-%m-%d')
+
+        LOGGER.info('Archiving the tables with date %s', date)
+
+        processes = []
+
+        for name, handler in self._handlers.items():
+            LOGGER.info('Running handler %s', name)
+            process = mp.Process(target=handler.run)
+            process.start()
+            processes.append(process)
+
+        for exchange in self._exchanges.values():
+            for name, instrument in exchange.instruments.items():
+                for handler in exchange.handlers.values():
+                    handler.rotate_table(
+                        table=instrument,
+                        last_datetime=date)
+
+        LOGGER.info('Closing the handlers')
+        for handler in self._handlers.values():
+            handler.close()
+
+        LOGGER.info('Joining all the processes')
+        for process in processes:
+            process.join()
+
+        LOGGER.info('Archived the tables with date %s', date)
+
     @staticmethod
-    def create_exchange(exchange_name, subscription, is_debug, is_cold):
+    def create_exchange(
+            exchange_name, subscription, handlers, is_debug, is_cold):
         """Create exchange.
         """
         exchange = RestApiExchange(
@@ -62,7 +114,27 @@ class Runner:
             is_debug=is_debug,
             is_cold=is_cold)
 
+        exchange.load(handlers=handlers)
+
         return exchange
+
+    @staticmethod
+    def create_exchanges(
+            exchanges_configuration, handlers, is_debug, is_cold):
+        """Create exchanges.
+        """
+        exchanges = {}
+
+        for exchange_name, subscription in exchanges_configuration.items():
+            exchange = Runner.create_exchange(
+                exchange_name=exchange_name,
+                subscription=subscription,
+                handlers=handlers,
+                is_debug=is_debug,
+                is_cold=is_cold)
+            exchanges[exchange_name] = exchange
+
+        return exchanges
 
     @staticmethod
     def create_handler(handler_name, handler_parameters, is_debug, is_cold):
@@ -83,8 +155,6 @@ class Runner:
 
         handler.load(queue=mp.Queue())
 
-        LOGGER.info('Running handler %s', handler_name)
-        mp.Process(target=handler.run).start()
         return handler
 
     @staticmethod

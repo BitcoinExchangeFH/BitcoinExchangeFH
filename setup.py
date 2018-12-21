@@ -14,6 +14,7 @@ requirements = [
 ]
 
 setup_requirements = [
+    'setuptools_scm',
     'pytest-runner',
 ]
 
@@ -23,7 +24,7 @@ test_requirements = [
 
 setup(
     name='BitcoinExchangeFH',
-    version='2.0.0',
+    use_scm_version=True,
     description="Cryptocurrency exchange market data feed handler",
     author="Gavin Chan",
     author_email='gavincyi@gmail.com',

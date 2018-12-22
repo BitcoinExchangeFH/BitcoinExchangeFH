@@ -1,6 +1,5 @@
 import logging
 from datetime import datetime
-from time import sleep
 
 from sqlalchemy import (
     create_engine,
@@ -11,7 +10,7 @@ from sqlalchemy import (
     Numeric,
     MetaData)
 
-from .handler import Handler, HandlerAction
+from .handler import Handler
 
 LOGGER = logging.getLogger(__name__)
 
@@ -29,6 +28,12 @@ class SqlHandler(Handler):
         self._meta_data = None
         self._queue = None
         self._tables = {}
+
+    @property
+    def engine(self):
+        """Engine.
+        """
+        return self._engine
 
     @property
     def queue(self):
@@ -76,7 +81,7 @@ class SqlHandler(Handler):
         self._meta_data.create_all(self._engine)
         LOGGER.info('Created table %s', table_name)
 
-    def insert(self, table_name, fields, **kwargs):
+    def insert(self, table_name, fields):
         """Insert.
         """
         assert self._engine, "Engine is not initialized"
@@ -95,10 +100,7 @@ class SqlHandler(Handler):
                 column_names=column_names,
                 values=values)
 
-        self._queue.put(sql_statement)
-
-        if self._is_debug:
-            LOGGER.info(sql_statement)
+        self._engine.execute(sql_statement)
 
     def rename_table(self, from_name, to_name, fields=None, keep_table=True):
         """Rename table.
@@ -126,41 +128,11 @@ class SqlHandler(Handler):
         LOGGER.info('Rotate table from %s to %s',
                     from_name,
                     to_name)
-        self.rename_table(
+        self.prepare_rename_table(
             from_name=from_name,
             to_name=to_name,
             fields=table.fields,
             keep_table=True)
-
-    def run(self):
-        """Run.
-        """
-        LOGGER.info('Running %s', self.__class__.__name__)
-
-        running = True
-
-        while running:
-            while not self._queue.empty():
-                element = self._queue.get()
-
-                LOGGER.debug('Received element %s', element)
-
-                if isinstance(element, str):
-                    self._engine.execute(element)
-                elif isinstance(element, HandlerAction):
-                    if element == HandlerAction.CLOSE:
-                        LOGGER.debug('Receiving closing signal')
-                        running = False
-
-            sleep(1)
-
-        LOGGER.info('Completed running  %s', self.__class__.__name__)
-
-    def close(self):
-        """Close.
-        """
-        LOGGER.debug('Publishing closing signal')
-        self._queue.put(HandlerAction.CLOSE)
 
     @staticmethod
     def _create_column(field_name, field):

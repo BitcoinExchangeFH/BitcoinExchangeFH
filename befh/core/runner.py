@@ -95,7 +95,7 @@ class Runner:
 
         LOGGER.info('Closing the handlers')
         for handler in self._handlers.values():
-            handler.close()
+            handler.prepare_close()
 
         LOGGER.info('Joining all the processes')
         for process in processes:

@@ -79,7 +79,7 @@ class Exchange:
             self._instruments[symbol] = instmt_info
 
             for handler in self._handlers.values():
-                handler.create_table(
+                handler.prepare_create_table(
                     table_name=instmt_info.table_name,
                     fields=instmt_info.fields)
 

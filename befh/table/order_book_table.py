@@ -128,7 +128,7 @@ class OrderBook(Table):
     def update_table(self, handler):
         """Update table.
         """
-        handler.insert(
+        handler.prepare_insert(
             table_name=self.table_name,
             fields=self.fields)
 

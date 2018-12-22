@@ -2,6 +2,11 @@ class HandlerOperator:
     """Handler operator.
     """
 
+    def __init__(self, allow_fail=False):
+        """Constructor.
+        """
+        self.allow_fail = allow_fail
+
     def execute(self, handler):
         """Execute.
         """
@@ -23,9 +28,10 @@ class HandlerCreateTableOperator(HandlerOperator):
     """Create table operator.
     """
 
-    def __init__(self, table_name, fields):
+    def __init__(self, table_name, fields, **kwargs):
         """Constructor.
         """
+        super().__init__(**kwargs)
         self._table_name = table_name
         self._fields = fields
 
@@ -41,9 +47,10 @@ class HandlerInsertOperator(HandlerOperator):
     """Insert operator.
     """
 
-    def __init__(self, table_name, fields):
+    def __init__(self, table_name, fields, **kwargs):
         """Constructor.
         """
+        super().__init__(**kwargs)
         self._table_name = table_name
         self._fields = fields
 
@@ -59,9 +66,11 @@ class HandlerRenameTableOperator(HandlerOperator):
     """Rename table operator.
     """
 
-    def __init__(self, from_name, to_name, fields=None, keep_table=True):
+    def __init__(self, from_name, to_name, fields=None,
+                 keep_table=True, **kwargs):
         """Constructor.
         """
+        super().__init__(**kwargs)
         self._from_name = from_name
         self._to_name = to_name
         self._fields = fields

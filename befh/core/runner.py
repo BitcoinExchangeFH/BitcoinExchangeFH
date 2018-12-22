@@ -91,7 +91,8 @@ class Runner:
                 for handler in exchange.handlers.values():
                     handler.rotate_table(
                         table=instrument,
-                        last_datetime=date)
+                        last_datetime=date,
+                        allow_fail=True)
 
         LOGGER.info('Closing the handlers')
         for handler in self._handlers.values():

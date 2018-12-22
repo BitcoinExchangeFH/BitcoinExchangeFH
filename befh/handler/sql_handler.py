@@ -118,7 +118,7 @@ class SqlHandler(Handler):
                 "Fields must be provided to create the table")
             self._meta_data.create_all(self._engine)
 
-    def rotate_table(self, table, last_datetime):
+    def rotate_table(self, table, last_datetime, allow_fail=False):
         """Rotate table.
         """
         from_name = table.table_name
@@ -132,6 +132,7 @@ class SqlHandler(Handler):
             from_name=from_name,
             to_name=to_name,
             fields=table.fields,
+            allow_fail=allow_fail,
             keep_table=True)
 
     @staticmethod

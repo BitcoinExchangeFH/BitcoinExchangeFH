@@ -53,12 +53,13 @@ class Handler:
         """
         LOGGER.info('Loading handler %s', self.__class__.__name__)
 
-    def prepare_create_table(self, table_name, fields):
+    def prepare_create_table(self, table_name, fields, **kwargs):
         """Prepare create table.
         """
         self._queue.put(HandlerCreateTableOperator(
             table_name=table_name,
-            fields=fields))
+            fields=fields,
+            **kwargs))
 
     def create_table(self, **kwargs):
         """Create table.
@@ -67,12 +68,13 @@ class Handler:
             'Not implemented on handler %s' %
             self.__class__.__name__)
 
-    def prepare_insert(self, table_name, fields):
+    def prepare_insert(self, table_name, fields, **kwargs):
         """Prepare insert.
         """
         self._queue.put(HandlerInsertOperator(
             table_name=table_name,
-            fields=fields))
+            fields=fields,
+            **kwargs))
 
     def insert(self, **kwargs):
         """Insert.
@@ -82,14 +84,16 @@ class Handler:
             self.__class__.__name__)
 
     def prepare_rename_table(
-            self, from_name, to_name, fields=None, keep_table=True):
+            self, from_name, to_name, fields=None,
+            keep_table=True, **kwargs):
         """Prepare rename table.
         """
         self._queue.put(HandlerRenameTableOperator(
             from_name=from_name,
             to_name=to_name,
             fields=fields,
-            keep_table=keep_table))
+            keep_table=keep_table,
+            **kwargs))
 
     def rename_table(self, from_name, to_name, fields=None, keep_table=True):
         """Rename table.
@@ -125,7 +129,16 @@ class Handler:
                 assert isinstance(element, HandlerOperator), (
                     "Element type is not handler operator (%s)" % (
                         element.__class__.__name__))
-                element.execute(handler=self)
+                try:
+                    element.execute(handler=self)
+                except Exception as e:
+                    if element.allow_fail:
+                        LOGGER.warn(
+                            'Execution failed on element %s (%s)',
+                            element,
+                            str(e))
+                    else:
+                        raise
 
             sleep(self._batch_frequency)
 

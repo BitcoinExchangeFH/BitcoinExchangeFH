@@ -41,6 +41,65 @@ pip install bitcoinexchangefh
 bitcoinexchangefh --configuration example/configuration.yaml
 ```
 
+## Configuration
+
+The configuration follows [YAML](https://pyyaml.org/wiki/PyYAMLDocumentation) syntax and contains two sections
+
+- subscriptions
+
+- handlers
+
+
+### Subscriptions
+
+Subscription section specifies the exchange and instruments to subscribe. 
+
+The first key is the exchange name and then follows the exchange details, 
+    
+- instruments 
+
+- number of depth (default is 5 if not specified)
+
+
+For example, 
+
+```
+subscription:
+    Binance:
+        instruments:
+            - XRP/BTC
+            - BCH/BTC
+        depth
+    Poloniex:
+        instruments:
+            - ETH/BTC
+        depth: 10
+```
+
+### Handlers
+
+After receiving the order book or trade update, each handler is updated. For example, for SQL database handler, it is updated with the corresponding SQl statements.
+
+For example,
+
+```
+handlers:
+    sql: 
+        connection: "sqlite://"
+    
+```
+
+#### SQL handler
+
+The following settings can be customized
+
+|Parameter|Description|
+|---|---|
+|connection|Database connection string required by [SQLAlchemy](https://docs.sqlalchemy.org/en/latest/core/engines.html)|
+|is_rotate|Boolean indicating whether to rotate to record the table.|
+|rotate_frequency|String in [format](https://docs.python.org/2/library/datetime.html#strftime-strptime-behavior) same as `strftime` and `strptime`|
+
+
 ## Inquiries
 
 You can first look up to the page [FAQ](https://github.com/gavincyi/BitcoinExchangeFH/wiki/FAQ). For more inquiries, you can either leave it in issues or drop me an email. I will get you back as soon as possible.

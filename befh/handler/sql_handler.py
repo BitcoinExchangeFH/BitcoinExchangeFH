@@ -25,9 +25,7 @@ class SqlHandler(Handler):
         super().__init__(**kwargs)
         self._connection = connection
         self._engine = None
-        self._meta_data = None
         self._queue = None
-        self._tables = {}
 
     @property
     def engine(self):
@@ -45,7 +43,6 @@ class SqlHandler(Handler):
         """Load.
         """
         self._engine = create_engine(self._connection)
-        self._meta_data = MetaData()
         self._queue = queue
 
     def create_table(self, table_name, fields, **kwargs):
@@ -64,9 +61,6 @@ class SqlHandler(Handler):
                     table_name)
             else:
                 LOGGER.info('Table %s is created', table_name)
-                self._tables[table_name] = Table(
-                    table_name, self._meta_data, autoload=True,
-                    autoload_with=self._engine)
                 return
 
         LOGGER.info('Creating table %s', table_name)
@@ -77,8 +71,9 @@ class SqlHandler(Handler):
                 field_name=field_name,
                 field=field))
 
-        self._tables[table_name] = Table(table_name, self._meta_data, *columns)
-        self._meta_data.create_all(self._engine)
+        meta_data = MetaData()
+        Table(table_name, meta_data, *columns)
+        meta_data.create_all(self._engine)
         LOGGER.info('Created table %s', table_name)
 
     def insert(self, table_name, fields):
@@ -116,7 +111,11 @@ class SqlHandler(Handler):
         if keep_table:
             assert fields is not None, (
                 "Fields must be provided to create the table")
-            self._meta_data.create_all(self._engine)
+            # Refresh the connection again
+            self._engine = create_engine(self._connection)
+            self.create_table(
+                table_name=from_name,
+                fields=fields)
 
     def rotate_table(self, table, last_datetime, allow_fail=False):
         """Rotate table.

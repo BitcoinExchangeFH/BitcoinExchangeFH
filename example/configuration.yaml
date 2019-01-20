@@ -1,0 +1,22 @@
+subscriptions:
+    Binance:
+        instruments: 
+          - ETH/BTC
+          - XRP/BTC
+        depth: 10
+
+    Poloniex:
+        instruments:
+          - ETH/BTC
+          - XRP/BTC
+
+    # Bitmex:
+    #     instruments:
+    #         - XBTH19
+    #         - ETHH19
+
+handlers:
+    sql:
+        connection: "sqlite:///.data/order_book.db"
+        is_rotate: True
+        rotate_frequency: "%Y%m%d%H%M"

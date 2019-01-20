@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 
 requirements = [
     'Click>=6.0',
-    'PyYAML ==3.11',
+    'PyYAML>=4.2b1',
     'ccxt>=1.17.485',
     'sqlalchemy>=1.1.11',
     'alembic>=0.9.3',

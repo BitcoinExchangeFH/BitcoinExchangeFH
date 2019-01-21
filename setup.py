@@ -11,7 +11,7 @@ requirements = [
     'ccxt>=1.17.485',
     'sqlalchemy>=1.1.11',
     'alembic>=0.9.3',
-    'zmq>=17.1.2',
+    'pyzmq>=17.1.2',
 ]
 
 setup_requirements = [

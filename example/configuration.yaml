@@ -14,6 +14,7 @@ subscriptions:
         instruments:
             - XBTH19
             - ETHH19
+            - ETHUSD
 
 handlers:
     sql:

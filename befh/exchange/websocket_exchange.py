@@ -140,3 +140,16 @@ class WebsocketExchange(RestApiExchange):
             instmt_info.update_table(handler=handler)
 
         self._rotate_ordre_tables()
+
+    def _check_valid_instrument(self):
+        """Check valid instrument.
+        """
+        if self._name.lower() == 'bitmex':
+            # Skip checking on BitMEX
+            return
+
+        for instrument_code in self._config['instruments']:
+            if instrument_code not in self._exchange_interface.markets:
+                raise RuntimeError(
+                    'Instrument %s is not found in exchange %s',
+                    instrument_code, self._name)

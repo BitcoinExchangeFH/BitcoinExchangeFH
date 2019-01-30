@@ -73,8 +73,13 @@ class WebsocketExchange(RestApiExchange):
         """
         mapping = {}
         for name in self._instruments.keys():
-            market = self._exchange_interface.markets[name]
-            normalized_name = market['baseId'] + '-' + market['quoteId']
+            if self._name.lower() == 'bitmex':
+                # BitMEX uses the instrument name directly
+                # without normalizing to cryptofeed convention
+                normalized_name = name
+            else:
+                market = self._exchange_interface.markets[name]
+                normalized_name = market['baseId'] + '-' + market['quoteId']
             mapping[normalized_name] = name
 
         return mapping
@@ -114,7 +119,14 @@ class WebsocketExchange(RestApiExchange):
         """
         instmt_info = self._instruments[self._instrument_mapping[pair]]
         trade = {}
-        trade['timestamp'] = timestamp
+
+        if self._name.lower() == 'bitmex':
+            timestamp = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
+            timestamp = timestamp.timestamp()
+            trade['timestamp'] = timestamp
+        else:
+            trade['timestamp'] = timestamp
+
         trade['id'] = order_id
         trade['price'] = float(price)
         trade['amount'] = float(amount)
@@ -128,3 +140,16 @@ class WebsocketExchange(RestApiExchange):
             instmt_info.update_table(handler=handler)
 
         self._rotate_ordre_tables()
+
+    def _check_valid_instrument(self):
+        """Check valid instrument.
+        """
+        if self._name.lower() == 'bitmex':
+            # Skip checking on BitMEX
+            return
+
+        for instrument_code in self._config['instruments']:
+            if instrument_code not in self._exchange_interface.markets:
+                raise RuntimeError(
+                    'Instrument %s is not found in exchange %s',
+                    instrument_code, self._name)

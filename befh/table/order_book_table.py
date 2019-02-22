@@ -155,6 +155,13 @@ class OrderBook(Table):
         self._prev_bids = deepcopy(self._bids)
         self._prev_asks = deepcopy(self._asks)
 
+        # Ensure proper order is defined
+        if len(bids) > 1 and bids[0][0] < bids[1][0]:
+            bids = bids[::-1]
+
+        if len(asks) > 1 and asks[0][0] > asks[1][0]:
+            asks = asks[::-1]
+
         max_bid_depth = min(len(bids), self._depth)
         max_ask_depth = min(len(asks), self._depth)
 

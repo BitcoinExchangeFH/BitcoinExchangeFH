@@ -79,7 +79,7 @@ class WebsocketExchange(RestApiExchange):
                 normalized_name = name
             else:
                 market = self._exchange_interface.markets[name]
-                normalized_name = market['baseId'] + '-' + market['quoteId']
+                normalized_name = market['base'] + '-' + market['quote']
             mapping[normalized_name] = name
 
         return mapping

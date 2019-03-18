@@ -36,10 +36,15 @@ class WebsocketExchange(RestApiExchange):
             raise ImportError(
                 'Cannot load exchange %s from websocket' % self._name)
 
-        callbacks = {
-            L2_BOOK: BookCallback(self._update_order_book_callback),
-            TRADES: TradeCallback(self._update_trade_callback)
-        }
+        if self._is_orders:
+            callbacks = {
+                L2_BOOK: BookCallback(self._update_order_book_callback),
+                TRADES: TradeCallback(self._update_trade_callback)
+            }
+        else:
+            callbacks = {
+                TRADES: TradeCallback(self._update_trade_callback)
+            }            
 
         if self._name.lower() == 'poloniex':
             self._feed_handler.add_feed(

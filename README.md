@@ -53,6 +53,8 @@ Websocket feeds of the following exchanges are supported by [cryptofeed](https:/
 
 - Huobi
 
+- OKCoin
+
 
 If the exchange is not supported with websocket API feed, it will automatically fall into using its REST API feed.
 

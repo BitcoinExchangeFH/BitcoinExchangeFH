@@ -70,6 +70,10 @@ class WebsocketExchange(RestApiExchange):
         name = name.capitalize()
         if name == 'Hitbtc':
             return 'HitBTC'
+        elif name == 'Okex':
+            return "OKEx"
+        elif name == "Huobipro":
+            return "Huobi"
 
         return name
 

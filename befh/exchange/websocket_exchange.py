@@ -128,8 +128,9 @@ class WebsocketExchange(RestApiExchange):
         """
         instmt_info = self._instruments[self._instrument_mapping[pair]]
         trade = {}
-
-        if self._name.lower() == 'bitmex':
+        
+        utcstr_timestamp_exchanges = ['bitmex', 'okex']
+        if self._name.lower() in utcstr_timestamp_exchanges:
             timestamp = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
             timestamp = timestamp.timestamp()
             trade['timestamp'] = timestamp

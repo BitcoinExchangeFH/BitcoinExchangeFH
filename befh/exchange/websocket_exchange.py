@@ -36,10 +36,15 @@ class WebsocketExchange(RestApiExchange):
             raise ImportError(
                 'Cannot load exchange %s from websocket' % self._name)
 
-        callbacks = {
-            L2_BOOK: BookCallback(self._update_order_book_callback),
-            TRADES: TradeCallback(self._update_trade_callback)
-        }
+        if self._is_orders:
+            callbacks = {
+                L2_BOOK: BookCallback(self._update_order_book_callback),
+                TRADES: TradeCallback(self._update_trade_callback)
+            }
+        else:
+            callbacks = {
+                TRADES: TradeCallback(self._update_trade_callback)
+            }            
 
         if self._name.lower() == 'poloniex':
             self._feed_handler.add_feed(
@@ -65,6 +70,10 @@ class WebsocketExchange(RestApiExchange):
         name = name.capitalize()
         if name == 'Hitbtc':
             return 'HitBTC'
+        elif name == 'Okex':
+            return "OKEx"
+        elif name == "Huobipro":
+            return "Huobi"
 
         return name
 
@@ -79,7 +88,7 @@ class WebsocketExchange(RestApiExchange):
                 normalized_name = name
             else:
                 market = self._exchange_interface.markets[name]
-                normalized_name = market['baseId'] + '-' + market['quoteId']
+                normalized_name = market['base'] + '-' + market['quote']
             mapping[normalized_name] = name
 
         return mapping
@@ -119,8 +128,9 @@ class WebsocketExchange(RestApiExchange):
         """
         instmt_info = self._instruments[self._instrument_mapping[pair]]
         trade = {}
-
-        if self._name.lower() == 'bitmex':
+        
+        utcstr_timestamp_exchanges = ['bitmex', 'okex']
+        if self._name.lower() in utcstr_timestamp_exchanges:
             timestamp = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
             timestamp = timestamp.timestamp()
             trade['timestamp'] = timestamp

@@ -21,6 +21,7 @@ class Exchange:
         self._config = config
         self._is_debug = is_debug
         self._is_cold = is_cold
+        self._is_orders = True
         self._instruments = {}
         self._depth = Exchange.DEFAULT_DEPTH
         self._last_request_time = datetime(1990, 1, 1)
@@ -58,6 +59,7 @@ class Exchange:
         self._load_handlers(handlers=handlers)
         self._load_instruments()
         self._load_depth()
+        self._load_is_orders()
 
     def _load_handlers(self, handlers):
         """Load handlers.
@@ -87,3 +89,12 @@ class Exchange:
             assert isinstance(self._depth, int), (
                 "Depth ({}) must be an integer".format(
                     self._depth))
+        
+    def _load_is_orders(self):
+        """Load is_orders.
+        """
+        if 'is_orders' in self._config:
+            self._is_orders = self._config['is_orders']
+            assert isinstance(self._is_orders, bool), (
+                "is_orders ({}) must be an boolean".format(
+                    self._is_orders))    

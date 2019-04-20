@@ -130,10 +130,13 @@ class WebsocketExchange(RestApiExchange):
         trade = {}
         
         utcstr_timestamp_exchanges = ['bitmex', 'okex']
+        str_timestamp_exchanges = ['bitstamp']
         if self._name.lower() in utcstr_timestamp_exchanges:
             timestamp = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
             timestamp = timestamp.timestamp()
             trade['timestamp'] = timestamp
+        elif self._name.lower() in str_timestamp_exchanges:
+            trade['timestamp'] = float(timestamp)
         else:
             trade['timestamp'] = timestamp
 

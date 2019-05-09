@@ -81,12 +81,16 @@ class WebsocketExchange(RestApiExchange):
         """Create instrument mapping.
         """
         mapping = {}
+        instruments_notin_ccxt = {'UST/USD':'UST-USD'}
         for name in self._instruments.keys():
             if self._name.lower() == 'bitmex':
                 # BitMEX uses the instrument name directly
                 # without normalizing to cryptofeed convention
                 normalized_name = name
+            elif name in instruments_notin_ccxt.keys():
+                normalized_name = instruments_notin_ccxt[name]
             else:
+                
                 market = self._exchange_interface.markets[name]
                 normalized_name = market['base'] + '-' + market['quote']
             mapping[normalized_name] = name
@@ -130,10 +134,13 @@ class WebsocketExchange(RestApiExchange):
         trade = {}
         
         utcstr_timestamp_exchanges = ['bitmex', 'okex']
+        str_timestamp_exchanges = ['bitstamp']
         if self._name.lower() in utcstr_timestamp_exchanges:
             timestamp = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
             timestamp = timestamp.timestamp()
             trade['timestamp'] = timestamp
+        elif self._name.lower() in str_timestamp_exchanges:
+            trade['timestamp'] = float(timestamp)
         else:
             trade['timestamp'] = timestamp
 
@@ -154,8 +161,10 @@ class WebsocketExchange(RestApiExchange):
     def _check_valid_instrument(self):
         """Check valid instrument.
         """
-        if self._name.lower() == 'bitmex':
+        skip_checking_exchanges = ['bitmex', 'bitfinex']
+        if self._name.lower() in skip_checking_exchanges:
             # Skip checking on BitMEX
+            # Skip checking on Bitfinex
             return
 
         for instrument_code in self._config['instruments']:

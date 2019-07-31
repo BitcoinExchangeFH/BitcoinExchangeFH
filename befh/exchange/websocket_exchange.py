@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime
+import re
 
 from cryptofeed import FeedHandler
 from cryptofeed.defines import L2_BOOK, TRADES, BID, ASK
@@ -9,6 +10,8 @@ import cryptofeed.exchanges as cryptofeed_exchanges
 from .rest_api_exchange import RestApiExchange
 
 LOGGER = logging.getLogger(__name__)
+
+FULL_UTC_PATTERN = '\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}Z'
 
 
 class WebsocketExchange(RestApiExchange):
@@ -44,7 +47,7 @@ class WebsocketExchange(RestApiExchange):
         else:
             callbacks = {
                 TRADES: TradeCallback(self._update_trade_callback)
-            }            
+            }
 
         if self._name.lower() == 'poloniex':
             self._feed_handler.add_feed(
@@ -90,7 +93,7 @@ class WebsocketExchange(RestApiExchange):
             elif name in instruments_notin_ccxt.keys():
                 normalized_name = instruments_notin_ccxt[name]
             else:
-                
+
                 market = self._exchange_interface.markets[name]
                 normalized_name = market['base'] + '-' + market['quote']
             mapping[normalized_name] = name
@@ -132,15 +135,15 @@ class WebsocketExchange(RestApiExchange):
         """
         instmt_info = self._instruments[self._instrument_mapping[pair]]
         trade = {}
-        
-        utcstr_timestamp_exchanges = ['bitmex', 'okex']
-        str_timestamp_exchanges = ['bitstamp']
-        if self._name.lower() in utcstr_timestamp_exchanges:
-            timestamp = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
-            timestamp = timestamp.timestamp()
-            trade['timestamp'] = timestamp
-        elif self._name.lower() in str_timestamp_exchanges:
-            trade['timestamp'] = float(timestamp)
+
+        if isinstance(timestamp, str):
+            if (len(timestamp) == 27 and
+                    re.search(full_utc_pattern, timestamp) is not None):
+                timestamp = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
+                timestamp = timestamp.timestamp()
+                trade['timestamp'] = timestamp
+            else:
+                trade['timestamp'] = float(timestamp)
         else:
             trade['timestamp'] = timestamp
 

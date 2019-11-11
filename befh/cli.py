@@ -44,7 +44,7 @@ def main(configuration, debug, cold, archive):
         format='%(asctime)s %(levelname)s %(message)s')
 
     configuration = open(configuration, 'r')
-    configuration = yaml.load(configuration)
+    configuration = yaml.load(configuration, Loader=yaml.FullLoader)
     LOGGER.debug('Configuration:\n%s', configuration)
     configuration = Configuration(configuration)
 

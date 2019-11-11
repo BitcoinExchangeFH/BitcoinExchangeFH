@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime
+import re
 
 from cryptofeed import FeedHandler
 from cryptofeed.defines import L2_BOOK, TRADES, BID, ASK
@@ -9,6 +10,8 @@ import cryptofeed.exchanges as cryptofeed_exchanges
 from .rest_api_exchange import RestApiExchange
 
 LOGGER = logging.getLogger(__name__)
+
+FULL_UTC_PATTERN = '\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}Z'
 
 
 class WebsocketExchange(RestApiExchange):
@@ -36,10 +39,15 @@ class WebsocketExchange(RestApiExchange):
             raise ImportError(
                 'Cannot load exchange %s from websocket' % self._name)
 
-        callbacks = {
-            L2_BOOK: BookCallback(self._update_order_book_callback),
-            TRADES: TradeCallback(self._update_trade_callback)
-        }
+        if self._is_orders:
+            callbacks = {
+                L2_BOOK: BookCallback(self._update_order_book_callback),
+                TRADES: TradeCallback(self._update_trade_callback)
+            }
+        else:
+            callbacks = {
+                TRADES: TradeCallback(self._update_trade_callback)
+            }
 
         if self._name.lower() == 'poloniex':
             self._feed_handler.add_feed(
@@ -65,6 +73,12 @@ class WebsocketExchange(RestApiExchange):
         name = name.capitalize()
         if name == 'Hitbtc':
             return 'HitBTC'
+        elif name == 'Okex':
+            return "OKEx"
+        elif name == 'Okcoinusd':
+            return "OKCoin"        
+        elif name == "Huobipro":
+            return "Huobi"
 
         return name
 
@@ -72,14 +86,18 @@ class WebsocketExchange(RestApiExchange):
         """Create instrument mapping.
         """
         mapping = {}
+        instruments_notin_ccxt = {'UST/USD':'UST-USD'}
         for name in self._instruments.keys():
             if self._name.lower() == 'bitmex':
                 # BitMEX uses the instrument name directly
                 # without normalizing to cryptofeed convention
                 normalized_name = name
+            elif name in instruments_notin_ccxt.keys():
+                normalized_name = instruments_notin_ccxt[name]
             else:
+
                 market = self._exchange_interface.markets[name]
-                normalized_name = market['baseId'] + '-' + market['quoteId']
+                normalized_name = market['base'] + '-' + market['quote']
             mapping[normalized_name] = name
 
         return mapping
@@ -120,10 +138,14 @@ class WebsocketExchange(RestApiExchange):
         instmt_info = self._instruments[self._instrument_mapping[pair]]
         trade = {}
 
-        if self._name.lower() == 'bitmex':
-            timestamp = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
-            timestamp = timestamp.timestamp()
-            trade['timestamp'] = timestamp
+        if isinstance(timestamp, str):
+            if (len(timestamp) == 27 and
+                    re.search(full_utc_pattern, timestamp) is not None):
+                timestamp = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
+                timestamp = timestamp.timestamp()
+                trade['timestamp'] = timestamp
+            else:
+                trade['timestamp'] = float(timestamp)
         else:
             trade['timestamp'] = timestamp
 
@@ -144,8 +166,10 @@ class WebsocketExchange(RestApiExchange):
     def _check_valid_instrument(self):
         """Check valid instrument.
         """
-        if self._name.lower() == 'bitmex':
+        skip_checking_exchanges = ['bitmex', 'bitfinex']
+        if self._name.lower() in skip_checking_exchanges:
             # Skip checking on BitMEX
+            # Skip checking on Bitfinex
             return
 
         for instrument_code in self._config['instruments']:

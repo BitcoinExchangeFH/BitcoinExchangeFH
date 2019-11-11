@@ -13,6 +13,13 @@ class HandlerOperator:
         """
         raise NotImplementedError(
             'Execute is not implemented')
+    
+    @staticmethod
+    def parse_table_name(table_name):
+        """parse table name fix sqlalchemy can't insert table name with '.'.
+        """
+            
+        return table_name.replace('.', '')
 
 
 class HandlerCloseOperator(HandlerOperator):
@@ -33,7 +40,7 @@ class HandlerCreateTableOperator(HandlerOperator):
         """Constructor.
         """
         super().__init__(**kwargs)
-        self._table_name = table_name
+        self._table_name = self.parse_table_name(table_name)
         self._fields = fields
 
     def execute(self, handler):
@@ -52,7 +59,7 @@ class HandlerInsertOperator(HandlerOperator):
         """Constructor.
         """
         super().__init__(**kwargs)
-        self._table_name = table_name
+        self._table_name = self.parse_table_name(table_name)
         self._fields = fields
 
     def execute(self, handler):
@@ -72,8 +79,8 @@ class HandlerRenameTableOperator(HandlerOperator):
         """Constructor.
         """
         super().__init__(**kwargs)
-        self._from_name = from_name
-        self._to_name = to_name
+        self._from_name = self.parse_table_name(from_name)
+        self._to_name = self.parse_table_name(to_name)
         self._fields = fields
         self._keep_table = keep_table
 

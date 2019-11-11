@@ -5,15 +5,13 @@ subscriptions:
           - XRP/BTC
         depth: 10
 
-    Poloniex:
-        instruments:
-          - ETH/BTC
-          - XRP/BTC
+#     Poloniex:
+#         instruments:
+#           - ETH/BTC
+#           - XRP/BTC
 
     Bitmex:
         instruments:
-            - XBTH19
-            - ETHH19
             - ETHUSD
 
 handlers:

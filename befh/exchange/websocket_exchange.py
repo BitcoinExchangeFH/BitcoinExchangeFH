@@ -75,6 +75,8 @@ class WebsocketExchange(RestApiExchange):
             return 'HitBTC'
         elif name == 'Okex':
             return "OKEx"
+        elif name == 'Okcoinusd':
+            return "OKCoin"        
         elif name == "Huobipro":
             return "Huobi"
 

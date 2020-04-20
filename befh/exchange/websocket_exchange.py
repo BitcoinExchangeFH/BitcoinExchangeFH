@@ -89,8 +89,6 @@ class WebsocketExchange(RestApiExchange):
             return 'HitBTC'
         elif name == 'Okex':
             return "OKEx"
-        elif name == 'Okcoinusd':
-            return "OKCoin"        
         elif name == "Huobipro":
             return "Huobi"
 
@@ -116,7 +114,7 @@ class WebsocketExchange(RestApiExchange):
 
         return mapping
 
-    def _update_order_book_callback(self, feed, pair, book, timestamp):
+    def _update_order_book_callback(self, feed, pair, book, timestamp, receipt_timestamp):
         """Update order book callback.
         """
         if pair in self._instrument_mapping:
@@ -146,7 +144,7 @@ class WebsocketExchange(RestApiExchange):
             return
 
     def _update_trade_callback(
-            self, feed, pair, order_id, timestamp, side, amount, price):
+            self, feed, pair, order_id, timestamp, side, amount, price, receipt_timestamp):
         """Update trade callback.
         """
         instmt_info = self._instruments[self._instrument_mapping[pair]]

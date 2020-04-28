@@ -39,9 +39,9 @@ class WebsocketExchange(RestApiExchange):
             raise ImportError(
                 'Cannot load exchange %s from websocket' % self._name)
 
-        contract_exchanges_use_spot_channel = ['HuobiSwap']
+        contract_exchanges_use_common_channel = ['HuobiSwap','HuibiDM','KrakenFutures','BinanceFutures','Bitmex']
         if self._is_orders:
-            if self._type == 'spot' or self._name in contract_exchanges_use_spot_channel:                
+            if self._type == 'spot' or self._name in contract_exchanges_use_common_channel:                
                 channels = [TRADES, L2_BOOK]
             elif self._type == 'futures':
                 channels = [TRADES_FUTURES, L2_BOOK_FUTURES]

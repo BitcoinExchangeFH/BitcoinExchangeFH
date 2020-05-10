@@ -3,7 +3,7 @@ from datetime import datetime
 import re
 
 from cryptofeed import FeedHandler
-from cryptofeed.defines import L2_BOOK, TRADES, BID, ASK
+from cryptofeed.defines import L2_BOOK, TRADES, L2_BOOK_FUTURES, TRADES_FUTURES, L2_BOOK_SWAP, TRADES_SWAP, BID, ASK
 from cryptofeed.callback import BookCallback, TradeCallback
 import cryptofeed.exchanges as cryptofeed_exchanges
 
@@ -40,14 +40,28 @@ class WebsocketExchange(RestApiExchange):
                 'Cannot load exchange %s from websocket' % self._name)
 
         if self._is_orders:
+            if self._type == 'spot':                
+                channels = [TRADES, L2_BOOK]
+            elif self._type == 'futures':
+                channels = [TRADES_FUTURES, L2_BOOK_FUTURES]
+            elif self._type == 'swap':
+                channels = [TRADES_SWAP, L2_BOOK_SWAP]
+
             callbacks = {
-                L2_BOOK: BookCallback(self._update_order_book_callback),
-                TRADES: TradeCallback(self._update_trade_callback)
-            }
+                TRADES: TradeCallback(self._update_trade_callback),
+                L2_BOOK: BookCallback(self._update_order_book_callback)               
+            }            
         else:
+            if self._type == 'spot':                
+                channels = [TRADES]
+            elif self._type == 'futures':
+                channels = [TRADES_FUTURES]
+            elif self._type == 'swap':
+                channels = [TRADES_SWAP]
+
             callbacks = {
-                TRADES: TradeCallback(self._update_trade_callback)
-            }
+                TRADES: TradeCallback(self._update_trade_callback),                
+            }            
 
         if self._name.lower() == 'poloniex':
             self._feed_handler.add_feed(
@@ -58,7 +72,7 @@ class WebsocketExchange(RestApiExchange):
             self._feed_handler.add_feed(
                 exchange(
                     pairs=list(self._instrument_mapping.keys()),
-                    channels=list(callbacks.keys()),
+                    channels=channels,
                     callbacks=callbacks))
 
     def run(self):
@@ -75,8 +89,6 @@ class WebsocketExchange(RestApiExchange):
             return 'HitBTC'
         elif name == 'Okex':
             return "OKEx"
-        elif name == 'Okcoinusd':
-            return "OKCoin"        
         elif name == "Huobipro":
             return "Huobi"
 
@@ -88,7 +100,7 @@ class WebsocketExchange(RestApiExchange):
         mapping = {}
         instruments_notin_ccxt = {'UST/USD':'UST-USD'}
         for name in self._instruments.keys():
-            if self._name.lower() == 'bitmex':
+            if self._name.lower() == 'bitmex' or self._type == 'futures' or self._type == 'swap':
                 # BitMEX uses the instrument name directly
                 # without normalizing to cryptofeed convention
                 normalized_name = name
@@ -102,7 +114,7 @@ class WebsocketExchange(RestApiExchange):
 
         return mapping
 
-    def _update_order_book_callback(self, feed, pair, book, timestamp):
+    def _update_order_book_callback(self, feed, pair, book, timestamp, receipt_timestamp):
         """Update order book callback.
         """
         if pair in self._instrument_mapping:
@@ -132,7 +144,7 @@ class WebsocketExchange(RestApiExchange):
             return
 
     def _update_trade_callback(
-            self, feed, pair, order_id, timestamp, side, amount, price):
+            self, feed, pair, order_id, timestamp, side, amount, price, receipt_timestamp):
         """Update trade callback.
         """
         instmt_info = self._instruments[self._instrument_mapping[pair]]
@@ -166,7 +178,7 @@ class WebsocketExchange(RestApiExchange):
     def _check_valid_instrument(self):
         """Check valid instrument.
         """
-        skip_checking_exchanges = ['bitmex', 'bitfinex']
+        skip_checking_exchanges = ['bitmex', 'bitfinex', 'okex']
         if self._name.lower() in skip_checking_exchanges:
             # Skip checking on BitMEX
             # Skip checking on Bitfinex

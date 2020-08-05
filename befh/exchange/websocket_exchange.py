@@ -49,11 +49,11 @@ class WebsocketExchange(RestApiExchange):
                 channels = [TRADES_SWAP, L2_BOOK_SWAP]
 
             callbacks = {
-                TRADES: TradeCallback(self._update_trade_callback),
+                channels[0]: TradeCallback(self._update_trade_callback),
                 L2_BOOK: BookCallback(self._update_order_book_callback)               
             }            
         else:
-            if self._type == 'spot':                
+            if self._type == 'spot' or self._name in contract_exchanges_use_common_channel:                
                 channels = [TRADES]
             elif self._type == 'futures':
                 channels = [TRADES_FUTURES]
@@ -61,7 +61,7 @@ class WebsocketExchange(RestApiExchange):
                 channels = [TRADES_SWAP]
 
             callbacks = {
-                TRADES: TradeCallback(self._update_trade_callback),                
+                channels[0]: TradeCallback(self._update_trade_callback),                
             }            
 
         if self._name.lower() == 'poloniex':

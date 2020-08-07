@@ -24,7 +24,7 @@ test_requirements = [
 ]
 
 extra_requirements = {
-    ":python_version>='3.5.3'": ["cryptofeed>=1.3.1"],
+    ":python_version>='3.5.3'": ["cryptofeed>=1.4.1"],
 }
 
 

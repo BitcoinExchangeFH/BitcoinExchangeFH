@@ -18,11 +18,13 @@ class RestApiExchange(Exchange):
         """Load.
         """
         super().load(**kwargs)
-        self._exchange_interface = getattr(ccxt, self._name.lower())()
-        self._exchange_interface.load_markets()
-        self._check_valid_instrument()
-        if is_initialize_instmt:
-            self._initialize_instmt_info()
+        ccxt_exchange = getattr(ccxt, self._name.lower(), None)
+        if ccxt_exchange:          
+            self._exchange_interface = ccxt_exchange()
+            self._exchange_interface.load_markets()
+            self._check_valid_instrument()
+            if is_initialize_instmt:
+                self._initialize_instmt_info()
 
     def run(self):
         """Run.

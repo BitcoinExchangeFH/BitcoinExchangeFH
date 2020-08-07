@@ -39,8 +39,9 @@ class WebsocketExchange(RestApiExchange):
             raise ImportError(
                 'Cannot load exchange %s from websocket' % self._name)
 
+        contract_exchanges_use_common_channel = ['HuobiSwap','HuibiDM','KrakenFutures','BinanceFutures','Bitmex']
         if self._is_orders:
-            if self._type == 'spot':                
+            if self._type == 'spot' or self._name in contract_exchanges_use_common_channel:                
                 channels = [TRADES, L2_BOOK]
             elif self._type == 'futures':
                 channels = [TRADES_FUTURES, L2_BOOK_FUTURES]
@@ -48,11 +49,11 @@ class WebsocketExchange(RestApiExchange):
                 channels = [TRADES_SWAP, L2_BOOK_SWAP]
 
             callbacks = {
-                TRADES: TradeCallback(self._update_trade_callback),
+                channels[0]: TradeCallback(self._update_trade_callback),
                 L2_BOOK: BookCallback(self._update_order_book_callback)               
             }            
         else:
-            if self._type == 'spot':                
+            if self._type == 'spot' or self._name in contract_exchanges_use_common_channel:                
                 channels = [TRADES]
             elif self._type == 'futures':
                 channels = [TRADES_FUTURES]
@@ -60,7 +61,7 @@ class WebsocketExchange(RestApiExchange):
                 channels = [TRADES_SWAP]
 
             callbacks = {
-                TRADES: TradeCallback(self._update_trade_callback),                
+                channels[0]: TradeCallback(self._update_trade_callback),                
             }            
 
         if self._name.lower() == 'poloniex':
@@ -84,12 +85,11 @@ class WebsocketExchange(RestApiExchange):
     def _get_exchange_name(name):
         """Get exchange name.
         """
-        name = name.capitalize()
         if name == 'Hitbtc':
             return 'HitBTC'
         elif name == 'Okex':
             return "OKEx"
-        elif name == "Huobipro":
+        elif name == "HuobiPro":
             return "Huobi"
 
         return name

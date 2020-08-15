@@ -59,7 +59,7 @@ class OrderBook(Table):
             name='date_time', value=datetime(2000, 1, 1))
         self._prev_update_time = DateTimeField(
             name='date_time', value=datetime(2000, 1, 1))
-        self._trades_per_timestamp = {}
+        #self._trades_per_timestamp = {}
 
     @staticmethod
     def create_depths(prefix, depth):
@@ -209,10 +209,10 @@ class OrderBook(Table):
 
                 # Check whether the trade was proceeded before at the
                 # same timestamp
-                timestamp_trades = self._trades_per_timestamp[timestamp]
+                #timestamp_trades = self._trades_per_timestamp[timestamp]
 
-                if trade_id in timestamp_trades:
-                    return False
+                #if trade_id in timestamp_trades:
+                    #return False
 
         self._prev_trade = deepcopy(self._trade)
         self._trade[self.TRADE_PX_INDEX].value = trade['price']
@@ -222,7 +222,7 @@ class OrderBook(Table):
         self._prev_update_time.value = self._update_time.value
         self._update_time.value = current_timestamp
         self._update_type.value = OrderBookUpdateTypeField.TRADE
-        self._trades_per_timestamp.setdefault(timestamp, []).append(
-            trade_id)
+        #self._trades_per_timestamp.setdefault(timestamp, []).append(
+            #trade_id)
 
         return True

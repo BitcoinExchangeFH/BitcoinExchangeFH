@@ -1,14 +1,9 @@
 subscriptions:
     Binance:
-        instruments: 
+        instruments:
           - ETH/BTC
           - XRP/BTC
         depth: 10
-
-#     Poloniex:
-#         instruments:
-#           - ETH/BTC
-#           - XRP/BTC
 
     Bitmex:
         instruments:

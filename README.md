@@ -145,6 +145,40 @@ The following settings can be customized
 |connection|Connection [format](http://api.zeromq.org/3-2:zmq-connect) in ZeroMQ. For example, "tcp://127.0.0.1:3456"|
 
 
+## Examples
+
+You can first create a directory `.data` and run the command
+
+```
+$ bitcoinexchangefh --configuration example/configuration.yaml 
+2020-08-07 23:33:32,110 INFO Loading runner
+2020-08-07 23:33:32,110 INFO Creating handler sql
+2020-08-07 23:33:32,205 INFO Loading handler SqlHandler
+2020-08-07 23:33:32,710 INFO Loading exchange Binance
+2020-08-07 23:33:34,062 INFO Loading exchange Bitmex
+2020-08-07 23:33:40,203 INFO Start running the feed handler
+2020-08-07 23:33:40,203 INFO Running handler sql
+2020-08-07 23:33:40,210 INFO Running exchange Binance
+2020-08-07 23:33:40,215 INFO Running SqlHandler
+2020-08-07 23:33:40,219 INFO Running exchange Bitmex
+2020-08-07 23:33:40,231 INFO Joining all the processes
+2020-08-07 23:33:40,232 INFO Creating table binance_ethbtc_order
+2020-08-07 23:33:40,263 INFO Created table binance_ethbtc_order
+2020-08-07 23:33:40,265 INFO Creating table binance_xrpbtc_order
+2020-08-07 23:33:40,294 INFO Created table binance_xrpbtc_order
+2020-08-07 23:33:40,297 INFO Creating table bitmex_ethusd_order
+2020-08-07 23:33:40,322 INFO Created table bitmex_ethusd_order
+```
+
+After a while, the data is streamed into the file `.data/order_book.db`. You can terminate the process and the database contains the following tables.
+
+```
+$ python -c "import sqlite3; print(sqlite3.connect('.data/order_book.db').execute('SELECT name from sqlite_master where type= \"table\"').fetchall())"
+[('binance_ethbtc_order',), ('binance_xrpbtc_order',), ('bitmex_ethusd_order',)]
+
+```
+
+
 ## Inquiries
 
 You can first look up to the page [FAQ](https://github.com/gavincyi/BitcoinExchangeFH/wiki/FAQ). For more inquiries, you can either leave it in issues or drop me an email. I will get you back as soon as possible.

@@ -76,7 +76,7 @@ class Exchange:
         for symbol in instruments:
             instmt_info = self.DEFAULT_ORDER_BOOK_CLASS(
                 exchange=self._name,
-                symbol=symbol)
+                symbol=self._symbol_filter(symbol))
             self._instruments[symbol] = instmt_info
 
             for handler in self._handlers.values():
@@ -110,3 +110,14 @@ class Exchange:
             assert isinstance(self._is_orders, bool), (
                 "is_orders ({}) must be an boolean".format(
                     self._is_orders))    
+
+    @staticmethod
+    def _symbol_filter(original_symbol):     
+        if original_symbol.find(':')>=0:
+            names = original_symbol.split(':')
+            symbol = names[1]
+        else:
+            symbol = original_symbol
+            
+        return symbol
+        

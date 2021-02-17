@@ -187,6 +187,60 @@ class OrderBook(Table):
             OrderBookUpdateTypeField.ORDER_BOOK)
 
         return is_update
+    
+    
+    def websocket_update_bids_asks(self, bids, asks):
+        """Update bids and asks.
+        """
+        is_update = False
+
+        self._prev_bids = deepcopy(self._bids)
+        self._prev_asks = deepcopy(self._asks)
+
+        # Ensure proper order is defined
+        
+        if len(bids) > 1 and bids.peekitem(0)[0] < bids.peekitem(1)[0]:
+            bids_it = reversed(bids)
+        else:
+            bids_it = iter(bids)
+
+        if len(asks) > 1 and asks.peekitem(0)[0] > asks.peekitem(1)[0]:
+            asks_it = reversed(asks)
+        else:
+            asks_it = iter(asks)
+
+        max_bid_depth = min(len(bids), self._depth)
+        max_ask_depth = min(len(asks), self._depth)
+
+        for i in range(0, max_bid_depth):
+            price = next(bids_it)
+            price_f = float(price)
+            volume_f = float(bids.get(price))
+            self._bids[i][0].value = price_f
+            self._bids[i][1].value = volume_f
+            is_update |= (
+                self._bids[i][0] != self._prev_bids[i][0] or
+                self._bids[i][1] != self._prev_bids[i][1]
+            )
+
+        for i in range(0, max_ask_depth):
+            price = next(asks_it)
+            price_f = float(price)
+            volume_f = float(asks.get(price))            
+            self._asks[i][0].value = price_f
+            self._asks[i][1].value = volume_f
+            is_update |= (
+                self._asks[i][0] != self._prev_asks[i][0] or
+                self._asks[i][1] != self._prev_asks[i][1]
+            )
+
+        self._prev_update_time.value = self._update_time.value
+        self._update_time.value = datetime.utcnow()
+        self._update_type.value = (
+            OrderBookUpdateTypeField.ORDER_BOOK)
+
+        return is_update
+    
 
     def update_trade(self, trade, current_timestamp):
         """Update trades.

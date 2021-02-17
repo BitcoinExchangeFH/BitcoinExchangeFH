@@ -59,7 +59,7 @@ class WebsocketExchange(RestApiExchange):
         else:
             self._feed_handler.add_feed(
                 exchange(
-                    pairs=list(self._instrument_mapping.keys()),
+                    symbols=list(self._instrument_mapping.keys()),
                     channels=channels,
                     callbacks=callbacks))
 
@@ -113,25 +113,14 @@ class WebsocketExchange(RestApiExchange):
         instrument_key = self._get_instrument_key(feed, pair)
             
         instmt_info = self._instruments[instrument_key]
-
-        order_book = {}
-        bids = []
-        asks = []
-        order_book['bids'] = bids
-        order_book['asks'] = asks
-
-        for price, volume in book[BID].items():
-            bids.append((float(price), float(volume)))
-
-        for price, volume in book[ASK].items():
-            asks.append((float(price), float(volume)))
-
-        is_updated = instmt_info.update_bids_asks(
-            bids=bids,
-            asks=asks)
+        
+        is_updated = instmt_info.websocket_update_bids_asks(
+            bids=book[BID],
+            asks=book[ASK])
 
         if not is_updated:
             return
+        
 
     def _update_trade_callback(
             self, feed, pair, order_id, timestamp, side, amount, price, receipt_timestamp):
@@ -144,7 +133,7 @@ class WebsocketExchange(RestApiExchange):
 
         if isinstance(timestamp, str):
             if (len(timestamp) == 27 and
-                    re.search(full_utc_pattern, timestamp) is not None):
+                    re.search(FULL_UTC_PATTERN, timestamp) is not None):
                 timestamp = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
                 timestamp = timestamp.timestamp()
                 trade['timestamp'] = timestamp
